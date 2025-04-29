@@ -1,0 +1,100 @@
+site_name: Ark SDK
+site_description: Python Ark SDK for CyberArk's Identity Security Platform
+site_author: CyberArk, Ofir Iluz
+repo_url: https://github.com/cyberark/ark-sdk-golang
+edit_uri: edit/main/docs
+
+nav:
+  - Overview: index.md
+  - Getting started: getting_started.md
+  - Architecture: architecture.md
+  - License: license.md
+  - How to guides:
+      - Work with profiles: howto/working_with_profiles.md
+      - Work with Ark cache: howto/working_with_ark_cache.md
+      - End-user database workflow: howto/enduser_databases_workflow.md
+      - End-user Kubernetes workflow: howto/enduser_kubernetes_workflow.md
+      - End-user SSH workflow: howto/enduser_ssh_workflow.md
+      - End-user RDP workflow: howto/enduser_rdp_workflow.md
+      - Install SIA connectors: howto/install_sia_connectors.md
+      - Onboard pcloud account: howto/onboard_pcloud_account.md
+      - Simple commands workflow: howto/simple_commands_workflow.md
+      - Simple SDK workflow: howto/simple_sdk_workflow.md
+      - Refresh authentication: howto/refreshing_authentication.md
+  - Examples:
+      - Commands examples: examples/commands_examples.md
+      - SDK examples: examples/sdk_examples.md
+  - CLI commands:
+      - Configure: commands/configure.md
+      - Login: commands/login.md
+      - Exec: commands/exec.md
+      - Profiles: commands/profiles.md
+      - Cache: commands/cache.md
+theme:
+  name: material
+  custom_dir: docs/overrides
+  font:
+    text: Ubuntu
+  palette:
+    - scheme: default
+      primary: dark blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tracking
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+  logo: media/logo.svg
+  favicon: media/favicon.ico
+
+markdown_extensions:
+  - admonition
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: "."
+      check_paths: true
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - attr_list
+  - pymdownx.emoji
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+copyright: Copyright &copy; 2023 CyberArk
+
+plugins:
+  - search
+  - literate-nav:
+      nav_file: SUMMARY.md
+      markdown_extensions:
+        - sane_lists
+  - section-index
+  - mkdocstrings
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  version:
+    provider: mike

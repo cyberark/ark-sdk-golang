@@ -1,0 +1,35 @@
+project_name: ark
+version: 2
+builds:
+  - id: unix
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+    env: [CGO_ENABLED=0]
+    main: ./cmd/ark.go
+    ldflags:
+      - -s -w -X 'main.GitCommit={{.Commit}}' -X 'main.BuildDate={{.Date}}' -X 'main.Version={{.Env.BUILD_VERSION}}' -X 'main.BuildNumber={{.Env.BUILD_NUMBER}}'
+    binary: ark-{{ .Os }}
+  - id: win
+    goos:
+      - windows
+    goarch:
+      - amd64
+    env: [CGO_ENABLED=0]
+    main: ./cmd/ark.go
+    ldflags:
+      - -X 'main.GitCommit={{.Commit}}' -X 'main.BuildDate={{.Date}}' -X 'main.Version={{.Env.BUILD_VERSION}}' -X 'main.BuildNumber={{.Env.BUILD_NUMBER}}'
+    binary: ark-windows
+
+archives:
+  - formats: [tar.gz]
+    files:
+      - LICENSE.txt
+      - README.md
+
+release:
+  github:
+    owner: cyberark
+    name: ark-sdk-golang
