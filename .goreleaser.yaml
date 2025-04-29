@@ -31,10 +31,5 @@ archives:
 
 release:
   github:
-    owner: pas
+    owner: cyberark
     name: ark-sdk-golang
-
-github_urls:
-  api: https://github.com/api/v3/
-  upload: https://github.com/api/uploads/
-  download: https://github.com

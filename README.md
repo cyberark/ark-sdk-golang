@@ -8,7 +8,7 @@
         <img src="https://img.shields.io/github/go-mod/go-version/cyberark/ark-sdk-golang" />
     </a>
     <a href="https://github.com/cyberark/ark-sdk-golang/blob/master/LICENSE.txt" alt="License">
-        <img src="https://img.shields.io/github/license/pas/ark-sdk-golang?style=flat" alt="License" />
+        <img src="https://img.shields.io/github/license/cyberark/ark-sdk-golang?style=flat" alt="License" />
     </a>
 </p>
 
