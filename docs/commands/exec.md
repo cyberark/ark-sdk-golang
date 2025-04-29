@@ -1,0 +1,63 @@
+---
+title: Exec
+description: Exec Command
+---
+
+# Exec
+
+You use the `exec` command is used to run commands on available services (the available services depend on the authorized user's account).
+
+## SIA services
+
+The following SIA commands are supported:
+
+- `ark exec sia`: Root command for the SIA service
+    - `sso` - SSO end-user operations
+    - `k8s` - Kubernetes service
+    - `workspaces` - Workspaces service
+      - `target-sets` - Target sets operations
+    - `secrets` - Secrets service
+      - `vm` - VM operations
+    - `access` - Access service
+- `ark exec cmgr`: Root command for the CMGR service
+- `ark exec pcloud`: Root command for PCloud service
+    - `accounts` - Accounts management
+    - `safes` - Safes management
+
+All commands have their own subcommands and respective arguments.
+
+## Running
+```shell linenums="0"
+ark exec
+```
+
+## Usage
+```shell
+Exec an action
+
+Usage:
+  ark exec [command]
+
+Available Commands:
+  cmgr
+  pcloud
+  sia
+
+Flags:
+      --allow-output                Allow stdout / stderr even when silent and not interactive
+      --disable-cert-verification   Disables certificate verification on HTTPS calls, unsafe!
+  -h, --help                        help for exec
+      --log-level string            Log level to use while verbose (default "INFO")
+      --logger-style string         Which verbose logger style to use (default "default")
+      --output-path string          Output file to write data to
+      --profile-name string         Profile name to load (default "ark")
+      --raw                         Whether to raw output
+      --refresh-auth                If a cache exists, will also try to refresh it
+      --request-file string         Request file containing the parameters for the exec action
+      --retry-count int             Retry count for execution (default 1)
+      --silent                      Silent execution, no interactiveness
+      --trusted-cert string         Certificate to use for HTTPS calls
+      --verbose                     Whether to verbose log
+
+Use "ark exec [command] --help" for more information about a command.
+```

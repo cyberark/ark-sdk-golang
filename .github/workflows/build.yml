@@ -1,0 +1,61 @@
+name: Build Pipeline
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up golang 1.24
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.24.0
+      - name: Calculate environment variables
+        id: calculate_version
+        run: |
+          main_version=$(cat VERSION | tr -d '\n')
+          branch_name=${GITHUB_REF_NAME}
+          build_number=${GITHUB_RUN_NUMBER}
+          is_master=false
+          if [ "$branch_name" = "main" ] || [ "$branch_name" = "master" ]; then
+            is_master=true
+          fi
+          tag="v${main_version}"
+          version="${main_version}"
+          if [[ "$branch_name" == PR-* ]]; then
+            tag="${tag}.${branch_name}.${build_number}"
+            version="${version}.10"
+          elif [ "$is_master" = false ]; then
+            sanitized_branch_name=$(echo "$branch_name" | sed 's/\//-/g')
+            tag="${tag}.${sanitized_branch_name}.${build_number}"
+            version="${version}.20"
+          fi
+          echo "BUILD_VERSION=$version" >> $GITHUB_ENV
+          echo "BUILD_TAG=$tag" >> $GITHUB_ENV
+          echo "BUILD_DATE=$(date +'%d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: go mod download
+      - name: Run linters
+        run: ./scripts/golint.sh
+      - name: Build
+        run: ./scripts/build.sh
+      - name: Tag
+        continue-on-error: true
+        uses: rickstaa/action-create-tag@v1
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        with:
+          tag: ${{ env.BUILD_TAG }}
+          tag_exists_error: false
+      - name: GoReleaser
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
