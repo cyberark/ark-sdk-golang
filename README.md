@@ -1,13 +1,13 @@
-![Ark SDK Python](https://github.com/cyberark/ark-sdk-golang/blob/master/assets/sdk.png)
+![Ark SDK Python](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/sdk.png)
 
 <p align="center">
-    <a href="https://actions-badge.atrox.dev/cyberark/ark-sdk-golang/goto?ref=master" alt="Build">
-        <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcyberark%2Fark-sdk-golang%2Fbadge%3Fref%3Dmaster&style=flat" />
+    <a href="https://actions-badge.atrox.dev/cyberark/ark-sdk-golang/goto?ref=main" alt="Build">
+        <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcyberark%2Fark-sdk-golang%2Fbadge%3Fref%3Dmain&style=flat" />
     </a>
     <a alt="Go Version">
         <img src="https://img.shields.io/github/go-mod/go-version/cyberark/ark-sdk-golang" />
     </a>
-    <a href="https://github.com/cyberark/ark-sdk-golang/blob/master/LICENSE.txt" alt="License">
+    <a href="https://github.com/cyberark/ark-sdk-golang/blob/main/LICENSE.txt" alt="License">
         <img src="https://img.shields.io/github/license/cyberark/ark-sdk-golang?style=flat" alt="License" />
     </a>
 </p>
@@ -48,7 +48,7 @@ TL;DR
 =====
 
 ## Enduser
-![Ark SDK Enduser Usage](https://github.com/cyberark/ark-sdk-golang/blob/master/assets/ark_sdk_enduser_tldr.gif)
+![Ark SDK Enduser Usage](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/ark_sdk_enduser_tldr.gif)
 
 
 Installation
