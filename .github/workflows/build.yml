@@ -62,12 +62,12 @@ jobs:
       - name: Tag
         continue-on-error: true
         uses: rickstaa/action-create-tag@v1
-#        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         with:
-          tag: 0.1.0
+          tag: ${{ env.BUILD_TAG }}
           tag_exists_error: false
       - name: GoReleaser
-#        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
