@@ -6,13 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Iilun/survey/v2"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/toqueteos/webbrowser"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/identity"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/toqueteos/webbrowser"
 	"io"
 	"net/http"
 	"regexp"
@@ -44,6 +44,7 @@ var factors = map[string]string{
 type lastStartAuthResponse struct {
 	lastResponse *identity.StartAuthResponse
 	timestamp    time.Time
+	cookies      map[string]string
 }
 
 var lastStartAuthResponses = make(map[string]*lastStartAuthResponse)
@@ -127,6 +128,7 @@ func IsPasswordRequired(username string, identityURL string, identityTenantSubdo
 	lastStartAuthResponses[fmt.Sprintf("%s_%s", ai.IdentityURL(), username)] = &lastStartAuthResponse{
 		lastResponse: resp,
 		timestamp:    time.Now(),
+		cookies:      ai.session.GetCookies(),
 	}
 	return resp.Result.IdpRedirectURL == "" && len(resp.Result.Challenges) > 0 && resp.Result.Challenges[0].Mechanisms[0].Name == "UP"
 }
@@ -718,6 +720,7 @@ func (ai *ArkIdentity) AuthIdentity(profile *models.ArkProfile, interactive bool
 	if cachedResponse, exists := lastStartAuthResponses[cacheKey]; exists {
 		if time.Since(cachedResponse.timestamp).Seconds() < lastStartAuthRespDeltaSeconds.Seconds() {
 			startAuthResponse = cachedResponse.lastResponse
+			ai.session.SetCookies(cachedResponse.cookies)
 		}
 		delete(lastStartAuthResponses, cacheKey)
 	}

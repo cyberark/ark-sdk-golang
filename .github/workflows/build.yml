@@ -1,6 +1,6 @@
 name: Build Pipeline
 
-on: [push]
+on: [push, pull_request]
 
 permissions:
   contents: write
@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Check if VERSION file is updated
-        if: startsWith(github.ref_name, 'PR-')
+        if: github.event_name == 'pull_request'
         run: |
           git fetch origin main
           if ! git diff --name-only HEAD origin/main | grep -q '^VERSION$'; then
