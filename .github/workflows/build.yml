@@ -60,7 +60,7 @@ jobs:
         uses: rickstaa/action-create-tag@v1
 #        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         with:
-          tag: ${{ env.BUILD_VERSION }}
+          tag: 0.1.0
           tag_exists_error: false
       - name: GoReleaser
 #        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
