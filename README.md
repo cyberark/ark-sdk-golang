@@ -399,3 +399,9 @@ func main() {
 ```
 
 More examples can be found in the examples folder
+
+## License
+
+This project is licensed under Apache License 2.0 - see [`LICENSE`](LICENSE.txt) for more details
+
+Copyright (c) 2025 CyberArk Software Ltd. All rights reserved.
