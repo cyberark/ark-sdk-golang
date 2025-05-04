@@ -963,6 +963,33 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#create-an-identity-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity User
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity Role
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-directories-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all directories identities
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1184,6 +1211,183 @@ You're not viewing the latest version.
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    SDK overview
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            SDK overview
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/authenticators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authenticators
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/schemas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schemas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/async_requests.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Async requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/pagination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pagination
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1382,6 +1586,33 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#create-an-identity-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity User
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity Role
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-directories-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all directories identities
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1474,6 +1705,15 @@ You're not viewing the latest version.
 </code></pre></div></td></tr></table></div>
 <h3 id="retrieve-a-pcloud-account-credentials">Retrieve a PCloud Account Credentials<a class="headerlink" href="#retrieve-a-pcloud-account-credentials" title="Permanent link">&para;</a></h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>accounts<span class="w"> </span>get-account-credentials<span class="w"> </span>--account-id<span class="w"> </span>11_1
+</code></pre></div></td></tr></table></div>
+<h3 id="create-an-identity-user">Create an Identity User<a class="headerlink" href="#create-an-identity-user" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>users<span class="w"> </span>create-user<span class="w"> </span>--roles<span class="w"> </span><span class="s2">&quot;DpaAdmin&quot;</span><span class="w"> </span>--username<span class="w"> </span><span class="s2">&quot;myuser&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="create-an-identity-role">Create an Identity Role<a class="headerlink" href="#create-an-identity-role" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>roles<span class="w"> </span>create-role<span class="w"> </span>--role-name<span class="w"> </span>myrole
+</code></pre></div></td></tr></table></div>
+<h3 id="list-all-directories-identities">List all directories identities<a class="headerlink" href="#list-all-directories-identities" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>directories<span class="w"> </span>list-directories-entities
 </code></pre></div></td></tr></table></div>
 
 

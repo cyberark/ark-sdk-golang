@@ -850,6 +850,15 @@ You're not viewing the latest version.
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#list-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Identities
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1043,6 +1052,183 @@ You're not viewing the latest version.
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    SDK overview
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            SDK overview
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/authenticators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authenticators
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/schemas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schemas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/async_requests.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Async requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/pagination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pagination
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1100,6 +1286,15 @@ You're not viewing the latest version.
   <a href="#list-pcloud-accounts" class="md-nav__link">
     <span class="md-ellipsis">
       List PCloud Accounts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Identities
     </span>
   </a>
   
@@ -1554,6 +1749,99 @@ You're not viewing the latest version.
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">accountsPage</span><span class="p">.</span><span class="nx">Items</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Account: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">account</span><span class="p">)</span>
 <span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="list-identities">List Identities<a class="headerlink" href="#list-identities" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/cyberark/ark-sdk-golang/pkg/auth&quot;</span>
+<span class="w">    </span><span class="nx">authmodels</span><span class="w"> </span><span class="s">&quot;github.com/cyberark/ark-sdk-golang/pkg/models/auth&quot;</span>
+<span class="w">    </span><span class="nx">directoriesmodels</span><span class="w"> </span><span class="s">&quot;github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/directories&quot;</span>
+<span class="w">    </span><span class="s">&quot;github.com/cyberark/ark-sdk-golang/pkg/services/identity&quot;</span>
+<span class="w">    </span><span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Perform authentication using ArkISPAuth to the platform</span>
+<span class="w">    </span><span class="c1">// First, create an ISP authentication class</span>
+<span class="w">    </span><span class="c1">// Afterwards, perform the authentication</span>
+<span class="w">    </span><span class="nx">ispAuth</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">auth</span><span class="p">.</span><span class="nx">NewArkISPAuth</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ispAuth</span><span class="p">.</span><span class="nx">Authenticate</span><span class="p">(</span>
+<span class="w">        </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="nx">authmodels</span><span class="p">.</span><span class="nx">ArkAuthProfile</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Username</span><span class="p">:</span><span class="w">           </span><span class="s">&quot;user@cyberark.cloud.12345&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">AuthMethod</span><span class="p">:</span><span class="w">         </span><span class="nx">authmodels</span><span class="p">.</span><span class="nx">Identity</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">AuthMethodSettings</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">authmodels</span><span class="p">.</span><span class="nx">IdentityArkAuthMethodSettings</span><span class="p">{},</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="nx">authmodels</span><span class="p">.</span><span class="nx">ArkSecret</span><span class="p">{</span>
+<span class="w">            </span><span class="nx">Secret</span><span class="p">:</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Getenv</span><span class="p">(</span><span class="s">&quot;ARK_SECRET&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// List all identities</span>
+<span class="w">    </span><span class="nx">identityAPI</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">identity</span><span class="p">.</span><span class="nx">NewArkIdentityAPI</span><span class="p">(</span><span class="nx">ispAuth</span><span class="p">.(</span><span class="o">*</span><span class="nx">auth</span><span class="p">.</span><span class="nx">ArkISPAuth</span><span class="p">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">identitiesChan</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">identityAPI</span><span class="p">.</span><span class="nx">Directories</span><span class="p">().</span><span class="nx">ListDirectoriesEntities</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">directoriesmodels</span><span class="p">.</span><span class="nx">ArkIdentityListDirectoriesEntities</span><span class="p">{})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">loadedIdentity</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">identitiesChan</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Identity: %v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loadedIdentity</span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
