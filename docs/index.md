@@ -23,4 +23,4 @@ Ark SDK, an API first library, is used to automate different sets of operations 
 
 This project is licensed under Apache License 2.0 - see [`LICENSE`](./license.md) for more details
 
-Copyright (c) 2023 CyberArk Software Ltd. All rights reserved.
+Copyright (c) 2025 CyberArk Software Ltd. All rights reserved.
