@@ -34,7 +34,6 @@ nav:
       - Authenticators: sdk/authenticators.md
       - Services: sdk/services.md
       - Schemas: sdk/schemas.md
-      - Async requests: sdk/async_requests.md
       - Pagination: sdk/pagination.md
 theme:
   name: material
