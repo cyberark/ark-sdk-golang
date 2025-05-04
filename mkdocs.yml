@@ -30,6 +30,12 @@ nav:
       - Exec: commands/exec.md
       - Profiles: commands/profiles.md
       - Cache: commands/cache.md
+  - SDK overview:
+      - Authenticators: sdk/authenticators.md
+      - Services: sdk/services.md
+      - Schemas: sdk/schemas.md
+      - Async requests: sdk/async_requests.md
+      - Pagination: sdk/pagination.md
 theme:
   name: material
   custom_dir: docs/overrides

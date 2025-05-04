@@ -3,16 +3,16 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
-	"github.com/octago/sflags"
-	"github.com/octago/sflags/gen/gpflag"
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"github.com/cyberark/ark-sdk-golang/pkg/cli"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions/services"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/mitchellh/mapstructure"
+	"github.com/octago/sflags"
+	"github.com/octago/sflags/gen/gpflag"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"reflect"
 	"slices"
 	"strings"
@@ -350,7 +350,13 @@ func (s *ArkServiceExecAction) RunExecAction(api *cli.ArkCLIAPI, cmd *cobra.Comm
 	if err != nil {
 		return err
 	}
-	service := serviceMethod.Call(nil)[0]
+	serviceErr := serviceMethod.Call(nil)
+	service := serviceErr[0]
+	if len(serviceErr) > 1 {
+		if err, ok := serviceErr[1].Interface().(error); ok && err != nil {
+			return err
+		}
+	}
 	actionMethod, err := s.findMethodByName(reflect.ValueOf(service.Interface()), actionNameTitled)
 	if err != nil {
 		return err

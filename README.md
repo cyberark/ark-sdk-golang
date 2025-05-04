@@ -39,6 +39,9 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] Connector Manager Service
   - [x] PCloud Accounts Service
   - [x] PCloud Safes Service
+  - [x] Identity Directories Service
+  - [x] Identity Roles Service
+  - [x] Identity Users Service
 - [x] Filesystem Inputs and Outputs for the CLI
 - [x] Silent and Verbose logging
 - [x] Profile Management and Authentication Caching
@@ -184,6 +187,10 @@ The following services and commands are supported:
 - <b>pcloud</b> - PCloud Service
   - <b>accounts</b> - PCloud Accounts Management
   - <b>safes</b> - PCloud Safes Management
+- <b>identity</b> - Identity Service
+  - <b>directories</b> - Identity Directories Management
+  - <b>roles</b> - Identity Roles Management
+  - <b>users</b> - Identity Users Management
 
 Any command has its own subcommands, with respective arguments
 
@@ -225,6 +232,21 @@ ark exec pcloud accounts add-account --name account --safe-name safe --platform-
 Retrieve a PCloud Account Credentials
 ```shell
 ark exec pcloud accounts get-account-credentials --account-id 11_1
+```
+
+Create an Identity User
+```shell
+ark exec identity users create-user --roles "DpaAdmin" --username "myuser"
+```
+
+Create an Identity Role
+```shell
+ark exec identity roles create-role --role-name myrole
+```
+
+List all directories identities
+```shell
+ark exec identity directories list-directories-entities
 ```
 
 You can view all of the commands via the --help for each respective exec action

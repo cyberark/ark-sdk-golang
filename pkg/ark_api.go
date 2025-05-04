@@ -7,6 +7,9 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/cmgr"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/users"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/accounts"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/safes"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
@@ -183,4 +186,46 @@ func (api *ArkAPI) PCloudAccounts() (*accounts.ArkPCloudAccountsService, error) 
 	var pcloudAccountsBaseService services.ArkService = pcloudAccountsService
 	api.services[accounts.PCloudAccountsServiceConfig.ServiceName] = &pcloudAccountsBaseService
 	return pcloudAccountsService, nil
+}
+
+// IdentityDirectories returns the IdentityDirectories service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) IdentityDirectories() (*directories.ArkIdentityDirectoriesService, error) {
+	if directoriesServiceInterface, ok := api.services[directories.IdentityDirectoriesServiceConfig.ServiceName]; ok {
+		return (*directoriesServiceInterface).(*directories.ArkIdentityDirectoriesService), nil
+	}
+	directoriesService, err := directories.NewArkIdentityDirectoriesService(api.loadServiceAuthenticators(directories.IdentityDirectoriesServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var directoriesBaseService services.ArkService = directoriesService
+	api.services[directories.IdentityDirectoriesServiceConfig.ServiceName] = &directoriesBaseService
+	return directoriesService, nil
+}
+
+// IdentityRoles returns the IdentityRoles service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) IdentityRoles() (*roles.ArkIdentityRolesService, error) {
+	if rolesServiceInterface, ok := api.services[roles.IdentityRolesServiceConfig.ServiceName]; ok {
+		return (*rolesServiceInterface).(*roles.ArkIdentityRolesService), nil
+	}
+	rolesService, err := roles.NewArkIdentityRolesService(api.loadServiceAuthenticators(roles.IdentityRolesServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var rolesBaseService services.ArkService = rolesService
+	api.services[roles.IdentityRolesServiceConfig.ServiceName] = &rolesBaseService
+	return rolesService, nil
+}
+
+// IdentityUsers returns the IdentityUsers service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) IdentityUsers() (*users.ArkIdentityUsersService, error) {
+	if usersServiceInterface, ok := api.services[users.IdentityUsersServiceConfig.ServiceName]; ok {
+		return (*usersServiceInterface).(*users.ArkIdentityUsersService), nil
+	}
+	usersService, err := users.NewArkIdentityUsersService(api.loadServiceAuthenticators(users.IdentityUsersServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var usersBaseService services.ArkService = usersService
+	api.services[users.IdentityUsersServiceConfig.ServiceName] = &usersBaseService
+	return usersService, nil
 }

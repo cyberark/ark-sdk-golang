@@ -37,7 +37,7 @@ func main() {
 		panic(err)
 	}
 	testReachabilityResponse, err := siaAPI.Access().TestConnectorReachability(
-		&accessmodels.ArkSiaTestConnectorReachability{
+		&accessmodels.ArkSIATestConnectorReachability{
 			ConnectorID:           "CMSConnector",
 			TargetHostname:        "google.com",
 			TargetPort:            443,

@@ -69,7 +69,7 @@ func (a *ArkISPAuth) performIdentityAuthentication(profile *models.ArkProfile, a
 	if tokenLifetime == 0 {
 		tokenLifetime = DefaultTokenLifetime
 	}
-	marshaledCookies, err := identityAuth.Session().MarshalCookies()
+	marshaledCookies, err := common.MarshalCookies(identityAuth.Session().GetCookieJar())
 	if err != nil {
 		a.Logger.Error("Failed to marshal cookies: %v", err)
 		return nil, err
@@ -116,7 +116,7 @@ func (a *ArkISPAuth) performIdentityRefreshAuthentication(profile *models.ArkPro
 	if tokenLifetime == 0 {
 		tokenLifetime = DefaultTokenLifetime
 	}
-	marshaledCookies, err := identityAuth.Session().MarshalCookies()
+	marshaledCookies, err := common.MarshalCookies(identityAuth.Session().GetCookieJar())
 	if err != nil {
 		a.Logger.Error("Failed to marshal cookies: %v", err)
 		return nil, err
@@ -162,7 +162,7 @@ func (a *ArkISPAuth) performIdentityServiceUserAuthentication(profile *models.Ar
 		return nil, err
 	}
 	env := commonmodels.GetDeployEnv()
-	marshaledCookies, err := identityAuth.Session().MarshalCookies()
+	marshaledCookies, err := common.MarshalCookies(identityAuth.Session().GetCookieJar())
 	if err != nil {
 		a.Logger.Error("Failed to marshal cookies: %v", err)
 		return nil, err

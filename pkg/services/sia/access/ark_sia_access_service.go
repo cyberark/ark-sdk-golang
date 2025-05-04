@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/connections"
@@ -16,6 +15,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/connections/connectiondata"
 	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"strings"
@@ -308,7 +308,8 @@ func (s *ArkSIAAccessService) uninstallConnectorOnMachine(
 	return nil
 }
 
-func (s *ArkSIAAccessService) TestConnectorReachability(testReachabilityRequest *accessmodels.ArkSiaTestConnectorReachability) (*accessmodels.ArkSiaReachabilityTestResponse, error) {
+// TestConnectorReachability tests the reachability of a connector.
+func (s *ArkSIAAccessService) TestConnectorReachability(testReachabilityRequest *accessmodels.ArkSIATestConnectorReachability) (*accessmodels.ArkSIAReachabilityTestResponse, error) {
 	s.Logger.Info("Starting connector reachability test. ConnectorID: %s", testReachabilityRequest.ConnectorID)
 	var testReachabilityRequestJSON = map[string]interface{}{
 		"targets": []map[string]interface{}{
@@ -337,7 +338,7 @@ func (s *ArkSIAAccessService) TestConnectorReachability(testReachabilityRequest 
 	if err != nil {
 		return nil, err
 	}
-	var testResponse accessmodels.ArkSiaReachabilityTestResponse
+	var testResponse accessmodels.ArkSIAReachabilityTestResponse
 	err = mapstructure.Decode(reachabilityTestResponseJSON, &testResponse)
 	if err != nil {
 		return nil, err
