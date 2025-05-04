@@ -23,7 +23,7 @@ The following SIA commands are supported:
 - `ark exec pcloud`: Root command for PCloud service
     - `accounts` - Accounts management
     - `safes` - Safes management
-- `ark execd identity`: Root command for the Identity service
+- `ark exec identity`: Root command for the Identity service
     - `directories` - Directories management
     - `users` - Users management
     - `roles` - Roles management

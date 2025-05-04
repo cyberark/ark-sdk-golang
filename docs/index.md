@@ -5,12 +5,12 @@ description: Ark SDK Homepage
 
 # Ark SDK
 
-![Ark SDK Python](./media/sdk.png){: style="height:80%;width:70%"}
+![Ark SDK Golang](./media/sdk.png){: style="height:80%;width:70%"}
 
-The official Python SDK and CLI for CyberArk's Identity Security Platform Services.
+The official Golang SDK and CLI for CyberArk's Identity Security Platform Services.
 
 ## Motivation
-Ark SDK, an API first library, is used to automate different sets of operations in order to ease day to day development. Ark provides a CLI for general purpose automation as well as a Python SDK for code integration.
+Ark SDK, an API first library, is used to automate different sets of operations in order to ease day to day development. Ark provides a CLI for general purpose automation as well as a Golang SDK for code integration.
 
 
 ## TL;DR
