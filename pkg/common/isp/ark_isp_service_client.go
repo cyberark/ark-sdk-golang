@@ -4,10 +4,11 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
+	"github.com/golang-jwt/jwt/v5"
+	cookiejar "github.com/juju/persistent-cookiejar"
 	"net/url"
 	"os"
 	"strings"
@@ -29,6 +30,7 @@ func NewArkISPServiceClient(
 	authHeaderName string,
 	separator string,
 	basePath string,
+	cookieJar *cookiejar.Jar,
 	refreshConnectionCallback func(*common.ArkClient) error,
 ) (*ArkISPServiceClient, error) {
 	if tenantEnv == "" {
@@ -45,11 +47,16 @@ func NewArkISPServiceClient(
 	if basePath != "" {
 		serviceURL = fmt.Sprintf("%s/%s", serviceURL, basePath)
 	}
-
-	client := common.NewArkClient(serviceURL, token, "Bearer", authHeaderName, refreshConnectionCallback)
-	client.SetHeader("Origin", serviceURL)
-	client.SetHeader("Referer", serviceURL)
+	parsedURL, err := url.Parse(serviceURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse service URL: %w", err)
+	}
+	client := common.NewArkClient(serviceURL, token, "Bearer", authHeaderName, cookieJar, refreshConnectionCallback)
+	client.SetHeader("Origin", fmt.Sprintf("%s://%s", parsedURL.Scheme, parsedURL.Host))
+	client.SetHeader("Referer", fmt.Sprintf("%s://%s", parsedURL.Scheme, parsedURL.Host))
 	client.SetHeader("Content-Type", "application/json")
+	client.SetHeader("Accept", "*/*")
+	client.SetHeader("Connection", "keep-alive")
 
 	return &ArkISPServiceClient{
 		ArkClient: client,
@@ -189,14 +196,15 @@ func FromISPAuth(ispAuth *auth.ArkISPAuth, serviceName string, separator string,
 			tenantEnv = commonmodels.Prod
 		}
 	}
-
-	cookieJar := make(map[string]string)
+	cookieJar, _ := cookiejar.New(nil)
 	if cookies, ok := ispAuth.Token.Metadata["cookies"]; ok {
 		decoded, _ := base64.StdEncoding.DecodeString(cookies.(string))
-		_ = json.Unmarshal(decoded, &cookieJar)
+		err := common.UnmarshalCookies(decoded, cookieJar)
+		if err != nil {
+			return nil, err
+		}
 	}
-
-	return NewArkISPServiceClient(serviceName, "", baseTenantURL, tenantEnv, ispAuth.Token.Token, "Authorization", separator, basePath, refreshConnectionCallback)
+	return NewArkISPServiceClient(serviceName, "", baseTenantURL, tenantEnv, ispAuth.Token.Token, "Authorization", separator, basePath, cookieJar, refreshConnectionCallback)
 }
 
 // RefreshClient refreshes the ArkISPServiceClient with the latest authentication token and cookies.

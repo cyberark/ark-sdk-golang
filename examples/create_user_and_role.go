@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
+	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/roles"
+	usersmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/users"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity"
 	"os"
 )
 
@@ -31,21 +32,19 @@ func main() {
 		panic(err)
 	}
 
-	// Install a connector on the pool above
-	siaAPI, err := sia.NewArkSIAAPI(ispAuth.(*auth.ArkISPAuth))
+	// Add role and user
+	identityAPI, err := identity.NewArkIdentityAPI(ispAuth.(*auth.ArkISPAuth))
 	if err != nil {
 		panic(err)
 	}
-	testReachabilityResponse, err := siaAPI.Access().TestConnectorReachability(
-		&accessmodels.ArkSIATestConnectorReachability{
-			ConnectorID:           "CMSConnector",
-			TargetHostname:        "google.com",
-			TargetPort:            443,
-			CheckBackendEndpoints: true,
-		},
-	)
+	role, err := identityAPI.Roles().CreateRole(&rolesmodels.ArkIdentityCreateRole{RoleName: "myrole"})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Reachability response: %v\n", testReachabilityResponse)
+	user, err := identityAPI.Users().CreateUser(&usersmodels.ArkIdentityCreateUser{Username: "myuser", Roles: []string{role.RoleName}})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("User: %v\n", user)
+	fmt.Printf("Role: %v\n", role)
 }

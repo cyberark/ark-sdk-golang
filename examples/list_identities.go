@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
+	directoriesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/directories"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity"
 	"os"
 )
 
@@ -31,21 +31,16 @@ func main() {
 		panic(err)
 	}
 
-	// Install a connector on the pool above
-	siaAPI, err := sia.NewArkSIAAPI(ispAuth.(*auth.ArkISPAuth))
+	// List all identities
+	identityAPI, err := identity.NewArkIdentityAPI(ispAuth.(*auth.ArkISPAuth))
 	if err != nil {
 		panic(err)
 	}
-	testReachabilityResponse, err := siaAPI.Access().TestConnectorReachability(
-		&accessmodels.ArkSIATestConnectorReachability{
-			ConnectorID:           "CMSConnector",
-			TargetHostname:        "google.com",
-			TargetPort:            443,
-			CheckBackendEndpoints: true,
-		},
-	)
+	identitiesChan, err := identityAPI.Directories().ListDirectoriesEntities(&directoriesmodels.ArkIdentityListDirectoriesEntities{})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Reachability response: %v\n", testReachabilityResponse)
+	for loadedIdentity := range identitiesChan {
+		fmt.Printf("Identity: %v\n", loadedIdentity)
+	}
 }

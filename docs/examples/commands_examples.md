@@ -114,3 +114,18 @@ ark exec pcloud accounts add-account --name account --safe-name safe --platform-
 ```shell
 ark exec pcloud accounts get-account-credentials --account-id 11_1
 ```
+
+### Create an Identity User
+```shell
+ark exec identity users create-user --roles "DpaAdmin" --username "myuser"
+```
+
+### Create an Identity Role
+```shell
+ark exec identity roles create-role --role-name myrole
+```
+
+### List all directories identities
+```shell
+ark exec identity directories list-directories-entities
+```
