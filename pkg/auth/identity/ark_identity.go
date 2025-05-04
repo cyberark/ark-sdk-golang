@@ -35,6 +35,7 @@ const (
 
 var factors = map[string]string{
 	"otp":   "📲 Push / Code",
+	"oath":  "📲 Push / Code",
 	"sms":   "📟 SMS",
 	"email": "📧 Email",
 	"pf":    "📞 Phone call",
@@ -49,7 +50,7 @@ type lastStartAuthResponse struct {
 
 var lastStartAuthResponses = make(map[string]*lastStartAuthResponse)
 
-var supportedIdentityMechanisms = []string{"pf", "sms", "email", "otp", "up"}
+var supportedIdentityMechanisms = []string{"pf", "sms", "email", "otp", "oath", "up"}
 
 // ArkIdentity is a struct that represents an identity authentication session.
 type ArkIdentity struct {
