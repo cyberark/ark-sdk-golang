@@ -14,10 +14,10 @@ package main
 
 import (
 	"fmt"
-	"github.cyberng.com/pas/ark-sdk-golang/pkg/auth"
-	authmodels "github.cyberng.com/pas/ark-sdk-golang/pkg/models/auth"
-	cmgrmodels "github.cyberng.com/pas/ark-sdk-golang/pkg/models/services/cmgr"
-	"github.cyberng.com/pas/ark-sdk-golang/pkg/services/cmgr"
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
+	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/cmgr"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/cmgr"
 	"os"
 )
 
