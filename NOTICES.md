@@ -1,3 +1,5 @@
+Copyright (c) 2025 CyberArk Software Ltd. All rights reserved
+
 # TABLE OF CONTENTS
 
 The following is a listing of the ark-sdk-golang open source components detailed
@@ -6,25 +8,25 @@ further if you wish to review the copyright notice(s) and the full text
 of the license associated with each component.
 
 - [SECTION 1: Apache / Apache-2.0](<SECTION-1:-Apache-/-Apache-2.0>)
-  - https://github.com/EDDYCJY/fake-useragent - [Fake-useragent](#Fake-useragent)
-  - https://github.com/confluentinc/go-editor - [Go-editor](#Go-editor)
-  - https://github.com/spf13/cobra - [Cobra](#Cobra)
-  - https://github.com/masterzen/winrm - [Winrm](#Winrm)
+   - https://github.com/EDDYCJY/fake-useragent - [Fake-useragent](#Fake-useragent)
+   - https://github.com/confluentinc/go-editor - [Go-editor](#Go-editor)
+   - https://github.com/spf13/cobra - [Cobra](#Cobra)
+   - https://github.com/masterzen/winrm - [Winrm](#Winrm)
 
 - [SECTION 2: BSD-3-Clause](<SECTION 3: BSD-3-Clause>)
-  - https://github.com/octago/sflags - [Sflags](#Sflags)
-  - https://github.com/spf13/pflag - [Pflag](#Pflag)
-  - https://github.com/google/uuid - [Uuid](#Uuid)
-  - https://github.com/juju/persistent-cookiejar - [Persistent-cookiejar](#Persistent-cookiejar)
+   - https://github.com/octago/sflags - [Sflags](#Sflags)
+   - https://github.com/spf13/pflag - [Pflag](#Pflag)
+   - https://github.com/google/uuid - [Uuid](#Uuid)
+   - https://github.com/juju/persistent-cookiejar - [Persistent-cookiejar](#Persistent-cookiejar)
 
 - [SECTION 3: MIT](<SECTION 4: MIT>)
-  - https://github.com/Iilun/survey - [Survey](#Survey)
-  - https://github.com/fatih/color - [Color](#Color)
-  - https://github.com/golang-jwt/jwt - [Golang-jwt](#Golang-jwt)
-  - https://github.com/mitchellh/mapstructure - [Mapstructure](#Mapstructure)
-  - https://github.com/spf13/viper - [Viper](#Viper)
-  - https://github.com/toqueteos/webbrowser - [Webbrowser](#Webbrowser)
-  - https://github.com/iancoleman/strcase - [Strcase](#Strcase)
+   - https://github.com/Iilun/survey - [Survey](#Survey)
+   - https://github.com/fatih/color - [Color](#Color)
+   - https://github.com/golang-jwt/jwt - [Golang-jwt](#Golang-jwt)
+   - https://github.com/mitchellh/mapstructure - [Mapstructure](#Mapstructure)
+   - https://github.com/spf13/viper - [Viper](#Viper)
+   - https://github.com/toqueteos/webbrowser - [Webbrowser](#Webbrowser)
+   - https://github.com/iancoleman/strcase - [Strcase](#Strcase)
 
 
 # SECTION 1: Apache / Apache-2.0
@@ -917,7 +919,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-## Pflags
+## Pflag
 
 https://github.com/spf13/pflag
 
@@ -1124,39 +1126,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-## Mapstructure
-
-https://github.com/mitchellh/mapstructure
-
-### Authors / Copyright
-
-- Copyright (c) 2013 Mitchell Hashimoto
-
-### License
-
-The MIT License (MIT)
-
-Copyright (c) 2013 Mitchell Hashimoto
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
 
 
 ## Mapstructure
