@@ -8,7 +8,7 @@ This document outlines security procedures and general policies for the CyberArk
 
 ## Reporting a Bug
 
-The CyberArk ark-sdk-golang team and community take all security bugs in the CyberArk ark-sdk-python suite seriously.
+The CyberArk ark-sdk-golang team and community take all security bugs in the CyberArk ark-sdk-golang suite seriously.
 Thank you for improving the security of the CyberArk ark-sdk-golang suite. We appreciate your efforts and
 responsible disclosure and will make every effort to acknowledge your
 contributions.

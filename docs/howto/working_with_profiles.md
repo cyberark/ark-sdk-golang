@@ -12,8 +12,8 @@ Profiles are stored as JSON files in the `$HOME/.ark_profiles` folder.
 
 !!! note
 
-    When There are multiple profiles configured, if profile is not specified explicitly in the command via<br>
-    **--profile-name** or **ARK_PROFILE** environment variable not set, the default profile called **"ark"** will be used.
+    When there are multiple profiles configured but a profile is not specified in the command (via  
+    `--profile-name`) or with the `ARK_PROFILE` environment variable, the default `ark` profile is used.
 
 
 Here is an example profile file:

@@ -4,9 +4,11 @@ description: SDK Examples
 ---
 
 # SDK Examples
-Using the SDK is similar to using the CLI
+Using the SDK is similar to using the CLI.
 
-## Short lived password example
+## Short-lived password example
+
+In this example we authenticate to our ISP tenant and create a short-lived password:
 
 ```go
 package main
@@ -59,9 +61,9 @@ func main() {
 }
 ```
 
-In the above example we authenticate to our ISP tenant and create a short lived password
-
 ## Target set example
+
+In this example we authenticate to our ISP tenant and create a target set with a VM secret:
 
 ```go
 package main
@@ -129,9 +131,9 @@ func main() {
 }
 ```
 
-In the above example we authenticate to our ISP tenant and create a target set with a VM secret
-
 ## CMGR example
+
+In this example we authenticate to our ISP tenant and create a network, pool, and identifier:
 
 ```go
 package main
@@ -190,9 +192,9 @@ func main() {
 }
 ```
 
-In the above example we authenticate to our ISP tenant and create a network, pool and identifier
+## List pCloud Accounts
 
-## List PCloud Accounts
+In this example we authenticate to our ISP tenant and list pCloud accounts:
 
 ```go
 package main
@@ -244,7 +246,9 @@ func main() {
 }
 ```
 
-## List Identities
+## List identities
+
+In this example we authenticate to our ISP tenant and list all of the accounts:
 
 ```go
 package main
@@ -295,4 +299,3 @@ func main() {
 }
 ```
 
-In the above example we authenticate to our ISP tenant and list all of the accounts

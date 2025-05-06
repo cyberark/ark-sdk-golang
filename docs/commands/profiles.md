@@ -5,7 +5,7 @@ description: Profiles Command
 
 # Profiles
 
-Use the `profiles` command to manage multiple users and tenants. You can create, copy, modify, and delete profiles for different users and tenant, and to list all existing profiles.
+Use the `profiles` command to manage multiple users and tenants, and list all existing profiles. You can create, copy, modify, and delete profiles for different users and tenant.
 
 ## Running
 ```shell linenums="0"

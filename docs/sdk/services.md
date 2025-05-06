@@ -66,35 +66,38 @@ func main() {
 }
 ```
 
-The above example authenticates to the specified ISP tenant, initializes a CMGR service using the authorized authenticator, and then uses the service to add a network / pool.
+The above example authenticates to the specified ISP tenant, initializes a CMGR service using the authorized authenticator, and then uses the service to add a network and pool.
 
 ## Secure Infrastructure Access service
 
 The Secure Infrastructure Access (sia) service requires the ArkISPAuth authenticator, and exposes these service classes:
 
-- <b>ArkSIAAccessService (access)</b> - SIA access service
-- <b>ArkSIAK8SService (kubernetes)</b> - SIA end-user Kubernetes service
-- <b>ArkSIASecretsService (secrets)</b> - SIA secrets management
-    - <b>ArkSIAVMSecretsService (vm)</b> - SIA VM secrets services
-- <b>ArkSIASSOService (sso)</b> - SIA end-user SSO service
-- <b>ArkSIADatabasesService (databases)</b> - SIA end-user databases service
-- <b>ArkSIAWorkspacesService (workspaces)</b> - SIA workspaces management
-    - <b>ArkSIATargetSetsWorkspaceService (db)</b> - SIA Target Sets workspace management
+- **ArkSIAAccessService** (access) - SIA access service
+- **ArkSIAK8SService** (Kubernetes) - SIA end-user Kubernetes service
+- **ArkSIASecretsService** (secrets) - SIA secrets management
+    - **ArkSIAVMSecretsService** (VM) - SIA VM secrets services
+- **ArkSIASSOService** (SSP) - SIA end-user SSO service
+- **ArkSIADatabasesService** (databases) - SIA end-user databases service
+- **ArkSIAWorkspacesService** (workspaces) - SIA workspaces management
+    - **ArkSIATargetSetsWorkspaceService** (db) - SIA Target Sets workspace management
 
 
 ## Identity service
-The Identity (identity) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkIdentityRolesService - Identity roles service
-- <b>ArkIdentityUsersService - Identity users service
-- <b>ArkIdentityDirectoriesService - Identity directories service
+The Identity (identity) service requires the ArkISPAuth authenticator, and exposes those service classes:
+
+- **ArkIdentityRolesService** - Identity roles service
+- **ArkIdentityUsersService** - Identity users service
+- **ArkIdentityDirectoriesService** - Identity directories service
 
 
 ## Privilege Cloud service
-The Privilege Cloud (pcloud) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkPCloudAccountsService</b> - Accounts management service
-- <b>ArkPCloudSafesService</b> - Safes management service
+The Privilege Cloud (pCloud) service requires the ArkISPAuth authenticator, and exposes those service classes:
+
+- **ArkPCloudAccountsService** - Accounts management service
+- **ArkPCloudSafesService** - Safes management service
 
 
 ## Connector Manager Service
-The Connector Manager (cmgr) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkCmgrService</b> - Connector Manager service
+The Connector Manager (cmgr) service requires the ArkISPAuth authenticator, and exposes those service classes:
+
+- **ArkCmgrService** - Connector Manager service

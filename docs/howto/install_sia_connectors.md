@@ -4,13 +4,13 @@ description: Install SIA connectors
 ---
 
 # Install SIA connectors
-Here is an example workflow for installing a connector on a linux / windows box:
+Here is an example workflow for installing a connector on a linux or windows box:
 
 1. Install Ark SDK with your artifactory credentials:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```
-   Make sure that the PATH environment variable points to the go binary path, for example
+   Make sure that the PATH environment variable points to the Go binary. For example:
    ```shell linenums="0"
    export PATH=$PATH:$(go env GOPATH)/bin
    ```

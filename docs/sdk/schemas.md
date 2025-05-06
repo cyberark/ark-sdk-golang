@@ -5,9 +5,9 @@ description: Schemas
 
 # Schemas
 
-Ark SDK is entirely based on schemas constructed from standard Golang structs, along with tagging of "json" and "mapstructure" for serialization.
+Ark SDK is entirely based on schemas constructed from standard Golang structs, along with the tagging of `json` and `mapstructure` values for serialization.
 
-All `exec` actions in the Ark SDK receive a model parsed from the CLI or from the SDK in code and, some of them, return a model or set of models.
+All `exec` actions in the Ark SDK receive a model parsed from the CLI or SDK in code and, some of them, return a model or set of models.
 
 ## Example
 
@@ -23,7 +23,7 @@ secret, err := siaAPI.VMSecrets().AddSecret(
 )
 ```
 
-The above example creates a VM secret service and calls `AddSecret()` to add a new VM secret. and the relevant add secret schema is passed. finally, a result schema for a secret is returned:
+The above example creates a VM secret service and calls `AddSecret()` to add a new VM secret. The add secret schema is passed, and a result schema for the secret is returned:
 
 ```go
 // ArkSIAVMSecret represents a secret in the Ark SIA VM.
@@ -41,4 +41,4 @@ type ArkSIAVMSecret struct {
 }
 ```
 
-All models can be found [here](https://github.com/cyberark/ark-sdk-golang/tree/main/ark_sdk_golang/pkg/models) and are separated to folders based on topic, from auth to services
+All models can be found [here](https://github.com/cyberark/ark-sdk-golang/tree/main/pkg/models), and are separated into folders according to type.

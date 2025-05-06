@@ -1,4 +1,4 @@
-![Ark SDK Python](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/sdk.png)
+![Ark SDK Golang](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/sdk.png)
 
 <p align="center">
     <a href="https://actions-badge.atrox.dev/cyberark/ark-sdk-golang/goto?ref=main" alt="Build">

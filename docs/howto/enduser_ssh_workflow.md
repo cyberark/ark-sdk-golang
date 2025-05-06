@@ -3,14 +3,14 @@ title: End-user ssh workflow
 description: End-user ssh Workflow
 ---
 
-# End-user ssh Workflow
-Here is an example workflow for connecting to a linux box using ssh:
+# End-user SSH workflow
+Here is an example workflow for connecting to a linux box using SSH:
 
 1. Install Ark SDK with your artifactory credentials:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```
-   Make sure that the PATH environment variable points to the go binary path, for example
+   Make sure that the PATH environment variable points to the Go binary. For example:
    ```shell linenums="0"
    export PATH=$PATH:$(go env GOPATH)/bin
    ```

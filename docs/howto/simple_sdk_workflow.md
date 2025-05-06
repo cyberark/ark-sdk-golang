@@ -4,11 +4,9 @@ description: Simple SDK Workflow
 ---
 
 # Simple SDK Workflow
-Let's say we want to generate a short lived password for SIA connection
+Here's an example tha shows how to generate a short-lived password for an SIA connection.
 
-The following example shows how to do that using the SDK
-
-## Short lived password example
+## Short-lived password example code
 ```go
 package main
 
@@ -23,8 +21,8 @@ import (
 
 func main() {
 	// Perform authentication using ArkISPAuth to the platform
-	// First, create an ISP authentication class
-	// Afterwards, perform the authentication
+	// Firstly, create an ISP authentication class
+	// Secondly, perform the authentication
 	ispAuth := auth.NewArkISPAuth(false)
 	_, err := ispAuth.Authenticate(
 		nil,
@@ -60,10 +58,13 @@ func main() {
 }
 ```
 
-We first start by importing the required packages. The `auth` package is used to authenticate to the platform, and the `sso` package is used to generate a short-lived password.
+## Code description
 
-We then create an instance of `ArkISPAuth` and call the `Authenticate` method to authenticate to the platform. The `Authenticate` method takes in the username, authentication method and relevant authentication method settings, and password as parameters.
+The code example does this:
 
-Once we have authenticated, we create an instance of `ArkSIASSOService` using the `ispAuth` instance. This service is used to generate a short-lived password.
-
-Finally, we call the `ShortLivedPassword` method on the `ssoService` instance to generate a short-lived password. The generated password is then printed to the console.
+1. Imports the required packages:
+    * the `authmodels` package is used to authenticate to the platform
+	* the `ssomodels` package is used to generate a short-lived password.
+1. Creates an instance of `ArkISPAuth`, which calls the `Authenticate` method to authenticate to the platform. The `Authenticate` method takes these parameters: username, authentication method, authentication method settings, and password.
+1. Creates an instance of `ArkSIASSOService` using the `ispAuth` authentication instance. The instance is named `ssoService`, and it is used to generate a short-lived password.
+1. Calls `ssoService` instance's `ShortLivedPassword` method to created a short-lived password, which is printed in the console.

@@ -5,7 +5,7 @@ description: Exec Command
 
 # Exec
 
-You use the `exec` command is used to run commands on available services (the available services depend on the authorized user's account).
+Use the `exec` command to run commands on available services (the available services depend on the authorized user's account).
 
 ## SIA services
 
