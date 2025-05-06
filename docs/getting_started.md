@@ -7,7 +7,7 @@ description: Getting started
 
 ## Installation
 
-You can install the SDK via go modules with your artifactory credentials using the following command:
+You can install the SDK via go modules using the following command:
 ```shell linenums="0"
 go install github.com/cyberark/ark-sdk-golang
 ```

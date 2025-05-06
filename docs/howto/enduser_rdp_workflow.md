@@ -6,7 +6,7 @@ description: End-user rdp Workflow
 # End-user RDP workflow
 Here is an example workflow for connecting to a windows box using rdp:
 
-1. Install Ark SDK with your artifactory credentials:
+1. Install Ark SDK:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```

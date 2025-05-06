@@ -7,7 +7,7 @@ description: End-user Kubernetes Workflow
 
 To securely access a Kubernetes cluster, do the following:
 
-1. Install Ark SDK with your artifactory credentials:
+1. Install Ark SDK:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```

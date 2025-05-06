@@ -58,7 +58,7 @@ TL;DR
 Installation
 ============
 
-One can install the SDK via the community pypi with the following command:
+One can install the SDK via the following command:
 ```shell
 go install github.com/cyberark/ark-sdk-golang
 ```

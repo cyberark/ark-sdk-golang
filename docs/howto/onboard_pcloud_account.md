@@ -6,7 +6,7 @@ description: Onboard pCloud Account
 # Onboard pCloud Account
 Here is an example workflow for onboarding a pCloud safe and creating a Safe:
 
-1. Install Ark SDK with your artifactory credentials:
+1. Install Ark SDK:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```
