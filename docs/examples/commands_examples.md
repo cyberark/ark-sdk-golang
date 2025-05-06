@@ -28,7 +28,7 @@ ark configure --profile-name="PROD" --work-with-isp --isp-username="tina@cyberar
 
 The login command can work in interactive or silent mode. Here's an example of a silent login with the profile configured in the example above:
 ```bash linenums="0"
-ark login -s --isp-secret=CoolPasswordß -profile-name PROD
+ark login -s --isp-secret=CoolPasswordß --profile-name PROD
 ```
 
 ## Exec command examples
