@@ -76,7 +76,8 @@ The Secure Infrastructure Access (sia) service requires the ArkISPAuth authentic
 - **ArkSIAK8SService** (Kubernetes) - SIA end-user Kubernetes service
 - **ArkSIASecretsService** (secrets) - SIA secrets management
     - **ArkSIAVMSecretsService** (VM) - SIA VM secrets services
-- **ArkSIASSOService** (SSP) - SIA end-user SSO service
+    - **ArkSIADBSecretsService** (DB) - SIA DB secrets services
+- **ArkSIASSOService** (SSO) - SIA end-user SSO service
 - **ArkSIADatabasesService** (databases) - SIA end-user databases service
 - **ArkSIAWorkspacesService** (workspaces) - SIA workspaces management
     - **ArkSIATargetSetsWorkspaceService** (db) - SIA Target Sets workspace management

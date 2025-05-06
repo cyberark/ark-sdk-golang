@@ -105,7 +105,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	secret, err := siaAPI.VMSecrets().AddSecret(
+	secret, err := siaAPI.SecretsVM().AddSecret(
 		&vmsecretsmodels.ArkSIAVMAddSecret{
 			SecretType:          "ProvisionerUser",
 			ProvisionerUsername: "CoolUser",
@@ -116,7 +116,7 @@ func main() {
 		panic(err)
 	}
 	// Add VM target set
-	targetSet, err := siaAPI.TargetSets().AddTargetSet(
+	targetSet, err := siaAPI.WorkspacesTargetSets().AddTargetSet(
 		&targetsetsmodels.ArkSIAAddTargetSet{
 			Name:       "mydomain.com",
 			Type:       "Domain",

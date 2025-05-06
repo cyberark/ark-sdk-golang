@@ -14,6 +14,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/safes"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
+	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
 	siasso "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
@@ -104,8 +105,8 @@ func (api *ArkAPI) SiaK8s() (*siak8s.ArkSIAK8SService, error) {
 	return k8sService, nil
 }
 
-// SiaTargetSets returns the SiaTargetSets service from the ArkAPI instance. If the service is not already created, it creates a new one.
-func (api *ArkAPI) SiaTargetSets() (*siatargetsets.ArkSIATargetSetsWorkspaceService, error) {
+// SiaWorkspacesTargetSets returns the SiaWorkspacesTargetSets service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIATargetSetsWorkspaceService, error) {
 	if targetSetsServiceInterface, ok := api.services[siatargetsets.SIATargetSetsWorkspaceServiceConfig.ServiceName]; ok {
 		return (*targetSetsServiceInterface).(*siatargetsets.ArkSIATargetSetsWorkspaceService), nil
 	}
@@ -130,6 +131,20 @@ func (api *ArkAPI) SiaSecretsVM() (*siasecretsvm.ArkSIASecretsVMService, error) 
 	var secretsVMBaseService services.ArkService = secretsVMService
 	api.services[siasecretsvm.SIASecretsVMServiceConfig.ServiceName] = &secretsVMBaseService
 	return secretsVMService, nil
+}
+
+// SiaSecretsDB returns the SiaSecretsDB service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SiaSecretsDB() (*siasecretsdb.ArkSIASecretsDBService, error) {
+	if secretsDBServiceInterface, ok := api.services[siasecretsdb.SIASecretsDBServiceConfig.ServiceName]; ok {
+		return (*secretsDBServiceInterface).(*siasecretsdb.ArkSIASecretsDBService), nil
+	}
+	secretsDBService, err := siasecretsdb.NewArkSIASecretsDBService(api.loadServiceAuthenticators(siasecretsdb.SIASecretsDBServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var secretsDBBaseService services.ArkService = secretsDBService
+	api.services[siasecretsdb.SIASecretsDBServiceConfig.ServiceName] = &secretsDBBaseService
+	return secretsDBService, nil
 }
 
 // SiaAccess returns the SiaAccess service from the ArkAPI instance. If the service is not already created, it creates a new one.
