@@ -597,7 +597,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -817,7 +817,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#short-lived-password-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Short lived password example
+      Short-lived password example
     </span>
   </a>
   
@@ -844,7 +844,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#list-pcloud-accounts" class="md-nav__link">
     <span class="md-ellipsis">
-      List PCloud Accounts
+      List pCloud Accounts
     </span>
   </a>
   
@@ -853,7 +853,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#list-identities" class="md-nav__link">
     <span class="md-ellipsis">
-      List Identities
+      List identities
     </span>
   </a>
   
@@ -1233,7 +1233,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#short-lived-password-example" class="md-nav__link">
     <span class="md-ellipsis">
-      Short lived password example
+      Short-lived password example
     </span>
   </a>
   
@@ -1260,7 +1260,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#list-pcloud-accounts" class="md-nav__link">
     <span class="md-ellipsis">
-      List PCloud Accounts
+      List pCloud Accounts
     </span>
   </a>
   
@@ -1269,7 +1269,7 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#list-identities" class="md-nav__link">
     <span class="md-ellipsis">
-      List Identities
+      List identities
     </span>
   </a>
   
@@ -1295,8 +1295,9 @@ You're not viewing the latest version.
 
 
 <h1 id="sdk-examples">SDK Examples<a class="headerlink" href="#sdk-examples" title="Permanent link">&para;</a></h1>
-<p>Using the SDK is similar to using the CLI</p>
-<h2 id="short-lived-password-example">Short lived password example<a class="headerlink" href="#short-lived-password-example" title="Permanent link">&para;</a></h2>
+<p>Using the SDK is similar to using the CLI.</p>
+<h2 id="short-lived-password-example">Short-lived password example<a class="headerlink" href="#short-lived-password-example" title="Permanent link">&para;</a></h2>
+<p>In this example we authenticate to our ISP tenant and create a short-lived password:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1393,8 +1394,8 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ssoPassword</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>In the above example we authenticate to our ISP tenant and create a short lived password</p>
 <h2 id="target-set-example">Target set example<a class="headerlink" href="#target-set-example" title="Permanent link">&para;</a></h2>
+<p>In this example we authenticate to our ISP tenant and create a target set with a VM secret:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1496,7 +1497,7 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">VMSecrets</span><span class="p">().</span><span class="nx">AddSecret</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">SecretsVM</span><span class="p">().</span><span class="nx">AddSecret</span><span class="p">(</span>
 <span class="w">        </span><span class="o">&amp;</span><span class="nx">vmsecretsmodels</span><span class="p">.</span><span class="nx">ArkSIAVMAddSecret</span><span class="p">{</span>
 <span class="w">            </span><span class="nx">SecretType</span><span class="p">:</span><span class="w">          </span><span class="s">&quot;ProvisionerUser&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nx">ProvisionerUsername</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CoolUser&quot;</span><span class="p">,</span>
@@ -1507,7 +1508,7 @@ You're not viewing the latest version.
 <span class="w">        </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="c1">// Add VM target set</span>
-<span class="w">    </span><span class="nx">targetSet</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">TargetSets</span><span class="p">().</span><span class="nx">AddTargetSet</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">targetSet</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">WorkspacesTargetSets</span><span class="p">().</span><span class="nx">AddTargetSet</span><span class="p">(</span>
 <span class="w">        </span><span class="o">&amp;</span><span class="nx">targetsetsmodels</span><span class="p">.</span><span class="nx">ArkSIAAddTargetSet</span><span class="p">{</span>
 <span class="w">            </span><span class="nx">Name</span><span class="p">:</span><span class="w">       </span><span class="s">&quot;mydomain.com&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nx">Type</span><span class="p">:</span><span class="w">       </span><span class="s">&quot;Domain&quot;</span><span class="p">,</span>
@@ -1521,8 +1522,8 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Target set %s created\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">targetSet</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>In the above example we authenticate to our ISP tenant and create a target set with a VM secret</p>
 <h2 id="cmgr-example">CMGR example<a class="headerlink" href="#cmgr-example" title="Permanent link">&para;</a></h2>
+<p>In this example we authenticate to our ISP tenant and create a network, pool, and identifier:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1631,8 +1632,8 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Added identifier: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">identifier</span><span class="p">.</span><span class="nx">ID</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>In the above example we authenticate to our ISP tenant and create a network, pool and identifier</p>
-<h2 id="list-pcloud-accounts">List PCloud Accounts<a class="headerlink" href="#list-pcloud-accounts" title="Permanent link">&para;</a></h2>
+<h2 id="list-pcloud-accounts">List pCloud Accounts<a class="headerlink" href="#list-pcloud-accounts" title="Permanent link">&para;</a></h2>
+<p>In this example we authenticate to our ISP tenant and list pCloud accounts:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1727,7 +1728,8 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="list-identities">List Identities<a class="headerlink" href="#list-identities" title="Permanent link">&para;</a></h2>
+<h2 id="list-identities">List identities<a class="headerlink" href="#list-identities" title="Permanent link">&para;</a></h2>
+<p>In this example we authenticate to our ISP tenant and list all of the accounts:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1820,7 +1822,6 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>In the above example we authenticate to our ISP tenant and list all of the accounts</p>
 
 
 

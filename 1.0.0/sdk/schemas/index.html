@@ -597,7 +597,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -1223,8 +1223,8 @@ You're not viewing the latest version.
 
 
 <h1 id="schemas">Schemas<a class="headerlink" href="#schemas" title="Permanent link">&para;</a></h1>
-<p>Ark SDK is entirely based on schemas constructed from standard Golang structs, along with tagging of "json" and "mapstructure" for serialization.</p>
-<p>All <code>exec</code> actions in the Ark SDK receive a model parsed from the CLI or from the SDK in code and, some of them, return a model or set of models.</p>
+<p>Ark SDK is entirely based on schemas constructed from standard Golang structs, along with the tagging of <code>json</code> and <code>mapstructure</code> values for serialization.</p>
+<p>All <code>exec</code> actions in the Ark SDK receive a model parsed from the CLI or SDK in code and, some of them, return a model or set of models.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <p>Any request can be called with a defined model, for example:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1233,7 +1233,7 @@ You're not viewing the latest version.
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">VMSecrets</span><span class="p">().</span><span class="nx">AddSecret</span><span class="p">(</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">siaAPI</span><span class="p">.</span><span class="nx">SecretsVM</span><span class="p">().</span><span class="nx">AddSecret</span><span class="p">(</span>
 <span class="w">    </span><span class="o">&amp;</span><span class="nx">vmsecretsmodels</span><span class="p">.</span><span class="nx">ArkSIAVMAddSecret</span><span class="p">{</span>
 <span class="w">        </span><span class="nx">SecretType</span><span class="p">:</span><span class="w">          </span><span class="s">&quot;ProvisionerUser&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nx">ProvisionerUsername</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CoolUser&quot;</span><span class="p">,</span>
@@ -1241,7 +1241,7 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="p">},</span>
 <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<p>The above example creates a VM secret service and calls <code>AddSecret()</code> to add a new VM secret. and the relevant add secret schema is passed. finally, a result schema for a secret is returned:</p>
+<p>The above example creates a VM secret service and calls <code>AddSecret()</code> to add a new VM secret. The add secret schema is passed, and a result schema for the secret is returned:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1268,7 +1268,7 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">SecretName</span><span class="w">    </span><span class="kt">string</span><span class="w">                 </span><span class="s">`json:&quot;secret_name,omitempty&quot; mapstructure:&quot;secret_name,omitempty&quot; flag:&quot;secret-name&quot; desc:&quot;A friendly name label&quot;`</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>All models can be found <a href="https://github.com/cyberark/ark-sdk-golang/tree/main/ark_sdk_golang/pkg/models">here</a> and are separated to folders based on topic, from auth to services</p>
+<p>All models can be found <a href="https://github.com/cyberark/ark-sdk-golang/tree/main/pkg/models">here</a>, and are separated into folders according to type.</p>
 
 
 

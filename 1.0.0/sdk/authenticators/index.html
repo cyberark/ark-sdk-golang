@@ -597,7 +597,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -1260,7 +1260,7 @@ You're not viewing the latest version.
 
 <h1 id="authenticators">Authenticators<a class="headerlink" href="#authenticators" title="Permanent link">&para;</a></h1>
 <p>An authenticator provides the ability to authenticate to a CyberArk Identity Security Platform (ISP) resource. The authentication is based on authentication profiles, where the authentication profile defines the authentication method and its associated settings.</p>
-<p>Here's an example of initialize and use an authenticator:</p>
+<p>Here's an example of how to initialize and use an authenticator:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
@@ -1281,9 +1281,9 @@ You're not viewing the latest version.
 </code></pre></div></td></tr></table></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>When you call the constructor, you can determine whether or not the authentication credentials are cached.</p>
-<p>The Authenticators have a base authenticate method that receives a profile as an input and returns an auth token. Additionally, the ArkISPAuth class exposes functions to retrieve a profile's authentication methods and settings. Although the returned token can be used as a return value, it can normally be ignored as it is saved internally.</p>
+</div>
+<p>Authenticators have a base authenticate method that receives a profile as an input and returns an auth token. Additionally, the ArkISPAuth class exposes functions to retrieve a profile's authentication methods and settings. Although the returned token can be used as a return value, it can normally be ignored as it is saved internally.</p>
 <p>These are the different types of authenticator types and auth methods:</p>
 <h2 id="authenticator-types">Authenticator types<a class="headerlink" href="#authenticator-types" title="Permanent link">&para;</a></h2>
 <p>Currently, ArkISPAuth is the only supported authenticator type, which is derived from the ArkAuth interface and accepts the <code>Identity</code> (default) and <code>IdentityServiceUser</code> auth methods.</p>
@@ -1295,9 +1295,9 @@ You're not viewing the latest version.
 <li><b>Default</b> (<code>default</code>) - Default authenticator auth method for the authenticator</li>
 <li><b>Other</b> (<code>other</code>) - For custom implementations</li>
 </ul>
-<p>See <a href="https://github.com/cyberark/ark-sdk-golang/blob/main/ark-sdk-golang/pkg/models/auth/ark_auth_method.go" rel="noopener" target="_blank">ark_auth_method.go</a> for more information about auth methods.</p>
+<p>See <a href="https://github.com/cyberark/ark-sdk-golang/blob/main/pkg/models/auth/ark_auth_method.go" rel="noopener" target="_blank">ark_auth_method.go</a> for more information about auth methods.</p>
 <h2 id="sdk-authenticate-example">SDK authenticate example<a class="headerlink" href="#sdk-authenticate-example" title="Permanent link">&para;</a></h2>
-<p>Here is an example authentication flow that uses implements the ArkISPAuth class:</p>
+<p>Here is an example authentication flow that implements the ArkISPAuth class:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1359,8 +1359,8 @@ You're not viewing the latest version.
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <p>The example above initializes an instance of the ArkISPAuth class and authenticates to the specified ISP tenant, using the <code>Identity</code> authentication type with the provided username and password.</p>
-<p>The <code>authenticate</code> method returns a token, which be ignored because it is stored internally.</p>
-<p>After authenticating, the authenticator can be used passed to the services you want to access.</p>
+<p>The <code>authenticate</code> method returns a token, which can usually be ignored because it is stored internally.</p>
+<p>After authenticating, the authenticator can be used to access the required services.</p>
 
 
 

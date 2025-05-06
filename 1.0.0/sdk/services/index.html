@@ -597,7 +597,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -1387,35 +1387,42 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Added identifier: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">identifier</span><span class="p">.</span><span class="nx">ID</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>The above example authenticates to the specified ISP tenant, initializes a CMGR service using the authorized authenticator, and then uses the service to add a network / pool.</p>
+<p>The above example authenticates to the specified ISP tenant, initializes a CMGR service using the authorized authenticator, and then uses the service to add a network and pool.</p>
 <h2 id="secure-infrastructure-access-service">Secure Infrastructure Access service<a class="headerlink" href="#secure-infrastructure-access-service" title="Permanent link">&para;</a></h2>
 <p>The Secure Infrastructure Access (sia) service requires the ArkISPAuth authenticator, and exposes these service classes:</p>
 <ul>
-<li><b>ArkSIAAccessService (access)</b> - SIA access service</li>
-<li><b>ArkSIAK8SService (kubernetes)</b> - SIA end-user Kubernetes service</li>
-<li><b>ArkSIASecretsService (secrets)</b> - SIA secrets management<ul>
-<li><b>ArkSIAVMSecretsService (vm)</b> - SIA VM secrets services</li>
+<li><strong>ArkSIAAccessService</strong> (access) - SIA access service</li>
+<li><strong>ArkSIAK8SService</strong> (Kubernetes) - SIA end-user Kubernetes service</li>
+<li><strong>ArkSIASecretsService</strong> (secrets) - SIA secrets management<ul>
+<li><strong>ArkSIAVMSecretsService</strong> (VM) - SIA VM secrets services</li>
+<li><strong>ArkSIADBSecretsService</strong> (DB) - SIA DB secrets services</li>
 </ul>
 </li>
-<li><b>ArkSIASSOService (sso)</b> - SIA end-user SSO service</li>
-<li><b>ArkSIADatabasesService (databases)</b> - SIA end-user databases service</li>
-<li><b>ArkSIAWorkspacesService (workspaces)</b> - SIA workspaces management<ul>
-<li><b>ArkSIATargetSetsWorkspaceService (db)</b> - SIA Target Sets workspace management</li>
+<li><strong>ArkSIASSOService</strong> (SSO) - SIA end-user SSO service</li>
+<li><strong>ArkSIADatabasesService</strong> (databases) - SIA end-user databases service</li>
+<li><strong>ArkSIAWorkspacesService</strong> (workspaces) - SIA workspaces management<ul>
+<li><strong>ArkSIATargetSetsWorkspaceService</strong> (db) - SIA Target Sets workspace management</li>
 </ul>
 </li>
 </ul>
 <h2 id="identity-service">Identity service<a class="headerlink" href="#identity-service" title="Permanent link">&para;</a></h2>
-<p>The Identity (identity) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkIdentityRolesService - Identity roles service
-- <b>ArkIdentityUsersService - Identity users service
-- <b>ArkIdentityDirectoriesService - Identity directories service</p>
+<p>The Identity (identity) service requires the ArkISPAuth authenticator, and exposes those service classes:</p>
+<ul>
+<li><strong>ArkIdentityRolesService</strong> - Identity roles service</li>
+<li><strong>ArkIdentityUsersService</strong> - Identity users service</li>
+<li><strong>ArkIdentityDirectoriesService</strong> - Identity directories service</li>
+</ul>
 <h2 id="privilege-cloud-service">Privilege Cloud service<a class="headerlink" href="#privilege-cloud-service" title="Permanent link">&para;</a></h2>
-<p>The Privilege Cloud (pcloud) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkPCloudAccountsService</b> - Accounts management service
-- <b>ArkPCloudSafesService</b> - Safes management service</p>
+<p>The Privilege Cloud (pCloud) service requires the ArkISPAuth authenticator, and exposes those service classes:</p>
+<ul>
+<li><strong>ArkPCloudAccountsService</strong> - Accounts management service</li>
+<li><strong>ArkPCloudSafesService</strong> - Safes management service</li>
+</ul>
 <h2 id="connector-manager-service">Connector Manager Service<a class="headerlink" href="#connector-manager-service" title="Permanent link">&para;</a></h2>
-<p>The Connector Manager (cmgr) service requires ArkISPAuth authenticator, and exposes those service classes:
-- <b>ArkCmgrService</b> - Connector Manager service</p>
+<p>The Connector Manager (cmgr) service requires the ArkISPAuth authenticator, and exposes those service classes:</p>
+<ul>
+<li><strong>ArkCmgrService</strong> - Connector Manager service</li>
+</ul>
 
 
 

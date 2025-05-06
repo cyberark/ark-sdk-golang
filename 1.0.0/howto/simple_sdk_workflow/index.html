@@ -599,7 +599,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -690,9 +690,18 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#short-lived-password-example" class="md-nav__link">
+  <a href="#short-lived-password-example-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Short lived password example
+      Short-lived password example code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code description
     </span>
   </a>
   
@@ -1195,9 +1204,18 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#short-lived-password-example" class="md-nav__link">
+  <a href="#short-lived-password-example-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Short lived password example
+      Short-lived password example code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code description
     </span>
   </a>
   
@@ -1223,9 +1241,8 @@ You're not viewing the latest version.
 
 
 <h1 id="simple-sdk-workflow">Simple SDK Workflow<a class="headerlink" href="#simple-sdk-workflow" title="Permanent link">&para;</a></h1>
-<p>Let's say we want to generate a short lived password for SIA connection</p>
-<p>The following example shows how to do that using the SDK</p>
-<h2 id="short-lived-password-example">Short lived password example<a class="headerlink" href="#short-lived-password-example" title="Permanent link">&para;</a></h2>
+<p>Here's an example tha shows how to generate a short-lived password for an SIA connection.</p>
+<h2 id="short-lived-password-example-code">Short-lived password example code<a class="headerlink" href="#short-lived-password-example-code" title="Permanent link">&para;</a></h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1286,8 +1303,8 @@ You're not viewing the latest version.
 
 <span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Perform authentication using ArkISPAuth to the platform</span>
-<span class="w">    </span><span class="c1">// First, create an ISP authentication class</span>
-<span class="w">    </span><span class="c1">// Afterwards, perform the authentication</span>
+<span class="w">    </span><span class="c1">// Firstly, create an ISP authentication class</span>
+<span class="w">    </span><span class="c1">// Secondly, perform the authentication</span>
 <span class="w">    </span><span class="nx">ispAuth</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">auth</span><span class="p">.</span><span class="nx">NewArkISPAuth</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 <span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">ispAuth</span><span class="p">.</span><span class="nx">Authenticate</span><span class="p">(</span>
 <span class="w">        </span><span class="kc">nil</span><span class="p">,</span>
@@ -1322,10 +1339,18 @@ You're not viewing the latest version.
 <span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ssoPassword</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>We first start by importing the required packages. The <code>auth</code> package is used to authenticate to the platform, and the <code>sso</code> package is used to generate a short-lived password.</p>
-<p>We then create an instance of <code>ArkISPAuth</code> and call the <code>Authenticate</code> method to authenticate to the platform. The <code>Authenticate</code> method takes in the username, authentication method and relevant authentication method settings, and password as parameters.</p>
-<p>Once we have authenticated, we create an instance of <code>ArkSIASSOService</code> using the <code>ispAuth</code> instance. This service is used to generate a short-lived password.</p>
-<p>Finally, we call the <code>ShortLivedPassword</code> method on the <code>ssoService</code> instance to generate a short-lived password. The generated password is then printed to the console.</p>
+<h2 id="code-description">Code description<a class="headerlink" href="#code-description" title="Permanent link">&para;</a></h2>
+<p>The code example does this:</p>
+<ol>
+<li>Imports the required packages:<ul>
+<li>the <code>authmodels</code> package is used to authenticate to the platform</li>
+<li>the <code>ssomodels</code> package is used to generate a short-lived password.</li>
+</ul>
+</li>
+<li>Creates an instance of <code>ArkISPAuth</code>, which calls the <code>Authenticate</code> method to authenticate to the platform. The <code>Authenticate</code> method takes these parameters: username, authentication method, authentication method settings, and password.</li>
+<li>Creates an instance of <code>ArkSIASSOService</code> using the <code>ispAuth</code> authentication instance. The instance is named <code>ssoService</code>, and it is used to generate a short-lived password.</li>
+<li>Calls <code>ssoService</code> instance's <code>ShortLivedPassword</code> method to created a short-lived password, which is printed in the console.</li>
+</ol>
 
 
 

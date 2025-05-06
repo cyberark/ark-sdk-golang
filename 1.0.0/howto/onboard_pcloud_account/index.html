@@ -608,7 +608,7 @@ You're not viewing the latest version.
   
   
   <span class="md-ellipsis">
-    Onboard pcloud account
+    Onboard pCloud account
     
   </span>
   
@@ -1165,12 +1165,12 @@ You're not viewing the latest version.
 
 
 <h1 id="onboard-pcloud-account">Onboard pCloud Account<a class="headerlink" href="#onboard-pcloud-account" title="Permanent link">&para;</a></h1>
-<p>Here is an example workflow for onboarding a pcloud safe and an account in it:</p>
+<p>Here is an example workflow for onboarding a pCloud safe and creating a Safe:</p>
 <ol>
-<li>Install Ark SDK with your artifactory credentials:
+<li>Install Ark SDK:
    <div class="highlight"><pre><span></span><code>go<span class="w"> </span>install<span class="w"> </span>github.com/cyberark/ark-sdk-golang
 </code></pre></div>
-   Make sure that the PATH environment variable points to the go binary path, for example
+   Make sure that the PATH environment variable points to the go binary. For example:
    <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="k">$(</span>go<span class="w"> </span>env<span class="w"> </span>GOPATH<span class="k">)</span>/bin
 </code></pre></div></li>
 <li>Create a profile:<ul>
@@ -1188,7 +1188,7 @@ You're not viewing the latest version.
 <li>Create a new safe:
     <div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>safes<span class="w"> </span>add-safe<span class="w"> </span>--safe-name<span class="o">=</span>safe
 </code></pre></div></li>
-<li>Create a new account in the safe:
+<li>Create a new account in the Safe:
     <div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>accounts<span class="w"> </span>add-account<span class="w"> </span>--name<span class="w"> </span>account<span class="w"> </span>--safe-name<span class="w"> </span>safe<span class="w"> </span>--platform-id<span class="o">=</span><span class="s1">&#39;UnixSSH&#39;</span><span class="w"> </span>--username<span class="w"> </span>root<span class="w"> </span>--address<span class="w"> </span><span class="m">1</span>.2.3.4<span class="w"> </span>--secret-type<span class="o">=</span>password<span class="w"> </span>--secret<span class="w"> </span>mypass
 </code></pre></div></li>
 </ol>
