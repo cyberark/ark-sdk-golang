@@ -6,11 +6,11 @@ description: End-user Database Workflow
 # End-user database Workflow
 Here is an example workflow for connecting to a database:
 
-1. Install Ark SDK with your artifactory credentials:
+1. Install Ark SDK:
    ```shell linenums="0"
    go install github.com/cyberark/ark-sdk-golang
    ```
-   Make sure that the PATH environment variable points to the go binary path, for example
+   Make sure that the PATH environment variable points to the Go binary. For example:
    ```shell linenums="0"
    export PATH=$PATH:$(go env GOPATH)/bin
    ```

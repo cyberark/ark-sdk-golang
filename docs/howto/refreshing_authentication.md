@@ -13,9 +13,11 @@ When you want to continue working with an existing authenticator, you can refres
 ## Login command
 
 To try to authenticate with an existing authenticator, use the `--refresh-auth` CLI flag:
+
 ```bash  linenums="0"
 ark login --refresh-auth
 ```
+
 The `--refresh-auth` flag indicates that the user's profile authenticator should be refreshed and used for authentication. The user is only prompted for additional authentication values when the refresh fails.
 
 ## Exec command

@@ -24,11 +24,11 @@ The `configure` command works in interactive or silent mode. When using silent m
 ark configure --profile-name="PROD" --work-with-isp --isp-username="tina@cyberark.cloud.12345" --silent --allow-output
 ```
 
-## Login commands Example
+## Login commands example
 
 The login command can work in interactive or silent mode. Here's an example of a silent login with the profile configured in the example above:
 ```bash linenums="0"
-ark login -s --isp-secret=CoolPasswordß
+ark login -s --isp-secret=CoolPasswordß --profile-name PROD
 ```
 
 ## Exec command examples
@@ -55,12 +55,12 @@ ark exec sia k8s generate-kubeconfig
 ark exec sia k8s generate-kubeconfig --folder=/Users/My.User/.kube
 ```
 
-### Add SIA VM Target Set
+### Add SIA VM target set
 ```shell
 ark exec sia workspaces target-sets add-target-set --name mydomain.com --type Domain
 ```
 
-### Add SIA VM Secret
+### Add SIA VM secret
 ```shell
 ark exec sia secrets vm add-secret --secret-type ProvisionerUser --provisioner-username=myuser --provisioner-password=mypassword
 ```
@@ -100,27 +100,27 @@ ark exec sia access install-connector --connector-pool-id 89b4f0ff-9b06-445a-9ca
 ark exec sia access uninstall-connector --connector-id CMSConnector_588741d5-e059-479d-b4c4-3d821a87f012_1a8b3734-8e1d-43a3-bb99-8a587609e653 --username myuser --password mypassword --target-machine 1.2.3.4 --connector-os windows
 ```
 
-### Create a PCloud Safe
+### Create a pCloud Safe
 ```shell
 ark exec pcloud safes add-safe --safe-name=safe
 ```
 
-### Create a PCloud Account
+### Create a pCloud account
 ```shell
 ark exec pcloud accounts add-account --name account --safe-name safe --platform-id='UnixSSH' --username root --address 1.2.3.4 --secret-type=password --secret mypass
 ```
 
-### Retrieve a PCloud Account Credentials
+### Retrieve a pCloud account credentials
 ```shell
 ark exec pcloud accounts get-account-credentials --account-id 11_1
 ```
 
-### Create an Identity User
+### Create an Identity user
 ```shell
 ark exec identity users create-user --roles "DpaAdmin" --username "myuser"
 ```
 
-### Create an Identity Role
+### Create an Identity role
 ```shell
 ark exec identity roles create-role --role-name myrole
 ```

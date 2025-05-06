@@ -1,4 +1,4 @@
-![Ark SDK Python](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/sdk.png)
+![Ark SDK Golang](https://github.com/cyberark/ark-sdk-golang/blob/main/assets/sdk.png)
 
 <p align="center">
     <a href="https://actions-badge.atrox.dev/cyberark/ark-sdk-golang/goto?ref=main" alt="Build">
@@ -58,7 +58,7 @@ TL;DR
 Installation
 ============
 
-One can install the SDK via the community pypi with the following command:
+One can install the SDK via the following command:
 ```shell
 go install github.com/cyberark/ark-sdk-golang
 ```
