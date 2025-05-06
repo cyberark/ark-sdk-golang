@@ -4,6 +4,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
+	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
 	siasso "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
 	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/targetsets"
@@ -55,6 +56,14 @@ var TargetSetsAction = actions.ArkServiceActionDefinition{
 	Schemas:    TargetSetsActionToSchemaMap,
 }
 
+// WorkspacesAction is a struct that defines the Workspaces action for the Ark service.
+var WorkspacesAction = actions.ArkServiceActionDefinition{
+	ActionName: "workspaces",
+	Subactions: []*actions.ArkServiceActionDefinition{
+		&TargetSetsAction,
+	},
+}
+
 // SecretsVMActionToSchemaMap is a map that defines the mapping between Secrets VM action names and their corresponding schema types.
 var SecretsVMActionToSchemaMap = map[string]interface{}{
 	"add-secret":      &siasecretsvm.ArkSIAVMAddSecret{},
@@ -72,11 +81,31 @@ var SecretsVMAction = actions.ArkServiceActionDefinition{
 	Schemas:    SecretsVMActionToSchemaMap,
 }
 
+// SecretsDBActionToSchemaMap is a map that defines the mapping between Secrets DB action names and their corresponding schema types.
+var SecretsDBActionToSchemaMap = map[string]interface{}{
+	"add-secret":      &siasecretsdb.ArkSIADBAddSecret{},
+	"update-secret":   &siasecretsdb.ArkSIADBUpdateSecret{},
+	"delete-secret":   &siasecretsdb.ArkSIADBDeleteSecret{},
+	"list-secrets":    nil,
+	"list-secrets-by": &siasecretsdb.ArkSIADBSecretsFilter{},
+	"enable-secret":   &siasecretsdb.ArkSIADBEnableSecret{},
+	"disable-secret":  &siasecretsdb.ArkSIADBDisableSecret{},
+	"secret":          &siasecretsdb.ArkSIADBGetSecret{},
+	"secrets-stats":   nil,
+}
+
+// SecretsDBAction is a struct that defines the Secrets DB action for the Ark service.
+var SecretsDBAction = actions.ArkServiceActionDefinition{
+	ActionName: "db",
+	Schemas:    SecretsDBActionToSchemaMap,
+}
+
 // SecretsAction is a struct that defines the Secrets action for the Ark service.
 var SecretsAction = actions.ArkServiceActionDefinition{
 	ActionName: "secrets",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&SecretsVMAction,
+		&SecretsDBAction,
 	},
 }
 
@@ -100,7 +129,7 @@ var SIAActions = &actions.ArkServiceActionDefinition{
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&SSOAction,
 		&K8SAction,
-		&TargetSetsAction,
+		&WorkspacesAction,
 		&SecretsAction,
 		&AccessAction,
 	},

@@ -18,6 +18,7 @@ The following SIA commands are supported:
       - `target-sets` - Target sets operations
     - `secrets` - Secrets service
       - `vm` - VM operations
+      - `db` - DB operations
     - `access` - Access service
 - `ark exec cmgr`: Root command for the CMGR service
 - `ark exec pcloud`: Root command for PCloud service

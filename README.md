@@ -33,7 +33,8 @@ CyberArk's Official SDK and CLI for different services operations
 - [x] Services API
   - [x] SIA SSO Service
   - [x] SIA K8S Service
-  - [x] SIA VM Service
+  - [x] SIA VM Secrets Service
+  - [x] SIA DB Secrets Service
   - [x] SIA Target Sets Workspace Service
   - [x] SIA Access Service
   - [x] Connector Manager Service
@@ -247,6 +248,15 @@ ark exec identity roles create-role --role-name myrole
 List all directories identities
 ```shell
 ark exec identity directories list-directories-entities
+```
+
+Add SIA Database Secret
+```shell
+ark exec sia secrets db add-secret --secret-name mysecret --secret-type username_password --username user --password mypass
+```
+Delete SIA Database Secret
+```shell
+ark exec sia secrets db delete-secret --secret-name mysecret
 ```
 
 You can view all of the commands via the --help for each respective exec action

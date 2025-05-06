@@ -129,3 +129,15 @@ ark exec identity roles create-role --role-name myrole
 ```shell
 ark exec identity directories list-directories-entities
 ```
+
+### Add SIA database secret
+
+```shell linenums="0"
+ark exec sia secrets db add-secret --secret-name mysecret --secret-type username_password --username user --password mypass
+```
+
+### Delete SIA database secret
+
+```shell linenums="0"
+ark exec sia secrets db delete-secret --secret-name mysecret
+```

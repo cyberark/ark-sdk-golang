@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	vmsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
-	targetsetsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/targetsets"
+	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
 	"os"
 )
@@ -32,32 +31,20 @@ func main() {
 		panic(err)
 	}
 
-	// Add a VM secret
+	// Add a DB secret
 	siaAPI, err := sia.NewArkSIAAPI(ispAuth.(*auth.ArkISPAuth))
 	if err != nil {
 		panic(err)
 	}
-	secret, err := siaAPI.SecretsVM().AddSecret(
-		&vmsecretsmodels.ArkSIAVMAddSecret{
-			SecretType:          "ProvisionerUser",
-			ProvisionerUsername: "CoolUser",
-			ProvisionerPassword: "CoolPassword",
+	secret, err := siaAPI.SecretsDB().AddSecret(
+		&dbsecretsmodels.ArkSIADBAddSecret{
+			SecretType: "username_password",
+			Username:   "CoolUser",
+			Password:   "CoolPassword",
 		},
 	)
 	if err != nil {
 		panic(err)
 	}
-	// Add VM target set
-	targetSet, err := siaAPI.WorkspacesTargetSets().AddTargetSet(
-		&targetsetsmodels.ArkSIAAddTargetSet{
-			Name:       "mydomain.com",
-			Type:       "Domain",
-			SecretID:   secret.SecretID,
-			SecretType: secret.SecretType,
-		},
-	)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Target set %s created\n", targetSet.Name)
+	fmt.Println("Secret ID:", secret.SecretID)
 }

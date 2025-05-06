@@ -14,7 +14,7 @@ All `exec` actions in the Ark SDK receive a model parsed from the CLI or from th
 Any request can be called with a defined model, for example:
 
 ```go
-secret, err := siaAPI.VMSecrets().AddSecret(
+secret, err := siaAPI.SecretsVM().AddSecret(
     &vmsecretsmodels.ArkSIAVMAddSecret{
         SecretType:          "ProvisionerUser",
         ProvisionerUsername: "CoolUser",
