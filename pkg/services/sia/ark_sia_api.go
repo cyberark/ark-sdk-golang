@@ -4,6 +4,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
+	dbsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	vmsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
@@ -15,6 +16,7 @@ type ArkSIAAPI struct {
 	k8sService        *k8s.ArkSIAK8SService
 	targetSetsService *targetsets.ArkSIATargetSetsWorkspaceService
 	vmSecretsService  *vmsecrets.ArkSIASecretsVMService
+	dbSecretsService  *dbsecrets.ArkSIASecretsDBService
 	accessService     *access.ArkSIAAccessService
 }
 
@@ -37,6 +39,10 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
+	dbSecretsService, err := dbsecrets.NewArkSIASecretsDBService(baseIspAuth)
+	if err != nil {
+		return nil, err
+	}
 	accessService, err := access.NewArkSIAAccessService(baseIspAuth)
 	if err != nil {
 		return nil, err
@@ -46,6 +52,7 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 		k8sService:        k8sService,
 		targetSetsService: targetSetsService,
 		vmSecretsService:  vmSecretsService,
+		dbSecretsService:  dbSecretsService,
 		accessService:     accessService,
 	}, nil
 }
@@ -60,14 +67,19 @@ func (api *ArkSIAAPI) K8s() *k8s.ArkSIAK8SService {
 	return api.k8sService
 }
 
-// TargetSets returns the TargetSets service of the ArkSIAAPI instance.
-func (api *ArkSIAAPI) TargetSets() *targetsets.ArkSIATargetSetsWorkspaceService {
+// WorkspacesTargetSets returns the TargetSets service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) WorkspacesTargetSets() *targetsets.ArkSIATargetSetsWorkspaceService {
 	return api.targetSetsService
 }
 
-// VMSecrets returns the VM Secrets service of the ArkSIAAPI instance.
-func (api *ArkSIAAPI) VMSecrets() *vmsecrets.ArkSIASecretsVMService {
+// SecretsVM returns the VM Secrets service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) SecretsVM() *vmsecrets.ArkSIASecretsVMService {
 	return api.vmSecretsService
+}
+
+// SecretsDB returns the DB Secrets service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) SecretsDB() *dbsecrets.ArkSIASecretsDBService {
+	return api.dbSecretsService
 }
 
 // Access returns the access service of the ArkSIAAPI instance.
