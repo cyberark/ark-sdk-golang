@@ -80,7 +80,8 @@ The Secure Infrastructure Access (sia) service requires the ArkISPAuth authentic
 - **ArkSIASSOService** (SSO) - SIA end-user SSO service
 - **ArkSIADatabasesService** (databases) - SIA end-user databases service
 - **ArkSIAWorkspacesService** (workspaces) - SIA workspaces management
-    - **ArkSIATargetSetsWorkspaceService** (db) - SIA Target Sets workspace management
+    - **ArkSIATargetSetsWorkspaceService** (target-sets) - SIA Target Sets workspace management
+    - **ArkSIADBWorkspaceService** (db) - SIA DB workspace management
 
 
 ## Identity service

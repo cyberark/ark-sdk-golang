@@ -17,6 +17,7 @@ import (
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
 	siasso "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
+	siaworkspacesdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
 )
 
@@ -117,6 +118,20 @@ func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIATargetSetsWor
 	var targetSetsBaseService services.ArkService = targetSetsService
 	api.services[siatargetsets.SIATargetSetsWorkspaceServiceConfig.ServiceName] = &targetSetsBaseService
 	return targetSetsService, nil
+}
+
+// SiaWorkspacesDB returns the Workspaces DB service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SiaWorkspacesDB() (*siaworkspacesdb.ArkSIADBWorkspaceService, error) {
+	if workspacesDBServiceInterface, ok := api.services[siaworkspacesdb.SIADBWorkspaceServiceConfig.ServiceName]; ok {
+		return (*workspacesDBServiceInterface).(*siaworkspacesdb.ArkSIADBWorkspaceService), nil
+	}
+	workspacesDBService, err := siaworkspacesdb.NewArkSIADBWorkspaceService(api.loadServiceAuthenticators(siaworkspacesdb.SIADBWorkspaceServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var workspacesDBBaseService services.ArkService = workspacesDBService
+	api.services[siaworkspacesdb.SIADBWorkspaceServiceConfig.ServiceName] = &workspacesDBBaseService
+	return workspacesDBService, nil
 }
 
 // SiaSecretsVM returns the SiaSecretsVM service from the ArkAPI instance. If the service is not already created, it creates a new one.

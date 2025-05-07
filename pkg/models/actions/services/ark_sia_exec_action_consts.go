@@ -7,6 +7,7 @@ import (
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
 	siasso "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
+	siaworkspacesdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
 	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/targetsets"
 )
 
@@ -50,10 +51,29 @@ var TargetSetsActionToSchemaMap = map[string]interface{}{
 	"target-sets-stats":       nil,
 }
 
+// DBWorkspaceActionToSchemaMap is a map that defines the mapping between DB workspace action names and their corresponding schema types.
+var DBWorkspaceActionToSchemaMap = map[string]interface{}{
+	"add-database":      &siaworkspacesdb.ArkSIADBAddDatabase{},
+	"delete-database":   &siaworkspacesdb.ArkSIADBDeleteDatabase{},
+	"update-database":   &siaworkspacesdb.ArkSIADBUpdateDatabase{},
+	"database":          &siaworkspacesdb.ArkSIADBGetDatabase{},
+	"list-databases":    nil,
+	"list-databases-by": &siaworkspacesdb.ArkSIADBDatabasesFilter{},
+	"databases-stats":   nil,
+	"list-engine-types": nil,
+	"list-family-types": nil,
+}
+
 // TargetSetsAction is a struct that defines the TargetSets action for the Ark service.
 var TargetSetsAction = actions.ArkServiceActionDefinition{
 	ActionName: "target-sets",
 	Schemas:    TargetSetsActionToSchemaMap,
+}
+
+// DBWorkspaceAction is a struct that defines the DB workspace action for the Ark service.
+var DBWorkspaceAction = actions.ArkServiceActionDefinition{
+	ActionName: "db",
+	Schemas:    DBWorkspaceActionToSchemaMap,
 }
 
 // WorkspacesAction is a struct that defines the Workspaces action for the Ark service.
@@ -61,6 +81,7 @@ var WorkspacesAction = actions.ArkServiceActionDefinition{
 	ActionName: "workspaces",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&TargetSetsAction,
+		&DBWorkspaceAction,
 	},
 }
 

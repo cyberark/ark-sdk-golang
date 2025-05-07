@@ -141,3 +141,13 @@ ark exec sia secrets db add-secret --secret-name mysecret --secret-type username
 ```shell linenums="0"
 ark exec sia secrets db delete-secret --secret-name mysecret
 ```
+
+### Add SIA database
+```shell linenums="0"
+ark exec sia workspaces db add-database --name mydatabase --provider-engine aurora-mysql --read-write-endpoint myrds.com
+```
+
+### Delete SIA database
+```shell linenums="0"
+ark exec sia workspaces db delete-database --id databaseid
+```

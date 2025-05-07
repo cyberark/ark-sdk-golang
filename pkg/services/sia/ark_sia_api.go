@@ -7,17 +7,19 @@ import (
 	dbsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	vmsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
 )
 
 // ArkSIAAPI is a struct that provides access to the Ark SIA API as a wrapped set of services.
 type ArkSIAAPI struct {
-	ssoService        *sso.ArkSIASSOService
-	k8sService        *k8s.ArkSIAK8SService
-	targetSetsService *targetsets.ArkSIATargetSetsWorkspaceService
-	vmSecretsService  *vmsecrets.ArkSIASecretsVMService
-	dbSecretsService  *dbsecrets.ArkSIASecretsDBService
-	accessService     *access.ArkSIAAccessService
+	ssoService          *sso.ArkSIASSOService
+	k8sService          *k8s.ArkSIAK8SService
+	targetSetsService   *targetsets.ArkSIATargetSetsWorkspaceService
+	workspacesDBService *db.ArkSIADBWorkspaceService
+	vmSecretsService    *vmsecrets.ArkSIASecretsVMService
+	dbSecretsService    *dbsecrets.ArkSIASecretsDBService
+	accessService       *access.ArkSIAAccessService
 }
 
 // NewArkSIAAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
@@ -35,6 +37,10 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
+	workspaceDBService, err := db.NewArkSIADBWorkspaceService(baseIspAuth)
+	if err != nil {
+		return nil, err
+	}
 	vmSecretsService, err := vmsecrets.NewArkSIASecretsVMService(baseIspAuth)
 	if err != nil {
 		return nil, err
@@ -48,12 +54,13 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 		return nil, err
 	}
 	return &ArkSIAAPI{
-		ssoService:        ssoService,
-		k8sService:        k8sService,
-		targetSetsService: targetSetsService,
-		vmSecretsService:  vmSecretsService,
-		dbSecretsService:  dbSecretsService,
-		accessService:     accessService,
+		ssoService:          ssoService,
+		k8sService:          k8sService,
+		targetSetsService:   targetSetsService,
+		workspacesDBService: workspaceDBService,
+		vmSecretsService:    vmSecretsService,
+		dbSecretsService:    dbSecretsService,
+		accessService:       accessService,
 	}, nil
 }
 
@@ -70,6 +77,11 @@ func (api *ArkSIAAPI) K8s() *k8s.ArkSIAK8SService {
 // WorkspacesTargetSets returns the TargetSets service of the ArkSIAAPI instance.
 func (api *ArkSIAAPI) WorkspacesTargetSets() *targetsets.ArkSIATargetSetsWorkspaceService {
 	return api.targetSetsService
+}
+
+// WorkspacesDB returns the workspace DB service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) WorkspacesDB() *db.ArkSIADBWorkspaceService {
+	return api.workspacesDBService
 }
 
 // SecretsVM returns the VM Secrets service of the ArkSIAAPI instance.
