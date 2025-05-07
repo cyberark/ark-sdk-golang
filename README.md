@@ -259,6 +259,15 @@ Delete SIA Database Secret
 ark exec sia secrets db delete-secret --secret-name mysecret
 ```
 
+Add SIA database
+```shell
+ark exec sia workspaces db add-database --name mydatabase --provider-engine aurora-mysql --read-write-endpoint myrds.com
+```
+Delete SIA database
+```shell
+ark exec sia workspaces db delete-database --id databaseid
+```
+
 You can view all of the commands via the --help for each respective exec action
 
 Notes:

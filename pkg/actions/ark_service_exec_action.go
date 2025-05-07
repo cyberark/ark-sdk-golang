@@ -234,8 +234,19 @@ func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flag
 		if strings.HasPrefix(field.Tag.Get("mapstructure"), key) {
 			if field.Tag.Get("choices") != "" {
 				choices := strings.Split(field.Tag.Get("choices"), ",")
-				if !slices.Contains(choices, flags[key].(string)) {
-					return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, flags[key], strings.Join(choices, ", "))
+				switch v := flags[key].(type) {
+				case string:
+					if !slices.Contains(choices, v) {
+						return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, v, strings.Join(choices, ", "))
+					}
+				case []string:
+					for _, item := range v {
+						if !slices.Contains(choices, item) {
+							return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, item, strings.Join(choices, ", "))
+						}
+					}
+				default:
+					return fmt.Errorf("unexpected type for flag %s: %T", f.Name, flags[key])
 				}
 			}
 		}

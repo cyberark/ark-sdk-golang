@@ -16,6 +16,7 @@ The following SIA commands are supported:
     - `k8s` - Kubernetes service
     - `workspaces` - Workspaces service
       - `target-sets` - Target sets operations
+      - `db` - Database operations
     - `secrets` - Secrets service
       - `vm` - VM operations
       - `db` - DB operations
