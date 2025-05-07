@@ -238,7 +238,6 @@ func (s *ArkSIADBWorkspaceService) UpdateDatabase(updateDatabase *dbmodels.ArkSI
 		mergedDatabase["provider_engine"] = existingDatabase.ProviderDetails.Engine
 	}
 
-	fmt.Printf("Merged Database: %+v\n", mergedDatabase)
 	s.Logger.Info(fmt.Sprintf("Updating database [%d]", updateDatabase.ID))
 	response, err := s.client.Put(context.Background(), fmt.Sprintf(resourceURL, updateDatabase.ID), mergedDatabase)
 	if err != nil {
