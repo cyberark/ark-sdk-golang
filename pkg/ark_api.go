@@ -106,7 +106,7 @@ func (api *ArkAPI) SiaK8s() (*siak8s.ArkSIAK8SService, error) {
 	return k8sService, nil
 }
 
-// SiaWorkspacesTargetSets returns the SiaTargetSets service from the ArkAPI instance. If the service is not already created, it creates a new one.
+// SiaWorkspacesTargetSets returns the SiaWorkspacesTargetSets service from the ArkAPI instance. If the service is not already created, it creates a new one.
 func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIATargetSetsWorkspaceService, error) {
 	if targetSetsServiceInterface, ok := api.services[siatargetsets.SIATargetSetsWorkspaceServiceConfig.ServiceName]; ok {
 		return (*targetSetsServiceInterface).(*siatargetsets.ArkSIATargetSetsWorkspaceService), nil
