@@ -3,12 +3,12 @@ package targetsets
 import (
 	"context"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	targetsetsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/targetsets"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"regexp"
@@ -27,17 +27,17 @@ var SIATargetSetsWorkspaceServiceConfig = services.ArkServiceConfig{
 	OptionalAuthenticatorNames: []string{},
 }
 
-// ArkSIATargetSetsWorkspaceService is the service for managing target sets in a workspace.
-type ArkSIATargetSetsWorkspaceService struct {
+// ArkSIAWorkspacesTargetSetsService is the service for managing target sets in a workspace.
+type ArkSIAWorkspacesTargetSetsService struct {
 	services.ArkService
 	*services.ArkBaseService
 	ispAuth *auth.ArkISPAuth
 	client  *isp.ArkISPServiceClient
 }
 
-// NewArkSIATargetSetsWorkspaceService creates a new instance of ArkSIATargetSetsWorkspaceService.
-func NewArkSIATargetSetsWorkspaceService(authenticators ...auth.ArkAuth) (*ArkSIATargetSetsWorkspaceService, error) {
-	targetSetsService := &ArkSIATargetSetsWorkspaceService{}
+// NewArkSIAWorkspacesTargetSetsService creates a new instance of ArkSIAWorkspacesTargetSetsService.
+func NewArkSIAWorkspacesTargetSetsService(authenticators ...auth.ArkAuth) (*ArkSIAWorkspacesTargetSetsService, error) {
+	targetSetsService := &ArkSIAWorkspacesTargetSetsService{}
 	var targetSetsServiceInterface services.ArkService = targetSetsService
 	baseService, err := services.NewArkBaseService(targetSetsServiceInterface, authenticators...)
 	if err != nil {
@@ -58,7 +58,7 @@ func NewArkSIATargetSetsWorkspaceService(authenticators ...auth.ArkAuth) (*ArkSI
 	return targetSetsService, nil
 }
 
-func (s *ArkSIATargetSetsWorkspaceService) refreshSIAAuth(client *common.ArkClient) error {
+func (s *ArkSIAWorkspacesTargetSetsService) refreshSIAAuth(client *common.ArkClient) error {
 	err := isp.RefreshClient(client, s.ispAuth)
 	if err != nil {
 		return err
@@ -67,7 +67,7 @@ func (s *ArkSIATargetSetsWorkspaceService) refreshSIAAuth(client *common.ArkClie
 }
 
 // AddTargetSet adds a new target set with related strong account.
-func (s *ArkSIATargetSetsWorkspaceService) AddTargetSet(addTargetSet *targetsetsmodels.ArkSIAAddTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) AddTargetSet(addTargetSet *targetsetsmodels.ArkSIAAddTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
 	s.Logger.Info("Adding target set [%s]", addTargetSet.Name)
 	var addTargetSetJSON map[string]interface{}
 	err := mapstructure.Decode(addTargetSet, &addTargetSetJSON)
@@ -91,8 +91,9 @@ func (s *ArkSIATargetSetsWorkspaceService) AddTargetSet(addTargetSet *targetsets
 	if err != nil {
 		return nil, err
 	}
+	targetSetJSONMap := targetSetJSON.(map[string]interface{})
 	var targetSet targetsetsmodels.ArkSIATargetSet
-	err = mapstructure.Decode(targetSetJSON["target_set"], &targetSet)
+	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +101,7 @@ func (s *ArkSIATargetSetsWorkspaceService) AddTargetSet(addTargetSet *targetsets
 }
 
 // BulkAddTargetSets adds multiple target sets with related strong account.
-func (s *ArkSIATargetSetsWorkspaceService) BulkAddTargetSets(bulkAddTargetSets *targetsetsmodels.ArkSIABulkAddTargetSets) (*targetsetsmodels.ArkSIABulkTargetSetResponse, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) BulkAddTargetSets(bulkAddTargetSets *targetsetsmodels.ArkSIABulkAddTargetSets) (*targetsetsmodels.ArkSIABulkTargetSetResponse, error) {
 	s.Logger.Info("Bulk adding target set [%v]", bulkAddTargetSets)
 	var bulkAddTargetSetsJSON map[string]interface{}
 	err := mapstructure.Decode(bulkAddTargetSets, &bulkAddTargetSetsJSON)
@@ -133,7 +134,7 @@ func (s *ArkSIATargetSetsWorkspaceService) BulkAddTargetSets(bulkAddTargetSets *
 }
 
 // DeleteTargetSet deletes a target set.
-func (s *ArkSIATargetSetsWorkspaceService) DeleteTargetSet(deleteTargetSet *targetsetsmodels.ArkSIADeleteTargetSet) error {
+func (s *ArkSIAWorkspacesTargetSetsService) DeleteTargetSet(deleteTargetSet *targetsetsmodels.ArkSIADeleteTargetSet) error {
 	s.Logger.Info("Deleting target set [%s]", deleteTargetSet.Name)
 	response, err := s.client.Delete(context.Background(), fmt.Sprintf(targetSetURL, deleteTargetSet.Name), nil)
 	if err != nil {
@@ -146,7 +147,7 @@ func (s *ArkSIATargetSetsWorkspaceService) DeleteTargetSet(deleteTargetSet *targ
 }
 
 // BulkDeleteTargetSets deletes multiple target sets.
-func (s *ArkSIATargetSetsWorkspaceService) BulkDeleteTargetSets(bulkDeleteTargetSets *targetsetsmodels.ArkSIABulkDeleteTargetSets) (*targetsetsmodels.ArkSIABulkTargetSetResponse, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) BulkDeleteTargetSets(bulkDeleteTargetSets *targetsetsmodels.ArkSIABulkDeleteTargetSets) (*targetsetsmodels.ArkSIABulkTargetSetResponse, error) {
 	s.Logger.Info("Bulk deleting target set [%v]", bulkDeleteTargetSets)
 	var bulkDeleteTargetSetsJSON map[string]interface{}
 	err := mapstructure.Decode(bulkDeleteTargetSets, &bulkDeleteTargetSetsJSON)
@@ -179,7 +180,7 @@ func (s *ArkSIATargetSetsWorkspaceService) BulkDeleteTargetSets(bulkDeleteTarget
 }
 
 // UpdateTargetSet updates a target set.
-func (s *ArkSIATargetSetsWorkspaceService) UpdateTargetSet(updateTargetSet *targetsetsmodels.ArkSIAUpdateTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) UpdateTargetSet(updateTargetSet *targetsetsmodels.ArkSIAUpdateTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
 	s.Logger.Info("Updating target set [%s]", updateTargetSet.Name)
 	var updateTargetSetJSON map[string]interface{}
 	err := mapstructure.Decode(updateTargetSet, &updateTargetSetJSON)
@@ -190,6 +191,8 @@ func (s *ArkSIATargetSetsWorkspaceService) UpdateTargetSet(updateTargetSet *targ
 	delete(updateTargetSetJSON, "new_name")
 	if updateTargetSet.NewName != "" {
 		updateTargetSetJSON["name"] = updateTargetSet.NewName
+	} else if updateTargetSet.Name != "" {
+		updateTargetSetJSON["name"] = updateTargetSet.Name
 	}
 	response, err := s.client.Post(context.Background(), fmt.Sprintf(targetSetURL, updateTargetSet.Name), updateTargetSetJSON)
 	if err != nil {
@@ -208,8 +211,9 @@ func (s *ArkSIATargetSetsWorkspaceService) UpdateTargetSet(updateTargetSet *targ
 	if err != nil {
 		return nil, err
 	}
+	targetSetJSONMap := targetSetJSON.(map[string]interface{})
 	var targetSet targetsetsmodels.ArkSIATargetSet
-	err = mapstructure.Decode(targetSetJSON["target_set"], &targetSet)
+	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +221,7 @@ func (s *ArkSIATargetSetsWorkspaceService) UpdateTargetSet(updateTargetSet *targ
 }
 
 // ListTargetSets lists all target sets.
-func (s *ArkSIATargetSetsWorkspaceService) ListTargetSets() ([]*targetsetsmodels.ArkSIATargetSet, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) ListTargetSets() ([]*targetsetsmodels.ArkSIATargetSet, error) {
 	s.Logger.Info("Listing all target sets")
 	response, err := s.client.Get(context.Background(), targetSetsURL, nil)
 	if err != nil {
@@ -236,8 +240,9 @@ func (s *ArkSIATargetSetsWorkspaceService) ListTargetSets() ([]*targetsetsmodels
 	if err != nil {
 		return nil, err
 	}
+	targetSetsResponseJSONMap := targetSetsResponseJSON.(map[string]interface{})
 	var targetSets []*targetsetsmodels.ArkSIATargetSet
-	err = mapstructure.Decode(targetSetsResponseJSON["target_sets"], &targetSets)
+	err = mapstructure.Decode(targetSetsResponseJSONMap["target_sets"], &targetSets)
 	if err != nil {
 		return nil, err
 	}
@@ -245,7 +250,7 @@ func (s *ArkSIATargetSetsWorkspaceService) ListTargetSets() ([]*targetsetsmodels
 }
 
 // ListTargetSetsBy filters target sets by the provided filter.
-func (s *ArkSIATargetSetsWorkspaceService) ListTargetSetsBy(targetSetsFilter *targetsetsmodels.ArkSIATargetSetsFilter) ([]*targetsetsmodels.ArkSIATargetSet, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) ListTargetSetsBy(targetSetsFilter *targetsetsmodels.ArkSIATargetSetsFilter) ([]*targetsetsmodels.ArkSIATargetSet, error) {
 	s.Logger.Info("Listing target sets by filter [%v]", targetSetsFilter)
 	targetSets, err := s.ListTargetSets()
 	if err != nil {
@@ -273,7 +278,7 @@ func (s *ArkSIATargetSetsWorkspaceService) ListTargetSetsBy(targetSetsFilter *ta
 }
 
 // TargetSet retrieves a target set by name.
-func (s *ArkSIATargetSetsWorkspaceService) TargetSet(getTargetSet *targetsetsmodels.ArkSIAGetTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) TargetSet(getTargetSet *targetsetsmodels.ArkSIAGetTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
 	s.Logger.Info("Getting target set [%s]", getTargetSet.Name)
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(targetSetURL, getTargetSet.Name), nil)
 	if err != nil {
@@ -292,8 +297,9 @@ func (s *ArkSIATargetSetsWorkspaceService) TargetSet(getTargetSet *targetsetsmod
 	if err != nil {
 		return nil, err
 	}
+	targetSetJSONMap := targetSetJSON.(map[string]interface{})
 	var targetSet targetsetsmodels.ArkSIATargetSet
-	err = mapstructure.Decode(targetSetJSON["target_set"], &targetSet)
+	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +307,7 @@ func (s *ArkSIATargetSetsWorkspaceService) TargetSet(getTargetSet *targetsetsmod
 }
 
 // TargetSetsStats retrieves statistics about target sets.
-func (s *ArkSIATargetSetsWorkspaceService) TargetSetsStats() (*targetsetsmodels.ArkSIATargetSetsStats, error) {
+func (s *ArkSIAWorkspacesTargetSetsService) TargetSetsStats() (*targetsetsmodels.ArkSIATargetSetsStats, error) {
 	targetSets, err := s.ListTargetSets()
 	if err != nil {
 		return nil, err
@@ -318,7 +324,7 @@ func (s *ArkSIATargetSetsWorkspaceService) TargetSetsStats() (*targetsetsmodels.
 	return &targetSetsStats, nil
 }
 
-// ServiceConfig returns the service configuration for the ArkSIATargetSetsWorkspaceService.
-func (s *ArkSIATargetSetsWorkspaceService) ServiceConfig() services.ArkServiceConfig {
+// ServiceConfig returns the service configuration for the ArkSIAWorkspacesTargetSetsService.
+func (s *ArkSIAWorkspacesTargetSetsService) ServiceConfig() services.ArkServiceConfig {
 	return SIATargetSetsWorkspaceServiceConfig
 }

@@ -131,8 +131,9 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var accountsJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				accountsJSON = value.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list accounts, unexpected result")
@@ -144,7 +145,7 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 				return
 			}
 			results <- &ArkPCloudAccountsPage{Items: accounts}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)
@@ -208,8 +209,9 @@ func (s *ArkPCloudAccountsService) ListAccountSecretVersions(listAccountSecretVe
 	if err != nil {
 		return nil, err
 	}
+	accountsSecretVersionsJSONMap := accountsSecretVersionsJSON.(map[string]interface{})
 	var accountSecretVersions []*accountsmodels.ArkPCloudAccountSecretVersion
-	err = mapstructure.Decode(accountsSecretVersionsJSON["versions"], &accountSecretVersions)
+	err = mapstructure.Decode(accountsSecretVersionsJSONMap["versions"], &accountSecretVersions)
 	if err != nil {
 		return nil, err
 	}
@@ -237,8 +239,9 @@ func (s *ArkPCloudAccountsService) GenerateAccountCredentials(generateAccountCre
 	if err != nil {
 		return nil, err
 	}
+	accountSecretJSONMap := accountSecretJSON.(map[string]interface{})
 	var accountSecret accountsmodels.ArkPCloudAccountCredentials
-	err = mapstructure.Decode(accountSecretJSON["password"], &accountSecret)
+	err = mapstructure.Decode(accountSecretJSONMap["password"], &accountSecret)
 	if err != nil {
 		return nil, err
 	}

@@ -3,12 +3,12 @@ package safes
 import (
 	"context"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	safesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/pcloud/safes"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"net/url"
@@ -178,10 +178,11 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var safesJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				safesJSON = value.([]interface{})
-			} else if safesData, ok := result["Safes"]; ok {
+			} else if safesData, ok := resultMap["Safes"]; ok {
 				safesJSON = safesData.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list safes, unexpected result")
@@ -193,7 +194,7 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 				return
 			}
 			results <- &ArkPCloudSafesPage{Items: safes}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)
@@ -258,8 +259,9 @@ func (s *ArkPCloudSafesService) listSafeMembersWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var membersJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				membersJSON = value.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list safe members, unexpected result")
@@ -280,7 +282,7 @@ func (s *ArkPCloudSafesService) listSafeMembersWithFilters(
 				}
 			}
 			results <- &ArkPCloudSafeMembersPage{Items: members}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)

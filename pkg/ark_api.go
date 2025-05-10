@@ -107,11 +107,11 @@ func (api *ArkAPI) SiaK8s() (*siak8s.ArkSIAK8SService, error) {
 }
 
 // SiaWorkspacesTargetSets returns the SiaWorkspacesTargetSets service from the ArkAPI instance. If the service is not already created, it creates a new one.
-func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIATargetSetsWorkspaceService, error) {
+func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIAWorkspacesTargetSetsService, error) {
 	if targetSetsServiceInterface, ok := api.services[siatargetsets.SIATargetSetsWorkspaceServiceConfig.ServiceName]; ok {
-		return (*targetSetsServiceInterface).(*siatargetsets.ArkSIATargetSetsWorkspaceService), nil
+		return (*targetSetsServiceInterface).(*siatargetsets.ArkSIAWorkspacesTargetSetsService), nil
 	}
-	targetSetsService, err := siatargetsets.NewArkSIATargetSetsWorkspaceService(api.loadServiceAuthenticators(siatargetsets.SIATargetSetsWorkspaceServiceConfig)...)
+	targetSetsService, err := siatargetsets.NewArkSIAWorkspacesTargetSetsService(api.loadServiceAuthenticators(siatargetsets.SIATargetSetsWorkspaceServiceConfig)...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,11 +121,11 @@ func (api *ArkAPI) SiaWorkspacesTargetSets() (*siatargetsets.ArkSIATargetSetsWor
 }
 
 // SiaWorkspacesDB returns the Workspaces DB service from the ArkAPI instance. If the service is not already created, it creates a new one.
-func (api *ArkAPI) SiaWorkspacesDB() (*siaworkspacesdb.ArkSIADBWorkspaceService, error) {
+func (api *ArkAPI) SiaWorkspacesDB() (*siaworkspacesdb.ArkSIAWorkspacesDBService, error) {
 	if workspacesDBServiceInterface, ok := api.services[siaworkspacesdb.SIADBWorkspaceServiceConfig.ServiceName]; ok {
-		return (*workspacesDBServiceInterface).(*siaworkspacesdb.ArkSIADBWorkspaceService), nil
+		return (*workspacesDBServiceInterface).(*siaworkspacesdb.ArkSIAWorkspacesDBService), nil
 	}
-	workspacesDBService, err := siaworkspacesdb.NewArkSIADBWorkspaceService(api.loadServiceAuthenticators(siaworkspacesdb.SIADBWorkspaceServiceConfig)...)
+	workspacesDBService, err := siaworkspacesdb.NewArkSIAWorkspacesDBService(api.loadServiceAuthenticators(siaworkspacesdb.SIADBWorkspaceServiceConfig)...)
 	if err != nil {
 		return nil, err
 	}

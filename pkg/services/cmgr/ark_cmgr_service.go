@@ -3,12 +3,12 @@ package cmgr
 import (
 	"context"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/cmgr"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 )
@@ -137,14 +137,15 @@ func listCommonPools[PageItemType any](
 				logger.Error("Failed to decode response for %s: %v", name, err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var items []*PageItemType
-			err = mapstructure.Decode(result["resources"], &items)
+			err = mapstructure.Decode(resultMap["resources"], &items)
 			if err != nil {
 				logger.Error("Failed to decode resources for %s: %v", name, err)
 				return
 			}
 			pageChannel <- &common.ArkPage[PageItemType]{Items: items}
-			pageInfo, ok := result["page"].(map[string]interface{})
+			pageInfo, ok := resultMap["page"].(map[string]interface{})
 			if !ok || pageInfo["continuation_token"] == nil || pageInfo["continuation_token"] == "" {
 				break
 			}

@@ -213,6 +213,8 @@ func (s *ArkSIASecretsDBService) UpdateSecret(updateSecret *dbsecretsmodels.ArkS
 	updateSecretMap := make(map[string]interface{})
 	if updateSecret.NewSecretName != "" {
 		updateSecretMap["secret_name"] = updateSecret.NewSecretName
+	} else if updateSecret.SecretName != "" {
+		updateSecretMap["secret_name"] = updateSecret.SecretName
 	}
 	if updateSecret.Description != "" {
 		updateSecretMap["description"] = updateSecret.Description
