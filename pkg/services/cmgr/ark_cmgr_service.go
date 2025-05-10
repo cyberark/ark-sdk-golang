@@ -564,10 +564,27 @@ func (s *ArkCmgrService) AddPoolIdentifiers(addPoolIdentifiers *cmgrmodels.ArkCm
 	return &cmgrmodels.ArkCmgrPoolIdentifiers{Identifiers: identifiers}, nil
 }
 
+// UpdatePoolIdentifier updates an existing identifier in a specific pool in the connector management service.
+func (s *ArkCmgrService) UpdatePoolIdentifier(updatePoolIdentifier *cmgrmodels.ArkCmgrUpdatePoolIdentifier) (*cmgrmodels.ArkCmgrPoolIdentifier, error) {
+	s.Logger.Info("Updating pool identifier [%s] from pool [%s]", updatePoolIdentifier.ID, updatePoolIdentifier.PoolID)
+	err := s.DeletePoolIdentifier(&cmgrmodels.ArkCmgrDeletePoolSingleIdentifier{
+		ID:     updatePoolIdentifier.ID,
+		PoolID: updatePoolIdentifier.PoolID,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return s.AddPoolIdentifier(&cmgrmodels.ArkCmgrAddPoolSingleIdentifier{
+		Type:   updatePoolIdentifier.Type,
+		Value:  updatePoolIdentifier.Value,
+		PoolID: updatePoolIdentifier.PoolID,
+	})
+}
+
 // DeletePoolIdentifier deletes an identifier from a specific pool in the connector management service.
 func (s *ArkCmgrService) DeletePoolIdentifier(deletePoolIdentifier *cmgrmodels.ArkCmgrDeletePoolSingleIdentifier) error {
-	s.Logger.Info("Deleting pool identifier [%s]", deletePoolIdentifier.IdentifierID)
-	response, err := s.client.Delete(context.Background(), fmt.Sprintf(poolIdentifierURL, deletePoolIdentifier.PoolID, deletePoolIdentifier.IdentifierID), nil)
+	s.Logger.Info("Deleting pool identifier [%s]", deletePoolIdentifier.ID)
+	response, err := s.client.Delete(context.Background(), fmt.Sprintf(poolIdentifierURL, deletePoolIdentifier.PoolID, deletePoolIdentifier.ID), nil)
 	if err != nil {
 		return err
 	}
@@ -644,6 +661,23 @@ func (s *ArkCmgrService) ListPoolIdentifiersBy(identifiersFilters *cmgrmodels.Ar
 		fmt.Sprintf(poolIdentifiersURL, identifiersFilters.PoolID),
 		&identifiersFilters.ArkCmgrPoolsCommonFilter,
 	)
+}
+
+// PoolIdentifier retrieves a specific identifier by its ID from a specific pool in the connector management service.
+func (s *ArkCmgrService) PoolIdentifier(getIdentifier *cmgrmodels.ArkCmgrGetPoolIdentifier) (*cmgrmodels.ArkCmgrPoolIdentifier, error) {
+	s.Logger.Info("Retrieving pool identifier [%s] from pool [%s]", getIdentifier.ID, getIdentifier.PoolID)
+	identifiers, err := s.ListPoolIdentifiers(&cmgrmodels.ArkCmgrListPoolIdentifiers{PoolID: getIdentifier.PoolID})
+	if err != nil {
+		return nil, err
+	}
+	for page := range identifiers {
+		for _, identifier := range page.Items {
+			if identifier.ID == getIdentifier.ID {
+				return identifier, nil
+			}
+		}
+	}
+	return nil, fmt.Errorf("failed to retrieve pool identifier - [%s] from pool - [%s]", getIdentifier.ID, getIdentifier.PoolID)
 }
 
 // ListPoolsComponents lists all components in the connector management service.

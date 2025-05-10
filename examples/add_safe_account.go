@@ -54,5 +54,5 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("Safe added: %s\n", safe.SafeName)
-	fmt.Printf("Account added: %s\n", account.ID)
+	fmt.Printf("Account added: %s\n", account.AccountID)
 }

@@ -139,6 +139,13 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 				s.Logger.Error("Failed to list accounts, unexpected result")
 				return
 			}
+			for i, account := range accountsJSON {
+				if accountMap, ok := account.(map[string]interface{}); ok {
+					if accountId, ok := accountMap["id"]; ok {
+						accountsJSON[i].(map[string]interface{})["account_id"] = accountId
+					}
+				}
+			}
 			var accounts []*accountsmodels.ArkPCloudAccount
 			if err := mapstructure.Decode(accountsJSON, &accounts); err != nil {
 				s.Logger.Error("Failed to validate accounts: %v", err)
@@ -379,8 +386,12 @@ func (s *ArkPCloudAccountsService) Account(getAccount *accountsmodels.ArkPCloudG
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountId, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountId
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}
@@ -478,11 +489,16 @@ func (s *ArkPCloudAccountsService) AddAccount(addAccount *accountsmodels.ArkPClo
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountId, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountId
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}
+
 	return &account, nil
 }
 
@@ -547,8 +563,12 @@ func (s *ArkPCloudAccountsService) UpdateAccount(updateAccount *accountsmodels.A
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountId, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountId
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}

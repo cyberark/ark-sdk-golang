@@ -188,6 +188,13 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 				s.Logger.Error("Failed to list safes, unexpected result")
 				return
 			}
+			for i, safe := range safesJSON {
+				if safeMap, ok := safe.(map[string]interface{}); ok {
+					if safeId, ok := safeMap["id"]; ok {
+						safesJSON[i].(map[string]interface{})["safe_id"] = safeId
+					}
+				}
+			}
 			var safes []*safesmodels.ArkPCloudSafe
 			if err := mapstructure.Decode(safesJSON, &safes); err != nil {
 				s.Logger.Error("Failed to validate safes: %v", err)
@@ -368,8 +375,12 @@ func (s *ArkPCloudSafesService) Safe(getSafe *safesmodels.ArkPCloudGetSafe) (*sa
 	if err != nil {
 		return nil, err
 	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeId, ok := safeJSONMap["id"]; ok {
+		safeJSONMap["safe_id"] = safeId
+	}
 	var safe safesmodels.ArkPCloudSafe
-	err = mapstructure.Decode(safeJSON, &safe)
+	err = mapstructure.Decode(safeJSONMap, &safe)
 	if err != nil {
 		return nil, err
 	}
@@ -436,6 +447,10 @@ func (s *ArkPCloudSafesService) AddSafe(addSafe *safesmodels.ArkPCloudAddSafe) (
 	safeJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeId, ok := safeJSONMap["id"]; ok {
+		safeJSONMap["safe_id"] = safeId
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)
@@ -565,6 +580,10 @@ func (s *ArkPCloudSafesService) UpdateSafe(updateSafe *safesmodels.ArkPCloudUpda
 	safeJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeId, ok := safeJSONMap["id"]; ok {
+		safeJSONMap["safe_id"] = safeId
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)
@@ -711,7 +730,7 @@ func (s *ArkPCloudSafesService) SafesMembersStats() (*safesmodels.ArkPCloudSafes
 			wg.Add(1)
 			go func(safe *safesmodels.ArkPCloudSafe) {
 				defer wg.Done()
-				safeMembersStats, err := s.SafeMembersStats(&safesmodels.ArkPCloudGetSafeMembersStats{SafeID: safe.SafeURLID})
+				safeMembersStats, err := s.SafeMembersStats(&safesmodels.ArkPCloudGetSafeMembersStats{SafeID: safe.SafeID})
 				if err != nil {
 					once.Do(func() {
 						firstErr = err

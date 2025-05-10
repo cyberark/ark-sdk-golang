@@ -21,7 +21,7 @@ type ArkPCloudAccountRemoteMachinesAccess struct {
 
 // ArkPCloudAccount represents the full properties of an account.
 type ArkPCloudAccount struct {
-	ID                        string                               `json:"id" mapstructure:"id" desc:"ID of the account" flag:"id" validate:"required"`
+	AccountID                 string                               `json:"account_id" mapstructure:"account_id" desc:"ID of the account" flag:"account-id" validate:"required"`
 	Status                    string                               `json:"status,omitempty" mapstructure:"status,omitempty" desc:"Status of the account" flag:"status"`
 	CreatedTime               int                                  `json:"created_time,omitempty" mapstructure:"created_time,omitempty" desc:"Creation time of the account" flag:"created-time"`
 	CategoryModificationTime  int                                  `json:"category_modification_time,omitempty" mapstructure:"category_modification_time,omitempty" desc:"Category modification time of the account" flag:"category-modification-time"`
