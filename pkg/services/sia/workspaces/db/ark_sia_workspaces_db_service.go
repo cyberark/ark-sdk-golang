@@ -227,6 +227,8 @@ func (s *ArkSIAWorkspacesDBService) UpdateDatabase(updateDatabase *dbmodels.ArkS
 		mergedDatabase["name"] = updateDatabase.NewName
 	} else if updateDatabase.Name != "" {
 		mergedDatabase["name"] = updateDatabase.Name
+	} else {
+		mergedDatabase["name"] = existingDatabase.Name
 	}
 
 	// Handling configured auth method
