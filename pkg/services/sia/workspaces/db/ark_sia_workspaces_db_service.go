@@ -58,6 +58,22 @@ func NewArkSIAWorkspacesDBService(authenticators ...auth.ArkAuth) (*ArkSIAWorksp
 	return dbService, nil
 }
 
+func (s *ArkSIAWorkspacesDBService) parseDatabaseTagsIntoMap(databaseJSONMap map[string]interface{}) {
+	if tags, ok := databaseJSONMap["tags"].([]interface{}); ok {
+		parsedTags := make(map[string]string)
+		for _, tag := range tags {
+			if tagMap, ok := tag.(map[string]interface{}); ok {
+				key, keyOk := tagMap["key"].(string)
+				value, valueOk := tagMap["value"].(string)
+				if keyOk && valueOk {
+					parsedTags[key] = value
+				}
+			}
+		}
+		databaseJSONMap["tags"] = parsedTags
+	}
+}
+
 func (s *ArkSIAWorkspacesDBService) refreshSIAAuth(client *common.ArkClient) error {
 	err := isp.RefreshClient(client, s.ispAuth)
 	if err != nil {
@@ -121,6 +137,34 @@ func (s *ArkSIAWorkspacesDBService) AddDatabase(addDatabase *dbmodels.ArkSIADBAd
 	err := mapstructure.Decode(addDatabase, &addDatabaseJSON)
 	if err != nil {
 		return nil, err
+	}
+	if addDatabase.Tags != nil {
+		addDatabaseJSON["tags"] = make([]dbmodels.ArkSIADBTag, len(addDatabase.Tags))
+		idx := 0
+		for key, value := range addDatabase.Tags {
+			if key == "" {
+				continue
+			}
+			addDatabaseJSON["tags"].([]dbmodels.ArkSIADBTag)[idx] = dbmodels.ArkSIADBTag{
+				Key:   key,
+				Value: value,
+			}
+			idx++
+		}
+	}
+	if addDatabase.Tags != nil {
+		addDatabaseJSON["tags"] = make([]dbmodels.ArkSIADBTag, len(addDatabase.Tags))
+		idx := 0
+		for key, value := range addDatabase.Tags {
+			if key == "" {
+				continue
+			}
+			addDatabaseJSON["tags"].([]dbmodels.ArkSIADBTag)[idx] = dbmodels.ArkSIADBTag{
+				Key:   key,
+				Value: value,
+			}
+			idx++
+		}
 	}
 	response, err := s.client.Post(context.Background(), resourcesURL, addDatabaseJSON)
 	if err != nil {
@@ -243,6 +287,21 @@ func (s *ArkSIAWorkspacesDBService) UpdateDatabase(updateDatabase *dbmodels.ArkS
 		mergedDatabase["provider_engine"] = existingDatabase.ProviderDetails.Engine
 	}
 
+	if updateDatabase.Tags != nil {
+		mergedDatabase["tags"] = make([]dbmodels.ArkSIADBTag, len(updateDatabase.Tags))
+		idx := 0
+		for key, value := range updateDatabase.Tags {
+			if key == "" {
+				continue
+			}
+			mergedDatabase["tags"].([]dbmodels.ArkSIADBTag)[idx] = dbmodels.ArkSIADBTag{
+				Key:   key,
+				Value: value,
+			}
+			idx++
+		}
+	}
+
 	s.Logger.Info(fmt.Sprintf("Updating database [%d]", updateDatabase.ID))
 	response, err := s.client.Put(context.Background(), fmt.Sprintf(resourceURL, updateDatabase.ID), mergedDatabase)
 	if err != nil {
@@ -292,8 +351,10 @@ func (s *ArkSIAWorkspacesDBService) Database(getDatabase *dbmodels.ArkSIADBGetDa
 	if err != nil {
 		return nil, err
 	}
+	databaseJSONMap := databaseJSON.(map[string]interface{})
+	s.parseDatabaseTagsIntoMap(databaseJSONMap)
 	var database dbmodels.ArkSIADBDatabase
-	err = mapstructure.Decode(databaseJSON, &database)
+	err = mapstructure.Decode(databaseJSONMap, &database)
 	return &database, nil
 }
 
