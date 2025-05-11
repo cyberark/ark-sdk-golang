@@ -152,20 +152,6 @@ func (s *ArkSIAWorkspacesDBService) AddDatabase(addDatabase *dbmodels.ArkSIADBAd
 			idx++
 		}
 	}
-	if addDatabase.Tags != nil {
-		addDatabaseJSON["tags"] = make([]dbmodels.ArkSIADBTag, len(addDatabase.Tags))
-		idx := 0
-		for key, value := range addDatabase.Tags {
-			if key == "" {
-				continue
-			}
-			addDatabaseJSON["tags"].([]dbmodels.ArkSIADBTag)[idx] = dbmodels.ArkSIADBTag{
-				Key:   key,
-				Value: value,
-			}
-			idx++
-		}
-	}
 	response, err := s.client.Post(context.Background(), resourcesURL, addDatabaseJSON)
 	if err != nil {
 		return nil, err
