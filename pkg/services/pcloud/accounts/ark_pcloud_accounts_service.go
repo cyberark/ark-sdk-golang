@@ -131,12 +131,23 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var accountsJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				accountsJSON = value.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list accounts, unexpected result")
 				return
+			}
+			for i, account := range accountsJSON {
+				if accountMap, ok := account.(map[string]interface{}); ok {
+					if accountID, ok := accountMap["id"]; ok {
+						accountsJSON[i].(map[string]interface{})["account_id"] = accountID
+					}
+					if userName, ok := accountMap["user_name"]; ok {
+						accountsJSON[i].(map[string]interface{})["username"] = userName
+					}
+				}
 			}
 			var accounts []*accountsmodels.ArkPCloudAccount
 			if err := mapstructure.Decode(accountsJSON, &accounts); err != nil {
@@ -144,7 +155,7 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 				return
 			}
 			results <- &ArkPCloudAccountsPage{Items: accounts}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)
@@ -208,8 +219,9 @@ func (s *ArkPCloudAccountsService) ListAccountSecretVersions(listAccountSecretVe
 	if err != nil {
 		return nil, err
 	}
+	accountsSecretVersionsJSONMap := accountsSecretVersionsJSON.(map[string]interface{})
 	var accountSecretVersions []*accountsmodels.ArkPCloudAccountSecretVersion
-	err = mapstructure.Decode(accountsSecretVersionsJSON["versions"], &accountSecretVersions)
+	err = mapstructure.Decode(accountsSecretVersionsJSONMap["versions"], &accountSecretVersions)
 	if err != nil {
 		return nil, err
 	}
@@ -237,8 +249,9 @@ func (s *ArkPCloudAccountsService) GenerateAccountCredentials(generateAccountCre
 	if err != nil {
 		return nil, err
 	}
+	accountSecretJSONMap := accountSecretJSON.(map[string]interface{})
 	var accountSecret accountsmodels.ArkPCloudAccountCredentials
-	err = mapstructure.Decode(accountSecretJSON["password"], &accountSecret)
+	err = mapstructure.Decode(accountSecretJSONMap["password"], &accountSecret)
 	if err != nil {
 		return nil, err
 	}
@@ -376,8 +389,15 @@ func (s *ArkPCloudAccountsService) Account(getAccount *accountsmodels.ArkPCloudG
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}
@@ -475,11 +495,19 @@ func (s *ArkPCloudAccountsService) AddAccount(addAccount *accountsmodels.ArkPClo
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}
+
 	return &account, nil
 }
 
@@ -544,8 +572,15 @@ func (s *ArkPCloudAccountsService) UpdateAccount(updateAccount *accountsmodels.A
 	if err != nil {
 		return nil, err
 	}
+	accountJSONMap := accountJSON.(map[string]interface{})
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
+	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSON, &account)
+	err = mapstructure.Decode(accountJSONMap, &account)
 	if err != nil {
 		return nil, err
 	}

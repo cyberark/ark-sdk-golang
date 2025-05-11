@@ -22,22 +22,22 @@ const (
 
 // SIADBWorkspaceServiceConfig is the configuration for the SIA db workspace service.
 var SIADBWorkspaceServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-db-workspace",
+	ServiceName:                "sia-workspaces-db",
 	RequiredAuthenticatorNames: []string{"isp"},
 	OptionalAuthenticatorNames: []string{},
 }
 
-// ArkSIADBWorkspaceService is the service for managing databases in a workspace.
-type ArkSIADBWorkspaceService struct {
+// ArkSIAWorkspacesDBService is the service for managing databases in a workspace.
+type ArkSIAWorkspacesDBService struct {
 	services.ArkService
 	*services.ArkBaseService
 	ispAuth *auth.ArkISPAuth
 	client  *isp.ArkISPServiceClient
 }
 
-// NewArkSIADBWorkspaceService creates a new instance of ArkSIADBWorkspaceService.
-func NewArkSIADBWorkspaceService(authenticators ...auth.ArkAuth) (*ArkSIADBWorkspaceService, error) {
-	dbService := &ArkSIADBWorkspaceService{}
+// NewArkSIAWorkspacesDBService creates a new instance of ArkSIAWorkspacesDBService.
+func NewArkSIAWorkspacesDBService(authenticators ...auth.ArkAuth) (*ArkSIAWorkspacesDBService, error) {
+	dbService := &ArkSIAWorkspacesDBService{}
 	var dbServiceInterface services.ArkService = dbService
 	baseService, err := services.NewArkBaseService(dbServiceInterface, authenticators...)
 	if err != nil {
@@ -58,7 +58,7 @@ func NewArkSIADBWorkspaceService(authenticators ...auth.ArkAuth) (*ArkSIADBWorks
 	return dbService, nil
 }
 
-func (s *ArkSIADBWorkspaceService) refreshSIAAuth(client *common.ArkClient) error {
+func (s *ArkSIAWorkspacesDBService) refreshSIAAuth(client *common.ArkClient) error {
 	err := isp.RefreshClient(client, s.ispAuth)
 	if err != nil {
 		return err
@@ -66,7 +66,7 @@ func (s *ArkSIADBWorkspaceService) refreshSIAAuth(client *common.ArkClient) erro
 	return nil
 }
 
-func (s *ArkSIADBWorkspaceService) listDatabasesWithFilters(providerFamily string, tags []dbmodels.ArkSIADBTag) (*dbmodels.ArkSIADBDatabaseInfoList, error) {
+func (s *ArkSIAWorkspacesDBService) listDatabasesWithFilters(providerFamily string, tags []dbmodels.ArkSIADBTag) (*dbmodels.ArkSIADBDatabaseInfoList, error) {
 	params := make(map[string]string)
 	if providerFamily != "" {
 		params["provider-family"] = providerFamily
@@ -100,7 +100,7 @@ func (s *ArkSIADBWorkspaceService) listDatabasesWithFilters(providerFamily strin
 }
 
 // AddDatabase adds a new database to the SIA workspace.
-func (s *ArkSIADBWorkspaceService) AddDatabase(addDatabase *dbmodels.ArkSIADBAddDatabase) (*dbmodels.ArkSIADBDatabase, error) {
+func (s *ArkSIAWorkspacesDBService) AddDatabase(addDatabase *dbmodels.ArkSIADBAddDatabase) (*dbmodels.ArkSIADBDatabase, error) {
 	s.Logger.Info(fmt.Sprintf("Adding database [%s]", addDatabase.Name))
 	// Validate ProviderEngine
 	if !slices.Contains(dbmodels.DatabaseEngineTypes, addDatabase.ProviderEngine) {
@@ -139,7 +139,8 @@ func (s *ArkSIADBWorkspaceService) AddDatabase(addDatabase *dbmodels.ArkSIADBAdd
 	if err != nil {
 		return nil, err
 	}
-	databaseID, ok := databaseJSON["target_id"].(float64)
+	databaseJSONMap := databaseJSON.(map[string]interface{})
+	databaseID, ok := databaseJSONMap["target_id"].(float64)
 	if !ok {
 		return nil, fmt.Errorf("missing target_id in response")
 	}
@@ -148,7 +149,7 @@ func (s *ArkSIADBWorkspaceService) AddDatabase(addDatabase *dbmodels.ArkSIADBAdd
 }
 
 // DeleteDatabase deletes a database.
-func (s *ArkSIADBWorkspaceService) DeleteDatabase(deleteDatabase *dbmodels.ArkSIADBDeleteDatabase) error {
+func (s *ArkSIAWorkspacesDBService) DeleteDatabase(deleteDatabase *dbmodels.ArkSIADBDeleteDatabase) error {
 	if deleteDatabase.Name != "" && deleteDatabase.ID == 0 {
 		databases, err := s.ListDatabasesBy(&dbmodels.ArkSIADBDatabasesFilter{Name: deleteDatabase.Name})
 		if err != nil {
@@ -178,7 +179,7 @@ func (s *ArkSIADBWorkspaceService) DeleteDatabase(deleteDatabase *dbmodels.ArkSI
 }
 
 // UpdateDatabase updates a database.
-func (s *ArkSIADBWorkspaceService) UpdateDatabase(updateDatabase *dbmodels.ArkSIADBUpdateDatabase) (*dbmodels.ArkSIADBDatabase, error) {
+func (s *ArkSIAWorkspacesDBService) UpdateDatabase(updateDatabase *dbmodels.ArkSIADBUpdateDatabase) (*dbmodels.ArkSIADBDatabase, error) {
 	if updateDatabase.Name != "" && updateDatabase.ID == 0 {
 		databases, err := s.ListDatabasesBy(&dbmodels.ArkSIADBDatabasesFilter{Name: updateDatabase.Name})
 		if err != nil {
@@ -224,6 +225,10 @@ func (s *ArkSIADBWorkspaceService) UpdateDatabase(updateDatabase *dbmodels.ArkSI
 	delete(mergedDatabase, "new_name")
 	if updateDatabase.NewName != "" {
 		mergedDatabase["name"] = updateDatabase.NewName
+	} else if updateDatabase.Name != "" {
+		mergedDatabase["name"] = updateDatabase.Name
+	} else {
+		mergedDatabase["name"] = existingDatabase.Name
 	}
 
 	// Handling configured auth method
@@ -255,7 +260,7 @@ func (s *ArkSIADBWorkspaceService) UpdateDatabase(updateDatabase *dbmodels.ArkSI
 }
 
 // Database retrieves a database by id or name.
-func (s *ArkSIADBWorkspaceService) Database(getDatabase *dbmodels.ArkSIADBGetDatabase) (*dbmodels.ArkSIADBDatabase, error) {
+func (s *ArkSIAWorkspacesDBService) Database(getDatabase *dbmodels.ArkSIADBGetDatabase) (*dbmodels.ArkSIADBDatabase, error) {
 	// If Name is provided but ID is not, fetch the ID by filtering databases
 	if getDatabase.Name != "" && getDatabase.ID == 0 {
 		filter := &dbmodels.ArkSIADBDatabasesFilter{Name: getDatabase.Name}
@@ -293,13 +298,13 @@ func (s *ArkSIADBWorkspaceService) Database(getDatabase *dbmodels.ArkSIADBGetDat
 }
 
 // ListDatabases lists all databases.
-func (s *ArkSIADBWorkspaceService) ListDatabases() (*dbmodels.ArkSIADBDatabaseInfoList, error) {
+func (s *ArkSIAWorkspacesDBService) ListDatabases() (*dbmodels.ArkSIADBDatabaseInfoList, error) {
 	s.Logger.Info("Listing all databases")
 	return s.listDatabasesWithFilters("", nil)
 }
 
 // ListDatabasesBy filters databases by the given filters.
-func (s *ArkSIADBWorkspaceService) ListDatabasesBy(databasesFilter *dbmodels.ArkSIADBDatabasesFilter) (*dbmodels.ArkSIADBDatabaseInfoList, error) {
+func (s *ArkSIAWorkspacesDBService) ListDatabasesBy(databasesFilter *dbmodels.ArkSIADBDatabasesFilter) (*dbmodels.ArkSIADBDatabaseInfoList, error) {
 	if databasesFilter.ProviderEngine != "" && !slices.Contains(dbmodels.DatabaseEngineTypes, databasesFilter.ProviderEngine) {
 		return nil, fmt.Errorf("invalid provider engine: %s", databasesFilter.ProviderEngine)
 	}
@@ -354,7 +359,7 @@ func (s *ArkSIADBWorkspaceService) ListDatabasesBy(databasesFilter *dbmodels.Ark
 }
 
 // DatabasesStats calculates statistics about databases.
-func (s *ArkSIADBWorkspaceService) DatabasesStats() (*dbmodels.ArkSIADBDatabasesStats, error) {
+func (s *ArkSIAWorkspacesDBService) DatabasesStats() (*dbmodels.ArkSIADBDatabasesStats, error) {
 	s.Logger.Info("Calculating databases stats")
 	databases, err := s.ListDatabases()
 	if err != nil {
@@ -402,16 +407,16 @@ func (s *ArkSIADBWorkspaceService) DatabasesStats() (*dbmodels.ArkSIADBDatabases
 }
 
 // ListEngineTypes returns all possible database engine types.
-func (s *ArkSIADBWorkspaceService) ListEngineTypes() []string {
+func (s *ArkSIAWorkspacesDBService) ListEngineTypes() []string {
 	return dbmodels.DatabaseEngineTypes
 }
 
 // ListFamilyTypes returns all possible database family types.
-func (s *ArkSIADBWorkspaceService) ListFamilyTypes() []string {
+func (s *ArkSIAWorkspacesDBService) ListFamilyTypes() []string {
 	return dbmodels.DatabaseFamilyTypes
 }
 
 // ServiceConfig returns the service configuration for the ArkSIATargetSetsWorkspaceService.
-func (s *ArkSIADBWorkspaceService) ServiceConfig() services.ArkServiceConfig {
+func (s *ArkSIAWorkspacesDBService) ServiceConfig() services.ArkServiceConfig {
 	return SIADBWorkspaceServiceConfig
 }

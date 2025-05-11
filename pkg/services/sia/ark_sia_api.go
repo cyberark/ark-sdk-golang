@@ -15,8 +15,8 @@ import (
 type ArkSIAAPI struct {
 	ssoService          *sso.ArkSIASSOService
 	k8sService          *k8s.ArkSIAK8SService
-	targetSetsService   *targetsets.ArkSIATargetSetsWorkspaceService
-	workspacesDBService *db.ArkSIADBWorkspaceService
+	targetSetsService   *targetsets.ArkSIAWorkspacesTargetSetsService
+	workspacesDBService *db.ArkSIAWorkspacesDBService
 	vmSecretsService    *vmsecrets.ArkSIASecretsVMService
 	dbSecretsService    *dbsecrets.ArkSIASecretsDBService
 	accessService       *access.ArkSIAAccessService
@@ -33,11 +33,11 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	targetSetsService, err := targetsets.NewArkSIATargetSetsWorkspaceService(baseIspAuth)
+	targetSetsService, err := targetsets.NewArkSIAWorkspacesTargetSetsService(baseIspAuth)
 	if err != nil {
 		return nil, err
 	}
-	workspaceDBService, err := db.NewArkSIADBWorkspaceService(baseIspAuth)
+	workspaceDBService, err := db.NewArkSIAWorkspacesDBService(baseIspAuth)
 	if err != nil {
 		return nil, err
 	}
@@ -75,12 +75,12 @@ func (api *ArkSIAAPI) K8s() *k8s.ArkSIAK8SService {
 }
 
 // WorkspacesTargetSets returns the TargetSets service of the ArkSIAAPI instance.
-func (api *ArkSIAAPI) WorkspacesTargetSets() *targetsets.ArkSIATargetSetsWorkspaceService {
+func (api *ArkSIAAPI) WorkspacesTargetSets() *targetsets.ArkSIAWorkspacesTargetSetsService {
 	return api.targetSetsService
 }
 
 // WorkspacesDB returns the workspace DB service of the ArkSIAAPI instance.
-func (api *ArkSIAAPI) WorkspacesDB() *db.ArkSIADBWorkspaceService {
+func (api *ArkSIAAPI) WorkspacesDB() *db.ArkSIAWorkspacesDBService {
 	return api.workspacesDBService
 }
 

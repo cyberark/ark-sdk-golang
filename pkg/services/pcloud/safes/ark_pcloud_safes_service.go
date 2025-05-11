@@ -3,12 +3,12 @@ package safes
 import (
 	"context"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	safesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/pcloud/safes"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"net/url"
@@ -178,14 +178,22 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var safesJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				safesJSON = value.([]interface{})
-			} else if safesData, ok := result["Safes"]; ok {
+			} else if safesData, ok := resultMap["Safes"]; ok {
 				safesJSON = safesData.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list safes, unexpected result")
 				return
+			}
+			for i, safe := range safesJSON {
+				if safeMap, ok := safe.(map[string]interface{}); ok {
+					if safeID, ok := safeMap["safe_url_id"]; ok {
+						safesJSON[i].(map[string]interface{})["safe_id"] = safeID
+					}
+				}
 			}
 			var safes []*safesmodels.ArkPCloudSafe
 			if err := mapstructure.Decode(safesJSON, &safes); err != nil {
@@ -193,7 +201,7 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 				return
 			}
 			results <- &ArkPCloudSafesPage{Items: safes}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)
@@ -258,8 +266,9 @@ func (s *ArkPCloudSafesService) listSafeMembersWithFilters(
 				s.Logger.Error("Failed to decode response: %v", err)
 				return
 			}
+			resultMap := result.(map[string]interface{})
 			var membersJSON []interface{}
-			if value, ok := result["value"]; ok {
+			if value, ok := resultMap["value"]; ok {
 				membersJSON = value.([]interface{})
 			} else {
 				s.Logger.Error("Failed to list safe members, unexpected result")
@@ -280,7 +289,7 @@ func (s *ArkPCloudSafesService) listSafeMembersWithFilters(
 				}
 			}
 			results <- &ArkPCloudSafeMembersPage{Items: members}
-			if nextLink, ok := result["nextLink"].(string); ok {
+			if nextLink, ok := resultMap["nextLink"].(string); ok {
 				nextQuery, _ := url.Parse(nextLink)
 				queryValues := nextQuery.Query()
 				query = make(map[string]string)
@@ -366,8 +375,12 @@ func (s *ArkPCloudSafesService) Safe(getSafe *safesmodels.ArkPCloudGetSafe) (*sa
 	if err != nil {
 		return nil, err
 	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
+	}
 	var safe safesmodels.ArkPCloudSafe
-	err = mapstructure.Decode(safeJSON, &safe)
+	err = mapstructure.Decode(safeJSONMap, &safe)
 	if err != nil {
 		return nil, err
 	}
@@ -434,6 +447,10 @@ func (s *ArkPCloudSafesService) AddSafe(addSafe *safesmodels.ArkPCloudAddSafe) (
 	safeJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)
@@ -563,6 +580,10 @@ func (s *ArkPCloudSafesService) UpdateSafe(updateSafe *safesmodels.ArkPCloudUpda
 	safeJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeJSONMap := safeJSON.(map[string]interface{})
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)
@@ -709,7 +730,7 @@ func (s *ArkPCloudSafesService) SafesMembersStats() (*safesmodels.ArkPCloudSafes
 			wg.Add(1)
 			go func(safe *safesmodels.ArkPCloudSafe) {
 				defer wg.Done()
-				safeMembersStats, err := s.SafeMembersStats(&safesmodels.ArkPCloudGetSafeMembersStats{SafeID: safe.SafeURLID})
+				safeMembersStats, err := s.SafeMembersStats(&safesmodels.ArkPCloudGetSafeMembersStats{SafeID: safe.SafeID})
 				if err != nil {
 					once.Do(func() {
 						firstErr = err

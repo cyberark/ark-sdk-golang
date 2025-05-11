@@ -46,7 +46,7 @@ func main() {
 	account, err := pcloudAPI.Accounts().AddAccount(&accountsmodels.ArkPCloudAddAccount{
 		SafeName:   safe.SafeName,
 		Secret:     "mysecret",
-		UserName:   "myuser",
+		Username:   "myuser",
 		Address:    "myaddr.com",
 		PlatformID: "UnixSSH",
 	})
@@ -54,5 +54,5 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("Safe added: %s\n", safe.SafeName)
-	fmt.Printf("Account added: %s\n", account.ID)
+	fmt.Printf("Account added: %s\n", account.AccountID)
 }

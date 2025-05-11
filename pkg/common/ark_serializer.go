@@ -64,13 +64,13 @@ func convertToCamelCase(data interface{}) interface{} {
 }
 
 // DeserializeJSONSnake takes an io.ReadCloser response and deserializes it into a map with snake_case keys.
-func DeserializeJSONSnake(response io.ReadCloser) (map[string]interface{}, error) {
-	var result map[string]interface{}
+func DeserializeJSONSnake(response io.ReadCloser) (interface{}, error) {
+	var result interface{}
 	err := json.NewDecoder(response).Decode(&result)
 	if err != nil {
 		return nil, err
 	}
-	return convertToSnakeCase(result).(map[string]interface{}), nil
+	return convertToSnakeCase(result).(interface{}), nil
 }
 
 // SerializeJSONCamel takes an interface and serializes it into a map with camelCase keys.

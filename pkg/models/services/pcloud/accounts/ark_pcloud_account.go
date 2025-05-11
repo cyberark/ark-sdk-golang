@@ -21,14 +21,14 @@ type ArkPCloudAccountRemoteMachinesAccess struct {
 
 // ArkPCloudAccount represents the full properties of an account.
 type ArkPCloudAccount struct {
-	ID                        string                               `json:"id" mapstructure:"id" desc:"ID of the account" flag:"id" validate:"required"`
+	AccountID                 string                               `json:"account_id" mapstructure:"account_id" desc:"ID of the account" flag:"account-id" validate:"required"`
 	Status                    string                               `json:"status,omitempty" mapstructure:"status,omitempty" desc:"Status of the account" flag:"status"`
 	CreatedTime               int                                  `json:"created_time,omitempty" mapstructure:"created_time,omitempty" desc:"Creation time of the account" flag:"created-time"`
 	CategoryModificationTime  int                                  `json:"category_modification_time,omitempty" mapstructure:"category_modification_time,omitempty" desc:"Category modification time of the account" flag:"category-modification-time"`
 	Name                      string                               `json:"name" mapstructure:"name" desc:"Name of the account" flag:"name" validate:"required"`
 	SafeName                  string                               `json:"safe_name" mapstructure:"safe_name" desc:"Safe name to store the account in" flag:"safe-name" validate:"required"`
 	PlatformID                string                               `json:"platform_id,omitempty" mapstructure:"platform_id,omitempty" desc:"Platform id to relate the account to" flag:"platform-id"`
-	UserName                  string                               `json:"user_name,omitempty" mapstructure:"user_name,omitempty" desc:"Username of the account" flag:"user-name"`
+	Username                  string                               `json:"username,omitempty" mapstructure:"username,omitempty" desc:"Username of the account" flag:"username"`
 	Address                   string                               `json:"address,omitempty" mapstructure:"address,omitempty" desc:"Address of the account" flag:"address"`
 	SecretType                string                               `json:"secret_type,omitempty" mapstructure:"secret_type,omitempty" desc:"Type of the secret of the account (password,key)" flag:"secret-type" choices:"password,key"`
 	PlatformAccountProperties map[string]interface{}               `json:"platform_account_properties,omitempty" mapstructure:"platform_account_properties,omitempty" desc:"Different properties related to the platform the account is related to" flag:"platform-account-properties"`
