@@ -206,6 +206,7 @@ func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flag
 			flags[key] = val
 		}
 	case "stringSlice":
+	case "[]string":
 		val, err := cmd.Flags().GetStringSlice(f.Name)
 		if err == nil {
 			flags[key] = val
@@ -216,11 +217,13 @@ func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flag
 			flags[key] = val
 		}
 	case "intSlice":
+	case "[]int":
 		val, err := cmd.Flags().GetIntSlice(f.Name)
 		if err == nil {
 			flags[key] = val
 		}
 	case "stringToString":
+	case "map[string]string":
 		val, err := cmd.Flags().GetStringToString(f.Name)
 		if err == nil {
 			flags[key] = val

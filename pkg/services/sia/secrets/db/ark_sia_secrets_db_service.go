@@ -69,6 +69,22 @@ func (s *ArkSIASecretsDBService) refreshSIAAuth(client *common.ArkClient) error 
 	return nil
 }
 
+func (s *ArkSIASecretsDBService) parseSecretTagsIntoMap(secretJSONMap map[string]interface{}) {
+	if tags, ok := secretJSONMap["tags"].([]interface{}); ok {
+		parsedTags := make(map[string]string)
+		for _, tag := range tags {
+			if tagMap, ok := tag.(map[string]interface{}); ok {
+				key, keyOk := tagMap["key"].(string)
+				value, valueOk := tagMap["value"].(string)
+				if keyOk && valueOk {
+					parsedTags[key] = value
+				}
+			}
+		}
+		secretJSONMap["tags"] = parsedTags
+	}
+}
+
 func (s *ArkSIASecretsDBService) listSecretsWithFilters(secretType string, tags map[string]string) (*dbsecretsmodels.ArkSIADBSecretMetadataList, error) {
 	params := make(map[string]string)
 	if secretType != "" {
@@ -96,8 +112,16 @@ func (s *ArkSIASecretsDBService) listSecretsWithFilters(secretType string, tags 
 	if err != nil {
 		return nil, err
 	}
+	secretsJSONMap := secretsJSON.(map[string]interface{})
+	if secrets, ok := secretsJSONMap["secrets"].([]interface{}); ok {
+		for _, secret := range secrets {
+			if secretMap, ok := secret.(map[string]interface{}); ok {
+				s.parseSecretTagsIntoMap(secretMap)
+			}
+		}
+	}
 	var secretsList dbsecretsmodels.ArkSIADBSecretMetadataList
-	err = mapstructure.Decode(secretsJSON, &secretsList)
+	err = mapstructure.Decode(secretsJSONMap, &secretsList)
 
 	if err != nil {
 		s.Logger.Error("Failed to parse list secrets response [%v]", err)
@@ -130,11 +154,16 @@ func (s *ArkSIASecretsDBService) AddSecret(addSecret *dbsecretsmodels.ArkSIADBAd
 	}
 	if addSecret.Tags != nil {
 		addSecretJSON["tags"] = make([]dbworkspacemodels.ArkSIADBTag, len(addSecret.Tags))
+		idx := 0
 		for key, value := range addSecret.Tags {
-			addSecretJSON["tags"] = append(addSecretJSON["tags"].([]dbworkspacemodels.ArkSIADBTag), dbworkspacemodels.ArkSIADBTag{
+			if key == "" {
+				continue
+			}
+			addSecretJSON["tags"].([]dbworkspacemodels.ArkSIADBTag)[idx] = dbworkspacemodels.ArkSIADBTag{
 				Key:   key,
 				Value: value,
-			})
+			}
+			idx++
 		}
 	}
 	switch addSecret.SecretType {
@@ -192,8 +221,10 @@ func (s *ArkSIASecretsDBService) AddSecret(addSecret *dbsecretsmodels.ArkSIADBAd
 	if err != nil {
 		return nil, err
 	}
+	secretJSONMap := secretJSON.(map[string]interface{})
+	s.parseSecretTagsIntoMap(secretJSONMap)
 	var secret dbsecretsmodels.ArkSIADBSecretMetadata
-	err = mapstructure.Decode(secretJSON, &secret)
+	err = mapstructure.Decode(secretJSONMap, &secret)
 	if err != nil {
 		return nil, err
 	}
@@ -224,11 +255,16 @@ func (s *ArkSIASecretsDBService) UpdateSecret(updateSecret *dbsecretsmodels.ArkS
 	}
 	if updateSecret.Tags != nil {
 		updateSecretMap["tags"] = make([]dbworkspacemodels.ArkSIADBTag, len(updateSecret.Tags))
+		idx := 0
 		for key, value := range updateSecret.Tags {
-			updateSecretMap["tags"] = append(updateSecretMap["tags"].([]dbworkspacemodels.ArkSIADBTag), dbworkspacemodels.ArkSIADBTag{
+			if key == "" {
+				continue
+			}
+			updateSecretMap["tags"].([]dbworkspacemodels.ArkSIADBTag)[idx] = dbworkspacemodels.ArkSIADBTag{
 				Key:   key,
 				Value: value,
-			})
+			}
+			idx++
 		}
 	}
 	if updateSecret.PAMAccountName != "" || updateSecret.PAMSafe != "" {
@@ -289,8 +325,10 @@ func (s *ArkSIASecretsDBService) UpdateSecret(updateSecret *dbsecretsmodels.ArkS
 	if err != nil {
 		return nil, err
 	}
+	secretJSONMap := secretJSON.(map[string]interface{})
+	s.parseSecretTagsIntoMap(secretJSONMap)
 	var secret dbsecretsmodels.ArkSIADBSecretMetadata
-	err = mapstructure.Decode(secretJSON, &secret)
+	err = mapstructure.Decode(secretJSONMap, &secret)
 	if err != nil {
 		return nil, err
 	}
@@ -451,8 +489,10 @@ func (s *ArkSIASecretsDBService) Secret(getSecret *dbsecretsmodels.ArkSIADBGetSe
 		s.Logger.Error("Failed to parse db secret response [%v]", err)
 		return nil, fmt.Errorf("failed to parse db secret response: %w", err)
 	}
+	secretJSONMap := secretJSON.(map[string]interface{})
+	s.parseSecretTagsIntoMap(secretJSONMap)
 	var secret dbsecretsmodels.ArkSIADBSecretMetadata
-	err = mapstructure.Decode(secretJSON, &secret)
+	err = mapstructure.Decode(secretJSONMap, &secret)
 	if err != nil {
 		return nil, err
 	}

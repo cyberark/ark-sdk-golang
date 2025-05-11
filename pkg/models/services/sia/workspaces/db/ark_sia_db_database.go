@@ -22,7 +22,7 @@ type ArkSIADBDatabase struct {
 	ReadOnlyEndpoint                            string                                     `json:"read_only_endpoint,omitempty" mapstructure:"read_only_endpoint,omitempty" flag:"read-only-endpoint" desc:"Optionally, a read only endpoint of the database"`
 	Port                                        int                                        `json:"port,omitempty" mapstructure:"port,omitempty" flag:"port" desc:"Port of the database, if not given, the default one will be used"`
 	SecretID                                    string                                     `json:"secret_id,omitempty" mapstructure:"secret_id,omitempty" flag:"secret-id" desc:"Secret identifier stored in the secret service related to this database"`
-	Tags                                        []ArkSIADBTag                              `json:"tags,omitempty" mapstructure:"tags,omitempty" flag:"tags" desc:"Tags for the database"`
+	Tags                                        map[string]string                          `json:"tags,omitempty" mapstructure:"tags,omitempty" flag:"tags" desc:"Tags for the database"`
 	ConfiguredAuthMethod                        ArkSIADBDatabaseTargetConfiguredAuthMethod `json:"configured_auth_method,omitempty" mapstructure:"configured_auth_method,omitempty" flag:"configured-auth-method" desc:"The target configured auth method"`
 	Region                                      string                                     `json:"region,omitempty" mapstructure:"region,omitempty" flag:"region" desc:"Region of the database, most commonly used with iam authentication"`
 }
