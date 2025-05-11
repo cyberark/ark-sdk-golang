@@ -141,8 +141,11 @@ func (s *ArkPCloudAccountsService) listAccountsWithFilters(
 			}
 			for i, account := range accountsJSON {
 				if accountMap, ok := account.(map[string]interface{}); ok {
-					if accountId, ok := accountMap["id"]; ok {
-						accountsJSON[i].(map[string]interface{})["account_id"] = accountId
+					if accountID, ok := accountMap["id"]; ok {
+						accountsJSON[i].(map[string]interface{})["account_id"] = accountID
+					}
+					if userName, ok := accountMap["user_name"]; ok {
+						accountsJSON[i].(map[string]interface{})["username"] = userName
 					}
 				}
 			}
@@ -387,8 +390,11 @@ func (s *ArkPCloudAccountsService) Account(getAccount *accountsmodels.ArkPCloudG
 		return nil, err
 	}
 	accountJSONMap := accountJSON.(map[string]interface{})
-	if accountId, ok := accountJSONMap["id"]; ok {
-		accountJSONMap["account_id"] = accountId
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
 	}
 	var account accountsmodels.ArkPCloudAccount
 	err = mapstructure.Decode(accountJSONMap, &account)
@@ -490,8 +496,11 @@ func (s *ArkPCloudAccountsService) AddAccount(addAccount *accountsmodels.ArkPClo
 		return nil, err
 	}
 	accountJSONMap := accountJSON.(map[string]interface{})
-	if accountId, ok := accountJSONMap["id"]; ok {
-		accountJSONMap["account_id"] = accountId
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
 	}
 	var account accountsmodels.ArkPCloudAccount
 	err = mapstructure.Decode(accountJSONMap, &account)
@@ -564,8 +573,11 @@ func (s *ArkPCloudAccountsService) UpdateAccount(updateAccount *accountsmodels.A
 		return nil, err
 	}
 	accountJSONMap := accountJSON.(map[string]interface{})
-	if accountId, ok := accountJSONMap["id"]; ok {
-		accountJSONMap["account_id"] = accountId
+	if accountID, ok := accountJSONMap["id"]; ok {
+		accountJSONMap["account_id"] = accountID
+	}
+	if userName, ok := accountJSONMap["user_name"]; ok {
+		accountJSONMap["username"] = userName
 	}
 	var account accountsmodels.ArkPCloudAccount
 	err = mapstructure.Decode(accountJSONMap, &account)

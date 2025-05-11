@@ -190,8 +190,8 @@ func (s *ArkPCloudSafesService) listSafesWithFilters(
 			}
 			for i, safe := range safesJSON {
 				if safeMap, ok := safe.(map[string]interface{}); ok {
-					if safeId, ok := safeMap["id"]; ok {
-						safesJSON[i].(map[string]interface{})["safe_id"] = safeId
+					if safeID, ok := safeMap["safe_url_id"]; ok {
+						safesJSON[i].(map[string]interface{})["safe_id"] = safeID
 					}
 				}
 			}
@@ -376,8 +376,8 @@ func (s *ArkPCloudSafesService) Safe(getSafe *safesmodels.ArkPCloudGetSafe) (*sa
 		return nil, err
 	}
 	safeJSONMap := safeJSON.(map[string]interface{})
-	if safeId, ok := safeJSONMap["id"]; ok {
-		safeJSONMap["safe_id"] = safeId
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSONMap, &safe)
@@ -449,8 +449,8 @@ func (s *ArkPCloudSafesService) AddSafe(addSafe *safesmodels.ArkPCloudAddSafe) (
 		return nil, err
 	}
 	safeJSONMap := safeJSON.(map[string]interface{})
-	if safeId, ok := safeJSONMap["id"]; ok {
-		safeJSONMap["safe_id"] = safeId
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)
@@ -582,8 +582,8 @@ func (s *ArkPCloudSafesService) UpdateSafe(updateSafe *safesmodels.ArkPCloudUpda
 		return nil, err
 	}
 	safeJSONMap := safeJSON.(map[string]interface{})
-	if safeId, ok := safeJSONMap["id"]; ok {
-		safeJSONMap["safe_id"] = safeId
+	if safeID, ok := safeJSONMap["safe_url_id"]; ok {
+		safeJSONMap["safe_id"] = safeID
 	}
 	var safe safesmodels.ArkPCloudSafe
 	err = mapstructure.Decode(safeJSON, &safe)

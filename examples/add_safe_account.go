@@ -46,7 +46,7 @@ func main() {
 	account, err := pcloudAPI.Accounts().AddAccount(&accountsmodels.ArkPCloudAddAccount{
 		SafeName:   safe.SafeName,
 		Secret:     "mysecret",
-		UserName:   "myuser",
+		Username:   "myuser",
 		Address:    "myaddr.com",
 		PlatformID: "UnixSSH",
 	})
