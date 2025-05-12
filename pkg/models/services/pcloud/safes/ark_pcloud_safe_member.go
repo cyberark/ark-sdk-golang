@@ -45,7 +45,7 @@ type ArkPCloudSafeMemberPermissions struct {
 
 // ArkPCloudSafeMember represents a safe member with its details and permissions.
 type ArkPCloudSafeMember struct {
-	SafeURLID                  string                         `json:"safe_url_id" mapstructure:"safe_url_id" desc:"Safe url identifier"`
+	SafeID                     string                         `json:"safe_id" mapstructure:"safe_id" desc:"Safe url identifier"`
 	SafeName                   string                         `json:"safe_name" mapstructure:"safe_name" desc:"Name of the safe of the member"`
 	SafeNumber                 int                            `json:"safe_number" mapstructure:"safe_number" desc:"Number id of the safe"`
 	MemberID                   interface{}                    `json:"member_id" mapstructure:"member_id" desc:"Member id"`
