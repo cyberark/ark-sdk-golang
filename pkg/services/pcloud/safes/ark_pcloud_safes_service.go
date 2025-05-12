@@ -274,6 +274,13 @@ func (s *ArkPCloudSafesService) listSafeMembersWithFilters(
 				s.Logger.Error("Failed to list safe members, unexpected result")
 				return
 			}
+			for i, safeMember := range membersJSON {
+				if safeMemberMap, ok := safeMember.(map[string]interface{}); ok {
+					if safeID, ok := safeMemberMap["safe_url_id"]; ok {
+						membersJSON[i].(map[string]interface{})["safe_id"] = safeID
+					}
+				}
+			}
 			var members []*safesmodels.ArkPCloudSafeMember
 			if err := mapstructure.Decode(membersJSON, &members); err != nil {
 				s.Logger.Error("Failed to validate safe members: %v", err)
@@ -408,6 +415,10 @@ func (s *ArkPCloudSafesService) SafeMember(getSafeMember *safesmodels.ArkPCloudG
 	if err != nil {
 		return nil, err
 	}
+	safeMemberJSONMap := safeMemberJSON.(map[string]interface{})
+	if safeID, ok := safeMemberJSONMap["safe_url_id"]; ok {
+		safeMemberJSONMap["safe_id"] = safeID
+	}
 	var safeMember safesmodels.ArkPCloudSafeMember
 	err = mapstructure.Decode(safeMemberJSON, &safeMember)
 	if err != nil {
@@ -431,6 +442,13 @@ func (s *ArkPCloudSafesService) AddSafe(addSafe *safesmodels.ArkPCloudAddSafe) (
 	if err != nil {
 		return nil, err
 	}
+	if addSafe.ManagingCPM != "" {
+		delete(addSafeJSON, "managingCpm")
+		addSafeJSON["managingCPM"] = addSafe.ManagingCPM
+	} else {
+		addSafeJSON["managingCPM"] = ""
+	}
+	addSafeJSON["olacEnabled"] = addSafe.OlacEnabled
 	response, err := s.client.Post(context.Background(), safesURL, addSafeJSON)
 	if err != nil {
 		return nil, err
@@ -496,6 +514,10 @@ func (s *ArkPCloudSafesService) AddSafeMember(addSafeMember *safesmodels.ArkPClo
 	safeMemberJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeMemberJSONMap := safeMemberJSON.(map[string]interface{})
+	if safeID, ok := safeMemberJSONMap["safe_url_id"]; ok {
+		safeMemberJSONMap["safe_id"] = safeID
 	}
 	var safeMember safesmodels.ArkPCloudSafeMember
 	err = mapstructure.Decode(safeMemberJSON, &safeMember)
@@ -633,6 +655,10 @@ func (s *ArkPCloudSafesService) UpdateSafeMember(updateSafeMember *safesmodels.A
 	safeMemberJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
+	}
+	safeMemberJSONMap := safeMemberJSON.(map[string]interface{})
+	if safeID, ok := safeMemberJSONMap["safe_url_id"]; ok {
+		safeMemberJSONMap["safe_id"] = safeID
 	}
 	var safeMember safesmodels.ArkPCloudSafeMember
 	err = mapstructure.Decode(safeMemberJSON, &safeMember)
