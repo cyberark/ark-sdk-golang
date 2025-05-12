@@ -449,6 +449,9 @@ func (s *ArkPCloudSafesService) AddSafe(addSafe *safesmodels.ArkPCloudAddSafe) (
 		addSafeJSON["managingCPM"] = ""
 	}
 	addSafeJSON["olacEnabled"] = addSafe.OlacEnabled
+	if _, ok := addSafeJSON["numberOfDaysRetention"]; !ok {
+		addSafeJSON["numberOfDaysRetention"] = 0
+	}
 	response, err := s.client.Post(context.Background(), safesURL, addSafeJSON)
 	if err != nil {
 		return nil, err
@@ -585,6 +588,9 @@ func (s *ArkPCloudSafesService) UpdateSafe(updateSafe *safesmodels.ArkPCloudUpda
 	delete(updateSafeJSON, "safeId")
 	if len(updateSafeJSON) == 0 {
 		return s.Safe(&safesmodels.ArkPCloudGetSafe{SafeID: updateSafe.SafeID})
+	}
+	if _, ok := updateSafeJSON["numberOfDaysRetention"]; !ok {
+		updateSafeJSON["numberOfDaysRetention"] = 0
 	}
 	response, err := s.client.Put(context.Background(), fmt.Sprintf(safeURL, updateSafe.SafeID), updateSafeJSON)
 	if err != nil {
