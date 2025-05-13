@@ -349,7 +349,6 @@ func (s *ArkIdentityRolesService) AddUserToRole(addUserToRole *rolesmodels.ArkId
 		"Name":  roleID,
 		"Users": []string{addUserToRole.Username},
 	}
-	fmt.Printf("Request body: %v\n", requestBody)
 	response, err := s.client.Post(context.Background(), addUserToRoleURL, requestBody)
 	if err != nil {
 		return fmt.Errorf("failed to add user to role: %v", err)
