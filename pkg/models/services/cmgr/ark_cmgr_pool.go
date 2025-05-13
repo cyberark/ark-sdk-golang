@@ -8,7 +8,7 @@ const (
 
 // ArkCmgrPool is a struct representing a pool in the Ark CMGR service.
 type ArkCmgrPool struct {
-	ID                 string         `json:"id" mapstructure:"id" flag:"id" desc:"ID of the pool"`
+	PoolID             string         `json:"pool_id" mapstructure:"pool_id" flag:"pool-id" desc:"ID of the pool"`
 	Name               string         `json:"name" mapstructure:"name" flag:"name" desc:"Name of the pool"`
 	Description        string         `json:"description,omitempty" mapstructure:"description,omitempty" flag:"description" desc:"Description of the pool"`
 	AssignedNetworkIDs []string       `json:"assigned_network_ids" mapstructure:"assigned_network_ids" flag:"assigned-network-ids" desc:"Assigned networks of the pool"`

@@ -41,8 +41,8 @@ const (
 	winReadConnectorConfigCmd    = "Get-Content -Path \"C:\\Program Files\\CyberArk\\DPAConnector\\connector.config.json\""
 
 	// Retry Constants
-	connectorReadyRetryCount  = 5
-	connectorRetryTickSeconds = 3.0 * time.Second
+	connectorReadyRetryCount = 5
+	connectorRetryTick       = 3.0 * time.Second
 )
 
 // ConnectorCmdSet maps OS types to their respective command sets.
@@ -173,7 +173,7 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 	password string,
 	privateKeyPath string,
 	privateKeyContents string,
-) (string, error) {
+) (*accessmodels.ArkSIAAccessConnectorID, error) {
 	// Create connection
 	connection, cmdSet, err := s.createConnection(
 		osType,
@@ -184,7 +184,7 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		privateKeyContents,
 	)
 	if err != nil {
-		return "", fmt.Errorf("failed to create connection: %w", err)
+		return nil, fmt.Errorf("failed to create connection: %w", err)
 	}
 	defer func(connection connections.ArkConnection) {
 		err := connection.Disconnect()
@@ -216,7 +216,7 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		})
 	}
 	if err != nil {
-		return "", fmt.Errorf("failed to install connector: %w", err)
+		return nil, fmt.Errorf("failed to install connector: %w", err)
 	}
 
 	// Retry checking if the connector is active
@@ -230,10 +230,10 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		}
 		if retryCount > 0 {
 			retryCount--
-			time.Sleep(connectorRetryTickSeconds)
+			time.Sleep(connectorRetryTick)
 			continue
 		}
-		return "", fmt.Errorf("failed to check if connector is active: %w", err)
+		return nil, fmt.Errorf("failed to check if connector is active: %w", err)
 	}
 
 	// Read the connector configuration
@@ -241,19 +241,19 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		Command: cmdSet["readConnectorConfig"],
 	})
 	if err != nil {
-		return "", fmt.Errorf("failed to read connector config: %w", err)
+		return nil, fmt.Errorf("failed to read connector config: %w", err)
 	}
 
 	// Parse the connector configuration and return the ID
 	var connectorConfig map[string]interface{}
 	if err := json.Unmarshal([]byte(result.Stdout), &connectorConfig); err != nil {
-		return "", fmt.Errorf("failed to parse connector config: %w", err)
+		return nil, fmt.Errorf("failed to parse connector config: %w", err)
 	}
 	connectorID, ok := connectorConfig["Id"].(string)
 	if !ok {
-		return "", fmt.Errorf("connector ID not found in config")
+		return nil, fmt.Errorf("connector ID not found in config")
 	}
-	return connectorID, nil
+	return &accessmodels.ArkSIAAccessConnectorID{ConnectorID: connectorID}, nil
 }
 
 func (s *ArkSIAAccessService) uninstallConnectorOnMachine(
@@ -380,7 +380,7 @@ func (s *ArkSIAAccessService) ConnectorSetupScript(getConnectorSetupScript *acce
 }
 
 // InstallConnector installs the connector on the target machine.
-func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.ArkSIAInstallConnector) (string, error) {
+func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.ArkSIAInstallConnector) (*accessmodels.ArkSIAAccessConnectorID, error) {
 	s.Logger.Info(
 		fmt.Sprintf(
 			"Installing connector on machine [%s] of type [%s]",
@@ -394,7 +394,7 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 		ConnectorType:   installConnector.ConnectorType,
 	})
 	if err != nil {
-		return "", fmt.Errorf("failed to retrieve connector setup script: %w", err)
+		return nil, fmt.Errorf("failed to retrieve connector setup script: %w", err)
 	}
 	return s.installConnectorOnMachine(
 		installationScript.BashCmd,
@@ -402,7 +402,7 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 		installConnector.TargetMachine,
 		installConnector.Username,
 		installConnector.Password,
-		installConnector.PrivateKeyPath,
+		common.ExpandFolder(installConnector.PrivateKeyPath),
 		installConnector.PrivateKeyContents,
 	)
 }
@@ -420,7 +420,7 @@ func (s *ArkSIAAccessService) UninstallConnector(uninstallConnector *accessmodel
 		uninstallConnector.TargetMachine,
 		uninstallConnector.Username,
 		uninstallConnector.Password,
-		uninstallConnector.PrivateKeyPath,
+		common.ExpandFolder(uninstallConnector.PrivateKeyPath),
 		uninstallConnector.PrivateKeyContents,
 	)
 }
