@@ -129,20 +129,24 @@ func (s *ArkSIASecretsVMService) AddSecret(addSecret *vmsecretsmodels.ArkSIAVMAd
 
 // ChangeSecret changes an existing secret in the SIA VM secrets service.
 func (s *ArkSIASecretsVMService) ChangeSecret(changeSecret *vmsecretsmodels.ArkSIAVMChangeSecret) (*vmsecretsmodels.ArkSIAVMSecret, error) {
-	s.Logger.Info("f'Changing existing vm secret with id [%s]", changeSecret.SecretID)
+	s.Logger.Info("Changing existing vm secret with id [%s]", changeSecret.SecretID)
 	changeSecretJSON := map[string]interface{}{
 		"is_active": !changeSecret.IsDisabled,
 	}
 	if changeSecret.ProvisionerUsername != "" && changeSecret.ProvisionerPassword != "" {
-		changeSecretJSON["secret"].(map[string]interface{})["secret_data"] = map[string]interface{}{
-			"username": changeSecret.ProvisionerUsername,
-			"password": changeSecret.ProvisionerPassword,
+		changeSecretJSON["secret"] = map[string]interface{}{
+			"secret_data": map[string]interface{}{
+				"username": changeSecret.ProvisionerUsername,
+				"password": changeSecret.ProvisionerPassword,
+			},
 		}
 	}
 	if changeSecret.PCloudAccountSafe != "" && changeSecret.PCloudAccountName != "" {
-		changeSecretJSON["secret"].(map[string]interface{})["secret_data"] = map[string]interface{}{
-			"safe":         changeSecret.PCloudAccountSafe,
-			"account_name": changeSecret.PCloudAccountName,
+		changeSecretJSON["secret"] = map[string]interface{}{
+			"secret_data": map[string]interface{}{
+				"safe":         changeSecret.PCloudAccountSafe,
+				"account_name": changeSecret.PCloudAccountName,
+			},
 		}
 	}
 	if changeSecret.SecretName != "" {
@@ -161,7 +165,7 @@ func (s *ArkSIASecretsVMService) ChangeSecret(changeSecret *vmsecretsmodels.ArkS
 			common.GlobalLogger.Warning("Error closing response body")
 		}
 	}(response.Body)
-	if response.StatusCode != http.StatusCreated {
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to change secret - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 	}
 	secretJSON, err := common.DeserializeJSONSnake(response.Body)
