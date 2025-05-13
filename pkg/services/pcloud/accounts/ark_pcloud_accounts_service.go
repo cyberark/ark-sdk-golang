@@ -519,6 +519,7 @@ func (s *ArkPCloudAccountsService) UpdateAccount(updateAccount *accountsmodels.A
 	if err != nil {
 		return nil, err
 	}
+	delete(updateAccountJSON, "secret")
 	delete(updateAccountJSON, "accountId")
 	delete(updateAccountJSON, "automaticManagementEnabled")
 	delete(updateAccountJSON, "manualManagementReason")
@@ -555,34 +556,53 @@ func (s *ArkPCloudAccountsService) UpdateAccount(updateAccount *accountsmodels.A
 		}
 		operations = append(operations, operation)
 	}
-	response, err := s.client.Patch(context.Background(), fmt.Sprintf(accountURL, updateAccount.AccountID), operations)
-	if err != nil {
-		return nil, err
-	}
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-			common.GlobalLogger.Warning("Error closing response body")
-		}
-	}(response.Body)
-	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed to update account - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
-	}
-	accountJSON, err := common.DeserializeJSONSnake(response.Body)
-	if err != nil {
-		return nil, err
-	}
-	accountJSONMap := accountJSON.(map[string]interface{})
-	if accountID, ok := accountJSONMap["id"]; ok {
-		accountJSONMap["account_id"] = accountID
-	}
-	if userName, ok := accountJSONMap["user_name"]; ok {
-		accountJSONMap["username"] = userName
-	}
 	var account accountsmodels.ArkPCloudAccount
-	err = mapstructure.Decode(accountJSONMap, &account)
-	if err != nil {
-		return nil, err
+	if len(operations) == 0 {
+		pcloudAccount, err := s.Account(&accountsmodels.ArkPCloudGetAccount{
+			AccountID: updateAccount.AccountID,
+		})
+		if err != nil {
+			return nil, err
+		}
+		account = *pcloudAccount
+	} else {
+		response, err := s.client.Patch(context.Background(), fmt.Sprintf(accountURL, updateAccount.AccountID), operations)
+		if err != nil {
+			return nil, err
+		}
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				common.GlobalLogger.Warning("Error closing response body")
+			}
+		}(response.Body)
+		if response.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("failed to update account - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
+		}
+		accountJSON, err := common.DeserializeJSONSnake(response.Body)
+		if err != nil {
+			return nil, err
+		}
+		accountJSONMap := accountJSON.(map[string]interface{})
+		if accountID, ok := accountJSONMap["id"]; ok {
+			accountJSONMap["account_id"] = accountID
+		}
+		if userName, ok := accountJSONMap["user_name"]; ok {
+			accountJSONMap["username"] = userName
+		}
+		err = mapstructure.Decode(accountJSONMap, &account)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if updateAccount.Secret != "" {
+		err = s.UpdateAccountCredentialsInVault(&accountsmodels.ArkPCloudUpdateAccountCredentialsInVault{
+			AccountID:      updateAccount.AccountID,
+			NewCredentials: updateAccount.Secret,
+		})
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &account, nil
 }
