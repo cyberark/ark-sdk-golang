@@ -136,6 +136,7 @@ var AccessActionToSchemaMap = map[string]interface{}{
 	"install-connector":           &siaaccess.ArkSIAInstallConnector{},
 	"uninstall-connector":         &siaaccess.ArkSIAUninstallConnector{},
 	"test-connector-reachability": &siaaccess.ArkSIATestConnectorReachability{},
+	"delete-connector":            &siaaccess.ArkSIADeleteConnector{},
 }
 
 // AccessAction is a struct that defines the Access action for the Ark service.
