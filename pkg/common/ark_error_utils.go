@@ -7,6 +7,7 @@ import (
 	"syscall"
 )
 
+// IsConnectionRefused checks if the error is a connection refused error.
 func IsConnectionRefused(err error) bool {
 	var opErr *net.OpError
 	if errors.As(err, &opErr) {
