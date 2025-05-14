@@ -1008,6 +1008,24 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#add-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1624,6 +1642,24 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#add-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1731,6 +1767,12 @@ You're not viewing the latest version.
 </code></pre></div>
 <h3 id="delete-sia-database-secret">Delete SIA database secret<a class="headerlink" href="#delete-sia-database-secret" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>secrets<span class="w"> </span>db<span class="w"> </span>delete-secret<span class="w"> </span>--secret-name<span class="w"> </span>mysecret
+</code></pre></div>
+<h3 id="add-sia-database">Add SIA database<a class="headerlink" href="#add-sia-database" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>workspaces<span class="w"> </span>db<span class="w"> </span>add-database<span class="w"> </span>--name<span class="w"> </span>mydatabase<span class="w"> </span>--provider-engine<span class="w"> </span>aurora-mysql<span class="w"> </span>--read-write-endpoint<span class="w"> </span>myrds.com
+</code></pre></div>
+<h3 id="delete-sia-database">Delete SIA database<a class="headerlink" href="#delete-sia-database" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>workspaces<span class="w"> </span>db<span class="w"> </span>delete-database<span class="w"> </span>--id<span class="w"> </span>databaseid
 </code></pre></div>
 
 
