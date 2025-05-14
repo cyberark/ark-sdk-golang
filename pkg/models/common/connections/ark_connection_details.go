@@ -17,5 +17,5 @@ type ArkConnectionDetails struct {
 	Credentials       *ArkConnectionCredentials `json:"credentials" mapstructure:"credentials"`
 	ConnectionData    interface{}               `json:"connection_data" mapstructure:"connection_data"`
 	ConnectionRetries int                       `json:"connection_retries" mapstructure:"connection_retries"`
-	RetryTickPeriod   float64                   `json:"retry_tick_period" mapstructure:"retry_tick_period"`
+	RetryTickPeriod   int                       `json:"retry_tick_period" mapstructure:"retry_tick_period"`
 }

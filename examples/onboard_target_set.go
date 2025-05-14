@@ -59,5 +59,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Target set %s created\n", targetSet.Name)
+	fmt.Printf("Target set %s created\n", targetSet.ID)
 }

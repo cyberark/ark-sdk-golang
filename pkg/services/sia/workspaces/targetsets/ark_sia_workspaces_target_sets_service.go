@@ -92,6 +92,9 @@ func (s *ArkSIAWorkspacesTargetSetsService) AddTargetSet(addTargetSet *targetset
 		return nil, err
 	}
 	targetSetJSONMap := targetSetJSON.(map[string]interface{})
+	if name, ok := targetSetJSONMap["target_set"].(map[string]interface{})["name"]; ok {
+		targetSetJSONMap["target_set"].(map[string]interface{})["id"] = name
+	}
 	var targetSet targetsetsmodels.ArkSIATargetSet
 	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {
@@ -135,8 +138,8 @@ func (s *ArkSIAWorkspacesTargetSetsService) BulkAddTargetSets(bulkAddTargetSets 
 
 // DeleteTargetSet deletes a target set.
 func (s *ArkSIAWorkspacesTargetSetsService) DeleteTargetSet(deleteTargetSet *targetsetsmodels.ArkSIADeleteTargetSet) error {
-	s.Logger.Info("Deleting target set [%s]", deleteTargetSet.Name)
-	response, err := s.client.Delete(context.Background(), fmt.Sprintf(targetSetURL, deleteTargetSet.Name), nil)
+	s.Logger.Info("Deleting target set [%s]", deleteTargetSet.ID)
+	response, err := s.client.Delete(context.Background(), fmt.Sprintf(targetSetURL, deleteTargetSet.ID), nil)
 	if err != nil {
 		return err
 	}
@@ -181,20 +184,14 @@ func (s *ArkSIAWorkspacesTargetSetsService) BulkDeleteTargetSets(bulkDeleteTarge
 
 // UpdateTargetSet updates a target set.
 func (s *ArkSIAWorkspacesTargetSetsService) UpdateTargetSet(updateTargetSet *targetsetsmodels.ArkSIAUpdateTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
-	s.Logger.Info("Updating target set [%s]", updateTargetSet.Name)
+	s.Logger.Info("Updating target set [%s]", updateTargetSet.ID)
 	var updateTargetSetJSON map[string]interface{}
 	err := mapstructure.Decode(updateTargetSet, &updateTargetSetJSON)
 	if err != nil {
 		return nil, err
 	}
-	delete(updateTargetSetJSON, "name")
-	delete(updateTargetSetJSON, "new_name")
-	if updateTargetSet.NewName != "" {
-		updateTargetSetJSON["name"] = updateTargetSet.NewName
-	} else if updateTargetSet.Name != "" {
-		updateTargetSetJSON["name"] = updateTargetSet.Name
-	}
-	response, err := s.client.Post(context.Background(), fmt.Sprintf(targetSetURL, updateTargetSet.Name), updateTargetSetJSON)
+	delete(updateTargetSetJSON, "id")
+	response, err := s.client.Put(context.Background(), fmt.Sprintf(targetSetURL, updateTargetSet.ID), updateTargetSetJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -212,6 +209,9 @@ func (s *ArkSIAWorkspacesTargetSetsService) UpdateTargetSet(updateTargetSet *tar
 		return nil, err
 	}
 	targetSetJSONMap := targetSetJSON.(map[string]interface{})
+	if name, ok := targetSetJSONMap["target_set"].(map[string]interface{})["name"]; ok {
+		targetSetJSONMap["target_set"].(map[string]interface{})["id"] = name
+	}
 	var targetSet targetsetsmodels.ArkSIATargetSet
 	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {
@@ -241,6 +241,11 @@ func (s *ArkSIAWorkspacesTargetSetsService) ListTargetSets() ([]*targetsetsmodel
 		return nil, err
 	}
 	targetSetsResponseJSONMap := targetSetsResponseJSON.(map[string]interface{})
+	for _, targetSetMap := range targetSetsResponseJSONMap["target_sets"].([]interface{}) {
+		if name, ok := targetSetMap.(map[string]interface{})["name"]; ok {
+			targetSetMap.(map[string]interface{})["id"] = name
+		}
+	}
 	var targetSets []*targetsetsmodels.ArkSIATargetSet
 	err = mapstructure.Decode(targetSetsResponseJSONMap["target_sets"], &targetSets)
 	if err != nil {
@@ -279,8 +284,8 @@ func (s *ArkSIAWorkspacesTargetSetsService) ListTargetSetsBy(targetSetsFilter *t
 
 // TargetSet retrieves a target set by name.
 func (s *ArkSIAWorkspacesTargetSetsService) TargetSet(getTargetSet *targetsetsmodels.ArkSIAGetTargetSet) (*targetsetsmodels.ArkSIATargetSet, error) {
-	s.Logger.Info("Getting target set [%s]", getTargetSet.Name)
-	response, err := s.client.Get(context.Background(), fmt.Sprintf(targetSetURL, getTargetSet.Name), nil)
+	s.Logger.Info("Getting target set [%s]", getTargetSet.ID)
+	response, err := s.client.Get(context.Background(), fmt.Sprintf(targetSetURL, getTargetSet.ID), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -298,6 +303,9 @@ func (s *ArkSIAWorkspacesTargetSetsService) TargetSet(getTargetSet *targetsetsmo
 		return nil, err
 	}
 	targetSetJSONMap := targetSetJSON.(map[string]interface{})
+	if name, ok := targetSetJSONMap["target_set"].(map[string]interface{})["name"]; ok {
+		targetSetJSONMap["target_set"].(map[string]interface{})["id"] = name
+	}
 	var targetSet targetsetsmodels.ArkSIATargetSet
 	err = mapstructure.Decode(targetSetJSONMap["target_set"], &targetSet)
 	if err != nil {

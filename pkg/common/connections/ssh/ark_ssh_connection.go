@@ -44,6 +44,9 @@ func (c *ArkSSHConnection) Connect(connectionDetails *connectionsmodels.ArkConne
 	if c.isConnected {
 		return nil
 	}
+	if connectionDetails.ConnectionRetries == 0 {
+		connectionDetails.ConnectionRetries = 1
+	}
 
 	var authMethods []ssh.AuthMethod
 	if connectionDetails.Credentials != nil {
@@ -76,10 +79,22 @@ func (c *ArkSSHConnection) Connect(connectionDetails *connectionsmodels.ArkConne
 	}
 
 	address := fmt.Sprintf("%s:%d", connectionDetails.Address, connectionDetails.Port)
-	client, err := ssh.Dial("tcp", address, config)
-	if err != nil {
-		return fmt.Errorf("failed to connect via SSH: %w", err)
+	var client *ssh.Client
+	var err error
+	for i := 0; i < connectionDetails.ConnectionRetries; i++ {
+		client, err = ssh.Dial("tcp", address, config)
+		if err != nil {
+			if common.IsConnectionRefused(err) {
+				if i < connectionDetails.ConnectionRetries-1 {
+					time.Sleep(time.Duration(connectionDetails.RetryTickPeriod) * time.Second)
+					continue
+				}
+			}
+			return fmt.Errorf("failed to connect to SSH server: %w", err)
+		}
+		break
 	}
+	c.logger.Debug(fmt.Sprintf("Connected to SSH server [%s] on port [%d]", connectionDetails.Address, connectionDetails.Port))
 	c.sshClient = client
 	c.isConnected = true
 	c.isSuspended = false

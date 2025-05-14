@@ -87,7 +87,8 @@ func listCommonPools[PageItemType any](
 	logger *common.ArkLogger,
 	client *isp.ArkISPServiceClient,
 	name string, route string,
-	commonFilter *cmgrmodels.ArkCmgrPoolsCommonFilter) (<-chan *common.ArkPage[PageItemType], error) {
+	commonFilter *cmgrmodels.ArkCmgrPoolsCommonFilter,
+	idMappings map[string]string) (<-chan *common.ArkPage[PageItemType], error) {
 	logger.Info("Listing %s", name)
 	pageChannel := make(chan *common.ArkPage[PageItemType])
 	go func() {
@@ -138,6 +139,21 @@ func listCommonPools[PageItemType any](
 				return
 			}
 			resultMap := result.(map[string]interface{})
+			if idMappings != nil && len(idMappings) > 0 {
+				for _, resourceItem := range resultMap["resources"].([]interface{}) {
+					for key, value := range idMappings {
+						if _, ok := resourceItem.(map[string]interface{})[key]; ok {
+							resourceItem.(map[string]interface{})[value] = resourceItem.(map[string]interface{})[key]
+						}
+					}
+					if _, ok := resourceItem.(map[string]interface{})["assigned_pools"]; ok {
+						for _, pool := range resourceItem.(map[string]interface{})["assigned_pools"].([]interface{}) {
+							pool.(map[string]interface{})["pool_id"] = pool.(map[string]interface{})["id"]
+						}
+					}
+				}
+			}
+
 			var items []*PageItemType
 			err = mapstructure.Decode(resultMap["resources"], &items)
 			if err != nil {
@@ -185,8 +201,10 @@ func (s *ArkCmgrService) AddNetwork(addNetwork *cmgrmodels.ArkCmgrAddNetwork) (*
 	if err != nil {
 		return nil, err
 	}
+	networkJSONMap := networkJSON.(map[string]interface{})
+	networkJSONMap["network_id"] = networkJSONMap["id"]
 	var network cmgrmodels.ArkCmgrNetwork
-	err = mapstructure.Decode(networkJSON, &network)
+	err = mapstructure.Decode(networkJSONMap, &network)
 	if err != nil {
 		return nil, err
 	}
@@ -222,8 +240,10 @@ func (s *ArkCmgrService) UpdateNetwork(updateNetwork *cmgrmodels.ArkCmgrUpdateNe
 	if err != nil {
 		return nil, err
 	}
+	networkJSONMap := networkJSON.(map[string]interface{})
+	networkJSONMap["network_id"] = networkJSONMap["id"]
 	var network cmgrmodels.ArkCmgrNetwork
-	err = mapstructure.Decode(networkJSON, &network)
+	err = mapstructure.Decode(networkJSONMap, &network)
 	if err != nil {
 		return nil, err
 	}
@@ -252,6 +272,9 @@ func (s *ArkCmgrService) ListNetworks() (<-chan *ArkCmgrNetworkPage, error) {
 		"networks",
 		networksURL,
 		nil,
+		map[string]string{
+			"id": "network_id",
+		},
 	)
 }
 
@@ -264,6 +287,9 @@ func (s *ArkCmgrService) ListNetworksBy(networksFilter *cmgrmodels.ArkCmgrNetwor
 		"networks",
 		networksURL,
 		&networksFilter.ArkCmgrPoolsCommonFilter,
+		map[string]string{
+			"id": "network_id",
+		},
 	)
 }
 
@@ -287,8 +313,10 @@ func (s *ArkCmgrService) Network(getNetwork *cmgrmodels.ArkCmgrGetNetwork) (*cmg
 	if err != nil {
 		return nil, err
 	}
+	networkJSONMap := networkJSON.(map[string]interface{})
+	networkJSONMap["network_id"] = networkJSONMap["id"]
 	var network cmgrmodels.ArkCmgrNetwork
-	err = mapstructure.Decode(networkJSON, &network)
+	err = mapstructure.Decode(networkJSONMap, &network)
 	if err != nil {
 		return nil, err
 	}
@@ -325,6 +353,9 @@ func (s *ArkCmgrService) AddPool(addPool *cmgrmodels.ArkCmgrAddPool) (*cmgrmodel
 	if err != nil {
 		return nil, err
 	}
+	if addPool.AssignedNetworkIDs == nil || len(addPool.AssignedNetworkIDs) == 0 {
+		return nil, fmt.Errorf("no networks assigned to the pool")
+	}
 	response, err := s.client.Post(context.Background(), poolsURL, addPoolJSON)
 	if err != nil {
 		return nil, err
@@ -342,8 +373,10 @@ func (s *ArkCmgrService) AddPool(addPool *cmgrmodels.ArkCmgrAddPool) (*cmgrmodel
 	if err != nil {
 		return nil, err
 	}
+	poolJSONMap := poolJSON.(map[string]interface{})
+	poolJSONMap["pool_id"] = poolJSONMap["id"]
 	var pool cmgrmodels.ArkCmgrPool
-	err = mapstructure.Decode(poolJSON, &pool)
+	err = mapstructure.Decode(poolJSONMap, &pool)
 	if err != nil {
 		return nil, err
 	}
@@ -379,8 +412,10 @@ func (s *ArkCmgrService) UpdatePool(updatePool *cmgrmodels.ArkCmgrUpdatePool) (*
 	if err != nil {
 		return nil, err
 	}
+	poolJSONMap := poolJSON.(map[string]interface{})
+	poolJSONMap["pool_id"] = poolJSONMap["id"]
 	var pool cmgrmodels.ArkCmgrPool
-	err = mapstructure.Decode(poolJSON, &pool)
+	err = mapstructure.Decode(poolJSONMap, &pool)
 	if err != nil {
 		return nil, err
 	}
@@ -409,6 +444,9 @@ func (s *ArkCmgrService) ListPools() (<-chan *ArkCmgrPoolPage, error) {
 		"pools",
 		poolsURL,
 		nil,
+		map[string]string{
+			"id": "pool_id",
+		},
 	)
 }
 
@@ -421,6 +459,9 @@ func (s *ArkCmgrService) ListPoolsBy(poolsFilter *cmgrmodels.ArkCmgrPoolsFilter)
 		"pools",
 		poolsURL,
 		&poolsFilter.ArkCmgrPoolsCommonFilter,
+		map[string]string{
+			"id": "pool_id",
+		},
 	)
 }
 
@@ -444,8 +485,10 @@ func (s *ArkCmgrService) Pool(getPool *cmgrmodels.ArkCmgrGetPool) (*cmgrmodels.A
 	if err != nil {
 		return nil, err
 	}
+	poolJSONMap := poolJSON.(map[string]interface{})
+	poolJSONMap["pool_id"] = poolJSONMap["id"]
 	var pool cmgrmodels.ArkCmgrPool
-	err = mapstructure.Decode(poolJSON, &pool)
+	err = mapstructure.Decode(poolJSONMap, &pool)
 	if err != nil {
 		return nil, err
 	}
@@ -504,8 +547,10 @@ func (s *ArkCmgrService) AddPoolIdentifier(addPoolIdentifier *cmgrmodels.ArkCmgr
 	if err != nil {
 		return nil, err
 	}
+	poolIdentifierJSONMap := poolIdentifierJSON.(map[string]interface{})
+	poolIdentifierJSONMap["identifier_id"] = poolIdentifierJSONMap["id"]
 	var poolIdentifier cmgrmodels.ArkCmgrPoolIdentifier
-	err = mapstructure.Decode(poolIdentifierJSON, &poolIdentifier)
+	err = mapstructure.Decode(poolIdentifierJSONMap, &poolIdentifier)
 	if err != nil {
 		return nil, err
 	}
@@ -554,6 +599,7 @@ func (s *ArkCmgrService) AddPoolIdentifiers(addPoolIdentifiers *cmgrmodels.ArkCm
 		if identifierResponse.StatusCode != http.StatusCreated {
 			return nil, fmt.Errorf("failed to add pool identifiers bulk - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 		}
+		identifierResponse.Body["identifier_id"] = identifierResponse.Body["id"]
 		var identifier cmgrmodels.ArkCmgrPoolIdentifier
 		err := mapstructure.Decode(identifierResponse.Body, &identifier)
 		if err != nil {
@@ -566,10 +612,10 @@ func (s *ArkCmgrService) AddPoolIdentifiers(addPoolIdentifiers *cmgrmodels.ArkCm
 
 // UpdatePoolIdentifier updates an existing identifier in a specific pool in the connector management service.
 func (s *ArkCmgrService) UpdatePoolIdentifier(updatePoolIdentifier *cmgrmodels.ArkCmgrUpdatePoolIdentifier) (*cmgrmodels.ArkCmgrPoolIdentifier, error) {
-	s.Logger.Info("Updating pool identifier [%s] from pool [%s]", updatePoolIdentifier.ID, updatePoolIdentifier.PoolID)
+	s.Logger.Info("Updating pool identifier [%s] from pool [%s]", updatePoolIdentifier.IdentifierID, updatePoolIdentifier.PoolID)
 	err := s.DeletePoolIdentifier(&cmgrmodels.ArkCmgrDeletePoolSingleIdentifier{
-		ID:     updatePoolIdentifier.ID,
-		PoolID: updatePoolIdentifier.PoolID,
+		IdentifierID: updatePoolIdentifier.IdentifierID,
+		PoolID:       updatePoolIdentifier.PoolID,
 	})
 	if err != nil {
 		return nil, err
@@ -583,8 +629,8 @@ func (s *ArkCmgrService) UpdatePoolIdentifier(updatePoolIdentifier *cmgrmodels.A
 
 // DeletePoolIdentifier deletes an identifier from a specific pool in the connector management service.
 func (s *ArkCmgrService) DeletePoolIdentifier(deletePoolIdentifier *cmgrmodels.ArkCmgrDeletePoolSingleIdentifier) error {
-	s.Logger.Info("Deleting pool identifier [%s]", deletePoolIdentifier.ID)
-	response, err := s.client.Delete(context.Background(), fmt.Sprintf(poolIdentifierURL, deletePoolIdentifier.PoolID, deletePoolIdentifier.ID), nil)
+	s.Logger.Info("Deleting pool identifier [%s]", deletePoolIdentifier.IdentifierID)
+	response, err := s.client.Delete(context.Background(), fmt.Sprintf(poolIdentifierURL, deletePoolIdentifier.PoolID, deletePoolIdentifier.IdentifierID), nil)
 	if err != nil {
 		return err
 	}
@@ -648,6 +694,9 @@ func (s *ArkCmgrService) ListPoolIdentifiers(listPoolIdentifiers *cmgrmodels.Ark
 		"pool identifiers",
 		fmt.Sprintf(poolIdentifiersURL, listPoolIdentifiers.PoolID),
 		nil,
+		map[string]string{
+			"id": "identifier_id",
+		},
 	)
 }
 
@@ -660,24 +709,27 @@ func (s *ArkCmgrService) ListPoolIdentifiersBy(identifiersFilters *cmgrmodels.Ar
 		"pool identifiers",
 		fmt.Sprintf(poolIdentifiersURL, identifiersFilters.PoolID),
 		&identifiersFilters.ArkCmgrPoolsCommonFilter,
+		map[string]string{
+			"id": "identifier_id",
+		},
 	)
 }
 
 // PoolIdentifier retrieves a specific identifier by its ID from a specific pool in the connector management service.
 func (s *ArkCmgrService) PoolIdentifier(getIdentifier *cmgrmodels.ArkCmgrGetPoolIdentifier) (*cmgrmodels.ArkCmgrPoolIdentifier, error) {
-	s.Logger.Info("Retrieving pool identifier [%s] from pool [%s]", getIdentifier.ID, getIdentifier.PoolID)
+	s.Logger.Info("Retrieving pool identifier [%s] from pool [%s]", getIdentifier.IdentifierID, getIdentifier.PoolID)
 	identifiers, err := s.ListPoolIdentifiers(&cmgrmodels.ArkCmgrListPoolIdentifiers{PoolID: getIdentifier.PoolID})
 	if err != nil {
 		return nil, err
 	}
 	for page := range identifiers {
 		for _, identifier := range page.Items {
-			if identifier.ID == getIdentifier.ID {
+			if identifier.IdentifierID == getIdentifier.IdentifierID {
 				return identifier, nil
 			}
 		}
 	}
-	return nil, fmt.Errorf("failed to retrieve pool identifier - [%s] from pool - [%s]", getIdentifier.ID, getIdentifier.PoolID)
+	return nil, fmt.Errorf("failed to retrieve pool identifier - [%s] from pool - [%s]", getIdentifier.IdentifierID, getIdentifier.PoolID)
 }
 
 // ListPoolsComponents lists all components in the connector management service.
@@ -689,6 +741,9 @@ func (s *ArkCmgrService) ListPoolsComponents() (<-chan *ArkCmgrPoolComponentPage
 		"pools components",
 		fmt.Sprintf(poolsComponentsURL),
 		nil,
+		map[string]string{
+			"id": "component_id",
+		},
 	)
 }
 
@@ -701,6 +756,9 @@ func (s *ArkCmgrService) ListPoolsComponentsBy(componentsFilters *cmgrmodels.Ark
 		"pools components",
 		fmt.Sprintf(poolsComponentsURL),
 		&componentsFilters.ArkCmgrPoolsCommonFilter,
+		map[string]string{
+			"id": "component_id",
+		},
 	)
 }
 
@@ -724,8 +782,10 @@ func (s *ArkCmgrService) PoolComponent(getPoolComponent *cmgrmodels.ArkCmgrGetPo
 	if err != nil {
 		return nil, err
 	}
+	poolComponentJSONMap := poolComponentJSON.(map[string]interface{})
+	poolComponentJSONMap["component_id"] = poolComponentJSONMap["id"]
 	var poolComponent cmgrmodels.ArkCmgrPoolComponent
-	err = mapstructure.Decode(poolComponentJSON, &poolComponent)
+	err = mapstructure.Decode(poolComponentJSONMap, &poolComponent)
 	if err != nil {
 		return nil, err
 	}

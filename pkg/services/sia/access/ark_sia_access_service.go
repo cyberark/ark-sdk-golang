@@ -18,13 +18,13 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
-	"strings"
 	"time"
 )
 
 const (
+	connectorURL                 = "/api/connectors/%s"
 	connectorSetupScriptURL      = "/api/connectors/setup-script"
-	connectorTestReachabilityURL = "/api/connectors/{connector_id}/reachability"
+	connectorTestReachabilityURL = "/api/connectors/%s/reachability"
 
 	// Linux / Darwin Commands
 	unixStopConnectorServiceCmd   = "sudo systemctl stop cyberark-dpa-connector"
@@ -41,8 +41,8 @@ const (
 	winReadConnectorConfigCmd    = "Get-Content -Path \"C:\\Program Files\\CyberArk\\DPAConnector\\connector.config.json\""
 
 	// Retry Constants
-	connectorReadyRetryCount  = 5
-	connectorRetryTickSeconds = 3.0 * time.Second
+	connectorReadyRetryCount = 5
+	connectorRetryTick       = 3.0 * time.Second
 )
 
 // ConnectorCmdSet maps OS types to their respective command sets.
@@ -123,6 +123,8 @@ func (s *ArkSIAAccessService) createConnection(
 	password string,
 	privateKeyPath string,
 	privateKeyContents string,
+	retryCount int,
+	retryDelay int,
 ) (connections.ArkConnection, map[string]string, error) {
 	var connection connections.ArkConnection
 	var connectionDetails *connectionsmodels.ArkConnectionDetails
@@ -154,7 +156,9 @@ func (s *ArkSIAAccessService) createConnection(
 				PrivateKeyFilepath: privateKeyPath,
 				PrivateKeyContents: privateKeyContents,
 			},
-			ConnectionData: &connectiondata.ArkSSHConnectionData{},
+			ConnectionData:    &connectiondata.ArkSSHConnectionData{},
+			ConnectionRetries: retryCount,
+			RetryTickPeriod:   retryDelay,
 		}
 	}
 
@@ -173,7 +177,9 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 	password string,
 	privateKeyPath string,
 	privateKeyContents string,
-) (string, error) {
+	retryCount int,
+	retryDelay int,
+) (*accessmodels.ArkSIAAccessConnectorID, error) {
 	// Create connection
 	connection, cmdSet, err := s.createConnection(
 		osType,
@@ -182,9 +188,11 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		password,
 		privateKeyPath,
 		privateKeyContents,
+		retryCount,
+		retryDelay,
 	)
 	if err != nil {
-		return "", fmt.Errorf("failed to create connection: %w", err)
+		return nil, fmt.Errorf("failed to create connection: %w", err)
 	}
 	defer func(connection connections.ArkConnection) {
 		err := connection.Disconnect()
@@ -216,11 +224,11 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		})
 	}
 	if err != nil {
-		return "", fmt.Errorf("failed to install connector: %w", err)
+		return nil, fmt.Errorf("failed to install connector: %w", err)
 	}
 
 	// Retry checking if the connector is active
-	retryCount := connectorReadyRetryCount
+	currConnReadyRetryCount := connectorReadyRetryCount
 	for {
 		_, err = connection.RunCommand(&connectionsmodels.ArkConnectionCommand{
 			Command: cmdSet["connectorActive"],
@@ -228,12 +236,12 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		if err == nil {
 			break
 		}
-		if retryCount > 0 {
-			retryCount--
-			time.Sleep(connectorRetryTickSeconds)
+		if currConnReadyRetryCount > 0 {
+			currConnReadyRetryCount--
+			time.Sleep(connectorRetryTick)
 			continue
 		}
-		return "", fmt.Errorf("failed to check if connector is active: %w", err)
+		return nil, fmt.Errorf("failed to check if connector is active: %w", err)
 	}
 
 	// Read the connector configuration
@@ -241,19 +249,19 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 		Command: cmdSet["readConnectorConfig"],
 	})
 	if err != nil {
-		return "", fmt.Errorf("failed to read connector config: %w", err)
+		return nil, fmt.Errorf("failed to read connector config: %w", err)
 	}
 
 	// Parse the connector configuration and return the ID
 	var connectorConfig map[string]interface{}
 	if err := json.Unmarshal([]byte(result.Stdout), &connectorConfig); err != nil {
-		return "", fmt.Errorf("failed to parse connector config: %w", err)
+		return nil, fmt.Errorf("failed to parse connector config: %w", err)
 	}
 	connectorID, ok := connectorConfig["Id"].(string)
 	if !ok {
-		return "", fmt.Errorf("connector ID not found in config")
+		return nil, fmt.Errorf("connector ID not found in config")
 	}
-	return connectorID, nil
+	return &accessmodels.ArkSIAAccessConnectorID{ConnectorID: connectorID}, nil
 }
 
 func (s *ArkSIAAccessService) uninstallConnectorOnMachine(
@@ -263,6 +271,8 @@ func (s *ArkSIAAccessService) uninstallConnectorOnMachine(
 	password string,
 	privateKeyPath string,
 	privateKeyContents string,
+	retryCount int,
+	retryDelay int,
 ) error {
 	// Create connection
 	connection, cmdSet, err := s.createConnection(
@@ -272,6 +282,8 @@ func (s *ArkSIAAccessService) uninstallConnectorOnMachine(
 		password,
 		privateKeyPath,
 		privateKeyContents,
+		retryCount,
+		retryDelay,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to create connection: %w", err)
@@ -320,8 +332,7 @@ func (s *ArkSIAAccessService) TestConnectorReachability(testReachabilityRequest 
 		},
 		"checkBackendEndpoints": testReachabilityRequest.CheckBackendEndpoints,
 	}
-	connectorURL := strings.Replace(connectorTestReachabilityURL, "{connector_id}", testReachabilityRequest.ConnectorID, -1)
-	response, err := s.client.Post(context.Background(), connectorURL, testReachabilityRequestJSON)
+	response, err := s.client.Post(context.Background(), fmt.Sprintf(connectorTestReachabilityURL, testReachabilityRequest.ConnectorID), testReachabilityRequestJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -380,7 +391,7 @@ func (s *ArkSIAAccessService) ConnectorSetupScript(getConnectorSetupScript *acce
 }
 
 // InstallConnector installs the connector on the target machine.
-func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.ArkSIAInstallConnector) (string, error) {
+func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.ArkSIAInstallConnector) (*accessmodels.ArkSIAAccessConnectorID, error) {
 	s.Logger.Info(
 		fmt.Sprintf(
 			"Installing connector on machine [%s] of type [%s]",
@@ -394,7 +405,7 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 		ConnectorType:   installConnector.ConnectorType,
 	})
 	if err != nil {
-		return "", fmt.Errorf("failed to retrieve connector setup script: %w", err)
+		return nil, fmt.Errorf("failed to retrieve connector setup script: %w", err)
 	}
 	return s.installConnectorOnMachine(
 		installationScript.BashCmd,
@@ -402,8 +413,10 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 		installConnector.TargetMachine,
 		installConnector.Username,
 		installConnector.Password,
-		installConnector.PrivateKeyPath,
+		common.ExpandFolder(installConnector.PrivateKeyPath),
 		installConnector.PrivateKeyContents,
+		installConnector.RetryCount,
+		installConnector.RetryDelay,
 	)
 }
 
@@ -415,14 +428,52 @@ func (s *ArkSIAAccessService) UninstallConnector(uninstallConnector *accessmodel
 			uninstallConnector.ConnectorID,
 		),
 	)
-	return s.uninstallConnectorOnMachine(
+	err := s.uninstallConnectorOnMachine(
 		uninstallConnector.ConnectorOS,
 		uninstallConnector.TargetMachine,
 		uninstallConnector.Username,
 		uninstallConnector.Password,
-		uninstallConnector.PrivateKeyPath,
+		common.ExpandFolder(uninstallConnector.PrivateKeyPath),
 		uninstallConnector.PrivateKeyContents,
+		uninstallConnector.RetryCount,
+		uninstallConnector.RetryDelay,
 	)
+	if err != nil {
+		return err
+	}
+	return s.DeleteConnector(&accessmodels.ArkSIADeleteConnector{
+		ConnectorID: uninstallConnector.ConnectorID,
+		RetryCount:  uninstallConnector.RetryCount,
+		RetryDelay:  uninstallConnector.RetryDelay,
+	})
+}
+
+// DeleteConnector deletes the connector from the target machine.
+func (s *ArkSIAAccessService) DeleteConnector(deleteConnector *accessmodels.ArkSIADeleteConnector) error {
+	s.Logger.Info(
+		fmt.Sprintf(
+			"Deleting connector [%s] from machine",
+			deleteConnector.ConnectorID,
+		),
+	)
+	currentTryCount := 0
+	for {
+		response, err := s.client.Delete(context.Background(), fmt.Sprintf(connectorURL, deleteConnector.ConnectorID), nil)
+		if err != nil {
+			return err
+		}
+		if response.StatusCode != http.StatusOK {
+			if currentTryCount < deleteConnector.RetryCount {
+				currentTryCount++
+				s.Logger.Warning("Failed to delete connector, retrying... [%d/%d]", currentTryCount, deleteConnector.RetryCount)
+				time.Sleep(time.Duration(deleteConnector.RetryDelay) * time.Second)
+				continue
+			}
+			return fmt.Errorf("failed to delete connector - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
+		}
+		break
+	}
+	return nil
 }
 
 // ServiceConfig returns the service configuration for the ArkSIAAccessService.

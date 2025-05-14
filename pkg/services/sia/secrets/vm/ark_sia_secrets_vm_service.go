@@ -97,8 +97,10 @@ func (s *ArkSIASecretsVMService) AddSecret(addSecret *vmsecretsmodels.ArkSIAVMAd
 	} else {
 		return nil, fmt.Errorf("invalid secret type: %s", addSecret.SecretType)
 	}
-	if secretDetails, ok := addSecretJSON["secret_details"]; !ok || secretDetails == nil {
-		addSecretJSON["secret_details"] = make(map[string]interface{})
+	if addSecret.SecretDetails != nil {
+		addSecretJSON["secret_details"] = addSecret.SecretDetails
+	} else {
+		addSecretJSON["secret_details"] = map[string]interface{}{}
 	}
 	response, err := s.client.Post(context.Background(), secretsURL, addSecretJSON)
 	if err != nil {
@@ -127,25 +129,31 @@ func (s *ArkSIASecretsVMService) AddSecret(addSecret *vmsecretsmodels.ArkSIAVMAd
 
 // ChangeSecret changes an existing secret in the SIA VM secrets service.
 func (s *ArkSIASecretsVMService) ChangeSecret(changeSecret *vmsecretsmodels.ArkSIAVMChangeSecret) (*vmsecretsmodels.ArkSIAVMSecret, error) {
-	s.Logger.Info("f'Changing existing vm secret with id [%s]", changeSecret.SecretID)
+	s.Logger.Info("Changing existing vm secret with id [%s]", changeSecret.SecretID)
 	changeSecretJSON := map[string]interface{}{
-		"is_active":      !changeSecret.IsDisabled,
-		"secret_details": changeSecret.SecretDetails,
+		"is_active": !changeSecret.IsDisabled,
 	}
 	if changeSecret.ProvisionerUsername != "" && changeSecret.ProvisionerPassword != "" {
-		changeSecretJSON["secret"].(map[string]interface{})["secret_data"] = map[string]interface{}{
-			"username": changeSecret.ProvisionerUsername,
-			"password": changeSecret.ProvisionerPassword,
+		changeSecretJSON["secret"] = map[string]interface{}{
+			"secret_data": map[string]interface{}{
+				"username": changeSecret.ProvisionerUsername,
+				"password": changeSecret.ProvisionerPassword,
+			},
 		}
 	}
 	if changeSecret.PCloudAccountSafe != "" && changeSecret.PCloudAccountName != "" {
-		changeSecretJSON["secret"].(map[string]interface{})["secret_data"] = map[string]interface{}{
-			"safe":         changeSecret.PCloudAccountSafe,
-			"account_name": changeSecret.PCloudAccountName,
+		changeSecretJSON["secret"] = map[string]interface{}{
+			"secret_data": map[string]interface{}{
+				"safe":         changeSecret.PCloudAccountSafe,
+				"account_name": changeSecret.PCloudAccountName,
+			},
 		}
 	}
 	if changeSecret.SecretName != "" {
 		changeSecretJSON["secret_name"] = changeSecret.SecretName
+	}
+	if changeSecret.SecretDetails != nil {
+		changeSecretJSON["secret_details"] = changeSecret.SecretDetails
 	}
 	response, err := s.client.Post(context.Background(), fmt.Sprintf(secretURL, changeSecret.SecretID), changeSecretJSON)
 	if err != nil {
@@ -157,7 +165,7 @@ func (s *ArkSIASecretsVMService) ChangeSecret(changeSecret *vmsecretsmodels.ArkS
 			common.GlobalLogger.Warning("Error closing response body")
 		}
 	}(response.Body)
-	if response.StatusCode != http.StatusCreated {
+	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to change secret - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 	}
 	secretJSON, err := common.DeserializeJSONSnake(response.Body)

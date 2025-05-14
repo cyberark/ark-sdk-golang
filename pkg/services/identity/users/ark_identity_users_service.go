@@ -301,7 +301,6 @@ func (s *ArkIdentityUsersService) UserIDByName(user *usersmodels.ArkIdentityUser
 	redrockQuery := map[string]interface{}{
 		"Script": fmt.Sprintf("Select ID, Username from User WHERE Username='%s'", strings.ToLower(user.Username)),
 	}
-	fmt.Printf("redrockQuery: %v\n", redrockQuery)
 	response, err := s.client.Post(context.Background(), redrockQueryURL, redrockQuery)
 	if err != nil {
 		return "", err
@@ -320,7 +319,6 @@ func (s *ArkIdentityUsersService) UserIDByName(user *usersmodels.ArkIdentityUser
 	if err != nil {
 		return "", err
 	}
-	fmt.Printf("result: %v\n", result)
 	if result["success"].(bool) == false {
 		return "", fmt.Errorf("failed to get user ID - [%v]", result)
 	}

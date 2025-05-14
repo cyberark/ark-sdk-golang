@@ -9,6 +9,7 @@ const (
 
 // ArkSIATargetSet represents the structure for a target set in the SIA workspace.
 type ArkSIATargetSet struct {
+	ID                          string `json:"id" mapstructure:"id" flag:"id" desc:"The target set id" validate:"required"`
 	Name                        string `json:"name" mapstructure:"name" flag:"name" desc:"The actual target set name / url" validate:"required"`
 	Description                 string `json:"description,omitempty" mapstructure:"description,omitempty" flag:"description" desc:"Description about the target set"`
 	ProvisionFormat             string `json:"provision_format,omitempty" mapstructure:"provision_format,omitempty" flag:"provision-format" desc:"Provisioning format for the target set ephemeral users"`

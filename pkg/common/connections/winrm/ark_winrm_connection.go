@@ -5,12 +5,12 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/masterzen/winrm"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/connections"
 	connectionsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common/connections"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/connections/connectiondata"
+	"github.com/google/uuid"
+	"github.com/masterzen/winrm"
 	"golang.org/x/text/encoding/unicode"
 	"io"
 	"os"
@@ -57,6 +57,9 @@ func (c *ArkWinRMConnection) Connect(connectionDetails *connectionsmodels.ArkCon
 	if connectionDetails.Port != 0 {
 		targetPort = connectionDetails.Port
 	}
+	if connectionDetails.ConnectionRetries == 0 {
+		connectionDetails.ConnectionRetries = 1
+	}
 	var err error
 	var certData []byte
 	certPath := ""
@@ -83,27 +86,36 @@ func (c *ArkWinRMConnection) Connect(connectionDetails *connectionsmodels.ArkCon
 		nil,
 		winrmConnectionTimeout,
 	)
-
-	var client *winrm.Client
-	if connectionDetails.Credentials != nil {
-		params := winrm.DefaultParameters
-		params.TransportDecorator = func() winrm.Transporter { return &winrm.ClientNTLM{} }
-		client, err = winrm.NewClientWithParameters(endpoint, connectionDetails.Credentials.User, connectionDetails.Credentials.Password, params)
-	} else {
+	if connectionDetails.Credentials == nil {
 		return fmt.Errorf("missing credentials for WinRM connection")
 	}
 
-	if err != nil {
-		return fmt.Errorf("failed to create WinRM client: %w", err)
+	var client *winrm.Client
+	var shell *winrm.Shell
+	for i := 0; i < connectionDetails.ConnectionRetries; i++ {
+		params := winrm.DefaultParameters
+		params.TransportDecorator = func() winrm.Transporter { return &winrm.ClientNTLM{} }
+		client, err = winrm.NewClientWithParameters(endpoint, connectionDetails.Credentials.User, connectionDetails.Credentials.Password, params)
+		if err != nil {
+			if common.IsConnectionRefused(err) && i < connectionDetails.ConnectionRetries-1 {
+				c.logger.Info(fmt.Sprintf("Failed to create WinRM client: %s - Retrying...", err))
+				time.Sleep(time.Duration(connectionDetails.RetryTickPeriod) * time.Second)
+				continue
+			}
+			return fmt.Errorf("failed to create WinRM client: %w", err)
+		}
+		shell, err = client.CreateShell()
+		if err != nil {
+			if common.IsConnectionRefused(err) && i < connectionDetails.ConnectionRetries-1 {
+				c.logger.Info(fmt.Sprintf("Failed to create WinRM shell: %s - Retrying...", err))
+				time.Sleep(time.Duration(connectionDetails.RetryTickPeriod) * time.Second)
+				continue
+			}
+			return fmt.Errorf("failed to create WinRM shell: %w", err)
+		}
+		break
 	}
-
-	shell, err := client.CreateShell()
-	if err != nil {
-		return fmt.Errorf("failed to create WinRM shell: %w", err)
-	}
-
 	c.logger.Debug(fmt.Sprintf("WinRM client and shell created successfully for [%s]", connectionDetails.Address))
-
 	c.winrmClient = client
 	c.winrmShell = shell
 	c.isConnected = true
