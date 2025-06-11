@@ -8,4 +8,5 @@ var SupportedServiceActions = []*actions.ArkServiceActionDefinition{
 	CmgrActions,
 	PCloudActions,
 	IdentityActions,
+	SecHubActions,
 }
