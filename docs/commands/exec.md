@@ -29,6 +29,13 @@ The following SIA commands are supported:
     - `directories` - Directories management
     - `users` - Users management
     - `roles` - Roles management
+-  `ark exec sechub`: Root command for the Secrets Hub Service
+    - `configuration` - Configuration management
+    - `serviceinfo` - Service Info management
+    - `secrets` - Secrets management
+    - `scans` - Scans management
+    - `secret-stores` - Secret Stores management
+
 
 All commands have their own subcommands and respective arguments.
 
