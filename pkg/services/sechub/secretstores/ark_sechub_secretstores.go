@@ -199,7 +199,7 @@ func (s *ArkSecHubSecretStoresService) GetSecretStore(
 	return &secretStore, nil
 }
 
-// GetSecretStoreConnectionStatus retrieves the connection status of a secret store.
+// GetSecretStoreConnStatus retrieves the connection status of a secret store.
 // https://api-docs.cyberark.com/docs/secretshub-api/b7f2joyxr9ekn-get-connection-status-of-secret-store
 func (s *ArkSecHubSecretStoresService) GetSecretStoreConnStatus(
 	getSecretStoreConnStatus *secretstoresmodels.ArkSecHubGetSecretStoreConnectionStatus) (*secretstoresmodels.ArkSecHubGetSecretStoreConnectionStatusResponse, error) {

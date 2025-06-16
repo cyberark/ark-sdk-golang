@@ -64,7 +64,7 @@ func (s *ArkSecHubServiceInfoService) refreshSecHubAuth(client *common.ArkClient
 	return nil
 }
 
-// ServiceInfo retrieves the service info from the Secrets Hub service.
+// GetServiceInfo retrieves the service info from the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/b7c22j9aexv8r-service-info
 func (s *ArkSecHubServiceInfoService) GetServiceInfo() (*serviceinfomodels.ArkSecHubGetServiceInfo, error) {
 	s.Logger.Info("Getting serviceinfo")
