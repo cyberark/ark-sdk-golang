@@ -24,7 +24,7 @@ const (
 	statesURL      = "/api/secret-stores/states"
 )
 
-// ArkSecHubSecretStorePage is a page of ArkSecHubSecretStore items.
+// ArkSecHubSecretStoresPage is a page of ArkSecHubSecretStore items.
 type ArkSecHubSecretStoresPage = common.ArkPage[secretstoresmodels.ArkSecHubSecretStore]
 
 // SecHubSecretStoresServiceConfig is the configuration for the Secrets Hub Secret Stores service.
@@ -153,7 +153,7 @@ func (s *ArkSecHubSecretStoresService) GetSecretStores() (<-chan *ArkSecHubSecre
 	)
 }
 
-// GetSecretsBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
+// GetSecretStoresBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
 func (s *ArkSecHubSecretStoresService) GetSecretStoresBy(secretStoresFilters *secretstoresmodels.ArkSecHubSecretStoresFilters) (<-chan *ArkSecHubSecretStoresPage, error) {
 	var behavior string
 	if secretStoresFilters.Behavior != "" {

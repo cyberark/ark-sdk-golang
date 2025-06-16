@@ -37,7 +37,7 @@ type ArkSecHubSecretsService struct {
 	client  *isp.ArkISPServiceClient
 }
 
-// NewArkSecHubScansService creates a new instance of ArkSecHubSecretsService.
+// NewArkSecHubSecretsService creates a new instance of ArkSecHubSecretsService.
 func NewArkSecHubSecretsService(authenticators ...auth.ArkAuth) (*ArkSecHubSecretsService, error) {
 	secretsService := &ArkSecHubSecretsService{}
 	var secretsServiceInterface services.ArkService = secretsService

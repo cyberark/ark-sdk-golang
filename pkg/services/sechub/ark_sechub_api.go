@@ -20,7 +20,7 @@ type ArkSecHubAPI struct {
 	secretsService       *secrets.ArkSecHubSecretsService
 }
 
-// NewArkSIAAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
+// NewArkSecHubAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
 func NewArkSecHubAPI(ispAuth *auth.ArkISPAuth) (*ArkSecHubAPI, error) {
 	var baseIspAuth auth.ArkAuth = ispAuth
 	serviceinfoService, err := serviceinfo.NewArkSecHubServiceInfoService(baseIspAuth)
