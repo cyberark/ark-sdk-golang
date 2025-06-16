@@ -1,6 +1,6 @@
 package configuration
 
-// ArkSecHubSyncSettinsgs represents the sync settings within the configuration settings.
+// ArkSecHubSyncSettings represents the sync settings within the configuration settings.
 type ArkSecHubSyncSettings struct {
 	SecretValidity int `json:"secret_validity" mapstructure:"secret_validity" desc:"Secret Validity period in seconds" flag:"secret-validity" validate:"required"`
 }

@@ -16,11 +16,11 @@ type ArkSecHubSecretStoreData struct {
 	// GCP GSM Specific Fields
 	GcpProjectName            string `json:"gcp_project_name,omitempty" mapstructure:"gcp_project_name,omitempty" desc:"The name of the GCP project where the GCP Secret Manager is stored"`
 	GcpProjectNumber          string `json:"gcp_project_number,omitempty" mapstructure:"gcp_project_number,omitempty" desc:"The number of the GCP project where the GCP Secret Manager is stored"`
-	GcpWorkloadIdentityPoolId string `json:"gcp_workload_identity_pool_id,omitempty" mapstructure:"gcp_workload_identity_pool_id,omitempty" desc:"The GCP workload identity pool ID created for Secrets Hub to access the GCP Secret Manager"`
-	GcpPoolProviderId         string `json:"gcp_pool_provider_id,omitempty" mapstructure:"gcp_pool_provider_id,omitempty" desc:"The GCP pool provider ID created for Secrets Hub to access the GCP Secret Manager"`
+	GcpWorkloadIdentityPoolID string `json:"gcp_workload_identity_pool_id,omitempty" mapstructure:"gcp_workload_identity_pool_id,omitempty" desc:"The GCP workload identity pool ID created for Secrets Hub to access the GCP Secret Manager"`
+	GcpPoolProviderID         string `json:"gcp_pool_provider_id,omitempty" mapstructure:"gcp_pool_provider_id,omitempty" desc:"The GCP pool provider ID created for Secrets Hub to access the GCP Secret Manager"`
 	ServiceAccountEmail       string `json:"service_account_email,omitempty" mapstructure:"service_account_email,omitempty" desc:"The service account email created for Secrets Hub to access the GCP Secret Manager"`
 	// Hashi Vault Specific Fields
-	HashiVaultUrl    string `json:"hashi_vault_url,omitempty" mapstructure:"hashi_vault_url,omitempty" desc:"The URL of the HashiCorp Vault"`
+	HashiVaultURL    string `json:"hashi_vault_url,omitempty" mapstructure:"hashi_vault_url,omitempty" desc:"The URL of the HashiCorp Vault"`
 	EnginePath       string `json:"engine_path,omitempty" mapstructure:"engine_path,omitempty" desc:"The path of the engine in HashiCorp Vault"`
 	EngineType       string `json:"engine_type,omitempty" mapstructure:"engine_type,omitempty" desc:"The type of the engine in HashiCorp Vault. Valid values: KV, PKI, SSH"`
 	EngineAPIVersion string `json:"engine_api_version,omitempty" mapstructure:"engine_api_version,omitempty" desc:"The API version of the engine in HashiCorp Vault. Valid values: 1, 2"`
@@ -30,10 +30,10 @@ type ArkSecHubSecretStoreData struct {
 	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
 	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
 	// Azure AKV Specific Fields
-	AppClientDirectoryId string `json:"app_client_directory_id,omitempty" mapstructure:"app_client_directory_id,omitempty"`
-	AzureVaultUrl        string `json:"azure_vault_url,omitempty" mapstructure:"azure_vault_url,omitempty"`
-	AppClientId          string `json:"app_client_id,omitempty" mapstructure:"app_client_id,omitempty"`
-	SubscriptionId       string `json:"subscription_id,omitempty" mapstructure:"subscription_id,omitempty"`
+	AppClientDirectoryID string `json:"app_client_directory_id,omitempty" mapstructure:"app_client_directory_id,omitempty"`
+	AzureVaultURL        string `json:"azure_vault_url,omitempty" mapstructure:"azure_vault_url,omitempty"`
+	AppClientID          string `json:"app_client_id,omitempty" mapstructure:"app_client_id,omitempty"`
+	SubscriptionID       string `json:"subscription_id,omitempty" mapstructure:"subscription_id,omitempty"`
 	SubscriptionName     string `json:"subscription_name,omitempty" mapstructure:"subscription_name,omitempty"`
 	ResourceGroupName    string `json:"resource_group_name,omitempty" mapstructure:"resource_group_name,omitempty"`
 	// Common Fields

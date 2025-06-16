@@ -74,7 +74,7 @@ func (s *ArkSecHubSecretStoresService) refreshSecHubAuth(client *common.ArkClien
 
 func (s *ArkSecHubSecretStoresService) getSecretStoresWithFilters(
 	behavior string,
-	filter []string,
+	filter string,
 ) (<-chan *ArkSecHubSecretStoresPage, error) {
 	query := map[string]string{}
 	if behavior != "" {
@@ -149,7 +149,7 @@ func (s *ArkSecHubSecretStoresService) getSecretStoresWithFilters(
 func (s *ArkSecHubSecretStoresService) GetSecretStores() (<-chan *ArkSecHubSecretStoresPage, error) {
 	return s.getSecretStoresWithFilters(
 		"",
-		[]string{},
+		"",
 	)
 }
 

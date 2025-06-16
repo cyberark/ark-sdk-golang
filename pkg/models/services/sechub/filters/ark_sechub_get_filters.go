@@ -4,7 +4,7 @@ type ArkSecHubGetFilters struct {
 	StoreID string `json:"store_id" mapstructure:"store_id" desc:"Secrets Store Id for Secrets Hub" flag:"store-id" validate:"required"`
 }
 
-// ArkSecHubGetFilterInfo holds the StoreId for the request.
+// ArkSecHubGetFilter holds the StoreId for the request.
 // Get all the secrets filters related to a secret store source, by the secret store unique identifier.
 type ArkSecHubGetFilter struct {
 	StoreID  string `json:"store_id" mapstructure:"store_id" desc:"Secrets Store Id for Secrets Hub" flag:"store-id" validate:"required"`
@@ -13,7 +13,7 @@ type ArkSecHubGetFilter struct {
 
 // ArkSecHubFilterData represents the data field in the filter.
 type ArkSecHubFilterData struct {
-	SafeName string `json:"safe_name" mapstructure:"safe_name"`
+	SafeName string `json:"safe_name" mapstructure:"safe_name" desc:"Vault Safe Name"`
 }
 
 // ArkSecHubFilter represents a single filter used to retrieve secrets from Ark Secrets Hub.
