@@ -143,7 +143,7 @@ func (s *ArkSecHubSyncPoliciesService) getSyncPoliciesWithFilters(
 }
 
 // GetSyncPolicies returns a channel of ArkSecHubSyncPoliciesPage containing all Sync Policies.
-func (s *ArkSecHubSyncPoliciesService) GetSyncPolicies(syncPolicies *syncpoliciesmodels.ArkSecHubGetSyncPolices) (<-chan *ArkSecHubSyncPoliciesPage, error) {
+func (s *ArkSecHubSyncPoliciesService) GetSyncPolicies(syncPolicies *syncpoliciesmodels.ArkSecHubGetSyncPolicies) (<-chan *ArkSecHubSyncPoliciesPage, error) {
 	var projection string
 	if syncPolicies.Projection != "" {
 		projection = syncPolicies.Projection
@@ -295,7 +295,7 @@ func (s *ArkSecHubSyncPoliciesService) DeleteSyncPolicy(syncPolicy *syncpolicies
 // SyncPoliciesStats retrieves statistics about sync policies.
 func (s *ArkSecHubSyncPoliciesService) SyncPoliciesStats() (*syncpoliciesmodels.ArkSecHubSyncPoliciesStats, error) {
 	s.Logger.Info("Retrieving sync policy stats")
-	var projection = syncpoliciesmodels.ArkSecHubGetSyncPolices{
+	var projection = syncpoliciesmodels.ArkSecHubGetSyncPolicies{
 		Projection: "REGULAR",
 	}
 	syncPoliciesChan, err := s.GetSyncPolicies(&projection)

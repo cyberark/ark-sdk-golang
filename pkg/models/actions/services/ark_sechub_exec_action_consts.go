@@ -99,7 +99,7 @@ var SyncPoliciesActionToSchemaMap = map[string]interface{}{
 	"create-sync-policy":    &sechubsyncpolicies.ArkSechubCreateSyncPolicy{},
 	"delete-sync-policy":    &sechubsyncpolicies.ArkSecHubDeleteSyncPolicy{},
 	"get-sync-policy":       &sechubsyncpolicies.ArkSecHubGetSyncPolicy{},
-	"get-sync-policies":     &sechubsyncpolicies.ArkSecHubGetSyncPolices{},
+	"get-sync-policies":     &sechubsyncpolicies.ArkSecHubGetSyncPolicies{},
 	"get-sync-policies-by":  &sechubsyncpolicies.ArkSecHubSyncPoliciesFilters{},
 	"set-sync-policy-state": &sechubsyncpolicies.ArkSecHubSetSyncPolicyState{},
 	"sync-policies-stats":   nil,
