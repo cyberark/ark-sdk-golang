@@ -169,7 +169,7 @@ func (s *ArkSecHubSecretStoresService) GetSecretStoresBy(secretStoresFilters *se
 // https://api-docs.cyberark.com/docs/secretshub-api/tw80b23aww65j-get-a-secret-store
 func (s *ArkSecHubSecretStoresService) GetSecretStore(
 	getSecretStore *secretstoresmodels.ArkSecHubGetSecretStore) (*secretstoresmodels.ArkSecHubSecretStore, error) {
-	s.Logger.Info("Retrieving safe [%s]", getSecretStore.SecretStoreID)
+	s.Logger.Info("Retrieving secret store [%s]", getSecretStore.SecretStoreID)
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(secretStoreURL, getSecretStore.SecretStoreID), nil)
 	if err != nil {
 		return nil, err
@@ -183,11 +183,11 @@ func (s *ArkSecHubSecretStoresService) GetSecretStore(
 	if response.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to retrieve secret store - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 	}
-	safeJSON, err := common.DeserializeJSONSnake(response.Body)
+	secretStoreJSON, err := common.DeserializeJSONSnake(response.Body)
 	if err != nil {
 		return nil, err
 	}
-	secretStoreJSONMap := safeJSON.(map[string]interface{})
+	secretStoreJSONMap := secretStoreJSON.(map[string]interface{})
 	if secretStoreID, ok := secretStoreJSONMap["id"]; ok {
 		secretStoreJSONMap["id"] = secretStoreID
 	}
@@ -337,12 +337,12 @@ func (s *ArkSecHubSecretStoresService) DeleteSecretStore(secretStore *secretstor
 		}
 	}(response.Body)
 	if response.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("failed to delete secret store- [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
+		return fmt.Errorf("failed to delete secret store - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 	}
 	return nil
 }
 
-// SecretStoresStats retrieves statistics about safes.
+// SecretStoresStats retrieves statistics about secret stores.
 func (s *ArkSecHubSecretStoresService) SecretStoresStats() (*secretstoresmodels.ArkSecHubSecretStoresStats, error) {
 	s.Logger.Info("Retrieving secret store stats")
 	secretStoresChan, err := s.GetSecretStores()
