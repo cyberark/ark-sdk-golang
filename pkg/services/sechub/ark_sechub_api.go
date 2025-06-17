@@ -8,6 +8,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secrets"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secretstores"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/serviceinfo"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/syncpolicies"
 )
 
 // ArkSecHubAPI is a struct that provides access to the Ark SecHub API as a wrapped set of services.
@@ -18,9 +19,10 @@ type ArkSecHubAPI struct {
 	serviceinfoService   *serviceinfo.ArkSecHubServiceInfoService
 	secretStoresService  *secretstores.ArkSecHubSecretStoresService
 	secretsService       *secrets.ArkSecHubSecretsService
+	syncPoliciesService  *syncpolicies.ArkSecHubSyncPoliciesService
 }
 
-// NewArkSecHubAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
+// NewArkSecHubAPI creates a new instance of ArkSecHubAPI with the provided ArkISPAuth.
 func NewArkSecHubAPI(ispAuth *auth.ArkISPAuth) (*ArkSecHubAPI, error) {
 	var baseIspAuth auth.ArkAuth = ispAuth
 	serviceinfoService, err := serviceinfo.NewArkSecHubServiceInfoService(baseIspAuth)
@@ -55,6 +57,11 @@ func (api *ArkSecHubAPI) SecretStores() *secretstores.ArkSecHubSecretStoresServi
 // ServiceInfo returns the service info service of the ArkSecHubAPI instance.
 func (api *ArkSecHubAPI) ServiceInfo() *serviceinfo.ArkSecHubServiceInfoService {
 	return api.serviceinfoService
+}
+
+// SyncPolicies returns the sync policies service of the ArkSecHubAPI instance.
+func (api *ArkSecHubAPI) SyncPolicies() *syncpolicies.ArkSecHubSyncPoliciesService {
+	return api.syncPoliciesService
 }
 
 // Filters returns the filters service of the ArkSecHubAPI instance.

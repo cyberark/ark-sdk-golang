@@ -19,6 +19,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secrets"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secretstores"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/serviceinfo"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/syncpolicies"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
@@ -349,4 +350,18 @@ func (api *ArkAPI) SecHubSecrets() (*secrets.ArkSecHubSecretsService, error) {
 	var secretsBaseService services.ArkService = secretsService
 	api.services[secrets.SecHubSecretsServiceConfig.ServiceName] = &secretsBaseService
 	return secretsService, nil
+}
+
+// SecHubSyncPolicies returns the SecHub Sync Policies service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubSyncPolicies() (*syncpolicies.ArkSecHubSyncPoliciesService, error) {
+	if syncPoliciesServiceInterface, ok := api.services[syncpolicies.SecHubSyncPoliciesServiceConfig.ServiceName]; ok {
+		return (*syncPoliciesServiceInterface).(*syncpolicies.ArkSecHubSyncPoliciesService), nil
+	}
+	syncPoliciesService, err := syncpolicies.NewArkSecHubSyncPoliciesService(api.loadServiceAuthenticators(syncpolicies.SecHubSyncPoliciesServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var syncPoliciesBaseService services.ArkService = syncPoliciesService
+	api.services[syncpolicies.SecHubSyncPoliciesServiceConfig.ServiceName] = &syncPoliciesBaseService
+	return syncPoliciesService, nil
 }

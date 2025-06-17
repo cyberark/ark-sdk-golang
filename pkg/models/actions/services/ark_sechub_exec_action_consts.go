@@ -7,6 +7,7 @@ import (
 	sechubscans "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/scans"
 	sechubsecrets "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secrets"
 	sechubsecretstores "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secretstores"
+	sechubsyncpolicies "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/syncpolicies"
 )
 
 // ServiceInfoActionToSchemaMap is a map that defines the mapping between Sec Hub Service Info action names and their corresponding schema types.
@@ -94,6 +95,22 @@ var SecretsSHAction = actions.ArkServiceActionDefinition{
 	Schemas:    SecretsSHActionToSchemaMap,
 }
 
+var SyncPoliciesActionToSchemaMap = map[string]interface{}{
+	"create-sync-policy":    &sechubsyncpolicies.ArkSechubCreateSyncPolicy{},
+	"delete-sync-policy":    &sechubsyncpolicies.ArkSecHubDeleteSyncPolicy{},
+	"get-sync-policy":       &sechubsyncpolicies.ArkSecHubGetSyncPolicy{},
+	"get-sync-policies":     &sechubsyncpolicies.ArkSecHubGetSyncPolices{},
+	"get-sync-policies-by":  &sechubsyncpolicies.ArkSecHubSyncPoliciesFilters{},
+	"set-sync-policy-state": &sechubsyncpolicies.ArkSecHubSetSyncPolicyState{},
+	"sync-policies-stats":   nil,
+}
+
+// SyncPoliciesAction is a struct that defines the sync policies action for the Ark service.
+var SyncPoliciesAction = actions.ArkServiceActionDefinition{
+	ActionName: "sync-policies",
+	Schemas:    SyncPoliciesActionToSchemaMap,
+}
+
 // SecHubActions is a struct that defines the SecHub action for the Ark service.
 var SecHubActions = &actions.ArkServiceActionDefinition{
 	ActionName: "sechub",
@@ -104,5 +121,6 @@ var SecHubActions = &actions.ArkServiceActionDefinition{
 		&FiltersAction,
 		&SecretsStoresAction,
 		&SecretsSHAction,
+		&SyncPoliciesAction,
 	},
 }
