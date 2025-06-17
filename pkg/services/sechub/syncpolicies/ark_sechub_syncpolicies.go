@@ -222,7 +222,6 @@ func (s *ArkSecHubSyncPoliciesService) CreateSyncPolicy(syncPolicy *syncpolicies
 	if syncPolicy.Transformation.Predefined == "default" {
 		delete(createSyncPolicyJSON, "transformation")
 	}
-	s.Logger.Info("%s", createSyncPolicyJSON)
 	response, err := s.client.Post(context.Background(), sechubURL, createSyncPolicyJSON)
 	if err != nil {
 		return nil, err

@@ -16,9 +16,9 @@ type ArkSecHubPolicy struct {
 	Source         ArkSecHubPolicyStore          `json:"source" mapstructure:"source" desc:"Source store reference"`
 	Target         ArkSecHubPolicyStore          `json:"target" mapstructure:"target" desc:"Target store reference"`
 	Filter         ArkSecHubPolicyFilter         `json:"filter" mapstructure:"filter" desc:"Filter reference"`
-	Transformation ArkSecHubPolicyTransformation `json:"transformation,omitempty" mapstructure:"transformation,omitempty" desc:"Transformation reference"`
+	Transformation ArkSecHubPolicyTransformation `json:"transformation,omitzero" mapstructure:"transformation,omitempty" desc:"Transformation reference"`
 	State          ArkSecHubPolicyState          `json:"state" mapstructure:"state" desc:"Current state of the policy"`
-	Status         ArkSecHubPolicyStatus         `json:"status,omitempty" mapstructure:"status,omitempty" desc:"Status of the policy"`
+	Status         ArkSecHubPolicyStatus         `json:"status,omitzero" mapstructure:"status,omitempty" desc:"Status of the policy"`
 }
 
 // ArkSecHubPolicyStore represents a reference to a store with details.
