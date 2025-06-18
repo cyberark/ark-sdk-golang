@@ -53,7 +53,6 @@ var FiltersActionToSchemaMap = map[string]interface{}{
 	"get-filters":   &sechubfilters.ArkSecHubGetFilters{},
 	"add-filter":    &sechubfilters.ArkSecHubAddFilter{},
 	"delete-filter": &sechubfilters.ArkSecHubDeleteFilter{},
-	"filter-stats":  nil,
 }
 
 // FiltersAction is a struct that defines the filters action for the Ark service.
