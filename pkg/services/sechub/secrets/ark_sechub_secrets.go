@@ -24,7 +24,7 @@ type ArkSecHubSecretsPage = common.ArkPage[secretsmodels.ArkSecHubSecret]
 
 // SecHubSecretsServiceConfig is the configuration for the Secrets Hub secrets service.
 var SecHubSecretsServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sechub-secretss",
+	ServiceName:                "sechub-secrets",
 	RequiredAuthenticatorNames: []string{"isp"},
 	OptionalAuthenticatorNames: []string{},
 }
@@ -158,6 +158,7 @@ func (s *ArkSecHubSecretsService) getSecretsWithFilters(
 }
 
 // GetSecrets returns a channel of ArkSecHubSecretsPage containing all Secret Stores.
+// https://api-docs.cyberark.com/docs/secretshub-api/kdyou8dae9r8m-get-secrets
 func (s *ArkSecHubSecretsService) GetSecrets() (<-chan *ArkSecHubSecretsPage, error) {
 	return s.getSecretsWithFilters(
 		"",
