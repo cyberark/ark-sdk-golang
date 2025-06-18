@@ -129,27 +129,17 @@ func (s *ArkSecHubScansService) GetScans() (<-chan *ArkSecHubScansPage, error) {
 // TriggerScan triggers scans in the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/kyc9azwliw2xa-trigger-scan
 func (s *ArkSecHubScansService) TriggerScan(triggerScan *scansmodels.ArkSecHubTriggerScans) (*scansmodels.ArkSecHubScanIDs, error) {
-	if triggerScan.ID == "" {
-		triggerScan.ID = "default"
-	}
-	if triggerScan.Type == "" {
-		triggerScan.Type = "secret-store"
-	}
-	s.Logger.Info("Triggering scan. Scan ID %s", triggerScan.ID)
-
-	triggerScanMap := scansmodels.ArkSecHubScanMap{
+	bodyMap := scansmodels.ArkSecHubScanMap{
 		Scope: scansmodels.ArkSecHubSecretStoreIds{
-			SecretStoreIds: triggerScan.SecretStoresIds,
+			SecretStoresIds: triggerScan.SecretStoresIds,
 		},
 	}
-	// Creating POST body using a subset of the user inputs.
-	// Only the Store IDs need to be sent as part of the body.
-	triggerScanMapJSON, err := common.SerializeJSONCamel(triggerScanMap)
+	bodyMapJSON, err := common.SerializeJSONCamel(bodyMap)
 	if err != nil {
 		return nil, err
 	}
-	s.Logger.Info("Triggering scan. Scan ID %s", triggerScanMapJSON)
-	response, err := s.client.Post(context.Background(), fmt.Sprintf(triggerURL, triggerScan.Type, triggerScan.ID), triggerScanMap)
+	s.Logger.Info("Triggering scan. Scan ID %s", triggerScan.ID)
+	response, err := s.client.Post(context.Background(), fmt.Sprintf(triggerURL, triggerScan.Type, triggerScan.ID), bodyMapJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +149,7 @@ func (s *ArkSecHubScansService) TriggerScan(triggerScan *scansmodels.ArkSecHubTr
 			common.GlobalLogger.Warning("Error closing response body")
 		}
 	}(response.Body)
-	if response.StatusCode != http.StatusOK {
+	if response.StatusCode != http.StatusAccepted {
 		return nil, fmt.Errorf("failed to update scans - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
 	}
 	scansJSON, err := common.DeserializeJSONSnake(response.Body)
