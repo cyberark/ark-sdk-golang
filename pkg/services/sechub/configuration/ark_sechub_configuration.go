@@ -95,7 +95,7 @@ func (s *ArkSecHubConfigurationService) GetConfiguration() (*configurationmodels
 
 // SetConfiguration updates the configuration info in the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/eko5hfu8sg16o-update-configuration
-func (s *ArkSecHubConfigurationService) SetConfiguration(setConfiguration *configurationmodels.ArkSecHubSetConfiguration) (*configurationmodels.ArkSecHubSetConfiguration, error) {
+func (s *ArkSecHubConfigurationService) SetConfiguration(setConfiguration *configurationmodels.ArkSecHubSetConfiguration) (*configurationmodels.ArkSecHubGetConfiguration, error) {
 	s.Logger.Info("Updating configuration. Setting secret validity to [%d]", setConfiguration.SyncSettings.SecretValidity)
 	setConfigurationJSON, err := common.SerializeJSONCamel(setConfiguration)
 	if err != nil {
@@ -118,7 +118,7 @@ func (s *ArkSecHubConfigurationService) SetConfiguration(setConfiguration *confi
 	if err != nil {
 		return nil, err
 	}
-	var configurationinfo configurationmodels.ArkSecHubSetConfiguration
+	var configurationinfo configurationmodels.ArkSecHubGetConfiguration
 	err = mapstructure.Decode(configurationJSON, &configurationinfo)
 	if err != nil {
 		return nil, err
