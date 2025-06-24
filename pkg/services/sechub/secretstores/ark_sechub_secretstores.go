@@ -229,6 +229,76 @@ func (s *ArkSecHubSecretStoresService) GetSecretStoreConnStatus(
 	return &connStatus, nil
 }
 
+// CreateSecretStore creates a new secret store
+// https://api-docs.cyberark.com/docs/secretshub-api/99oqbphsqgomi-create-secret-store
+func (s *ArkSecHubSecretStoresService) CreateSecretStore(secretStore *secretstoresmodels.ArkSecHubCreateSecretStore) (*secretstoresmodels.ArkSecHubSecretStore, error) {
+	s.Logger.Info("Creating secret store[%s]", secretStore.Name)
+	createSecretStoreJSON, err := common.SerializeJSONCamel(secretStore)
+	if err != nil {
+		return nil, err
+	}
+	if secretStore.Description != "" {
+		delete(createSecretStoreJSON, "description")
+		createSecretStoreJSON["description"] = secretStore.Description
+	}
+	response, err := s.client.Post(context.Background(), sechubURL, createSecretStoreJSON)
+	if err != nil {
+		return nil, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			common.GlobalLogger.Warning("Error closing response body")
+		}
+	}(response.Body)
+	if response.StatusCode != http.StatusCreated {
+		return nil, fmt.Errorf("failed to create secret store - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
+	}
+	secretStoreJSON, err := common.DeserializeJSONSnake(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	var secretStoreResponse secretstoresmodels.ArkSecHubSecretStore
+	err = mapstructure.Decode(secretStoreJSON, &secretStoreResponse)
+	if err != nil {
+		return nil, err
+	}
+	return &secretStoreResponse, nil
+}
+
+// UpdateSecretStore updates a secret store
+// https://api-docs.cyberark.com/docs/secretshub-api/99oqbphsqgomi-create-secret-store
+func (s *ArkSecHubSecretStoresService) UpdateSecretStore(secretStore *secretstoresmodels.ArkSecHubUpdateSecretStore) (*secretstoresmodels.ArkSecHubSecretStore, error) {
+	s.Logger.Info("Updating secret store[%s]", secretStore.Name)
+	updateSecretStoreJSON, err := common.SerializeJSONCamel(secretStore)
+	if err != nil {
+		return nil, err
+	}
+	response, err := s.client.Patch(context.Background(), fmt.Sprintf(secretStoreURL, secretStore.SecretStoreID), updateSecretStoreJSON)
+	if err != nil {
+		return nil, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			common.GlobalLogger.Warning("Error closing response body")
+		}
+	}(response.Body)
+	if response.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("failed to udpate secret store - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
+	}
+	secretStoreJSON, err := common.DeserializeJSONSnake(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	var secretStoreResponse secretstoresmodels.ArkSecHubSecretStore
+	err = mapstructure.Decode(secretStoreJSON, &secretStoreResponse)
+	if err != nil {
+		return nil, err
+	}
+	return &secretStoreResponse, nil
+}
+
 // SetSecretStoreState sets the state of a secret store.
 // https://api-docs.cyberark.com/docs/secretshub-api/qb5o0s8br9nxg-set-secret-store-state
 func (s *ArkSecHubSecretStoresService) SetSecretStoreState(
@@ -285,41 +355,6 @@ func (s *ArkSecHubSecretStoresService) SetSecretStoresState(
 		return nil, err
 	}
 	return &secretStoresState, nil
-}
-
-// UpdateSecretStore updates an existing secret store.
-// https://api-docs.cyberark.com/docs/secretshub-api/c5psoqrujuqbr-update-secret-store
-// TODO: Test
-func (s *ArkSecHubSecretStoresService) UpdateSecretStore(
-	updateSecretStore *secretstoresmodels.ArkSecHubUpdateSecretStore) (*secretstoresmodels.ArkSecHubSecretStore, error) {
-	s.Logger.Info("Updating secret store [%s]", updateSecretStore.SecretStoreID)
-	response, err := s.client.Patch(context.Background(), fmt.Sprintf(secretStoreURL, updateSecretStore.SecretStoreID), updateSecretStore)
-	if err != nil {
-		return nil, err
-	}
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-			common.GlobalLogger.Warning("Error closing response body")
-		}
-	}(response.Body)
-	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed to update secret store - [%d] - [%s]", response.StatusCode, common.SerializeResponseToJSON(response.Body))
-	}
-	secretStoreJSON, err := common.DeserializeJSONSnake(response.Body)
-	if err != nil {
-		return nil, err
-	}
-	secretStoreJSONMap := secretStoreJSON.(map[string]interface{})
-	if secretStoreID, ok := secretStoreJSONMap["id"]; ok {
-		secretStoreJSONMap["id"] = secretStoreID
-	}
-	var secretStore secretstoresmodels.ArkSecHubSecretStore
-	err = mapstructure.Decode(secretStoreJSONMap, &secretStore)
-	if err != nil {
-		return nil, err
-	}
-	return &secretStore, nil
 }
 
 // DeleteSecretStore deletes a specified secret store based on ID
