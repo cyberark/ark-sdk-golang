@@ -43,6 +43,13 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] Identity Directories Service
   - [x] Identity Roles Service
   - [x] Identity Users Service
+  - [x] Secrets Hub Secret Stores Service
+  - [x] Secrets Hub Secrets Service
+  - [x] Secrets Hub Sync Policies Service
+  - [x] Secrets Hub Scans Service
+  - [x] Secrets Hub Service Info Service
+  - [x] Secrets Hub Configuration Service
+  - [x] Secrets Hub Filters Service
 - [x] Filesystem Inputs and Outputs for the CLI
 - [x] Silent and Verbose logging
 - [x] Profile Management and Authentication Caching
