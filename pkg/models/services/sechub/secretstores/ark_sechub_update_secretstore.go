@@ -10,34 +10,32 @@ type ArkSecHubUpdateSecretStore struct {
 
 type ArkSecHubUpdateSecretStoreData struct {
 	// AWS ASM Specific Fields
-	AccountAlias string `json:"account_alias,omitempty" mapstructure:"account_alias,omitempty" flag:"aws-account-alias"`
-	// GCP GSM Specific Fields
-	GcpProjectName            string `json:"gcp_project_name,omitempty" mapstructure:"gcp_project_name,omitempty" flag:"gcp-project-name" desc:"The name of the GCP project where the GCP Secret Manager is stored"`
-	GcpWorkloadIdentityPoolID string `json:"gcp_workload_identity_pool_id,omitempty" mapstructure:"gcp_workload_identity_pool_id,omitempty" desc:"The GCP workload identity pool ID created for Secrets Hub to access the GCP Secret Manager"`
-	GcpPoolProviderID         string `json:"gcp_pool_provider_id,omitempty" mapstructure:"gcp_pool_provider_id,omitempty" flag:"gcp-pool-provider-id" desc:"The GCP pool provider ID created for Secrets Hub to access the GCP Secret Manager"`
-	ServiceAccountEmail       string `json:"service_account_email,omitempty" mapstructure:"service_account_email,omitempty" flag:"gcp-service-account-email" desc:"The service account email created for Secrets Hub to access the GCP Secret Manager"`
-	// Self-Hosted Specific Fields
-	Password        string `json:"password,omitempty" mapstructure:"password,omitempty" desc:"The password of the user in PAM 'SecretsHub'" flag:"password"`
-	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d" flag:"sh-connector-id"`
-	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1" flag:"sh-connector-pool-id"`
+	AccountAlias string `json:"account_alias,omitempty" mapstructure:"account_alias,omitempty" flag:"aws-account-alias" desc:"AWS: The alias of your AWS account"`
+	RoleName     string `json:"role_name,omitempty" mapstructure:"role_name,omitempty" flag:"aws-rolename" desc:"AWS: The role used to allow Secrets Hub to manage secrets in your AWS Secrets Manager"`
 	// Azure AKV Specific Fields
-	AppClientDirectoryID string `json:"app_client_directory_id,omitempty" mapstructure:"app_client_directory_id,omitempty" flag:"azure-app-client-directory-id" desc:"The Azure directory/tenant ID where the application (user) for Secrets Hub was created"`
-	AppClientID          string `json:"app_client_id,omitempty" mapstructure:"app_client_id,omitempty" flag:"azure-app-client-id" desc:"A unique Application (client) ID assigned to Secrets Hub by Azure AD when the app was registered."`
-	AppClientSecret      string `json:"app_client_secret,omitempty" mapstructure:"app_client_secret,omitempty" flag:"azure-app-client-secret" desc:"The user's password that will be used by Secrets Hub to access the Azure Key Vault."`
-	SubscriptionID       string `json:"subscription_id,omitempty" mapstructure:"subscription_id,omitempty" flag:"azure-subscription-id" desc:"The Azure subscription ID linked to the Azure Key Vault"`
-	SubscriptionName     string `json:"subscription_name,omitempty" mapstructure:"subscription_name,omitempty" flag:"azure-subscription-name" desc:"The Azure subscription name linked to the Azure Key Vault"`
-	ResourceGroupName    string `json:"resource_group_name,omitempty" mapstructure:"resource_group_name,omitempty" flag:"azure-resource-group-name" desc:"The Azure resource group name where the Azure Key Vault is stored"`
-	// Common Fields
-	// Used by AWS and HashiCorp Vault
-	RoleName string `json:"role_name,omitempty" mapstructure:"role_name,omitempty" flag:"rolename" desc:"Rolename for AWS and Hashi"`
-	// Used by Azure, GCP, and HashiCorp Vault
-	ConnectionConfig *ArkSecHubUpdateSecretStoreConnectionConfig `json:"connection_config,omitempty" mapstructure:"connection_config,omitempty" desc:"The network access configuration set for your target"`
+	AppClientDirectoryID string `json:"app_client_directory_id,omitempty" mapstructure:"app_client_directory_id,omitempty" flag:"azure-app-client-directory-id" desc:"AZURE: The Azure Active Directory ID of the application that has access to the Azure Key Vault"`
+	AzureVaultURL        string `json:"azure_vault_url,omitempty" mapstructure:"azure_vault_url,omitempty" flag:"azure-vault-url" desc:"AZURE: The URL of the Azure Key Vault where you store secrets. Example: https://myvault.vault.azure.net/"`
+	AppClientID          string `json:"app_client_id,omitempty" mapstructure:"app_client_id,omitempty" flag:"azure-app-client-id" desc:"AZURE: The Azure Active Directory application ID of the application that has access to the Azure Key Vault"`
+	SubscriptionID       string `json:"subscription_id,omitempty" mapstructure:"subscription_id,omitempty" flag:"azure-subscription-id" desc:"AZURE: The Azure subscription ID where the Azure Key Vault is stored"`
+	SubscriptionName     string `json:"subscription_name,omitempty" mapstructure:"subscription_name,omitempty" flag:"azure-subscription-name" desc:"AZURE: The name of the Azure subscription where the Azure Key Vault is stored"`
+	ResourceGroupName    string `json:"resource_group_name,omitempty" mapstructure:"resource_group_name,omitempty" flag:"azure-resource-group-name" desc:"AZURE: The name of the Azure resource group where the Azure Key Vault is stored"`
+	// GCP GSM Specific Fields
+	GcpProjectName            string `json:"gcp_project_name,omitempty" mapstructure:"gcp_project_name,omitempty" flag:"gcp-project-name" desc:"GCP: The name of the GCP project where the GCP Secret Manager is stored"`
+	GcpWorkloadIdentityPoolID string `json:"gcp_workload_identity_pool_id,omitempty" mapstructure:"gcp_workload_identity_pool_id,omitempty" flag:"gcp-workload-identity-pool-id" desc:"GCP: The GCP workload identity pool ID created for Secrets Hub to access the GCP Secret Manager"`
+	GcpPoolProviderID         string `json:"gcp_pool_provider_id,omitempty" mapstructure:"gcp_pool_provider_id,omitempty" flag:"gcp-pool-provider-id" desc:"GCP: The GCP pool provider ID created for Secrets Hub to access the GCP Secret Manager"`
+	ServiceAccountEmail       string `json:"service_account_email,omitempty" mapstructure:"service_account_email,omitempty" flag:"gcp-service-account-email" desc:"GCP: The service account email created for Secrets Hub to access the GCP Secret Manager"`
+	// Self-Hosted Specific Fields
+	Password        string `json:"password,omitempty" mapstructure:"password,omitempty" desc:"SELF HOSTED: The password of the user in PAM 'SecretsHub'" flag:"sh-password"`
+	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"SELF HOSTED: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d" flag:"sh-connector-id"`
+	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"SELF HOSTED: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1" flag:"sh-connector-pool-id"`
+	// Used by Azure, GCP
+	ConnectionConfig *ArkSecHubUpdateSecretStoreConnectionConfig `json:"connection_config,omitzero" mapstructure:"connection_config,omitzero" desc:"AZURE: The network access configuration set for your target"`
 }
 
 type ArkSecHubUpdateSecretStoreConnectionConfig struct {
-	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"If your Cloud Vault is not open to public access, choose 'CONNECTOR'. Valid Values: 'CONNECTOR','PUBLIC"`
+	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"AZURE: If your Cloud Vault is not open to public access, choose 'CONNECTOR'. Valid Values: 'CONNECTOR','PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.
 	// If you choose 'PUBLIC', these fields are not required.
-	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
-	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" flag:"connector-pool-id" desc:"The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
+	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"AZURE: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
+	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" flag:"connector-pool-id" desc:"AZURE: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
 }
