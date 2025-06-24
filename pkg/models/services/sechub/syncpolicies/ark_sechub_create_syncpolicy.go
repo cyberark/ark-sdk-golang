@@ -19,7 +19,7 @@ type ArkSechubSyncPolicyStore struct {
 // ArkSechubSyncPolicyFilter represents a filter for selecting items to sync.
 type ArkSechubSyncPolicyFilter struct {
 	ID   string                        `json:"id,omitempty" mapstructure:"id,omitempty" desc:"The unique filter identifier. If used, Data and Type are not required." flag:"id,omitempty"`
-	Data ArkSechubSyncPolicyFilterData `json:"data,omitempty" mapstructure:"data,omitempty" desc:"Filter data" flag:"data,omitempty"`
+	Data ArkSechubSyncPolicyFilterData `json:"data,omitzero" mapstructure:"data,omitzero" desc:"Filter data" flag:"data,omitempty"`
 	Type string                        `json:"type,omitempty" mapstructure:"type,omitempty" desc:"Type of filter - Allowed Value: 'PAM_SAFE'" flag:"type,omitempty" validate:"omitempty,eq=PAM_SAFE"` // PAM_SAFE
 }
 
@@ -30,5 +30,5 @@ type ArkSechubSyncPolicyFilterData struct {
 
 // ArkSechubSyncPolicyTransformation represents transformation configuration for the sync policy.
 type ArkSechubSyncPolicyTransformation struct {
-	Predefined string `json:"predefined" mapstructure:"predefined" desc:"Predefined transformation to apply - Allowed Values: 'password_only_plain_text, default'" default:"default" flag:"predefined" validate:"required"` // password_only_plain_text, default
+	Predefined string `json:"predefined" mapstructure:"predefined" desc:"Predefined transformation to apply - Allowed Values: 'password_only_plain_text', 'default'" flag:"predefined"` // password_only_plain_text, default
 }
