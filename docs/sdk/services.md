@@ -112,3 +112,4 @@ The Secrets Hub (sechub) service requires the ArkISPAuth authenticator, and expo
 - **ArkSecHubScansService** - Scans service
 - **ArkSecHubSecretStoresService** - Secret Stores service
 - **ArkSecHubServiceInfoService** - Service Info service
+- **ArkSecHubFiltersService** - Filter service
