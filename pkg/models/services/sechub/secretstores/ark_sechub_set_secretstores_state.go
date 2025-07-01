@@ -2,7 +2,7 @@ package secretstores
 
 // ArkSecHubSetSecretStoresState represents the body of sent when setting multiple secret store states
 type ArkSecHubSetSecretStoresState struct {
-	Action         string   `json:"action" mapstructure:"action" flag:"action" desc:"State to set secret stores to, Allowed Values: 'enable' and 'disable'" validate:"required,oneof=enable disable"`
+	Action         string   `json:"action" mapstructure:"action" flag:"action" desc:"State to set secret stores to (enable,disable)" choices:"enable,disable"`
 	SecretStoreIDs []string `json:"secret_store_ids" mapstructure:"secret_store_ids" desc:"List of Secret Store ids to set state for" flag:"secret-store-ids" validate:"required"`
 }
 

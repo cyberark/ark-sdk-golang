@@ -1,7 +1,7 @@
 package secretstores
 
 type ArkSecHubSecretStoreConnectionConfig struct {
-	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" desc:"If your Cloud Vault is not open to public access, choose 'CONNECTOR'. Valid Values: 'CONNECTOR','PUBLIC"`
+	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" desc:"The connection type (CONNECTOR,PUBLIC)"`
 	// Required if you choose 'CONNECTOR' as the connection type.
 	// If you choose 'PUBLIC', these fields are not required.
 	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
@@ -45,14 +45,14 @@ type ArkSecHubSecretStoreData struct {
 
 type ArkSecHubSecretStoreScan struct {
 	ID         string `json:"id" mapstructure:"id" validate:"required" desc:"The unique identifier of the scan"`
-	Status     string `json:"status" mapstructure:"status" validate:"required" desc:"The status of the scan. Valid values: IN_PROGRESS, SUCCESS, FAILED"`
+	Status     string `json:"status" mapstructure:"status" validate:"required" desc:"The status of the scan (IN_PROGRESS,SUCCESS,FAILED)"`
 	Message    string `json:"message,omitempty" mapstructure:"message,omitempty" desc:"More information on the scan status."`
 	FinishedAt string `json:"finished_at,omitempty" mapstructure:"finished_at,omitempty" desc:"The date and time the scan ended. Example: 2023-07-06T15:45:00.103000"`
 }
 
 type ArkSecHubSecretStore struct {
 	ID                 string                   `json:"id" mapstructure:"id" desc:"The unique identifier of the secret store" validate:"required"`
-	Type               string                   `json:"type" mapstructure:"type" desc:"The type of secret store. Valid values: PAM_PCLOUD, PAM_SELF_HOSTED, AWS_ASM, AZURE_AKV, GCP_GSM, HASHI_HCV" validate:"required"`
+	Type               string                   `json:"type" mapstructure:"type" desc:"The type of secret store (PAM_PCLOUD,PAM_SELF_HOSTED,AWS_ASM,AZURE_AKV,GCP_GSM,HASHI_HCV)" validate:"required"`
 	Behaviors          []string                 `json:"behaviors" mapstructure:"behaviors" desc:"Whether the secret store is used as a source or a target. There can be only one source secret store per tenant. Valid values: SECRETS_SOURCE, SECRETS_TARGET"`
 	CreatedAt          string                   `json:"created_at" mapstructure:"created_at" desc:"The secret store creation date." validate:"required"`
 	CreatedBy          string                   `json:"created_by" mapstructure:"created_by" desc:"The user who created the secret store." validate:"required"`

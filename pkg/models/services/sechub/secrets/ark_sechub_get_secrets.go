@@ -17,7 +17,7 @@ type ArkSecHubSecretVendorData struct {
 	ProjectName           string                            `json:"project_name,omitempty" mapstructure:"project_name,omitempty" desc:"The name of the Google Cloud project where the secret is stored."`
 	ProjectNumber         string                            `json:"project_number,omitempty" mapstructure:"project_number,omitempty" desc:"The number of the Google Cloud project where the secret is stored."`
 	SecretEnabledVersions int                               `json:"secret_enabled_versions,omitempty" mapstructure:"secret_enabled_versions,omitempty" desc:"The number of versions of the secret that are enabled in external secret store."`
-	SecretType            string                            `json:"secret_type,omitempty" mapstructure:"secret_type,omitempty" desc:"E.g GLOBAL - Allowed Values: 'GLOBAL','REGIONAL'"`
+	SecretType            string                            `json:"secret_type,omitempty" mapstructure:"secret_type,omitempty" desc:"(GLOBAL,REGIONAL)" choices:"GLOBAL,REGIONAL"`
 	Replicas              ArkSecHubSecretVendorDataReplicas `json:"replicas,omitzero" mapstructure:"replicas,omitzero" desc:"If the secret is being replicated, and to where."`
 	NextRotationTime      string                            `json:"next_rotation_time,omitempty" mapstructure:"next_rotation_time,omitempty" desc:"The time at which the secret is scheduled to be rotated by the external secret store."`
 	Annotations           map[string]string                 `json:"annotations,omitempty" mapstructure:"" desc:"The annotations that are applied to the secret in external secret store."`
@@ -35,8 +35,8 @@ type ArkSecHubSecretVendorData struct {
 
 // ArkSecHubSecret represents a single secret in the response.
 type ArkSecHubSecret struct {
-	VendorType       string                    `json:"vendor_type" mapstructure:"vendor_type" desc:"The vendor type of the store where the secret was found, valid values: AWS, AZURE, GCP" validate:"required"`
-	VendorSubType    string                    `json:"vendor_sub_type" mapstructure:"vendor_sub_type" desc:"The subtype of the secret store where the secret was discovered, valid values: ASM, AKV, GSM" validate:"required"`
+	VendorType       string                    `json:"vendor_type" mapstructure:"vendor_type" desc:"The vendor type of the store where the secret was found (AWS, AZURE, GCP)" validate:"required"`
+	VendorSubType    string                    `json:"vendor_sub_type" mapstructure:"vendor_sub_type" desc:"The subtype of the secret store where the secret was discovered (ASM, AKV, GSM)" validate:"required"`
 	ID               string                    `json:"id" mapstructure:"id" desc:"The unique identifier of the secret in Secrets Hub (internal). " validate:"required"`
 	OriginID         string                    `json:"origin_id" mapstructure:"origin_id" desc:"The unique identifier of the secret as defined in the secret store." validate:"required"`
 	Name             string                    `json:"name,omitempty" mapstructure:"name,omitempty" desc:"The name of the secret as defined in the secret store."`

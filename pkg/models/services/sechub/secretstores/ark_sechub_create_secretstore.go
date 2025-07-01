@@ -1,7 +1,7 @@
 package secretstores
 
 type ArkSecHubCreateSecretStoreConnectionConfig struct {
-	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"COMMON - AKV, GCP: If your Cloud Vault is not open to public access, choose 'CONNECTOR'. Valid Values: 'CONNECTOR','PUBLIC"`
+	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"COMMON - AKV, GCP: The type of connector (CONNECTOR,PUBLIC)" default:"CONNECTOR" choices:"CONNECTOR,PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.
 	// If you choose 'PUBLIC', these fields are not required.
 	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"AZURE: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
@@ -38,9 +38,9 @@ type ArkSecHubCreateSecretStoreData struct {
 }
 
 type ArkSecHubCreateSecretStore struct {
-	Type        string                         `json:"type" mapstructure:"type" flag:"type" validate:"required" desc:"The type for the secrets. Valid values: AWS_ASM, AZURE_AKV, GCP_GSM, HASHI_HCV, PAM_PCLOUD, PAM_SELF_HOSTED"`
+	Type        string                         `json:"type" mapstructure:"type" flag:"type" validate:"required" desc:"The type for the secrets (AWS_ASM, AZURE_AKV,GCP_GSM,HASHI_HCV,PAM_PCLOUD,PAM_SELF_HOSTED)" choices:"AWS_ASM,AZURE_AKV,GCP_GSM,HASHI_HCV,PAM_PCLOUD,PAM_SELF_HOSTED"`
 	Description string                         `json:"description,omitempty" mapstructure:"description,omitempty" flag:"description" desc:"A description of the secret store."`
 	Name        string                         `json:"name" mapstructure:"name" desc:"The secret store name." flag:"name" validate:"required"`
-	State       string                         `json:"state,omitempty" mapstructure:"state,omitempty" flag:"state" desc:"The secret store state. Valid Values: ENABLED, DISABLED. Default Value: ENABLED"`
+	State       string                         `json:"state,omitempty" mapstructure:"state,omitempty" flag:"state" desc:"The secret store state (ENABLED,DISABLED)" default:"ENABLED" choices:"ENABLED,DISABLED"`
 	Data        ArkSecHubCreateSecretStoreData `json:"data" mapstructure:"data" desc:"The data of the secret store depends on the secret store type."`
 }

@@ -33,7 +33,7 @@ type ArkSecHubUpdateSecretStoreData struct {
 }
 
 type ArkSecHubUpdateSecretStoreConnectionConfig struct {
-	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"AZURE: If your Cloud Vault is not open to public access, choose 'CONNECTOR'. Valid Values: 'CONNECTOR','PUBLIC"`
+	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"AZURE: The type of connector (CONNECTOR,PUBLIC)" default:"CONNECTOR" choices:"CONNECTOR,PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.
 	// If you choose 'PUBLIC', these fields are not required.
 	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"AZURE: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
