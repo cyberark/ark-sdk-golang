@@ -12,7 +12,7 @@ import (
 
 // ServiceInfoActionToSchemaMap is a map that defines the mapping between Sec Hub Service Info action names and their corresponding schema types.
 var ServiceInfoActionToSchemaMap = map[string]interface{}{
-	"get-service-info": nil,
+	"service-info": nil,
 }
 
 // ServiceInfoAction is a struct that defines the Secrets Hub Service Info action for the Ark service.
@@ -23,7 +23,7 @@ var ServiceInfoAction = actions.ArkServiceActionDefinition{
 
 // ScansActionToSchemaMap is a map that defines the mapping between Sec Hub scans action names and their corresponding schema types.
 var ScansActionToSchemaMap = map[string]interface{}{
-	"get-scans":    nil,
+	"scans":        nil,
 	"scans-stats":  nil,
 	"trigger-scan": &sechubscans.ArkSecHubTriggerScans{},
 }
@@ -36,8 +36,7 @@ var ScansAction = actions.ArkServiceActionDefinition{
 
 // ConfigurationActionToSchemaMap is a map that defines the mapping between Sec Hub configuration action names and their corresponding schema types.
 var ConfigurationActionToSchemaMap = map[string]interface{}{
-	//"get-configuration": &sechubconfiguration.ArkSecHubGetConfiguration{},
-	"get-configuration": nil,
+	"configuration":     nil,
 	"set-configuration": &sechubconfiguration.ArkSecHubSetConfiguration{},
 }
 
@@ -49,8 +48,8 @@ var ConfigurationAction = actions.ArkServiceActionDefinition{
 
 // FiltersActionToSchemaMap is a map that defines the mapping between Sec Hub filters action names and their corresponding schema types.
 var FiltersActionToSchemaMap = map[string]interface{}{
-	"get-filter":    &sechubfilters.ArkSecHubGetFilter{},
-	"get-filters":   &sechubfilters.ArkSecHubGetFilters{},
+	"filter":        &sechubfilters.ArkSecHubGetFilter{},
+	"list-filters":  &sechubfilters.ArkSecHubGetFilters{},
 	"add-filter":    &sechubfilters.ArkSecHubAddFilter{},
 	"delete-filter": &sechubfilters.ArkSecHubDeleteFilter{},
 }
@@ -63,16 +62,16 @@ var FiltersAction = actions.ArkServiceActionDefinition{
 
 // SecretsStoresActionToSchemaMap is a map that defines the mapping between Sec Hub secrets stores action names and their corresponding schema types.
 var SecretsStoresActionToSchemaMap = map[string]interface{}{
-	"get-secret-store":             &sechubsecretstores.ArkSecHubGetSecretStore{},
-	"get-secret-stores":            nil,
-	"get-secret-stores-by":         &sechubsecretstores.ArkSecHubSecretStoresFilters{},
-	"get-secret-store-conn-status": &sechubsecretstores.ArkSecHubGetSecretStoreConnectionStatus{},
-	"set-secret-store-state":       &sechubsecretstores.ArkSecHubSetSecretStoreState{},
-	"set-secret-stores-state":      &sechubsecretstores.ArkSecHubSetSecretStoresState{},
-	"secret-stores-stats":          nil,
-	"delete-secret-store":          &sechubsecretstores.ArkSecHubDeleteSecretStore{},
-	"create-secret-store":          &sechubsecretstores.ArkSecHubCreateSecretStore{},
-	"update-secret-store":          &sechubsecretstores.ArkSecHubUpdateSecretStore{},
+	"secret-store":             &sechubsecretstores.ArkSecHubGetSecretStore{},
+	"list-secret-stores":       nil,
+	"list-secret-stores-by":    &sechubsecretstores.ArkSecHubSecretStoresFilters{},
+	"secret-store-conn-status": &sechubsecretstores.ArkSecHubGetSecretStoreConnectionStatus{},
+	"set-secret-store-state":   &sechubsecretstores.ArkSecHubSetSecretStoreState{},
+	"set-secret-stores-state":  &sechubsecretstores.ArkSecHubSetSecretStoresState{},
+	"secret-stores-stats":      nil,
+	"delete-secret-store":      &sechubsecretstores.ArkSecHubDeleteSecretStore{},
+	"create-secret-store":      &sechubsecretstores.ArkSecHubCreateSecretStore{},
+	"update-secret-store":      &sechubsecretstores.ArkSecHubUpdateSecretStore{},
 }
 
 // SecretsStoresAction is a struct that defines the secrets stores action for the Ark service.
@@ -83,9 +82,9 @@ var SecretsStoresAction = actions.ArkServiceActionDefinition{
 
 // SecretsSHActionToSchemaMap is a map that defines the mapping between Sec Hub secrets action names and their corresponding schema types.
 var SecretsSHActionToSchemaMap = map[string]interface{}{
-	"get-secrets":    nil,
-	"get-secrets-by": &sechubsecrets.ArkSecHubSecretsFilter{},
-	"secrets-stats":  nil,
+	"secrets":         nil,
+	"list-secrets-by": &sechubsecrets.ArkSecHubSecretsFilter{},
+	"secrets-stats":   nil,
 }
 
 // SecretsSHAction is a struct that defines the secrets action for the Ark service.
@@ -97,9 +96,9 @@ var SecretsSHAction = actions.ArkServiceActionDefinition{
 var SyncPoliciesActionToSchemaMap = map[string]interface{}{
 	"create-sync-policy":    &sechubsyncpolicies.ArkSechubCreateSyncPolicy{},
 	"delete-sync-policy":    &sechubsyncpolicies.ArkSecHubDeleteSyncPolicy{},
-	"get-sync-policy":       &sechubsyncpolicies.ArkSecHubGetSyncPolicy{},
-	"get-sync-policies":     &sechubsyncpolicies.ArkSecHubGetSyncPolicies{},
-	"get-sync-policies-by":  &sechubsyncpolicies.ArkSecHubSyncPoliciesFilters{},
+	"sync-policy":           &sechubsyncpolicies.ArkSecHubGetSyncPolicy{},
+	"list-sync-policies":    &sechubsyncpolicies.ArkSecHubGetSyncPolicies{},
+	"list-sync-policies-by": &sechubsyncpolicies.ArkSecHubSyncPoliciesFilters{},
 	"set-sync-policy-state": &sechubsyncpolicies.ArkSecHubSetSyncPolicyState{},
 	"sync-policies-stats":   nil,
 }
