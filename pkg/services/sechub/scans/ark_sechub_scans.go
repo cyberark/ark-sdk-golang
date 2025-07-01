@@ -72,9 +72,9 @@ func (s *ArkSecHubScansService) refreshSecHubAuth(client *common.ArkClient) erro
 	return nil
 }
 
-// GetScans retrieves the scans info from the Secrets Hub service.
+// Scans retrieves the scans info from the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/78cprz38emhrb-get-scans
-func (s *ArkSecHubScansService) GetScans() (<-chan *ArkSecHubScansPage, error) {
+func (s *ArkSecHubScansService) Scans() (<-chan *ArkSecHubScansPage, error) {
 	s.Logger.Info("Getting scans")
 
 	results := make(chan *ArkSecHubScansPage)
@@ -167,7 +167,7 @@ func (s *ArkSecHubScansService) TriggerScan(triggerScan *scansmodels.ArkSecHubTr
 // ScansStats retrieves statistics about scans.
 func (s *ArkSecHubScansService) ScansStats() (*scansmodels.ArkSecHubScanStats, error) {
 	s.Logger.Info("Retrieving scan stats")
-	scansChan, err := s.GetScans()
+	scansChan, err := s.Scans()
 	if err != nil {
 		return nil, err
 	}

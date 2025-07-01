@@ -157,9 +157,9 @@ func (s *ArkSecHubSecretsService) getSecretsWithFilters(
 	return results, nil
 }
 
-// GetSecrets returns a channel of ArkSecHubSecretsPage containing all Secret Stores.
+// Secrets returns a channel of ArkSecHubSecretsPage containing all Secret Stores.
 // https://api-docs.cyberark.com/docs/secretshub-api/kdyou8dae9r8m-get-secrets
-func (s *ArkSecHubSecretsService) GetSecrets() (<-chan *ArkSecHubSecretsPage, error) {
+func (s *ArkSecHubSecretsService) Secrets() (<-chan *ArkSecHubSecretsPage, error) {
 	return s.getSecretsWithFilters(
 		"",
 		"",
@@ -169,8 +169,8 @@ func (s *ArkSecHubSecretsService) GetSecrets() (<-chan *ArkSecHubSecretsPage, er
 	)
 }
 
-// GetSecretsBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
-func (s *ArkSecHubSecretsService) GetSecretsBy(secretsFilters *secretsmodels.ArkSecHubSecretsFilter) (<-chan *ArkSecHubSecretsPage, error) {
+// ListSecretsBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
+func (s *ArkSecHubSecretsService) ListSecretsBy(secretsFilters *secretsmodels.ArkSecHubSecretsFilter) (<-chan *ArkSecHubSecretsPage, error) {
 	return s.getSecretsWithFilters(
 		secretsFilters.Projection,
 		secretsFilters.Filter,
@@ -183,7 +183,7 @@ func (s *ArkSecHubSecretsService) GetSecretsBy(secretsFilters *secretsmodels.Ark
 // SecretsStats retrieves statistics about secrets.
 func (s *ArkSecHubSecretsService) SecretsStats() (*secretsmodels.ArkSecHubSecretsStats, error) {
 	s.Logger.Info("Retrieving secret stats")
-	secretsChan, err := s.GetSecrets()
+	secretsChan, err := s.Secrets()
 	if err != nil {
 		return nil, err
 	}

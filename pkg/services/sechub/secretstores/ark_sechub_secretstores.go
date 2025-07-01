@@ -145,16 +145,16 @@ func (s *ArkSecHubSecretStoresService) getSecretStoresWithFilters(
 	return results, nil
 }
 
-// GetSecretStores returns a channel of ArkSecHubSecretStoresPage containing all Secret Stores.
-func (s *ArkSecHubSecretStoresService) GetSecretStores() (<-chan *ArkSecHubSecretStoresPage, error) {
+// ListSecretStores returns a channel of ArkSecHubSecretStoresPage containing all Secret Stores.
+func (s *ArkSecHubSecretStoresService) ListSecretStores() (<-chan *ArkSecHubSecretStoresPage, error) {
 	return s.getSecretStoresWithFilters(
 		"",
 		"",
 	)
 }
 
-// GetSecretStoresBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
-func (s *ArkSecHubSecretStoresService) GetSecretStoresBy(secretStoresFilters *secretstoresmodels.ArkSecHubSecretStoresFilters) (<-chan *ArkSecHubSecretStoresPage, error) {
+// ListSecretStoresBy returns a channel of ArkSecHubSecretsPage containing secrets filtered by the given filters.
+func (s *ArkSecHubSecretStoresService) ListSecretStoresBy(secretStoresFilters *secretstoresmodels.ArkSecHubSecretStoresFilters) (<-chan *ArkSecHubSecretStoresPage, error) {
 	var behavior string
 	if secretStoresFilters.Behavior != "" {
 		behavior = secretStoresFilters.Behavior
@@ -165,9 +165,9 @@ func (s *ArkSecHubSecretStoresService) GetSecretStoresBy(secretStoresFilters *se
 	)
 }
 
-// GetSecretStore returns an individual secret store.
+// SecretStore returns an individual secret store.
 // https://api-docs.cyberark.com/docs/secretshub-api/tw80b23aww65j-get-a-secret-store
-func (s *ArkSecHubSecretStoresService) GetSecretStore(
+func (s *ArkSecHubSecretStoresService) SecretStore(
 	getSecretStore *secretstoresmodels.ArkSecHubGetSecretStore) (*secretstoresmodels.ArkSecHubSecretStore, error) {
 	s.Logger.Info("Retrieving secret store [%s]", getSecretStore.SecretStoreID)
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(secretStoreURL, getSecretStore.SecretStoreID), nil)
@@ -199,9 +199,9 @@ func (s *ArkSecHubSecretStoresService) GetSecretStore(
 	return &secretStore, nil
 }
 
-// GetSecretStoreConnStatus retrieves the connection status of a secret store.
+// SecretStoreConnStatus retrieves the connection status of a secret store.
 // https://api-docs.cyberark.com/docs/secretshub-api/b7f2joyxr9ekn-get-connection-status-of-secret-store
-func (s *ArkSecHubSecretStoresService) GetSecretStoreConnStatus(
+func (s *ArkSecHubSecretStoresService) SecretStoreConnStatus(
 	getSecretStoreConnStatus *secretstoresmodels.ArkSecHubGetSecretStoreConnectionStatus) (*secretstoresmodels.ArkSecHubGetSecretStoreConnectionStatusResponse, error) {
 	s.Logger.Info("Retrieving secret store connection status [%s]", getSecretStoreConnStatus.SecretStoreID)
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(connStatusURL, getSecretStoreConnStatus.SecretStoreID), nil)
@@ -380,7 +380,7 @@ func (s *ArkSecHubSecretStoresService) DeleteSecretStore(secretStore *secretstor
 // SecretStoresStats retrieves statistics about secret stores.
 func (s *ArkSecHubSecretStoresService) SecretStoresStats() (*secretstoresmodels.ArkSecHubSecretStoresStats, error) {
 	s.Logger.Info("Retrieving secret store stats")
-	secretStoresChan, err := s.GetSecretStores()
+	secretStoresChan, err := s.ListSecretStores()
 	if err != nil {
 		return nil, err
 	}

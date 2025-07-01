@@ -142,8 +142,8 @@ func (s *ArkSecHubSyncPoliciesService) getSyncPoliciesWithFilters(
 	return results, nil
 }
 
-// GetSyncPolicies returns a channel of ArkSecHubSyncPoliciesPage containing all Sync Policies.
-func (s *ArkSecHubSyncPoliciesService) GetSyncPolicies(syncPolicies *syncpoliciesmodels.ArkSecHubGetSyncPolicies) (<-chan *ArkSecHubSyncPoliciesPage, error) {
+// ListSyncPolicies returns a channel of ArkSecHubSyncPoliciesPage containing all Sync Policies.
+func (s *ArkSecHubSyncPoliciesService) ListSyncPolicies(syncPolicies *syncpoliciesmodels.ArkSecHubGetSyncPolicies) (<-chan *ArkSecHubSyncPoliciesPage, error) {
 	var projection string
 	if syncPolicies.Projection != "" {
 		projection = syncPolicies.Projection
@@ -154,8 +154,8 @@ func (s *ArkSecHubSyncPoliciesService) GetSyncPolicies(syncPolicies *syncpolicie
 	)
 }
 
-// GetSyncPoliciesBy returns a channel of ArkSecHubSyncPoliciesPage containing secrets filtered by the given filters.
-func (s *ArkSecHubSyncPoliciesService) GetSyncPoliciesBy(syncPoliciesFilters *syncpoliciesmodels.ArkSecHubSyncPoliciesFilters) (<-chan *ArkSecHubSyncPoliciesPage, error) {
+// ListSyncPoliciesBy returns a channel of ArkSecHubSyncPoliciesPage containing secrets filtered by the given filters.
+func (s *ArkSecHubSyncPoliciesService) ListSyncPoliciesBy(syncPoliciesFilters *syncpoliciesmodels.ArkSecHubSyncPoliciesFilters) (<-chan *ArkSecHubSyncPoliciesPage, error) {
 	var projection string
 	if syncPoliciesFilters.Projection != "" {
 		projection = syncPoliciesFilters.Projection
@@ -166,9 +166,9 @@ func (s *ArkSecHubSyncPoliciesService) GetSyncPoliciesBy(syncPoliciesFilters *sy
 	)
 }
 
-// GetSyncPolicy returns an individual sync policy
+// SyncPolicy returns an individual sync policy
 // https://api-docs.cyberark.com/docs/secretshub-api/f5jjh0rv9ivfs-get-sync-policy
-func (s *ArkSecHubSyncPoliciesService) GetSyncPolicy(
+func (s *ArkSecHubSyncPoliciesService) SyncPolicy(
 	getSyncPolicy *syncpoliciesmodels.ArkSecHubGetSyncPolicy) (*syncpoliciesmodels.ArkSecHubPolicy, error) {
 	s.Logger.Info("Retrieving sync policy [%s]", getSyncPolicy.PolicyID)
 	query := map[string]string{}
@@ -297,7 +297,7 @@ func (s *ArkSecHubSyncPoliciesService) SyncPoliciesStats() (*syncpoliciesmodels.
 	var projection = syncpoliciesmodels.ArkSecHubGetSyncPolicies{
 		Projection: "REGULAR",
 	}
-	syncPoliciesChan, err := s.GetSyncPolicies(&projection)
+	syncPoliciesChan, err := s.ListSyncPolicies(&projection)
 	if err != nil {
 		return nil, err
 	}

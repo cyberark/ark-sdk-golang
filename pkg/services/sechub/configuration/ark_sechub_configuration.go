@@ -64,9 +64,9 @@ func (s *ArkSecHubConfigurationService) refreshSecHubAuth(client *common.ArkClie
 	return nil
 }
 
-// GetConfiguration retrieves the configuration info from the Secrets Hub service.
+// Configuration retrieves the configuration info from the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/r3a0vv9er2enm-view-configuration
-func (s *ArkSecHubConfigurationService) GetConfiguration() (*configurationmodels.ArkSecHubGetConfiguration, error) {
+func (s *ArkSecHubConfigurationService) Configuration() (*configurationmodels.ArkSecHubGetConfiguration, error) {
 	s.Logger.Info("Getting configuration")
 	response, err := s.client.Get(context.Background(), sechubURL, nil)
 	if err != nil {

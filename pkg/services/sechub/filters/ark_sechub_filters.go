@@ -68,9 +68,9 @@ func (s *ArkSecHubFiltersService) refreshSecHubAuth(client *common.ArkClient) er
 	return nil
 }
 
-// GetFilter retrieves the filters info from the Secrets Hub service.
+// Filter retrieves the filters info from the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/rqykgubx980ul-get-secrets-filter
-func (s *ArkSecHubFiltersService) GetFilter(getFilters *filtersmodels.ArkSecHubGetFilter) (*filtersmodels.ArkSecHubFilter, error) {
+func (s *ArkSecHubFiltersService) Filter(getFilters *filtersmodels.ArkSecHubGetFilter) (*filtersmodels.ArkSecHubFilter, error) {
 	if getFilters.StoreID == "" {
 		s.Logger.Info("Setting Secret Store ID to default")
 		getFilters.StoreID = "default"
@@ -108,9 +108,9 @@ func (s *ArkSecHubFiltersService) GetFilter(getFilters *filtersmodels.ArkSecHubG
 	return &filter, nil
 }
 
-// GetFilters retrieves the filters info from the Secrets Hub service.
+// ListFilters retrieves the filters info from the Secrets Hub service.
 // https://api-docs.cyberark.com/docs/secretshub-api/punr36gz4tuqe-get-all-secrets-filters
-func (s *ArkSecHubFiltersService) GetFilters(getFilters *filtersmodels.ArkSecHubGetFilters) (<-chan *ArkSecHubFiltersPage, error) {
+func (s *ArkSecHubFiltersService) ListFilters(getFilters *filtersmodels.ArkSecHubGetFilters) (<-chan *ArkSecHubFiltersPage, error) {
 	if getFilters.StoreID == "" {
 		s.Logger.Info("Setting Secret Store ID to default")
 		getFilters.StoreID = "default"
