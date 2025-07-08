@@ -103,3 +103,13 @@ The Privilege Cloud (pCloud) service requires the ArkISPAuth authenticator, and 
 The Connector Manager (cmgr) service requires the ArkISPAuth authenticator, and exposes those service classes:
 
 - **ArkCmgrService** - Connector Manager service
+
+## Secrets Hub service
+The Secrets Hub (sechub) service requires the ArkISPAuth authenticator, and exposes those service classes:
+
+- **ArkSecHubConfigurationService** - Configuration service
+- **ArkSecHubSecretsService** - Secrets service
+- **ArkSecHubScansService** - Scans service
+- **ArkSecHubSecretStoresService** - Secret Stores service
+- **ArkSecHubServiceInfoService** - Service Info service
+- **ArkSecHubFiltersService** - Filter service

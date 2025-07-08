@@ -43,6 +43,13 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] Identity Directories Service
   - [x] Identity Roles Service
   - [x] Identity Users Service
+  - [x] Secrets Hub Secret Stores Service
+  - [x] Secrets Hub Secrets Service
+  - [x] Secrets Hub Sync Policies Service
+  - [x] Secrets Hub Scans Service
+  - [x] Secrets Hub Service Info Service
+  - [x] Secrets Hub Configuration Service
+  - [x] Secrets Hub Filters Service
 - [x] Filesystem Inputs and Outputs for the CLI
 - [x] Silent and Verbose logging
 - [x] Profile Management and Authentication Caching
@@ -267,6 +274,87 @@ Delete SIA database
 ```shell
 ark exec sia workspaces db delete-database --id databaseid
 ```
+
+Get Secrets Hub Configuration
+```shell
+ark exec sechub configuration get-configuration
+```
+Set Secrets Hub Configuration
+```shell 
+ark exec sechub configuration set-configuration --sync-settings 360
+```
+
+Get Secrets Hub Filters
+```shell
+ark exec sechub filters get-filters --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+Add Secrets Hub Filter
+```shell
+ark exec sechub filters add-filter --type "PAM_SAFE" --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667 --data-safe-name "example-safe"
+```
+Delete Secrets Hub Filter
+```shell
+ark exec sechub filters delete-filter --filter-id filter-7f3d187d-7439-407f-b968-ec27650be692 --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+
+Get Secrets Hub Scans
+```shell
+ark exec sechub scans get-scans 
+```
+Trigger Secrets Hub Scan
+```shell
+ark exec sechub scans trigger-scan --id default --secret-stores-ids store-e488dd22-a59c-418c-bbe3-3f061dd9b667 type secret-store
+```
+
+Create Secrets Hub Secret Store
+```shell
+ark exec sechub secret-stores create-secret-store --type AWS_ASM --description sdk-testing --name "SDK Testing" --state ENABLED --data-aws-account-alias ALIAS-NAME-EXAMPLE --data-aws-region-id us-east-1 --data-aws-account-id 123456789123 --data-aws-rolename Secrets-Hub-IAM-Role-Name-Created-For-Secrets-Hub
+```
+Retrieve Secrets Hub Secret Store
+```shell
+ark exec sechub secret-stores get-secret-store --secret-store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+Update Secrets Hub Secret Store
+```shell
+ark exec sechub secret-stores update-secret-store --secret-store-id store-7f3d187d-7439-407f-b968-ec27650be692 --name "New Name" --description "Updated Description" --data-aws-account-alias "Test2"
+```
+Delete Secrets Hub Secret Store
+```shell
+ark exec sechub secret-stores delete-secret-store --secret-store-id store-fd11bc7c-22d0-4d9b-ac1b-f8458161935f
+```
+
+Get Secrets Hub Secrets
+```shell
+ark exec sechub secrets get-secrets
+```
+Get Secrets Hub Secrets using a filter
+```shell
+ark exec sechub secrets get-secrets-by --limit 5 --projection EXTEND --filter "name CONTAINS EXAMPLE"
+```
+
+Get Secrets Hub Service Information
+```shell
+ark exec sechub service-info get-service-info
+```
+
+Get Secrets Hub Sync Policies
+```shell
+ark exec sechub sync-policies get-sync-policies
+```
+Get Secrets Hub Sync Policy
+```shell
+ark exec sechub sync-policies get-sync-policy --policy-id policy-7f3d187d-7439-407f-b968-ec27650be692 --projection EXTEND
+```
+Create Secrets Hub Sync Policy
+```shell
+ark exec sechub sync-policies create-sync-policy --name "New Sync Policy" --description "New Sync Policy Description" --filter-type PAM_SAFE --filter-data-safe-name EXAMPLE-SAFE-NAME --source-id store-e488dd22-a59c-418c-bbe3-3f061dd12367 --target-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+Delete Secrets Hub Sync Policy
+```shell
+ark exec sechub sync-policies delete-sync-policy --policy-id policy-7f3d187d-7439-407f-b968-ec27650be692
+```
+
+
 
 You can view all of the commands via the --help for each respective exec action
 

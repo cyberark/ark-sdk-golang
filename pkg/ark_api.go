@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
@@ -12,6 +13,13 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/users"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/accounts"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/safes"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/configuration"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/filters"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/scans"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secrets"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secretstores"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/serviceinfo"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/syncpolicies"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
@@ -258,4 +266,102 @@ func (api *ArkAPI) IdentityUsers() (*users.ArkIdentityUsersService, error) {
 	var usersBaseService services.ArkService = usersService
 	api.services[users.IdentityUsersServiceConfig.ServiceName] = &usersBaseService
 	return usersService, nil
+}
+
+// SecHubConfiguration returns the SecHub Configuration service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubConfiguration() (*configuration.ArkSecHubConfigurationService, error) {
+	if configurationServiceInterface, ok := api.services[configuration.SecHubConfigurationServiceConfig.ServiceName]; ok {
+		return (*configurationServiceInterface).(*configuration.ArkSecHubConfigurationService), nil
+	}
+	configurationService, err := configuration.NewArkSecHubConfigurationService(api.loadServiceAuthenticators(configuration.SecHubConfigurationServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var configurationBaseService services.ArkService = configurationService
+	api.services[configuration.SecHubConfigurationServiceConfig.ServiceName] = &configurationBaseService
+	return configurationService, nil
+}
+
+// SecHubScans returns the SecHub Scans service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubScans() (*scans.ArkSecHubScansService, error) {
+	if serviceInfoServiceInterface, ok := api.services[scans.SecHubScansServiceConfig.ServiceName]; ok {
+		return (*serviceInfoServiceInterface).(*scans.ArkSecHubScansService), nil
+	}
+	scansService, err := scans.NewArkSecHubScansService(api.loadServiceAuthenticators(scans.SecHubScansServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var scansBaseService services.ArkService = scansService
+	api.services[scans.SecHubScansServiceConfig.ServiceName] = &scansBaseService
+	return scansService, nil
+}
+
+// SecHubServiceInfo returns the SecHub Service Info service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubServiceInfo() (*serviceinfo.ArkSecHubServiceInfoService, error) {
+	if serviceInfoServiceInterface, ok := api.services[serviceinfo.SecHubServiceInfoServiceConfig.ServiceName]; ok {
+		return (*serviceInfoServiceInterface).(*serviceinfo.ArkSecHubServiceInfoService), nil
+	}
+	serviceinfoService, err := serviceinfo.NewArkSecHubServiceInfoService(api.loadServiceAuthenticators(serviceinfo.SecHubServiceInfoServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var serviceinfoBaseService services.ArkService = serviceinfoService
+	api.services[serviceinfo.SecHubServiceInfoServiceConfig.ServiceName] = &serviceinfoBaseService
+	return serviceinfoService, nil
+}
+
+// SecHubFilters returns the SecHub Filters service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubFilters() (*filters.ArkSecHubFiltersService, error) {
+	if filtersServiceInterface, ok := api.services[filters.SecHubFiltersServiceConfig.ServiceName]; ok {
+		return (*filtersServiceInterface).(*filters.ArkSecHubFiltersService), nil
+	}
+	filtersService, err := filters.NewArkSecHubFiltersService(api.loadServiceAuthenticators(filters.SecHubFiltersServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var filtersBaseService services.ArkService = filtersService
+	api.services[filters.SecHubFiltersServiceConfig.ServiceName] = &filtersBaseService
+	return filtersService, nil
+}
+
+// SecHubSecretStores returns the SecHub Secret Stores service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubSecretStores() (*secretstores.ArkSecHubSecretStoresService, error) {
+	if secretStoresServiceInterface, ok := api.services[secretstores.SecHubSecretStoresServiceConfig.ServiceName]; ok {
+		return (*secretStoresServiceInterface).(*secretstores.ArkSecHubSecretStoresService), nil
+	}
+	secretStoresService, err := secretstores.NewArkSecHubSecretStoresService(api.loadServiceAuthenticators(secretstores.SecHubSecretStoresServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var secretStoresBaseService services.ArkService = secretStoresService
+	api.services[secretstores.SecHubSecretStoresServiceConfig.ServiceName] = &secretStoresBaseService
+	return secretStoresService, nil
+}
+
+// SecHubSecrets returns the SecHub Secrets service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubSecrets() (*secrets.ArkSecHubSecretsService, error) {
+	if secretsServiceInterface, ok := api.services[secrets.SecHubSecretsServiceConfig.ServiceName]; ok {
+		return (*secretsServiceInterface).(*secrets.ArkSecHubSecretsService), nil
+	}
+	secretsService, err := secrets.NewArkSecHubSecretsService(api.loadServiceAuthenticators(secrets.SecHubSecretsServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var secretsBaseService services.ArkService = secretsService
+	api.services[secrets.SecHubSecretsServiceConfig.ServiceName] = &secretsBaseService
+	return secretsService, nil
+}
+
+// SecHubSyncPolicies returns the SecHub Sync Policies service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SecHubSyncPolicies() (*syncpolicies.ArkSecHubSyncPoliciesService, error) {
+	if syncPoliciesServiceInterface, ok := api.services[syncpolicies.SecHubSyncPoliciesServiceConfig.ServiceName]; ok {
+		return (*syncPoliciesServiceInterface).(*syncpolicies.ArkSecHubSyncPoliciesService), nil
+	}
+	syncPoliciesService, err := syncpolicies.NewArkSecHubSyncPoliciesService(api.loadServiceAuthenticators(syncpolicies.SecHubSyncPoliciesServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var syncPoliciesBaseService services.ArkService = syncPoliciesService
+	api.services[syncpolicies.SecHubSyncPoliciesServiceConfig.ServiceName] = &syncPoliciesBaseService
+	return syncPoliciesService, nil
 }

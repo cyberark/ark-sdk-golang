@@ -2,7 +2,7 @@
 
 if [ -z "$BUILD_VERSION" ]
 then
-	export BUILD_VERSION="v1.0.0"
+	export BUILD_VERSION="v1.1.0"
 fi
 
 if [ -z "$BUILD_NUMBER" ]
