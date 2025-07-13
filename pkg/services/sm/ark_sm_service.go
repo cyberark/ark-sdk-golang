@@ -293,8 +293,8 @@ func (s *ArkSMService) CountSessionActivitiesBy(filter *smmodels.ArkSMSessionAct
 	return count, err
 }
 
-// GetSessionsStats retrieves the session statistics for the SM service.
-func (s *ArkSMService) GetSessionsStats() (*smmodels.ArkSMSessionsStats, error) {
+// SessionsStats retrieves the session statistics for the SM service.
+func (s *ArkSMService) SessionsStats() (*smmodels.ArkSMSessionsStats, error) {
 	s.Logger.Info("Calculating sessions stats for the last 30 days")
 	startTimeFrom := time.Now().AddDate(0, 0, -30).UTC().Format("2006-01-02T15:04:05Z")
 
@@ -332,8 +332,8 @@ func (s *ArkSMService) GetSessionsStats() (*smmodels.ArkSMSessionsStats, error) 
 	return stats, nil
 }
 
-// GetSession retrieves a session by its ID
-func (s *ArkSMService) GetSession(getSession *smmodels.ArkSIASMGetSession) (*smmodels.ArkSMSession, error) {
+// Session retrieves a session by its ID
+func (s *ArkSMService) Session(getSession *smmodels.ArkSIASMGetSession) (*smmodels.ArkSMSession, error) {
 	s.Logger.Info(fmt.Sprintf("Getting session [%s]", getSession.SessionID))
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(sessionURL, getSession.SessionID), nil)
 	if err != nil {

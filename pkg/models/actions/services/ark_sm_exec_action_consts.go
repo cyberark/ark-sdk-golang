@@ -11,12 +11,12 @@ var SMActionToSchemaMap = map[string]interface{}{
 	"count-sessions":              nil,
 	"list-sessions-by":            &sm.ArkSMSessionsFilter{},
 	"count-sessions-by":           &sm.ArkSMSessionsFilter{},
-	"get-session":                 &sm.ArkSIASMGetSession{},
+	"session":                     &sm.ArkSIASMGetSession{},
 	"list-session-activities":     &sm.ArkSIASMGetSessionActivities{},
 	"count-session-activities":    &sm.ArkSIASMGetSessionActivities{},
 	"list-session-activities-by":  &sm.ArkSMSessionActivitiesFilter{},
 	"count-session-activities-by": &sm.ArkSMSessionActivitiesFilter{},
-	"get-sessions-stats":          nil,
+	"sessions-stats":              nil,
 }
 
 // SMActions is a struct that defines the SM actions for the Ark service.
