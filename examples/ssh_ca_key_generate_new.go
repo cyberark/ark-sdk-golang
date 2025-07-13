@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
 	"os"
 )
 
@@ -31,29 +30,14 @@ func main() {
 		panic(err)
 	}
 
-	// Create an SSO service from the authenticator above
-	ssoService, err := sso.NewArkSIASSOService(ispAuth)
+	// Install a connector on the pool above
+	siaAPI, err := sia.NewArkSIAAPI(ispAuth.(*auth.ArkISPAuth))
 	if err != nil {
 		panic(err)
 	}
-
-	// Generate a short-lived password for DB
-	ssoPassword, err := ssoService.ShortLivedPassword(
-		&ssomodels.ArkSIASSOGetShortLivedPassword{},
-	)
+	err = siaAPI.SSHCa().GenerateNewCA()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%s\n", ssoPassword)
-
-	// Generate a short-lived password for RDP
-	ssoPassword, err = ssoService.ShortLivedPassword(
-		&ssomodels.ArkSIASSOGetShortLivedPassword{
-			Service: "DPA-RDP",
-		},
-	)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%s\n", ssoPassword)
+	fmt.Printf("Generated new SSH CA key successfully\n")
 }

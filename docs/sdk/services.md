@@ -82,6 +82,7 @@ The Secure Infrastructure Access (sia) service requires the ArkISPAuth authentic
 - **ArkSIAWorkspacesService** (workspaces) - SIA workspaces management
     - **ArkSIATargetSetsWorkspaceService** (target-sets) - SIA Target Sets workspace management
     - **ArkSIADBWorkspaceService** (db) - SIA DB workspace management
+- **ArkSIASSHCAService** (ssh-ca) - SIA SSH CA Key service
 
 
 ## Identity service
@@ -113,3 +114,8 @@ The Secrets Hub (sechub) service requires the ArkISPAuth authenticator, and expo
 - **ArkSecHubSecretStoresService** - Secret Stores service
 - **ArkSecHubServiceInfoService** - Service Info service
 - **ArkSecHubFiltersService** - Filter service
+
+## Session Monitoring service
+The Session Monitoring (sm) service requires the ArkISPAuth authenticator, and exposes those service classes:
+
+- **ArkSMService** - Session Monitoring service

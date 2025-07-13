@@ -24,9 +24,11 @@ import (
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
+	siasshca "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca"
 	siasso "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	siaworkspacesdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sm"
 )
 
 // ArkAPI Wraps different API functionality of Ark Services.
@@ -182,6 +184,20 @@ func (api *ArkAPI) SiaAccess() (*siaaccess.ArkSIAAccessService, error) {
 	var accessBaseService services.ArkService = accessService
 	api.services[siaaccess.SIAAccessServiceConfig.ServiceName] = &accessBaseService
 	return accessService, nil
+}
+
+// SiaSSHCa returns the SiaSSHCa service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SiaSSHCa() (*siasshca.ArkSIASSHCAService, error) {
+	if sshCaServiceInterface, ok := api.services[siasshca.SIASSHCAServiceConfig.ServiceName]; ok {
+		return (*sshCaServiceInterface).(*siasshca.ArkSIASSHCAService), nil
+	}
+	sshCaService, err := siasshca.NewArkSIASSHCAService(api.loadServiceAuthenticators(siasshca.SIASSHCAServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var sshCaBaseService services.ArkService = sshCaService
+	api.services[siasshca.SIASSHCAServiceConfig.ServiceName] = &sshCaBaseService
+	return sshCaService, nil
 }
 
 // Cmgr returns the Cmgr service from the ArkAPI instance. If the service is not already created, it creates a new one.
@@ -364,4 +380,18 @@ func (api *ArkAPI) SecHubSyncPolicies() (*syncpolicies.ArkSecHubSyncPoliciesServ
 	var syncPoliciesBaseService services.ArkService = syncPoliciesService
 	api.services[syncpolicies.SecHubSyncPoliciesServiceConfig.ServiceName] = &syncPoliciesBaseService
 	return syncPoliciesService, nil
+}
+
+// Sm returns the SMService from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) Sm() (*sm.ArkSMService, error) {
+	if SMInterface, ok := api.services[sm.SMServiceConfig.ServiceName]; ok {
+		return (*SMInterface).(*sm.ArkSMService), nil
+	}
+	SMService, err := sm.NewArkSMService(api.loadServiceAuthenticators(sm.SMServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var smBaseService services.ArkService = SMService
+	api.services[sm.SMServiceConfig.ServiceName] = &smBaseService
+	return SMService, nil
 }

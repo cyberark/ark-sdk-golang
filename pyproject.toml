@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ark-sdk-golang"
-version = "1.1.0"
+version = "1.2.0"
 description='Official Ark SDK / CLI for CyberArk Identity Security Platform'
 authors = ["CyberArk <cyberark@cyberark.com>", "Ofir Iluz <ofir.iluz@cyberark.com"]
 readme = "README.md"

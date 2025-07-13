@@ -1,5 +1,6 @@
 package secretstores
 
+// ArkSecHubUpdateSecretStore defines the structure for updating a secret store in the Ark Secrets Hub.
 type ArkSecHubUpdateSecretStore struct {
 	SecretStoreID string `json:"secret_store_id" mapstructure:"secret_store_id" flag:"secret-store-id" validate:"required" desc:"The unique identifier of the secret store to update"`
 	Description   string `json:"description,omitempty" mapstructure:"description,omitempty" flag:"description" desc:"A description of the secret store."`
@@ -8,6 +9,7 @@ type ArkSecHubUpdateSecretStore struct {
 	Data *ArkSecHubUpdateSecretStoreData `json:"data,omitempty" mapstructure:"data,omitempty" desc:"The data related to the secret store as defined in the cloud platform."`
 }
 
+// ArkSecHubUpdateSecretStoreData defines the data structure for updating a secret store in the Ark Secrets Hub.
 type ArkSecHubUpdateSecretStoreData struct {
 	// AWS ASM Specific Fields
 	AccountAlias string `json:"account_alias,omitempty" mapstructure:"account_alias,omitempty" flag:"aws-account-alias" desc:"AWS: The alias of your AWS account"`
@@ -32,6 +34,7 @@ type ArkSecHubUpdateSecretStoreData struct {
 	ConnectionConfig *ArkSecHubUpdateSecretStoreConnectionConfig `json:"connection_config,omitzero" mapstructure:"connection_config,omitzero" desc:"AZURE: The network access configuration set for your target"`
 }
 
+// ArkSecHubUpdateSecretStoreConnectionConfig defines the connection configuration for updating a secret store in the Ark Secrets Hub.
 type ArkSecHubUpdateSecretStoreConnectionConfig struct {
 	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"AZURE: The type of connector (CONNECTOR,PUBLIC)" default:"CONNECTOR" choices:"CONNECTOR,PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.

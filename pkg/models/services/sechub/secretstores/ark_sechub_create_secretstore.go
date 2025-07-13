@@ -1,5 +1,6 @@
 package secretstores
 
+// ArkSecHubCreateSecretStoreConnectionConfig defines the connection configuration for creating a secret store in the Ark Secrets Hub.
 type ArkSecHubCreateSecretStoreConnectionConfig struct {
 	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"COMMON - AKV, GCP: The type of connector (CONNECTOR,PUBLIC)" default:"CONNECTOR" choices:"CONNECTOR,PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.
@@ -8,6 +9,7 @@ type ArkSecHubCreateSecretStoreConnectionConfig struct {
 	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" flag:"connector-pool-id" desc:"AZURE: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
 }
 
+// ArkSecHubCreateSecretStoreData defines the data structure for creating a secret store in the Ark Secrets Hub.
 type ArkSecHubCreateSecretStoreData struct {
 	// AWS ASM Specific Fields
 	AccountAlias string `json:"account_alias,omitempty" mapstructure:"account_alias,omitempty" flag:"aws-account-alias" desc:"AWS: The alias of your AWS account"`
@@ -37,6 +39,7 @@ type ArkSecHubCreateSecretStoreData struct {
 	ConnectionConfig *ArkSecHubCreateSecretStoreConnectionConfig `json:"connection_config,omitzero" mapstructure:"connection_config,omitzero" desc:"COMMON - AZURE, GCP: The network access configuration set for your target"`
 }
 
+// ArkSecHubCreateSecretStore defines the structure for creating a secret store in the Ark Secrets Hub.
 type ArkSecHubCreateSecretStore struct {
 	Type        string                         `json:"type" mapstructure:"type" flag:"type" validate:"required" desc:"The type for the secrets (AWS_ASM, AZURE_AKV,GCP_GSM,HASHI_HCV,PAM_PCLOUD,PAM_SELF_HOSTED)" choices:"AWS_ASM,AZURE_AKV,GCP_GSM,HASHI_HCV,PAM_PCLOUD,PAM_SELF_HOSTED"`
 	Description string                         `json:"description,omitempty" mapstructure:"description,omitempty" flag:"description" desc:"A description of the secret store."`

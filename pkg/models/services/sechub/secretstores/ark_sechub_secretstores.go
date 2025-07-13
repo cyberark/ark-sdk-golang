@@ -1,5 +1,6 @@
 package secretstores
 
+// ArkSecHubSecretStoreConnectionConfig defines the connection configuration for a secret store in the Ark Secrets Hub.
 type ArkSecHubSecretStoreConnectionConfig struct {
 	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" desc:"The connection type (CONNECTOR,PUBLIC)"`
 	// Required if you choose 'CONNECTOR' as the connection type.
@@ -8,6 +9,7 @@ type ArkSecHubSecretStoreConnectionConfig struct {
 	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
 }
 
+// ArkSecHubSecretStoreData defines the data structure for a secret store in the Ark Secrets Hub.
 type ArkSecHubSecretStoreData struct {
 	// AWS ASM Specific Fields
 	AccountAlias string `json:"account_alias,omitempty" mapstructure:"account_alias,omitempty" flag:"aws-account-alias"`
@@ -43,6 +45,7 @@ type ArkSecHubSecretStoreData struct {
 	ConnectionConfig *ArkSecHubSecretStoreConnectionConfig `json:"connection_config,omitempty" mapstructure:"connection_config,omitempty"`
 }
 
+// ArkSecHubSecretStoreScan defines the scan status of a secret store in the Ark Secrets Hub.
 type ArkSecHubSecretStoreScan struct {
 	ID         string `json:"id" mapstructure:"id" validate:"required" desc:"The unique identifier of the scan"`
 	Status     string `json:"status" mapstructure:"status" validate:"required" desc:"The status of the scan (IN_PROGRESS,SUCCESS,FAILED)"`
@@ -50,6 +53,7 @@ type ArkSecHubSecretStoreScan struct {
 	FinishedAt string `json:"finished_at,omitempty" mapstructure:"finished_at,omitempty" desc:"The date and time the scan ended. Example: 2023-07-06T15:45:00.103000"`
 }
 
+// ArkSecHubSecretStore defines the structure for a secret store in the Ark Secrets Hub.
 type ArkSecHubSecretStore struct {
 	ID                 string                   `json:"id" mapstructure:"id" desc:"The unique identifier of the secret store" validate:"required"`
 	Type               string                   `json:"type" mapstructure:"type" desc:"The type of secret store (PAM_PCLOUD,PAM_SELF_HOSTED,AWS_ASM,AZURE_AKV,GCP_GSM,HASHI_HCV)" validate:"required"`

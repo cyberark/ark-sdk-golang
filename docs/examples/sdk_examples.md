@@ -58,6 +58,17 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("%s\n", ssoPassword)
+
+	// Generate a short-lived password for RDP
+	ssoPassword, err = ssoService.ShortLivedPassword(
+		&ssomodels.ArkSIASSOGetShortLivedPassword{
+			Service: "DPA-RDP",
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s\n", ssoPassword)
 }
 ```
 
@@ -299,3 +310,54 @@ func main() {
 }
 ```
 
+## Session Monitoring
+
+In this example we authenticate to our ISP tenant and get all the active sessions:
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sm"
+	"os"
+)
+
+func main() {
+	// Perform authentication using ArkISPAuth to the platform
+	// First, create an ISP authentication class
+	// Afterwards, perform the authentication
+	ispAuth := auth.NewArkISPAuth(false)
+	_, err := ispAuth.Authenticate(
+		nil,
+		&authmodels.ArkAuthProfile{
+			Username:           "user@cyberark.cloud.12345",
+			AuthMethod:         authmodels.Identity,
+			AuthMethodSettings: &authmodels.IdentityArkAuthMethodSettings{},
+		},
+		&authmodels.ArkSecret{
+			Secret: os.Getenv("ARK_SECRET"),
+		},
+		false,
+		false,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	SMAPI, err := sm.NewArkSMService(ispAuth.(*auth.ArkISPAuth))
+	if err != nil {
+		panic(err)
+	}
+	filter := &ArkSMSessionsFilter{
+		Search: "status IN Active",
+	}
+	// Get all active sessions
+	activeSessions, err := SMAPI.CountSessionsBy(filter)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Total Active Sessions: %d\n", activeSessions)
+}
+```
