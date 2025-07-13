@@ -3,6 +3,10 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
+	"slices"
+	"strings"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/cli"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
@@ -13,9 +17,6 @@ import (
 	"github.com/octago/sflags/gen/gpflag"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"reflect"
-	"slices"
-	"strings"
 )
 
 // ArkServiceExecAction is a struct that implements the ArkExecAction interface for executing service actions.
@@ -307,6 +308,9 @@ func (s *ArkServiceExecAction) serializeAndPrintOutput(result []reflect.Value, a
 			} else {
 				args.PrintSuccess(string(jsonData))
 			}
+			shouldPrintGenericResult = false
+		} else if res.Kind() == reflect.Int {
+			args.PrintSuccess(fmt.Sprintf("%d", res.Int()))
 			shouldPrintGenericResult = false
 		} else {
 			args.PrintSuccess(res.Interface())

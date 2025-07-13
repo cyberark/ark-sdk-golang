@@ -18,6 +18,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -413,7 +414,7 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 		installConnector.TargetMachine,
 		installConnector.Username,
 		installConnector.Password,
-		common.ExpandFolder(installConnector.PrivateKeyPath),
+		strings.TrimSuffix(common.ExpandFolder(installConnector.PrivateKeyPath), "/"),
 		installConnector.PrivateKeyContents,
 		installConnector.RetryCount,
 		installConnector.RetryDelay,
@@ -433,7 +434,7 @@ func (s *ArkSIAAccessService) UninstallConnector(uninstallConnector *accessmodel
 		uninstallConnector.TargetMachine,
 		uninstallConnector.Username,
 		uninstallConnector.Password,
-		common.ExpandFolder(uninstallConnector.PrivateKeyPath),
+		strings.TrimSuffix(common.ExpandFolder(uninstallConnector.PrivateKeyPath), "/"),
 		uninstallConnector.PrivateKeyContents,
 		uninstallConnector.RetryCount,
 		uninstallConnector.RetryDelay,

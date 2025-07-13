@@ -39,6 +39,7 @@ type ArkSecHubSyncPoliciesService struct {
 	client  *isp.ArkISPServiceClient
 }
 
+// NewArkSecHubSyncPoliciesService creates a new instance of ArkSecHubSyncPoliciesService.
 func NewArkSecHubSyncPoliciesService(authenticators ...auth.ArkAuth) (*ArkSecHubSyncPoliciesService, error) {
 	syncPoliciesService := &ArkSecHubSyncPoliciesService{}
 	var syncPoliciesServiceInterface services.ArkService = syncPoliciesService

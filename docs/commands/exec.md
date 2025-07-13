@@ -21,6 +21,7 @@ The following SIA commands are supported:
       - `vm` - VM operations
       - `db` - DB operations
     - `access` - Access service
+    - `ssh-ca` - SSH CA key service
 - `ark exec cmgr`: Root command for the CMGR service
 - `ark exec pcloud`: Root command for PCloud service
     - `accounts` - Accounts management
@@ -36,6 +37,7 @@ The following SIA commands are supported:
     - `scans` - Scans management
     - `secret-stores` - Secret Stores management
     - `sync-policies` - Sync Policies management
+- `ark exec sm`: Root command for the SM service
 
 
 All commands have their own subcommands and respective arguments.
@@ -56,6 +58,8 @@ Available Commands:
   cmgr
   pcloud
   sia
+  sechub
+  sm
 
 Flags:
       --allow-output                Allow stdout / stderr even when silent and not interactive

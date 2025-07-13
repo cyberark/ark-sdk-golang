@@ -93,6 +93,7 @@ var SecretsSHAction = actions.ArkServiceActionDefinition{
 	Schemas:    SecretsSHActionToSchemaMap,
 }
 
+// SyncPoliciesActionToSchemaMap is a map that defines the mapping between Sec Hub sync policies action names and their corresponding schema types.
 var SyncPoliciesActionToSchemaMap = map[string]interface{}{
 	"create-sync-policy":    &sechubsyncpolicies.ArkSechubCreateSyncPolicy{},
 	"delete-sync-policy":    &sechubsyncpolicies.ArkSecHubDeleteSyncPolicy{},

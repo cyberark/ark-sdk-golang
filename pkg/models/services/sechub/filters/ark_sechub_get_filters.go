@@ -1,5 +1,6 @@
 package filters
 
+// ArkSecHubGetFilters holds the StoreId for the request.
 type ArkSecHubGetFilters struct {
 	StoreID string `json:"store_id" mapstructure:"store_id" desc:"Secrets Store Id for Secrets Hub" flag:"store-id" validate:"required"`
 }

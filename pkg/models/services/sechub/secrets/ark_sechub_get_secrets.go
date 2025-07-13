@@ -1,5 +1,6 @@
 package secrets
 
+// ArkSecHubSecretVendorDataReplicas defines the structure for the replicas field in the vendor data of a secret.
 type ArkSecHubSecretVendorDataReplicas struct {
 	Location string `json:"location,omitempty" mapstructure:"location,omitempty" desc:"Locations secrets are replicated to"`
 }

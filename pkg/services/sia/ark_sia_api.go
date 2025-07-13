@@ -6,6 +6,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	dbsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	vmsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
@@ -20,6 +21,7 @@ type ArkSIAAPI struct {
 	vmSecretsService    *vmsecrets.ArkSIASecretsVMService
 	dbSecretsService    *dbsecrets.ArkSIASecretsDBService
 	accessService       *access.ArkSIAAccessService
+	sshCaService        *sshca.ArkSIASSHCAService
 }
 
 // NewArkSIAAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
@@ -53,6 +55,10 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
+	sshCaService, err := sshca.NewArkSIASSHCAService(baseIspAuth)
+	if err != nil {
+		return nil, err
+	}
 	return &ArkSIAAPI{
 		ssoService:          ssoService,
 		k8sService:          k8sService,
@@ -61,6 +67,7 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 		vmSecretsService:    vmSecretsService,
 		dbSecretsService:    dbSecretsService,
 		accessService:       accessService,
+		sshCaService:        sshCaService,
 	}, nil
 }
 
@@ -97,4 +104,9 @@ func (api *ArkSIAAPI) SecretsDB() *dbsecrets.ArkSIASecretsDBService {
 // Access returns the access service of the ArkSIAAPI instance.
 func (api *ArkSIAAPI) Access() *access.ArkSIAAccessService {
 	return api.accessService
+}
+
+// SSHCa returns the ssh-ca service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) SSHCa() *sshca.ArkSIASSHCAService {
+	return api.sshCaService
 }

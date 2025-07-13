@@ -40,6 +40,11 @@ Use the `--help` flag to view all `exec` options.
 ark exec sia sso short-lived-password
 ```
 
+### Generate a short-lived SSO password for an RDP connection
+```shell linenums="0"
+ark exec sia sso short-lived-password --service DPA-RDP
+```
+
 ### Generate a short-lived SSO Oracle wallet for an Oracle database connection
 ```shell linenums="0"
 ark exec sia sso short-lived-oracle-wallet --folder ~/wallet
@@ -63,6 +68,21 @@ ark exec sia workspaces target-sets add-target-set --name mydomain.com --type Do
 ### Add SIA VM secret
 ```shell
 ark exec sia secrets vm add-secret --secret-type ProvisionerUser --provisioner-username=myuser --provisioner-password=mypassword
+```
+
+### Generate new SSH CA key version
+```shell linenums="0"
+ark exec sia ssh-ca generate-new-ca
+```
+
+### Deactivate previous SSH CA key version
+```shell linenums="0"
+ark exec sia ssh-ca deactivate-previous-ca
+```
+
+### Reactivate previous SSH CA key version
+```shell linenums="0"
+ark exec sia ssh-ca reactivate-previous-ca
 ```
 
 ### List CMGR connector pools
@@ -150,4 +170,139 @@ ark exec sia workspaces db add-database --name mydatabase --provider-engine auro
 ### Delete SIA database
 ```shell linenums="0"
 ark exec sia workspaces db delete-database --id databaseid
+```
+
+### Get Secrets Hub Configuration
+```shell linenums="0"
+ark exec sechub configuration get-configuration
+```
+
+### Set Secrets Hub Configuration
+```shell linenums="0"
+ark exec sechub configuration set-configuration --sync-settings 360
+```
+
+### Get Secrets Hub Filters
+```shell linenums="0"
+ark exec sechub filters get-filters --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+
+### Add Secrets Hub Filter
+```shell linenums="0"
+ark exec sechub filters add-filter --type "PAM_SAFE" --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667 --data-safe-name "example-safe"
+```
+
+### Delete Secrets Hub Filter
+```shell linenums="0"
+ark exec sechub filters delete-filter --filter-id filter-7f3d187d-7439-407f-b968-ec27650be692 --store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+
+### Get Secrets Hub Scans
+```shell linenums="0"
+ark exec sechub scans get-scans
+```
+
+### Trigger Secrets Hub Scan
+```shell linenums="0"
+ark exec sechub scans trigger-scan --id default --secret-stores-ids store-e488dd22-a59c-418c-bbe3-3f061dd9b667 type secret-store
+```
+
+### Create Secrets Hub Secret Store
+```shell linenums="0"
+ark exec sechub secret-stores create-secret-store --type AWS_ASM --description sdk-testing --name "SDK Testing" --state ENABLED --data-aws-account-alias ALIAS-NAME-EXAMPLE --data-aws-region-id us-east-1 --data-aws-account-id 123456789123 --data-aws-rolename Secrets-Hub-IAM-Role-Name-Created-For-Secrets-Hub
+```
+
+### Retrieve Secrets Hub Secret Store
+```shell linenums="0"
+ark exec sechub secret-stores get-secret-store --secret-store-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+
+### Update Secrets Hub Secret Store
+```shell linenums="0"
+ark exec sechub secret-stores update-secret-store --secret-store-id store-7f3d187d-7439-407f-b968-ec27650be692 --name "New Name" --description "Updated Description" --data-aws-account-alias "Test2"
+```
+
+### Delete Secrets Hub Secret Store
+```shell linenums="0"
+ark exec sechub secret-stores delete-secret-store --secret-store-id store-fd11bc7c-22d0-4d9b-ac1b-f8458161935f
+```
+
+### Get Secrets Hub Secrets
+```shell linenums="0"
+ark exec sechub secrets get-secrets
+```
+
+### Get Secrets Hub Secrets using a filter
+```shell linenums="0"
+ark exec sechub secrets get-secrets-by --limit 5 --projection EXTEND --filter "name CONTAINS EXAMPLE"
+```
+
+### Get Secrets Hub Service Information
+```shell linenums="0"
+ark exec sechub service-info get-service-info
+```
+
+### Get Secrets Hub Sync Policies
+```shell linenums="0"
+ark exec sechub sync-policies get-sync-policies
+```
+
+### Get Secrets Hub Sync Policy
+```shell linenums="0"
+ark exec sechub sync-policies get-sync-policy --policy-id policy-7f3d187d-7439-407f-b968-ec27650be692 --projection EXTEND
+```
+
+### Create Secrets Hub Sync Policy
+```shell linenums="0"
+ark exec sechub sync-policies create-sync-policy --name "New Sync Policy" --description "New Sync Policy Description" --filter-type PAM_SAFE --filter-data-safe-name EXAMPLE-SAFE-NAME --source-id store-e488dd22-a59c-418c-bbe3-3f061dd12367 --target-id store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+```
+
+### Delete Secrets Hub Sync Policy
+```shell linenums="0"
+ark exec sechub sync-policies delete-sync-policy --policy-id policy-7f3d187d-7439-407f-b968-ec27650be692
+```
+
+### List Sessions
+```shell linenums="0"
+ark exec sm list-sessions
+```
+
+### Count Sessions
+```shell linenums="0"
+ark exec sm count-sessions
+```
+
+### List Sessions By Filter
+```shell
+ark exec sm list-sessions-by --search "duration LE 01:00:00"
+```
+
+### Count Sessions By Filter
+```shell linenums="0"
+ark exec sm count-sessions-by --search "command STARTSWITH ls"
+```
+
+### Get Session
+```shell linenums="0"
+ark exec sm get-session --session-id my-id
+```
+
+### List Session Activities
+```shell linenums="0"
+ark exec sm list-session-activities --session-id my-id
+```
+
+### Count Session Activities
+```shell linenums="0"
+ark exec sm count-session-activities --session-id my-id
+```
+
+### List Session Activities By Filter
+```shell linenums="0"
+ark exec sm list-session-activities-by --session-id my-id --command-contains "ls"
+```
+
+### Count Session Activities By Filter
+```shell linenums="0"
+ark exec sm count-session-activities-by --session-id my-id --command-contains "chmod"
 ```

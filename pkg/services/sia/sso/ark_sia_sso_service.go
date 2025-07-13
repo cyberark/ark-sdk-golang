@@ -8,8 +8,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/mitchellh/mapstructure"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
@@ -18,6 +16,8 @@ import (
 	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"os"
@@ -320,7 +320,7 @@ func (s *ArkSIASSOService) ShortLivedPassword(getShortLivedPassword *ssomodels.A
 	}
 	response, err := s.client.Post(context.Background(), acquireSsoTokenURL, map[string]interface{}{
 		"token_type": "password",
-		"service":    "DPA-DB",
+		"service":    getShortLivedPassword.Service,
 	})
 	if err != nil {
 		return "", err

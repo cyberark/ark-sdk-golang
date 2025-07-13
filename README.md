@@ -37,6 +37,7 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] SIA DB Secrets Service
   - [x] SIA Target Sets Workspace Service
   - [x] SIA Access Service
+  - [x] SIA SSH CA Key Service
   - [x] Connector Manager Service
   - [x] PCloud Accounts Service
   - [x] PCloud Safes Service
@@ -50,6 +51,7 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] Secrets Hub Service Info Service
   - [x] Secrets Hub Configuration Service
   - [x] Secrets Hub Filters Service
+  - [x] Session Monitoring Service
 - [x] Filesystem Inputs and Outputs for the CLI
 - [x] Silent and Verbose logging
 - [x] Profile Management and Authentication Caching
@@ -202,9 +204,14 @@ The following services and commands are supported:
 
 Any command has its own subcommands, with respective arguments
 
-For example, generating a short lived password
+For example, generating a short lived password for DB
 ```shell
 ark exec sia sso short-lived-password
+```
+
+Or a short lived password for RDP
+```shell
+ark exec sia sso short-lived-password --service DPA-RDP
 ```
 
 Add SIA VM Target Set
@@ -354,6 +361,46 @@ Delete Secrets Hub Sync Policy
 ark exec sechub sync-policies delete-sync-policy --policy-id policy-7f3d187d-7439-407f-b968-ec27650be692
 ```
 
+List Sessions
+```shell
+ark exec sm list-sessions
+```
+Count Sessions
+```shell
+ark exec sm count-sessions
+```
+List Sessions By Filter
+```shell
+ark exec sm list-sessions-by --search "duration LE 01:00:00"
+```
+Count Sessions By Filter
+```shell
+ark exec sm count-sessions-by --search "command STARTSWITH ls"
+```
+Get Session
+```shell
+ark exec sm get-session --session-id my-id
+```
+List Session Activities
+```shell
+ark exec sm list-session-activities --session-id my-id
+```
+Count Session Activities
+```shell
+ark exec sm count-session-activities --session-id my-id
+```
+List Session Activities By Filter
+```shell
+ark exec sm list-session-activities-by --session-id my-id --command-contains "ls"
+```
+Count Session Activities By Filter
+```shell
+ark exec sm count-sessions-by --session-id my-id --command-contains "chmod"
+```
+Get Sessions Statistics
+```shell
+ark exec sm get-sessions-stats
+```
 
 
 You can view all of the commands via the --help for each respective exec action

@@ -53,6 +53,10 @@ func (c *ArkSSHConnection) Connect(connectionDetails *connectionsmodels.ArkConne
 		if connectionDetails.Credentials.Password != "" {
 			authMethods = append(authMethods, ssh.Password(connectionDetails.Credentials.Password))
 		} else if connectionDetails.Credentials.PrivateKeyFilepath != "" {
+			_, err := os.Stat(connectionDetails.Credentials.PrivateKeyFilepath)
+			if err != nil {
+				return fmt.Errorf("failed to check private key file exists: %w", err)
+			}
 			keyData, err := os.ReadFile(connectionDetails.Credentials.PrivateKeyFilepath)
 			if err != nil {
 				return fmt.Errorf("failed to read private key file: %w", err)
