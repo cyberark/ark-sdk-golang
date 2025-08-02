@@ -423,10 +423,6 @@ func (ai *ArkIdentity) pickMechanism(challenge *identity.Challenge) (*identity.M
 			}
 		}
 	}
-	var defaultChoice string
-	if ai.mfaType != "" {
-		defaultChoice = factors[strings.ToLower(ai.mfaType)]
-	}
 	options := make([]string, len(supportedMechanisms))
 	for i, m := range supportedMechanisms {
 		options[i] = factors[strings.ToLower(m.Name)]
@@ -435,7 +431,16 @@ func (ai *ArkIdentity) pickMechanism(challenge *identity.Challenge) (*identity.M
 	prompt := &survey.Select{
 		Message: "Please pick one of the following MFA methods",
 		Options: options,
-		Default: defaultChoice,
+	}
+
+	if ai.mfaType != "" {
+		mfaTypeFactor := factors[strings.ToLower(ai.mfaType)]
+		for _, option := range options {
+			if option == mfaTypeFactor {
+				prompt.Default = option
+				break
+			}
+		}
 	}
 
 	var selectedOption string
