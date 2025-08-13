@@ -1,8 +1,8 @@
 package vm
 
 import (
+	sia "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/common"
 	"github.com/mitchellh/mapstructure"
-	sia "github.cyberng.com/pas/ark-sdk-golang/pkg/models/services/uap/sia/common"
 )
 
 // ArkUAPSIAVMAccessPolicy represents a VM access policy for SIA.

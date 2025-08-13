@@ -2,15 +2,16 @@ package vm
 
 import (
 	"fmt"
-	"github.com/mitchellh/mapstructure"
-	"github.cyberng.com/pas/ark-sdk-golang/pkg/auth"
-	"github.cyberng.com/pas/ark-sdk-golang/pkg/common"
-	commonmodels "github.cyberng.com/pas/ark-sdk-golang/pkg/models/common"
-	commonuapmodels "github.cyberng.com/pas/ark-sdk-golang/pkg/models/services/uap/common"
-	vmmodels "github.cyberng.com/pas/ark-sdk-golang/pkg/models/services/uap/sia/vm"
-	"github.cyberng.com/pas/ark-sdk-golang/pkg/services"
-	uap "github.cyberng.com/pas/ark-sdk-golang/pkg/services/uap/common"
 	"reflect"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
+	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
+	vmmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/vm"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
+	"github.com/mitchellh/mapstructure"
 )
 
 // ArkUAPVMPolicyPage represents a page of SIA VM policies in the UAP service.

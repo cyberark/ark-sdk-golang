@@ -1,6 +1,6 @@
 package vm
 
-import "github.cyberng.com/pas/ark-sdk-golang/pkg/models/services/uap/common"
+import "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
 
 // ArkUAPSIAVMFilters defines filters specific to the SIA VM policies within the UAP service.
 //
