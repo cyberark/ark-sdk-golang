@@ -6,6 +6,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/uap"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/uap/sca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/vm"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
@@ -25,6 +26,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/serviceinfo"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sechub/syncpolicies"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
+	siadb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/db"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
