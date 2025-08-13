@@ -13,6 +13,7 @@ nav:
       - Work with profiles: howto/working_with_profiles.md
       - Work with Ark cache: howto/working_with_ark_cache.md
       - End-user database workflow: howto/enduser_databases_workflow.md
+      - End-user psql workflow: howto/enduser_databases_psql.md
       - End-user Kubernetes workflow: howto/enduser_kubernetes_workflow.md
       - End-user SSH workflow: howto/enduser_ssh_workflow.md
       - End-user RDP workflow: howto/enduser_rdp_workflow.md
