@@ -2,11 +2,11 @@ package common
 
 // Protocol types for sessions.
 const (
-	SSH     = "SSH"
-	RDP     = "RDP"
-	CLI     = "CLI"
-	CONSOLE = "CONSOLE"
-	HTTPS   = "HTTPS"
-	K8S     = "K8S"
-	DB      = "DB"
+	ProtocolTypeSSH     = "SSH"
+	ProtocolTypeRDP     = "RDP"
+	ProtocolTypeCLI     = "CLI"
+	ProtocolTypeCONSOLE = "CONSOLE"
+	ProtocolTypeHTTPS   = "HTTPS"
+	ProtocolTypeK8S     = "K8S"
+	ProtocolTypeDB      = "DB"
 )

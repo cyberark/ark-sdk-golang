@@ -7,12 +7,12 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	browser "github.com/EDDYCJY/fake-useragent"
-	cookiejar "github.com/juju/persistent-cookiejar"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	cookiejar "github.com/juju/persistent-cookiejar"
 )
 
 const (
@@ -142,7 +142,7 @@ func NewArkClient(baseURL string, token string, tokenType string, authHeaderName
 		logger:                    GetLogger("ArkClient", Unknown),
 	}
 	client.UpdateToken(token, tokenType)
-	client.headers["User-Agent"] = browser.Chrome()
+	client.headers["User-Agent"] = UserAgent()
 	return client
 }
 

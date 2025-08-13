@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/connections"
 	connectionsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common/connections"
 	"golang.org/x/crypto/ssh"
-	"os"
-	"time"
 )
 
 const (

@@ -2,13 +2,13 @@ package actions
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/spf13/cobra"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/cli"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/fatih/color"
+	"github.com/spf13/cobra"
 	"time"
 )
 
@@ -47,11 +47,11 @@ func (a *ArkBaseExecAction) DefineAction(cmd *cobra.Command) {
 	}
 	a.CommonActionsConfiguration(execCmd)
 
-	execCmd.Flags().String("profile-name", profiles.DefaultProfileName(), "Profile name to load")
-	execCmd.Flags().String("output-path", "", "Output file to write data to")
-	execCmd.Flags().String("request-file", "", "Request file containing the parameters for the exec action")
-	execCmd.Flags().Int("retry-count", 1, "Retry count for execution")
-	execCmd.Flags().Bool("refresh-auth", false, "If a cache exists, will also try to refresh it")
+	execCmd.PersistentFlags().String("profile-name", profiles.DefaultProfileName(), "Profile name to load")
+	execCmd.PersistentFlags().String("output-path", "", "Output file to write data to")
+	execCmd.PersistentFlags().String("request-file", "", "Request file containing the parameters for the exec action")
+	execCmd.PersistentFlags().Int("retry-count", 1, "Retry count for execution")
+	execCmd.PersistentFlags().Bool("refresh-auth", false, "If a cache exists, will also try to refresh it")
 	err := (*a.execAction).DefineExecAction(execCmd)
 	if err != nil {
 		args.PrintFailure(fmt.Sprintf("Error defining exec action %v", err))

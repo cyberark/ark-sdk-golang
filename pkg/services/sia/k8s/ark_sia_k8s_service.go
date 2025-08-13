@@ -4,15 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	k8sModels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	k8smodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
 )
 
 const (
@@ -71,7 +72,7 @@ func (s *ArkSIAK8SService) refreshSIAAuth(client *common.ArkClient) error {
 }
 
 // GenerateKubeconfig generates a kubeconfig file for the SIA K8S service and saves it to the specified folder.
-func (s *ArkSIAK8SService) GenerateKubeconfig(generateKubeConfig *k8sModels.ArkSIAK8SGenerateKubeconfig) (string, error) {
+func (s *ArkSIAK8SService) GenerateKubeconfig(generateKubeConfig *k8smodels.ArkSIAK8SGenerateKubeconfig) (string, error) {
 	s.Logger.Info("Getting kubeconfig")
 	response, err := s.client.Get(context.Background(), kubeConfigGenerationURL, nil)
 	if err != nil {

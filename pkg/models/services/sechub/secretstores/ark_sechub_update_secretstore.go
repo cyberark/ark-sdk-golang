@@ -28,8 +28,8 @@ type ArkSecHubUpdateSecretStoreData struct {
 	ServiceAccountEmail       string `json:"service_account_email,omitempty" mapstructure:"service_account_email,omitempty" flag:"gcp-service-account-email" desc:"GCP: The service account email created for Secrets Hub to access the GCP Secret Manager"`
 	// Self-Hosted Specific Fields
 	Password        string `json:"password,omitempty" mapstructure:"password,omitempty" desc:"SELF HOSTED: The password of the user in PAM 'SecretsHub'" flag:"sh-password"`
-	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"SELF HOSTED: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d" flag:"sh-connector-id"`
-	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"SELF HOSTED: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1" flag:"sh-connector-pool-id"`
+	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" desc:"SELF HOSTED: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor." flag:"sh-connector-id"`
+	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" desc:"SELF HOSTED: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub." flag:"sh-connector-pool-id"`
 	// Used by Azure, GCP
 	ConnectionConfig *ArkSecHubUpdateSecretStoreConnectionConfig `json:"connection_config,omitzero" mapstructure:"connection_config,omitzero" desc:"AZURE: The network access configuration set for your target"`
 }
@@ -39,6 +39,6 @@ type ArkSecHubUpdateSecretStoreConnectionConfig struct {
 	ConnectionType string `json:"connection_type,omitempty" mapstructure:"connection_type,omitempty" flag:"connection-type" desc:"AZURE: The type of connector (CONNECTOR,PUBLIC)" default:"CONNECTOR" choices:"CONNECTOR,PUBLIC"`
 	// Required if you choose 'CONNECTOR' as the connection type.
 	// If you choose 'PUBLIC', these fields are not required.
-	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"AZURE: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor. Example: ManagementAgent_90c63827-7315-4284-8559-ac8d24f2666d"`
-	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" flag:"connector-pool-id" desc:"AZURE: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub.. Example: c389961d-a0cd-46ab-9f69-877f756a59c1"`
+	ConnectorID     string `json:"connector_id,omitempty" mapstructure:"connector_id,omitempty" flag:"connector-id" desc:"AZURE: The connector unique identifier used to connect Secrets Hub and the Cloud Vendor."`
+	ConnectorPoolID string `json:"connector_pool_id,omitempty" mapstructure:"connector_pool_id,omitempty" flag:"connector-pool-id" desc:"AZURE: The connector pool unique identifier used to connect PAM Self-Hosted and Secrets Hub."`
 }

@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "name": "Cool Policy",
+    "description": "Cool Policy Description",
+    "status": {
+      "status": "Active",
+      "statusDescription": "Example status description"
+    },
+    "timeFrame": {
+      "fromTime": null,
+      "toTime": null
+    },
+    "policyEntitlement": {
+      "targetCategory": "VM",
+      "locationType": "FQDN/IP",
+      "policyType": "Recurring"
+    },
+    "policyTags": [
+      "cool_tag",
+      "cool_tag2"
+    ],
+    "timeZone": "Asia/Jerusalem"
+  },
+  "principals": [
+    {
+      "id": "principal_id",
+      "name": "tester@cyberark.cloud",
+      "type": "User",
+      "sourceDirectoryName": "CyberArk Cloud Directory",
+      "sourceDirectoryId": "source_directory_id"
+    }
+  ],
+  "delegationClassification": "Unrestricted",
+  "conditions": {
+    "accessWindow": {
+      "timeZone": "Asia/Jerusalem",
+      "daysOfTheWeek": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "fromHour": "05:00",
+      "toHour": "23:59"
+    },
+    "maxSessionDuration": 2,
+    "idleTime": 1
+  },
+  "targets": {
+    "onpremResource": {
+      "fqdnRules": [
+        {
+          "operator": "EXACTLY",
+          "computernamePattern": "myvm.mydomain.com",
+          "domain": "domain.com"
+        }
+      ],
+      "ipRules": [
+        {
+          "operator": "EXACTLY",
+          "ipAddresses": [
+            "192.168.12.34"
+          ],
+          "logicalName": "CoolLogicalName"
+        }
+      ]
+    }
+  },
+  "behavior": {
+    "sshProfile": {
+      "username": "ssh_user"
+    },
+    "rdpProfile": {
+      "domainEphemeralUser": {
+        "assignGroups": [
+          "rdp_users"
+        ],
+        "enableEphemeralUserReconnect": false,
+        "assignDomainGroups": [
+          "domain_rdp_users"
+        ]
+      }
+    }
+  }
+}

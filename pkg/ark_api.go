@@ -3,6 +3,10 @@ package api
 import (
 	"fmt"
 
+	"github.com/cyberark/ark-sdk-golang/pkg/services/uap"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/uap/sca"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
@@ -200,6 +204,20 @@ func (api *ArkAPI) SiaSSHCa() (*siasshca.ArkSIASSHCAService, error) {
 	return sshCaService, nil
 }
 
+// SiaDb returns the SiaDb service from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) SiaDb() (*siadb.ArkSIADBService, error) {
+	if dbServiceInterface, ok := api.services[siadb.SIADBServiceConfig.ServiceName]; ok {
+		return (*dbServiceInterface).(*siadb.ArkSIADBService), nil
+	}
+	dbService, err := siadb.NewArkSIADBService(api.loadServiceAuthenticators(siadb.SIADBServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var dbBaseService services.ArkService = dbService
+	api.services[siadb.SIADBServiceConfig.ServiceName] = &dbBaseService
+	return dbService, nil
+}
+
 // Cmgr returns the Cmgr service from the ArkAPI instance. If the service is not already created, it creates a new one.
 func (api *ArkAPI) Cmgr() (*cmgr.ArkCmgrService, error) {
 	if cmgrServiceInterface, ok := api.services[cmgr.CmgrServiceConfig.ServiceName]; ok {
@@ -394,4 +412,60 @@ func (api *ArkAPI) Sm() (*sm.ArkSMService, error) {
 	var smBaseService services.ArkService = SMService
 	api.services[sm.SMServiceConfig.ServiceName] = &smBaseService
 	return SMService, nil
+}
+
+// Uap returns the UapService from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) Uap() (*uap.ArkUAPService, error) {
+	if uapInterface, ok := api.services[uap.UapServiceConfig.ServiceName]; ok {
+		return (*uapInterface).(*uap.ArkUAPService), nil
+	}
+	uapService, err := uap.NewArkUAPService(api.loadServiceAuthenticators(uap.UapServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var uapBaseService services.ArkService = uapService
+	api.services[uap.UapServiceConfig.ServiceName] = &uapBaseService
+	return uapService, nil
+}
+
+// UapSca returns the UapScaService from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) UapSca() (*sca.ArkUAPSCAService, error) {
+	if uapScaInterface, ok := api.services[sca.ArkUAPSCAServiceConfig.ServiceName]; ok {
+		return (*uapScaInterface).(*sca.ArkUAPSCAService), nil
+	}
+	uapScaService, err := sca.NewArkUAPSCAService(api.loadServiceAuthenticators(sca.ArkUAPSCAServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var uapScaBaseService services.ArkService = uapScaService
+	api.services[sca.ArkUAPSCAServiceConfig.ServiceName] = &uapScaBaseService
+	return uapScaService, nil
+}
+
+// UapDb returns the UapSiaDbService from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) UapDb() (*db.ArkUAPSIADBService, error) {
+	if uapDbInterface, ok := api.services[db.ArkUAPSIADBServiceConfig.ServiceName]; ok {
+		return (*uapDbInterface).(*db.ArkUAPSIADBService), nil
+	}
+	uapDbService, err := db.NewArkUAPSIADBService(api.loadServiceAuthenticators(db.ArkUAPSIADBServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var uapDbBaseService services.ArkService = uapDbService
+	api.services[db.ArkUAPSIADBServiceConfig.ServiceName] = &uapDbBaseService
+	return uapDbService, nil
+}
+
+// UapVM returns the UapSiaVmService from the ArkAPI instance. If the service is not already created, it creates a new one.
+func (api *ArkAPI) UapVM() (*vm.ArkUAPSIAVMService, error) {
+	if uapVMInterface, ok := api.services[vm.ArkUAPSIAVMServiceConfig.ServiceName]; ok {
+		return (*uapVMInterface).(*vm.ArkUAPSIAVMService), nil
+	}
+	uapVMService, err := vm.NewArkUAPSIAVMService(api.loadServiceAuthenticators(vm.ArkUAPSIAVMServiceConfig)...)
+	if err != nil {
+		return nil, err
+	}
+	var uapVMBaseService services.ArkService = uapVMService
+	api.services[vm.ArkUAPSIAVMServiceConfig.ServiceName] = &uapVMBaseService
+	return uapVMService, nil
 }

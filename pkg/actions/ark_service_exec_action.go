@@ -3,6 +3,8 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"os"
 	"reflect"
 	"slices"
 	"strings"
@@ -32,6 +34,48 @@ func NewArkServiceExecAction(profilesLoader *profiles.ProfileLoader) *ArkService
 	baseAction := NewArkBaseExecAction(&actionInterface, "ArkServiceExecAction", profilesLoader)
 	action.ArkBaseExecAction = baseAction
 	return action
+}
+
+func (s *ArkServiceExecAction) isComplexType(field reflect.StructField) bool {
+	if field.Type.Kind() == reflect.Map && field.Type.Key().Kind() == reflect.String && field.Type.Elem().Kind() == reflect.Struct {
+		return true
+	}
+	if (field.Type.Kind() == reflect.Slice || field.Type.Kind() == reflect.Array) && field.Type.Elem().Kind() == reflect.Struct {
+		return true
+	}
+	return false
+}
+
+func (s *ArkServiceExecAction) fillRemainingSchema(schema interface{}, flags *pflag.FlagSet) {
+	schemaType := reflect.TypeOf(schema).Elem()
+	for i := 0; i < schemaType.NumField(); i++ {
+		field := schemaType.Field(i)
+
+		// Skip unexported fields
+		if field.PkgPath != "" && !field.Anonymous {
+			continue
+		}
+
+		if s.isComplexType(field) {
+			flagName := field.Tag.Get("flag")
+			if flagName == "" {
+				flagName = field.Tag.Get("mapstructure")
+			}
+			if flagName == "" {
+				flagName = field.Name
+			}
+			desc := field.Tag.Get("desc")
+			if desc != "" {
+				desc += " (This is a complex type and will be parsed as JSON or array of JSONs)"
+			}
+			flags.String(flagName, field.Tag.Get("default"), desc)
+		}
+		if field.Tag.Get("mapstructure") == ",squash" {
+			// If the field is a struct with the `squash` tag, we need to add its fields as flags
+			subSchema := reflect.New(field.Type).Interface()
+			s.fillRemainingSchema(subSchema, flags)
+		}
+	}
 }
 
 func (s *ArkServiceExecAction) defineServiceExecAction(
@@ -70,6 +114,7 @@ func (s *ArkServiceExecAction) defineServiceExecAction(
 					return nil, err
 				}
 				gpflag.GenerateTo(flags, subCmd.Flags())
+				s.fillRemainingSchema(schema, subCmd.Flags())
 				reflectedSchema := reflect.TypeOf(schema).Elem()
 				// We find the field by the flag name
 				// There might be a misalignment between the flag name and the field name case wise
@@ -130,6 +175,61 @@ func (s *ArkServiceExecAction) defineServiceExecActions(
 			if err != nil {
 				return err
 			}
+		}
+	}
+	return nil
+}
+
+func (s *ArkServiceExecAction) fillParsedFlag(schemaElem reflect.Type, flags map[string]interface{}, key string, f *pflag.Flag) error {
+	for i := 0; i < schemaElem.NumField(); i++ {
+		field := schemaElem.Field(i)
+		if strings.HasPrefix(field.Tag.Get("mapstructure"), key) {
+			if s.isComplexType(field) {
+				if field.Type.Kind() == reflect.Map && field.Type.Key().Kind() == reflect.String && field.Type.Elem().Kind() == reflect.Struct {
+					var mapJSON map[string]interface{}
+					err := json.Unmarshal([]byte(flags[key].(string)), &mapJSON)
+					if err != nil {
+						return err
+					}
+					flags[key] = mapJSON
+				} else {
+					var sliceJSON []map[string]interface{}
+					err := json.Unmarshal([]byte(flags[key].(string)), &sliceJSON)
+					if err != nil {
+						return err
+					}
+					flags[key] = sliceJSON
+				}
+			}
+			if field.Tag.Get("choices") != "" {
+				choices := strings.Split(field.Tag.Get("choices"), ",")
+				switch v := flags[key].(type) {
+				case string:
+					if !slices.Contains(choices, v) {
+						return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, v, strings.Join(choices, ", "))
+					}
+				case []string:
+					for _, item := range v {
+						if !slices.Contains(choices, item) {
+							return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, item, strings.Join(choices, ", "))
+						}
+					}
+				case map[string]any:
+					for fieldKey := range v {
+						if !slices.Contains(choices, fieldKey) {
+							return fmt.Errorf("invalid key for flag %s: %s, valid choices are: %s", f.Name, fieldKey, strings.Join(choices, ", "))
+						}
+					}
+				default:
+					return fmt.Errorf("unexpected type for flag %s: %T", f.Name, flags[key])
+				}
+			}
+		} else if field.Tag.Get("mapstructure") == ",squash" {
+			err := s.fillParsedFlag(field.Type, flags, key, f)
+			if err != nil {
+				return err
+			}
+			continue
 		}
 	}
 	return nil
@@ -233,29 +333,7 @@ func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flag
 		flags[key] = f.Value.String()
 	}
 	schemaElem := reflect.TypeOf(schema).Elem()
-	for i := 0; i < schemaElem.NumField(); i++ {
-		field := schemaElem.Field(i)
-		if strings.HasPrefix(field.Tag.Get("mapstructure"), key) {
-			if field.Tag.Get("choices") != "" {
-				choices := strings.Split(field.Tag.Get("choices"), ",")
-				switch v := flags[key].(type) {
-				case string:
-					if !slices.Contains(choices, v) {
-						return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, v, strings.Join(choices, ", "))
-					}
-				case []string:
-					for _, item := range v {
-						if !slices.Contains(choices, item) {
-							return fmt.Errorf("invalid value for flag %s: %s, valid choices are: %s", f.Name, item, strings.Join(choices, ", "))
-						}
-					}
-				default:
-					return fmt.Errorf("unexpected type for flag %s: %T", f.Name, flags[key])
-				}
-			}
-		}
-	}
-	return nil
+	return s.fillParsedFlag(schemaElem, flags, key, f)
 }
 
 func (s *ArkServiceExecAction) serializeAndPrintOutput(result []reflect.Value, actionName string) {
@@ -409,6 +487,19 @@ func (s *ArkServiceExecAction) RunExecAction(api *cli.ArkCLIAPI, cmd *cobra.Comm
 	var result []reflect.Value
 	if actionSchema != nil {
 		flags := map[string]interface{}{}
+		if requestFile, err := execCmd.PersistentFlags().GetString("request-file"); err == nil && requestFile != "" {
+			fileContent, err := os.ReadFile(requestFile)
+			if err != nil {
+				return err
+			}
+			var data map[string]interface{}
+			err = json.Unmarshal(fileContent, &data)
+			if err != nil {
+				return err
+			}
+			schemaType := reflect.ValueOf(actionSchema).Type()
+			flags = common.ConvertToSnakeCase(data, &schemaType).(map[string]interface{})
+		}
 		err = nil
 		cmd.Flags().VisitAll(func(f *pflag.Flag) {
 			err = s.parseFlag(f, cmd, flags, actionSchema)

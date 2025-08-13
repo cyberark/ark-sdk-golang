@@ -14,12 +14,13 @@ The following SIA commands are supported:
 - `ark exec sia`: Root command for the SIA service
     - `sso` - SSO end-user operations
     - `k8s` - Kubernetes service
+    - `db` - DB service
     - `workspaces` - Workspaces service
       - `target-sets` - Target sets operations
       - `db` - Database operations
     - `secrets` - Secrets service
       - `vm` - VM operations
-      - `db` - DB operations
+      - `db` - Database operations
     - `access` - Access service
     - `ssh-ca` - SSH CA key service
 - `ark exec cmgr`: Root command for the CMGR service
@@ -38,7 +39,10 @@ The following SIA commands are supported:
     - `secret-stores` - Secret Stores management
     - `sync-policies` - Sync Policies management
 - `ark exec sm`: Root command for the SM service
-
+- `ark exec uap`: Root command for the UAP service
+    - `sca` - SCA management
+    - `db` - SIA DB management
+    - `vm` - SIA VM management
 
 All commands have their own subcommands and respective arguments.
 
@@ -60,6 +64,7 @@ Available Commands:
   sia
   sechub
   sm
+  uap
 
 Flags:
       --allow-output                Allow stdout / stderr even when silent and not interactive

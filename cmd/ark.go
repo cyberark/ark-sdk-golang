@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/cyberark/ark-sdk-golang/pkg/actions"
-	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 	"os"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/actions"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -26,6 +28,7 @@ func main() {
 		Short:   "Ark CLI",
 	}
 	rootCmd.SetVersionTemplate("{{.Version}}\n")
+	common.SetArkVersion(Version)
 	profilesLoader := profiles.DefaultProfilesLoader()
 	arkActions := []actions.ArkAction{
 		actions.NewArkProfilesAction(profilesLoader),

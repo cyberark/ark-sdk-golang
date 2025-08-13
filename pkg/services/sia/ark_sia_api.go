@@ -9,6 +9,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
+	workspacesdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
 )
 
@@ -17,11 +18,12 @@ type ArkSIAAPI struct {
 	ssoService          *sso.ArkSIASSOService
 	k8sService          *k8s.ArkSIAK8SService
 	targetSetsService   *targetsets.ArkSIAWorkspacesTargetSetsService
-	workspacesDBService *db.ArkSIAWorkspacesDBService
+	workspacesDBService *workspacesdb.ArkSIAWorkspacesDBService
 	vmSecretsService    *vmsecrets.ArkSIASecretsVMService
 	dbSecretsService    *dbsecrets.ArkSIASecretsDBService
 	accessService       *access.ArkSIAAccessService
 	sshCaService        *sshca.ArkSIASSHCAService
+	dbService           *db.ArkSIADBService
 }
 
 // NewArkSIAAPI creates a new instance of ArkSIAAPI with the provided ArkISPAuth.
@@ -39,7 +41,7 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	workspaceDBService, err := db.NewArkSIAWorkspacesDBService(baseIspAuth)
+	workspaceDBService, err := workspacesdb.NewArkSIAWorkspacesDBService(baseIspAuth)
 	if err != nil {
 		return nil, err
 	}
@@ -59,6 +61,10 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 	if err != nil {
 		return nil, err
 	}
+	dbService, err := db.NewArkSIADBService(baseIspAuth)
+	if err != nil {
+		return nil, err
+	}
 	return &ArkSIAAPI{
 		ssoService:          ssoService,
 		k8sService:          k8sService,
@@ -68,6 +74,7 @@ func NewArkSIAAPI(ispAuth *auth.ArkISPAuth) (*ArkSIAAPI, error) {
 		dbSecretsService:    dbSecretsService,
 		accessService:       accessService,
 		sshCaService:        sshCaService,
+		dbService:           dbService,
 	}, nil
 }
 
@@ -87,7 +94,7 @@ func (api *ArkSIAAPI) WorkspacesTargetSets() *targetsets.ArkSIAWorkspacesTargetS
 }
 
 // WorkspacesDB returns the workspace DB service of the ArkSIAAPI instance.
-func (api *ArkSIAAPI) WorkspacesDB() *db.ArkSIAWorkspacesDBService {
+func (api *ArkSIAAPI) WorkspacesDB() *workspacesdb.ArkSIAWorkspacesDBService {
 	return api.workspacesDBService
 }
 
@@ -109,4 +116,9 @@ func (api *ArkSIAAPI) Access() *access.ArkSIAAccessService {
 // SSHCa returns the ssh-ca service of the ArkSIAAPI instance.
 func (api *ArkSIAAPI) SSHCa() *sshca.ArkSIASSHCAService {
 	return api.sshCaService
+}
+
+// Db returns the DB service of the ArkSIAAPI instance.
+func (api *ArkSIAAPI) Db() *db.ArkSIADBService {
+	return api.dbService
 }

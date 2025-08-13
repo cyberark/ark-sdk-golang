@@ -4,14 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	browser "github.com/EDDYCJY/fake-useragent"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/common/identity"
 	"io"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/models/common/identity"
 )
 
 const (
@@ -24,7 +24,7 @@ func DefaultHeaders() map[string]string {
 	return map[string]string{
 		"Content-Type":         "application/json",
 		"X-IDAP-NATIVE-CLIENT": "true",
-		"User-Agent":           browser.Chrome(),
+		"User-Agent":           common.UserAgent(),
 		"OobIdPAuth":           "true",
 	}
 }
@@ -33,7 +33,7 @@ func DefaultHeaders() map[string]string {
 func DefaultSystemHeaders() map[string]string {
 	return map[string]string{
 		"X-IDAP-NATIVE-CLIENT": "true",
-		"User-Agent":           browser.Chrome(),
+		"User-Agent":           common.UserAgent(),
 	}
 }
 

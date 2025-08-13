@@ -2,7 +2,7 @@ package common
 
 // Possible operating systems
 const (
-	Windows = "windows"
-	Darwin  = "darwin"
-	Linux   = "linux"
+	OSTypeWindows = "windows"
+	OSTypeDarwin  = "darwin"
+	OSTypeLinux   = "linux"
 )

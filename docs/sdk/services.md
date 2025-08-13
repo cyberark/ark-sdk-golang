@@ -73,7 +73,9 @@ The above example authenticates to the specified ISP tenant, initializes a CMGR 
 The Secure Infrastructure Access (sia) service requires the ArkISPAuth authenticator, and exposes these service classes:
 
 - **ArkSIAAccessService** (access) - SIA access service
+- **ArkSIASSHCAService** (ssh-ca) - SIA SSH CA Key service
 - **ArkSIAK8SService** (Kubernetes) - SIA end-user Kubernetes service
+- **ArkSIADBService** (Db) - SIA end-user Db service
 - **ArkSIASecretsService** (secrets) - SIA secrets management
     - **ArkSIAVMSecretsService** (VM) - SIA VM secrets services
     - **ArkSIADBSecretsService** (DB) - SIA DB secrets services
@@ -119,3 +121,10 @@ The Secrets Hub (sechub) service requires the ArkISPAuth authenticator, and expo
 The Session Monitoring (sm) service requires the ArkISPAuth authenticator, and exposes those service classes:
 
 - **ArkSMService** - Session Monitoring service
+
+## UAP
+The Unified Access Policies (uap) service requires the ArkISPAuth authenticator, and exposes those service classes:
+- **ArkUAPService** - Unified Access Policies service
+  - **ArkUAPSCAService** - Unified Access Policies SCA service
+  - **ArkUAPSIADBService** - Unified Access Policies SIA DB service
+  - **ArkUAPSIAVMService** - Unified Access Policies SIA VM service

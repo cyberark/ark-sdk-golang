@@ -52,6 +52,10 @@ CyberArk's Official SDK and CLI for different services operations
   - [x] Secrets Hub Configuration Service
   - [x] Secrets Hub Filters Service
   - [x] Session Monitoring Service
+  - [x] Unified Access Policies Service
+    - [x] SCA - Secure Cloud Access
+    - [x] DB - Databases
+    - [x] VM - Virtual Machines
 - [x] Filesystem Inputs and Outputs for the CLI
 - [x] Silent and Verbose logging
 - [x] Profile Management and Authentication Caching
@@ -201,6 +205,10 @@ The following services and commands are supported:
   - <b>directories</b> - Identity Directories Management
   - <b>roles</b> - Identity Roles Management
   - <b>users</b> - Identity Users Management
+- <b>uap</b> - Unified Access Policies Services
+  - <b>sca</b> - secure cloud access policies management
+  - <b>db</b> - databases access policies management
+  - <b>vm</b> - virtual machines access policies management
 
 Any command has its own subcommands, with respective arguments
 
@@ -402,6 +410,75 @@ Get Sessions Statistics
 ark exec sm get-sessions-stats
 ```
 
+List all UAP policies
+```shell
+ark exec uap list-policies
+```
+
+Delete UAP DB Policy
+```shell
+ark exec uap db delete-policy --policy-id my-policy-id
+```
+
+List DB Policies from UAP
+```shell
+ark exec uap db list-policies
+```
+
+Get DB Policy from UAP
+```shell
+ark exec uap db policy --policy-id my-policy-id
+```
+
+Add UAP DB Policy
+```shell
+ark exec uap db add-policy --request-file /path/to/policy-request.json
+```
+
+List UAP SCA Policies
+```shell
+ark exec uap sca list-policies
+```
+
+Get UAP SCA Policy
+```shell
+ark exec uap sca policy --policy-id my-policy-id
+```
+
+Add UAP SCA Policy
+```shell
+ark exec uap sca add-policy --request-file /path/to/policy-request.json
+```
+
+Delete UAP SCA Policy
+```shell
+ark exec uap sca delete-policy --policy-id my-policy-id
+```
+
+List VM Policies from UAP
+```shell
+ark exec uap vm list-policies
+```
+
+Get VM Policy from UAP
+```shell
+ark exec uap vm policy --policy-id my-policy-id
+```
+
+Delete VM Policy from UAP
+```shell
+ark exec uap vm delete-policy --policy-id my-policy-id
+```
+
+Connect to MySQL ZSP with the mysql cli via Ark CLI
+```shell
+ark exec sia db mysql --target-address myaddress.com
+```
+
+Connect to PostgreSQL Vaulted with the psql cli via Ark CLI
+```shell
+ark exec sia db psql --target-address myaddress.com --target-user myuser
+```
 
 You can view all of the commands via the --help for each respective exec action
 
