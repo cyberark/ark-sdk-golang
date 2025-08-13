@@ -1,0 +1,209 @@
+{
+  "metadata": {
+    "name": "Cool Policy",
+    "description": "Cool Policy Description",
+    "policyTags": [
+      "cool_tag",
+      "cool_tag2"
+    ],
+    "policyEntitlement": {
+      "targetCategory": "DB",
+      "locationType": "FQDN/IP",
+      "policyType": "Recurring"
+    },
+    "timeFrame": {
+      "fromTime": null,
+      "toTime": null
+    },
+    "status": {
+      "status": "Active",
+      "statusDescription": "Example status description"
+    },
+    "timeZone": "Asia/Jerusalem"
+  },
+  "principals": [
+    {
+      "id": "principal_id",
+      "name": "tester@cyberark.cloud",
+      "type": "User",
+      "sourceDirectoryName": "CyberArk Cloud Directory",
+      "sourceDirectoryId": "source_directory_id"
+    }
+  ],
+  "conditions": {
+    "accessWindow": {
+      "timeZone": "Asia/Jerusalem",
+      "daysOfTheWeek": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "fromHour": "05:00",
+      "toHour": "23:59"
+    },
+    "maxSessionDuration": 2,
+    "idleTime": 1
+  },
+  "targets": {
+    "FQDN/IP": {
+      "instances": [
+        {
+          "instanceName": "Mongo-atlas_ephemeral_user",
+          "instanceId": "1234",
+          "instanceType": "Mongo",
+          "authenticationMethod": "mongo_auth",
+          "mongoAuthProfile": {
+            "globalBuiltinRoles": [
+              "readWriteAnyDatabase"
+            ],
+            "databaseBuiltinRoles": {
+              "mydb1": [
+                "userAdmin"
+              ],
+              "mydb2": [
+                "dbAdmin"
+              ]
+            },
+            "databaseCustomRoles": {
+              "mydb1": [
+                "myCoolRole"
+              ]
+            }
+          }
+        },
+        {
+          "instanceName": "MySQL-local_ephemeral_user",
+          "instanceId": "5678",
+          "instanceType": "MySQL",
+          "authenticationMethod": "db_auth",
+          "dbAuthProfile": {
+            "roles": [
+              "hr"
+            ]
+          }
+        },
+        {
+          "instanceName": "MariaDB-local_ephemeral_user",
+          "instanceId": "1111",
+          "instanceType": "MariaDB",
+          "authenticationMethod": "db_auth",
+          "dbAuthProfile": {
+            "roles": [
+              "hr"
+            ]
+          }
+        },
+        {
+          "instanceName": "MSSQL-ad_ephemeral_user",
+          "instanceId": "2222",
+          "instanceType": "MSSQL",
+          "authenticationMethod": "ldap_auth",
+          "ldapAuthProfile": {
+            "assignGroups": [
+              "hrVP"
+            ]
+          }
+        },
+        {
+          "instanceName": "Oracle-local_ephemeral_user",
+          "instanceId": "3333",
+          "instanceType": "Oracle",
+          "authenticationMethod": "oracle_auth",
+          "oracleAuthProfile": {
+            "roles": [
+              "role1",
+              "role2"
+            ],
+            "dbaRole": true,
+            "sysdbaRole": false,
+            "sysoperRole": false
+          }
+        },
+        {
+          "instanceName": "MSSQL-local_ephemeral_user-multi_instances",
+          "instanceId": "4444",
+          "instanceType": "MSSQL",
+          "authenticationMethod": "sqlserver_auth",
+          "sqlserverAuthProfile": {
+            "globalBuiltinRoles": [
+              "processadmin"
+            ],
+            "globalCustomRoles": [
+              "my_custom_role1",
+              "my_custom_role2"
+            ],
+            "databaseBuiltinRoles": {
+              "child_db1": [
+                "db_securityadmin",
+                "db_ddladmin"
+              ],
+              "child_db2": [
+                "db_accessadmin",
+                "db_denydatareader"
+              ]
+            },
+            "databaseCustomRoles": {
+              "child_db3": [
+                "my_custom_role3",
+                "my_custom_role_4"
+              ]
+            }
+          }
+        },
+        {
+          "instanceName": "DB2-ad_ephemeral_user",
+          "instanceId": "5555",
+          "instanceType": "DB2",
+          "authenticationMethod": "ldap_auth",
+          "ldapAuthProfile": {
+            "assignGroups": [
+              "hrVP"
+            ]
+          }
+        },
+        {
+          "instanceName": "MySQL-rds_iam_authentication",
+          "instanceId": "7777",
+          "instanceType": "MySQL",
+          "authenticationMethod": "rds_iam_user_auth",
+          "rdsIamUserAuthProfile": {
+            "dbUser": "iam_user"
+          }
+        },
+        {
+          "instanceName": "MariaDB-rds_iam_authentication",
+          "instanceId": "8888",
+          "instanceType": "MariaDB",
+          "authenticationMethod": "rds_iam_user_auth",
+          "rdsIamUserAuthProfile": {
+            "dbUser": "iam_user"
+          }
+        },
+        {
+          "instanceName": "Postgres-rds_iam_authentication",
+          "instanceId": "9999",
+          "instanceType": "Postgres",
+          "authenticationMethod": "rds_iam_user_auth",
+          "rdsIamUserAuthProfile": {
+            "dbUser": "iam_user"
+          }
+        },
+        {
+          "instanceName": "Postgres-local_ephemeral_user",
+          "instanceId": "10101010",
+          "instanceType": "Postgres",
+          "authenticationMethod": "db_auth",
+          "dbAuthProfile": {
+            "roles": [
+              "hr"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

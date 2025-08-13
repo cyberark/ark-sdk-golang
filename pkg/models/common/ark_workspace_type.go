@@ -2,10 +2,11 @@ package common
 
 // Possible workspace types
 const (
-	AWS    = "AWS"
-	Azure  = "AZURE"
-	OnPrem = "ON-PREMISE"
-	GCP    = "GCP"
-	ATLAS  = "ATLAS"
-	Fault  = "FAULT"
+	WorkspaceTypeAWS    = "AWS"
+	WorkspaceTypeAzure  = "AZURE"
+	WorkspaceTypeOnPrem = "ON-PREMISE"
+	WorkspaceTypeGCP    = "GCP"
+	WorkspaceTypeFQDNIP = "FQDN/IP"
+	WorkspaceTypeATLAS  = "ATLAS"
+	WorkspaceTypeFault  = "FAULT"
 )

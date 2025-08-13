@@ -48,21 +48,21 @@ const (
 
 // ConnectorCmdSet maps OS types to their respective command sets.
 var connectorCmdSet = map[string]map[string]string{
-	commonmodels.Linux: {
+	commonmodels.OSTypeLinux: {
 		"stopConnectorService":   unixStopConnectorServiceCmd,
 		"removeConnectorService": unixRemoveConnectorServiceCmd,
 		"removeConnectorFiles":   unixRemoveConnectorFilesCmd,
 		"connectorActive":        unixConnectorActiveCmd,
 		"readConnectorConfig":    unixReadConnectorConfigCmd,
 	},
-	commonmodels.Darwin: {
+	commonmodels.OSTypeDarwin: {
 		"stopConnectorService":   unixStopConnectorServiceCmd,
 		"removeConnectorService": unixRemoveConnectorServiceCmd,
 		"removeConnectorFiles":   unixRemoveConnectorFilesCmd,
 		"connectorActive":        unixConnectorActiveCmd,
 		"readConnectorConfig":    unixReadConnectorConfigCmd,
 	},
-	commonmodels.Windows: {
+	commonmodels.OSTypeWindows: {
 		"stopConnectorService":   winStopConnectorServiceCmd,
 		"removeConnectorService": winRemoveConnectorServiceCmd,
 		"removeConnectorFiles":   winRemoveConnectorFilesCmd,
@@ -130,7 +130,7 @@ func (s *ArkSIAAccessService) createConnection(
 	var connection connections.ArkConnection
 	var connectionDetails *connectionsmodels.ArkConnectionDetails
 
-	if osType == commonmodels.Windows {
+	if osType == commonmodels.OSTypeWindows {
 		connection = winrm.NewArkWinRMConnection()
 		connectionDetails = &connectionsmodels.ArkConnectionDetails{
 			Address:        targetMachine,
@@ -214,7 +214,7 @@ func (s *ArkSIAAccessService) installConnectorOnMachine(
 	})
 
 	// Install the connector
-	if osType == commonmodels.Windows {
+	if osType == commonmodels.OSTypeWindows {
 		_, err = connection.RunCommand(&connectionsmodels.ArkConnectionCommand{
 			Command:          installScript,
 			ExtraCommandData: map[string]interface{}{"force_command_split": true},

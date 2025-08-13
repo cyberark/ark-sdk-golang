@@ -306,3 +306,73 @@ ark exec sm list-session-activities-by --session-id my-id --command-contains "ls
 ```shell linenums="0"
 ark exec sm count-session-activities-by --session-id my-id --command-contains "chmod"
 ```
+
+### List all UAP policies
+```shell linenums="0"
+ark exec uap list-policies
+```
+
+### Delete UAP DB Policy
+```shell linenums="0"
+ark exec uap db delete-policy --policy-id my-policy-id
+```
+
+### List DB Policies from UAP
+```shell linenums="0"
+ark exec uap db list-policies
+```
+
+### Get DB Policy from UAP
+```shell linenums="0"
+ark exec uap db policy --policy-id my-policy-id
+```
+
+### Add UAP DB Policy
+```shell linenums="0"
+ark exec uap db add-policy --request-file /path/to/policy-request.json
+```
+
+### List UAP SCA Policies
+```shell linenums="0"
+ark exec uap sca list-policies
+```
+
+### Get UAP SCA Policy
+```shell linenums="0"
+ark exec uap sca policy --policy-id my-policy-id
+```
+
+### Add UAP SCA Policy
+```shell linenums="0"
+ark exec uap sca add-policy --request-file /path/to/policy-request.json
+```
+
+### Delete UAP SCA Policy
+```shell linenums="0"
+ark exec uap sca delete-policy --policy-id my-policy-id
+```
+
+### List VM Policies from UAP
+```shell
+ark exec uap vm list-policies
+```
+
+### Get VM Policy from UAP
+```shell
+ark exec uap vm policy --policy-id my-policy-id
+```
+
+### Delete VM Policy from UAP
+```shell
+ark exec uap vm delete-policy --policy-id my-policy-id
+```
+
+### Connect to MySQL ZSP with the mysql cli via Ark CLI
+```shell linenums="0"
+ark exec sia db mysql --target-address myaddress.com
+```
+
+### Connect to PostgreSQL Vaulted with the psql cli via Ark CLI
+```shell linenums="0"
+ark exec sia db psql --target-address myaddress.com --target-user myuser
+```

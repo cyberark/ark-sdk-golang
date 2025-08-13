@@ -10,4 +10,5 @@ var SupportedServiceActions = []*actions.ArkServiceActionDefinition{
 	IdentityActions,
 	SecHubActions,
 	SMActions,
+	UAPActions,
 }

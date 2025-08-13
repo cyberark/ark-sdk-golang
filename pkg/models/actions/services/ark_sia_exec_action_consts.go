@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
 	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
+	siadbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/db"
 	siak8s "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
 	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
 	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
@@ -146,8 +147,8 @@ var AccessAction = actions.ArkServiceActionDefinition{
 	Schemas:    AccessActionToSchemaMap,
 }
 
-// SSHCAActionToSchemaMap is a map that defines the mapping between ssh-ca action names and their corresponding schema types.
-var SSHCAActionToSchemaMap = map[string]interface{}{
+// SSHCaActionToSchemaMap is a map that defines the mapping between ssh-ca action names and their corresponding schema types.
+var SSHCaActionToSchemaMap = map[string]interface{}{
 	"generate-new-ca":        nil,
 	"deactivate-previous-ca": nil,
 	"reactivate-previous-ca": nil,
@@ -155,10 +156,25 @@ var SSHCAActionToSchemaMap = map[string]interface{}{
 	"public-key-script":      &siasshca.ArkSIAGetSSHPublicKey{},
 }
 
-// SSHCAAction is a struct that defines the Access action for the Ark service.
-var SSHCAAction = actions.ArkServiceActionDefinition{
+// SSHCaAction is a struct that defines the Access action for the Ark service.
+var SSHCaAction = actions.ArkServiceActionDefinition{
 	ActionName: "ssh-ca",
-	Schemas:    SSHCAActionToSchemaMap,
+	Schemas:    SSHCaActionToSchemaMap,
+}
+
+// DbActionToSchemaMap is a map that defines the mapping between ssh-ca action names and their corresponding schema types.
+var DbActionToSchemaMap = map[string]interface{}{
+	"psql":                      &siadbmodels.ArkSIADBPsqlExecution{},
+	"mysql":                     &siadbmodels.ArkSIADBMysqlExecution{},
+	"sqlcmd":                    &siadbmodels.ArkSIADBSqlcmdExecution{},
+	"generate-oracle-tnsnames":  &siadbmodels.ArkSIADBOracleGenerateAssets{},
+	"generate-proxy-full-chain": &siadbmodels.ArkSIADBProxyFullChainGenerateAssets{},
+}
+
+// DbAction is a struct that defines the Access action for the Ark service.
+var DbAction = actions.ArkServiceActionDefinition{
+	ActionName: "db",
+	Schemas:    DbActionToSchemaMap,
 }
 
 // SIAActions is a struct that defines the SIA actions for the Ark service.
@@ -170,6 +186,7 @@ var SIAActions = &actions.ArkServiceActionDefinition{
 		&WorkspacesAction,
 		&SecretsAction,
 		&AccessAction,
-		&SSHCAAction,
+		&SSHCaAction,
+		&DbAction,
 	},
 }

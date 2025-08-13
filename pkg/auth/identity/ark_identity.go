@@ -5,6 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
+	"regexp"
+	"strings"
+	"time"
+
 	"github.com/Iilun/survey/v2"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
@@ -13,11 +19,6 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/identity"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/toqueteos/webbrowser"
-	"io"
-	"net/http"
-	"regexp"
-	"strings"
-	"time"
 )
 
 const (

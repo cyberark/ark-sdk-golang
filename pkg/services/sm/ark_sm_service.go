@@ -3,6 +3,12 @@ package sm
 import (
 	"context"
 	"fmt"
+	"io"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
@@ -10,11 +16,6 @@ import (
 	smmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	"github.com/mitchellh/mapstructure"
-	"io"
-	"net/http"
-	"strconv"
-	"strings"
-	"time"
 )
 
 const (

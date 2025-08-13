@@ -42,17 +42,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	pool, err := cmgrService.AddPool(&cmgrmodels.ArkCmgrAddPool{Name: "tlvpool", AssignedNetworkIDs: []string{network.ID}})
+	pool, err := cmgrService.AddPool(&cmgrmodels.ArkCmgrAddPool{Name: "tlvpool", AssignedNetworkIDs: []string{network.NetworkID}})
 	if err != nil {
 		panic(err)
 	}
-	identifier, err := cmgrService.AddPoolIdentifier(&cmgrmodels.ArkCmgrAddPoolSingleIdentifier{PoolID: pool.ID, Type: cmgrmodels.GeneralFQDN, Value: "mymachine.tlv.com"})
+	identifier, err := cmgrService.AddPoolIdentifier(&cmgrmodels.ArkCmgrAddPoolSingleIdentifier{PoolID: pool.PoolID, Type: cmgrmodels.GeneralFQDN, Value: "mymachine.tlv.com"})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Added pool: %s\n", pool.ID)
-	fmt.Printf("Added network: %s\n", network.ID)
-	fmt.Printf("Added identifier: %s\n", identifier.ID)
+	fmt.Printf("Added pool: %s\n", pool.PoolID)
+	fmt.Printf("Added network: %s\n", network.NetworkID)
+	fmt.Printf("Added identifier: %s\n", identifier.IdentifierID)
 
 	// Install a connector on the pool above
 	siaAPI, err := sia.NewArkSIAAPI(ispAuth.(*auth.ArkISPAuth))
@@ -63,7 +63,7 @@ func main() {
 		&accessmodels.ArkSIAInstallConnector{
 			ConnectorType:   "ON-PREMISE",
 			ConnectorOS:     "linux",
-			ConnectorPoolID: pool.ID,
+			ConnectorPoolID: pool.PoolID,
 			TargetMachine:   "1.1.1.1",
 			Username:        "root",
 			PrivateKeyPath:  "/path/to/key.pem",
