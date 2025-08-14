@@ -88,7 +88,7 @@ Here is an example workflow for adding a UAP VM policy via the CLI:
         "idleTime": 1
       },
       "targets": {
-        "onpremResource": {
+        "fqdnipResource": {
           "fqdnRules": [
             {
               "operator": "EXACTLY",

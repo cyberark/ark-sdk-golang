@@ -552,7 +552,7 @@ func main() {
 				},
 			},
 			Targets: uapvmmodels.ArkUAPSIAVMPlatformTargets{
-				OnPremResource: &uapvmmodels.ArkUAPSIAVMOnPremResource{
+				FQDNIPResource: &uapvmmodels.ArkUAPSIAVMFQDNIPResource{
 					FQDNRules: []uapvmmodels.ArkUAPSIAVMFQDNRule{
 						{
 							Operator:            uapvmmodels.VMFQDNOperatorExactly,

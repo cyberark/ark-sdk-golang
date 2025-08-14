@@ -340,14 +340,14 @@ func (r *ArkUAPSIAVMGCPResource) Deserialize(data map[string]interface{}) error 
 	return nil
 }
 
-// ArkUAPSIAVMOnPremResource represents the on-premises resources for a virtual machine access policy.
-type ArkUAPSIAVMOnPremResource struct {
+// ArkUAPSIAVMFQDNIPResource represents the fqdn/ip resources for a virtual machine access policy.
+type ArkUAPSIAVMFQDNIPResource struct {
 	FQDNRules []ArkUAPSIAVMFQDNRule `json:"fqdn_rules,omitempty" mapstructure:"fqdn_rules" flag:"fqdn-rules" desc:"The FQDN rules used to match DNS records. This is a list of FQDN rules."`
 	IPRules   []ArkUAPSIAVMIPRule   `json:"ip_rules,omitempty" mapstructure:"ip_rules" flag:"ip-rules" desc:"The IP rules used to match IP addresses and logical names. This is a list of IP rules."`
 }
 
-// Serialize converts the on-prem resource to a map.
-func (r *ArkUAPSIAVMOnPremResource) Serialize() map[string]interface{} {
+// Serialize converts the fqdn/ip resource to a map.
+func (r *ArkUAPSIAVMFQDNIPResource) Serialize() map[string]interface{} {
 	fqdnRules := make([]map[string]interface{}, len(r.FQDNRules))
 	for i, rule := range r.FQDNRules {
 		fqdnRules[i] = rule.Serialize()
@@ -362,8 +362,8 @@ func (r *ArkUAPSIAVMOnPremResource) Serialize() map[string]interface{} {
 	}
 }
 
-// Deserialize populates the on-prem resource from a map.
-func (r *ArkUAPSIAVMOnPremResource) Deserialize(data map[string]interface{}) error {
+// Deserialize populates the fqdn/ip resource from a map.
+func (r *ArkUAPSIAVMFQDNIPResource) Deserialize(data map[string]interface{}) error {
 	if fqdnRules, ok := data["fqdn_rules"].([]interface{}); ok {
 		for _, rule := range fqdnRules {
 			if ruleMap, ok := rule.(map[string]interface{}); ok {
@@ -398,7 +398,7 @@ type ArkUAPSIAVMPlatformTargets struct {
 	AWSResource    *ArkUAPSIAVMAWSResource    `json:"aws_resource,omitempty" mapstructure:"aws_resource" flag:"aws-resource" desc:"The AWS resources for the VM access policy. This includes regions, tags, VPC IDs, and account IDs."`
 	AzureResource  *ArkUAPSIAVMAzureResource  `json:"azure_resource,omitempty" mapstructure:"azure_resource" flag:"azure-resource" desc:"The Azure resources for the VM access policy. This includes regions, tags, resource groups, VNet IDs, and subscriptions."`
 	GCPResource    *ArkUAPSIAVMGCPResource    `json:"gcp_resource,omitempty" mapstructure:"gcp_resource" flag:"gcp-resource" desc:"The GCP resources for the VM access policy. This includes regions, labels, VPC IDs, and project IDs."`
-	OnPremResource *ArkUAPSIAVMOnPremResource `json:"onprem_resource,omitempty" mapstructure:"onprem_resource" flag:"onprem-resource" desc:"The on-premises resources for the VM access policy. This includes FQDN rules and IP rules."`
+	FQDNIPResource *ArkUAPSIAVMFQDNIPResource `json:"fqdnip_resource,omitempty" mapstructure:"fqdnip_resource" flag:"fqdnip-resource" desc:"The fqdn/ip resources for the VM access policy. This includes FQDN rules and IP rules."`
 }
 
 // Serialize converts the platform targets to a map.
@@ -410,8 +410,8 @@ func (t *ArkUAPSIAVMPlatformTargets) Serialize(workspace string) (map[string]int
 		data[common.WorkspaceTypeAzure] = t.AzureResource.Serialize()
 	} else if workspace == common.WorkspaceTypeGCP && t.GCPResource != nil {
 		data[common.WorkspaceTypeGCP] = t.GCPResource.Serialize()
-	} else if workspace == common.WorkspaceTypeFQDNIP && t.OnPremResource != nil {
-		data[common.WorkspaceTypeFQDNIP] = t.OnPremResource.Serialize()
+	} else if workspace == common.WorkspaceTypeFQDNIP && t.FQDNIPResource != nil {
+		data[common.WorkspaceTypeFQDNIP] = t.FQDNIPResource.Serialize()
 	} else {
 		return nil, errors.New("unsupported workspace type or missing resource")
 	}
@@ -448,9 +448,9 @@ func (t *ArkUAPSIAVMPlatformTargets) Deserialize(data map[string]interface{}, wo
 			return errors.New("missing GCP resource data")
 		}
 	} else if workspace == common.WorkspaceTypeFQDNIP {
-		if onPremData, ok := data[common.WorkspaceTypeFQDNIP].(map[string]interface{}); ok {
-			t.OnPremResource = &ArkUAPSIAVMOnPremResource{}
-			if err := t.OnPremResource.Deserialize(onPremData); err != nil {
+		if fqdnipData, ok := data[common.WorkspaceTypeFQDNIP].(map[string]interface{}); ok {
+			t.FQDNIPResource = &ArkUAPSIAVMFQDNIPResource{}
+			if err := t.FQDNIPResource.Deserialize(fqdnipData); err != nil {
 				return err
 			}
 		} else {

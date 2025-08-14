@@ -50,7 +50,7 @@
     "idleTime": 1
   },
   "targets": {
-    "onpremResource": {
+    "fqdnipResource": {
       "fqdnRules": [
         {
           "operator": "EXACTLY",
