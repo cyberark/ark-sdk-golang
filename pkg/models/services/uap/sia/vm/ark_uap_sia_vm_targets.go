@@ -340,13 +340,13 @@ func (r *ArkUAPSIAVMGCPResource) Deserialize(data map[string]interface{}) error 
 	return nil
 }
 
-// ArkUAPSIAVMFQDNIPResource represents the on-premises resources for a virtual machine access policy.
+// ArkUAPSIAVMFQDNIPResource represents the fqdn/ip resources for a virtual machine access policy.
 type ArkUAPSIAVMFQDNIPResource struct {
 	FQDNRules []ArkUAPSIAVMFQDNRule `json:"fqdn_rules,omitempty" mapstructure:"fqdn_rules" flag:"fqdn-rules" desc:"The FQDN rules used to match DNS records. This is a list of FQDN rules."`
 	IPRules   []ArkUAPSIAVMIPRule   `json:"ip_rules,omitempty" mapstructure:"ip_rules" flag:"ip-rules" desc:"The IP rules used to match IP addresses and logical names. This is a list of IP rules."`
 }
 
-// Serialize converts the on-prem resource to a map.
+// Serialize converts the fqdn/ip resource to a map.
 func (r *ArkUAPSIAVMFQDNIPResource) Serialize() map[string]interface{} {
 	fqdnRules := make([]map[string]interface{}, len(r.FQDNRules))
 	for i, rule := range r.FQDNRules {
@@ -362,7 +362,7 @@ func (r *ArkUAPSIAVMFQDNIPResource) Serialize() map[string]interface{} {
 	}
 }
 
-// Deserialize populates the on-prem resource from a map.
+// Deserialize populates the fqdn/ip resource from a map.
 func (r *ArkUAPSIAVMFQDNIPResource) Deserialize(data map[string]interface{}) error {
 	if fqdnRules, ok := data["fqdn_rules"].([]interface{}); ok {
 		for _, rule := range fqdnRules {
