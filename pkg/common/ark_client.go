@@ -170,11 +170,16 @@ func (ac *ArkClient) GetHeaders() map[string]string {
 
 // SetCookie sets a single cookie for the ArkClient.
 func (ac *ArkClient) SetCookie(key string, value string) {
-	ac.cookieJar.SetCookies(
-		&url.URL{
+	parsedUrl, err := url.Parse(ac.BaseURL)
+	if err != nil {
+		ac.logger.Error("Fail to parse url %s: %v", ac.BaseURL, err)
+		parsedUrl = &url.URL{
 			Scheme: "https",
 			Host:   ac.BaseURL,
-		},
+		}
+	}
+	ac.cookieJar.SetCookies(
+		parsedUrl,
 		[]*http.Cookie{
 			{
 				Name:  key,
