@@ -9,8 +9,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	filtersmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/filters"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	filtersmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/filters/models"
 	"github.com/mitchellh/mapstructure"
 )
 

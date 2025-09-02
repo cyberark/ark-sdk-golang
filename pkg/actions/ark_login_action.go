@@ -3,24 +3,53 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"slices"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth/identity"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"slices"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // ArkLoginAction is a struct that implements the ArkAction interface for login action.
+//
+// ArkLoginAction provides authentication functionality for the Ark SDK CLI.
+// It handles user authentication across multiple authentication methods and
+// manages token storage and retrieval. The action supports interactive and
+// non-interactive modes, shared secrets between authenticators, token refresh,
+// and forced re-authentication.
+//
+// Key features:
+//   - Multi-authenticator support (e.g., ISP, identity providers)
+//   - Interactive credential prompting with shared secrets
+//   - Token caching and refresh capabilities
+//   - Force login and token display options
+//   - Profile-based configuration management
 type ArkLoginAction struct {
 	*ArkBaseAction
 	profilesLoader *profiles.ProfileLoader
 }
 
 // NewArkLoginAction creates a new instance of ArkLoginAction.
+//
+// NewArkLoginAction initializes a new ArkLoginAction with the provided profile
+// loader for managing authentication profiles. The action inherits common
+// functionality from ArkBaseAction and configures profile-specific behavior.
+//
+// Parameters:
+//   - profilesLoader: A ProfileLoader interface for loading and managing authentication profiles
+//
+// Returns a new ArkLoginAction instance ready for CLI integration.
+//
+// Example:
+//
+//	loader := profiles.DefaultProfilesLoader()
+//	action := NewArkLoginAction(loader)
+//	action.DefineAction(rootCmd)
 func NewArkLoginAction(profilesLoader *profiles.ProfileLoader) *ArkLoginAction {
 	return &ArkLoginAction{
 		ArkBaseAction:  NewArkBaseAction(),
@@ -29,6 +58,32 @@ func NewArkLoginAction(profilesLoader *profiles.ProfileLoader) *ArkLoginAction {
 }
 
 // DefineAction defines the CLI `login` action, and adds the login function.
+//
+// DefineAction configures the login command with all necessary flags and
+// behavior for authentication operations. The command supports various
+// authentication options including profile selection, forced login,
+// shared secrets management, token display, and refresh capabilities.
+//
+// Command flags added:
+//   - profile-name: Specifies which profile to use for authentication
+//   - force: Forces login even if valid tokens exist
+//   - no-shared-secrets: Disables credential sharing between authenticators
+//   - show-tokens: Displays authentication tokens in output
+//   - refresh-auth: Attempts to refresh existing tokens from cache
+//   - [authenticator]-username: Username for specific authenticators
+//   - [authenticator]-secret: Secret/password for specific authenticators
+//
+// Parameters:
+//   - cmd: The parent cobra command to attach the login command to
+//
+// The login command will be added as a subcommand with all configured flags
+// and will execute the authentication workflow when invoked.
+//
+// Example:
+//
+//	action := NewArkLoginAction(loader)
+//	action.DefineAction(rootCmd)
+//	// Now 'ark login' command is available
 func (a *ArkLoginAction) DefineAction(cmd *cobra.Command) {
 	loginCmd := &cobra.Command{
 		Use:   "login",
@@ -54,6 +109,38 @@ func (a *ArkLoginAction) DefineAction(cmd *cobra.Command) {
 	cmd.AddCommand(loginCmd)
 }
 
+// runLoginAction executes the authentication workflow for the login command.
+//
+// runLoginAction handles the complete authentication process including profile
+// loading, credential gathering, authentication execution, and token management.
+// It supports multiple authenticators simultaneously and manages shared secrets
+// between compatible authentication methods.
+//
+// The function performs the following operations:
+//  1. Loads the specified authentication profile
+//  2. Iterates through configured authenticators
+//  3. Checks existing authentication status and handles refresh/force options
+//  4. Gathers credentials interactively or from command flags
+//  5. Executes authentication for each configured authenticator
+//  6. Manages shared secrets between compatible authenticators
+//  7. Displays authentication results and tokens (if requested)
+//
+// Parameters:
+//   - cmd: The cobra command containing parsed flags and configuration
+//   - loginArgs: Command line arguments (currently unused)
+//
+// The function handles various authentication scenarios:
+//   - Skip authentication if already authenticated (unless force=true)
+//   - Refresh tokens if requested and possible
+//   - Interactive credential prompting in interactive mode
+//   - Shared secret reuse for compatible authentication methods
+//   - Special handling for identity authentication without passwords
+//   - Error handling and user feedback for failed authentication attempts
+//
+// Example:
+//   Command: ark login --profile-name prod --force --show-tokens
+//   Result: Authenticates to all configured authenticators and displays tokens
+
 func (a *ArkLoginAction) runLoginAction(cmd *cobra.Command, loginArgs []string) {
 	a.CommonActionsExecution(cmd, loginArgs)
 
@@ -78,7 +165,7 @@ func (a *ArkLoginAction) runLoginAction(cmd *cobra.Command, loginArgs []string) 
 					args.PrintSuccess(fmt.Sprintf("%s Authentication Refreshed", authenticator.AuthenticatorHumanReadableName()))
 					continue
 				}
-				a.logger.Info(fmt.Sprintf("%s Failed to refresh token, performing normal login [%s]", authenticator.AuthenticatorHumanReadableName(), err))
+				a.logger.Info("%s Failed to refresh token, performing normal login [%s]", authenticator.AuthenticatorHumanReadableName(), err.Error())
 			} else {
 				args.PrintSuccess(fmt.Sprintf("%s Already Authenticated", authenticator.AuthenticatorHumanReadableName()))
 				continue

@@ -10,8 +10,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sshca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	sshcamodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca/models"
 )
 
 const (
@@ -29,7 +29,7 @@ var SIASSHCAServiceConfig = services.ArkServiceConfig{
 	OptionalAuthenticatorNames: []string{},
 }
 
-// ArkSIASSHCAService is a struct that implements the ArkService interface and provides functionality for Connectors of SIA.
+// ArkSIASSHCAService is a struct that implements the ArkService interface and provides functionality for SSH CA of SIA.
 type ArkSIASSHCAService struct {
 	services.ArkService
 	*services.ArkBaseService
@@ -37,7 +37,7 @@ type ArkSIASSHCAService struct {
 	client  *isp.ArkISPServiceClient
 }
 
-// NewArkSIASSHCAService creates a new instance of NewArkSIASSHCAService with the provided authenticators.
+// NewArkSIASSHCAService creates a new instance of ArkSIASSHCAService with the provided authenticators.
 func NewArkSIASSHCAService(authenticators ...auth.ArkAuth) (*ArkSIASSHCAService, error) {
 	sshCaService := &ArkSIASSHCAService{}
 	var sshCaServiceInterface services.ArkService = sshCaService
@@ -108,7 +108,7 @@ func (s *ArkSIASSHCAService) ReactivatePreviousCa() error {
 }
 
 // PublicKey retrieves the public key for the SSH CA.
-func (s *ArkSIASSHCAService) PublicKey(getPublicKey *sshca.ArkSIAGetSSHPublicKey) (string, error) {
+func (s *ArkSIASSHCAService) PublicKey(getPublicKey *sshcamodels.ArkSIAGetSSHPublicKey) (string, error) {
 	s.Logger.Info("Getting public key")
 	response, err := s.client.Get(context.Background(), publicKeyURL, nil)
 	if err != nil {
@@ -147,7 +147,7 @@ func (s *ArkSIASSHCAService) PublicKey(getPublicKey *sshca.ArkSIAGetSSHPublicKey
 }
 
 // PublicKeyScript retrieves the public key script for the SSH CA.
-func (s *ArkSIASSHCAService) PublicKeyScript(getPublicKey *sshca.ArkSIAGetSSHPublicKey) (string, error) {
+func (s *ArkSIASSHCAService) PublicKeyScript(getPublicKey *sshcamodels.ArkSIAGetSSHPublicKey) (string, error) {
 	s.Logger.Info("Getting public key script")
 	response, err := s.client.Get(context.Background(), publicKeyScriptURL, nil)
 	if err != nil {

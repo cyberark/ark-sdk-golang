@@ -13,8 +13,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	smmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	smmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sm/models"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -335,7 +335,7 @@ func (s *ArkSMService) SessionsStats() (*smmodels.ArkSMSessionsStats, error) {
 
 // Session retrieves a session by its ID
 func (s *ArkSMService) Session(getSession *smmodels.ArkSIASMGetSession) (*smmodels.ArkSMSession, error) {
-	s.Logger.Info(fmt.Sprintf("Getting session [%s]", getSession.SessionID))
+	s.Logger.Info("Getting session [%s]", getSession.SessionID)
 	response, err := s.client.Get(context.Background(), fmt.Sprintf(sessionURL, getSession.SessionID), nil)
 	if err != nil {
 		return nil, err

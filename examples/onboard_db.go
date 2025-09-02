@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
-	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
+	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db/models"
+	workspacesdbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db/models"
+
 	"os"
 )
 
@@ -51,9 +53,9 @@ func main() {
 
 	// Add the database with the created secret
 	database, err := siaAPI.WorkspacesDB().AddDatabase(
-		&dbmodels.ArkSIADBAddDatabase{
+		&workspacesdbmodels.ArkSIADBAddDatabase{
 			Name:              "MyDatabase",
-			ProviderEngine:    dbmodels.EngineTypeAuroraMysql,
+			ProviderEngine:    workspacesdbmodels.EngineTypeAuroraMysql,
 			ReadWriteEndpoint: "myrds.com",
 			SecretID:          secret.SecretID,
 		},

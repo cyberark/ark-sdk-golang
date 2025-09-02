@@ -8,22 +8,23 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
-	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
+	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso/models"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (
@@ -558,7 +559,7 @@ func (s *ArkSIASSOService) ShortLivedTokenInfo(getTokenInfo *ssomodels.ArkSIASSO
 	var tokenInfo ssomodels.ArkSIASSOTokenInfo
 	err = json.NewDecoder(response.Body).Decode(&tokenInfo)
 	if err != nil {
-		s.Logger.Error(fmt.Sprintf("Failed to parse get short lived token info response [%s] - [%s]", err.Error(), common.SerializeResponseToJSON(response.Body)))
+		s.Logger.Error("Failed to parse get short lived token info response [%s] - [%s]", err.Error(), common.SerializeResponseToJSON(response.Body))
 		return nil, fmt.Errorf("failed to parse get short lived token info response [%s]", err.Error())
 	}
 	return &tokenInfo, nil

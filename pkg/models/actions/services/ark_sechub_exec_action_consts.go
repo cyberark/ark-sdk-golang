@@ -2,12 +2,12 @@ package services
 
 import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
-	sechubconfiguration "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/configuration"
-	sechubfilters "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/filters"
-	sechubscans "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/scans"
-	sechubsecrets "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secrets"
-	sechubsecretstores "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secretstores"
-	sechubsyncpolicies "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/syncpolicies"
+	sechubconfiguration "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/configuration/models"
+	filtersmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/filters/models"
+	sechubscans "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/scans/models"
+	sechubsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secrets/models"
+	storesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secretstores/models"
+	policiesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/syncpolicies/models"
 )
 
 // ServiceInfoActionToSchemaMap is a map that defines the mapping between Sec Hub Service Info action names and their corresponding schema types.
@@ -48,10 +48,10 @@ var ConfigurationAction = actions.ArkServiceActionDefinition{
 
 // FiltersActionToSchemaMap is a map that defines the mapping between Sec Hub filters action names and their corresponding schema types.
 var FiltersActionToSchemaMap = map[string]interface{}{
-	"filter":        &sechubfilters.ArkSecHubGetFilter{},
-	"list-filters":  &sechubfilters.ArkSecHubGetFilters{},
-	"add-filter":    &sechubfilters.ArkSecHubAddFilter{},
-	"delete-filter": &sechubfilters.ArkSecHubDeleteFilter{},
+	"filter":        &filtersmodels.ArkSecHubGetFilter{},
+	"list-filters":  &filtersmodels.ArkSecHubGetFilters{},
+	"add-filter":    &filtersmodels.ArkSecHubAddFilter{},
+	"delete-filter": &filtersmodels.ArkSecHubDeleteFilter{},
 }
 
 // FiltersAction is a struct that defines the filters action for the Ark service.
@@ -62,16 +62,16 @@ var FiltersAction = actions.ArkServiceActionDefinition{
 
 // SecretsStoresActionToSchemaMap is a map that defines the mapping between Sec Hub secrets stores action names and their corresponding schema types.
 var SecretsStoresActionToSchemaMap = map[string]interface{}{
-	"secret-store":             &sechubsecretstores.ArkSecHubGetSecretStore{},
+	"secret-store":             &storesmodels.ArkSecHubGetSecretStore{},
 	"list-secret-stores":       nil,
-	"list-secret-stores-by":    &sechubsecretstores.ArkSecHubSecretStoresFilters{},
-	"secret-store-conn-status": &sechubsecretstores.ArkSecHubGetSecretStoreConnectionStatus{},
-	"set-secret-store-state":   &sechubsecretstores.ArkSecHubSetSecretStoreState{},
-	"set-secret-stores-state":  &sechubsecretstores.ArkSecHubSetSecretStoresState{},
+	"list-secret-stores-by":    &storesmodels.ArkSecHubSecretStoresFilters{},
+	"secret-store-conn-status": &storesmodels.ArkSecHubGetSecretStoreConnectionStatus{},
+	"set-secret-store-state":   &storesmodels.ArkSecHubSetSecretStoreState{},
+	"set-secret-stores-state":  &storesmodels.ArkSecHubSetSecretStoresState{},
 	"secret-stores-stats":      nil,
-	"delete-secret-store":      &sechubsecretstores.ArkSecHubDeleteSecretStore{},
-	"create-secret-store":      &sechubsecretstores.ArkSecHubCreateSecretStore{},
-	"update-secret-store":      &sechubsecretstores.ArkSecHubUpdateSecretStore{},
+	"delete-secret-store":      &storesmodels.ArkSecHubDeleteSecretStore{},
+	"create-secret-store":      &storesmodels.ArkSecHubCreateSecretStore{},
+	"update-secret-store":      &storesmodels.ArkSecHubUpdateSecretStore{},
 }
 
 // SecretsStoresAction is a struct that defines the secrets stores action for the Ark service.
@@ -95,12 +95,12 @@ var SecretsSHAction = actions.ArkServiceActionDefinition{
 
 // SyncPoliciesActionToSchemaMap is a map that defines the mapping between Sec Hub sync policies action names and their corresponding schema types.
 var SyncPoliciesActionToSchemaMap = map[string]interface{}{
-	"create-sync-policy":    &sechubsyncpolicies.ArkSechubCreateSyncPolicy{},
-	"delete-sync-policy":    &sechubsyncpolicies.ArkSecHubDeleteSyncPolicy{},
-	"sync-policy":           &sechubsyncpolicies.ArkSecHubGetSyncPolicy{},
-	"list-sync-policies":    &sechubsyncpolicies.ArkSecHubGetSyncPolicies{},
-	"list-sync-policies-by": &sechubsyncpolicies.ArkSecHubSyncPoliciesFilters{},
-	"set-sync-policy-state": &sechubsyncpolicies.ArkSecHubSetSyncPolicyState{},
+	"create-sync-policy":    &policiesmodels.ArkSechubCreateSyncPolicy{},
+	"delete-sync-policy":    &policiesmodels.ArkSecHubDeleteSyncPolicy{},
+	"sync-policy":           &policiesmodels.ArkSecHubGetSyncPolicy{},
+	"list-sync-policies":    &policiesmodels.ArkSecHubGetSyncPolicies{},
+	"list-sync-policies-by": &policiesmodels.ArkSecHubSyncPoliciesFilters{},
+	"set-sync-policy-state": &policiesmodels.ArkSecHubSetSyncPolicyState{},
 	"sync-policies-stats":   nil,
 }
 

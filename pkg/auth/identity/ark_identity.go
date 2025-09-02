@@ -36,7 +36,7 @@ const (
 
 var factors = map[string]string{
 	"otp":   "📲 Push / Code",
-	"oath":  "📲 Push / Code",
+	"oath":  "🔐 OATH Code",
 	"sms":   "📟 SMS",
 	"email": "📧 Email",
 	"pf":    "📞 Phone call",
@@ -138,6 +138,9 @@ func IsPasswordRequired(username string, identityURL string, identityTenantSubdo
 // NewArkIdentity creates a new ArkIdentity instance with the specified parameters.
 func NewArkIdentity(username string, password string, identityURL string, identityTenantSubdomain string, mfaType string, logger *common.ArkLogger, cacheAuthentication bool, loadCache bool, cacheProfile *models.ArkProfile) (*ArkIdentity, error) {
 	var err error
+	if mfaType == "" {
+		mfaType = "email"
+	}
 	identityAuth := &ArkIdentity{
 		username:            username,
 		password:            password,
@@ -175,12 +178,12 @@ func (ai *ArkIdentity) loadCache(profile *models.ArkProfile) bool {
 	if ai.keyring != nil && profile != nil {
 		token, err := ai.keyring.LoadToken(profile, ai.username+"_identity", false)
 		if err != nil {
-			ai.logger.Error(fmt.Sprintf("Error loading token from cache: %v", err))
+			ai.logger.Error("Error loading token from cache: %v", err)
 			return false
 		}
 		session, err := ai.keyring.LoadToken(profile, ai.username+"_identity_session", false)
 		if err != nil {
-			ai.logger.Error(fmt.Sprintf("Error loading session from cache: %v", err))
+			ai.logger.Error("Error loading session from cache: %v", err)
 			return false
 		}
 		if token != nil && session != nil {
@@ -259,7 +262,7 @@ func (ai *ArkIdentity) saveCache(profile *models.ArkProfile) error {
 }
 
 func (ai *ArkIdentity) startAuthentication() (*identity.StartAuthResponse, error) {
-	ai.logger.Info(fmt.Sprintf("Starting authentication with user %s and fqdn %s", ai.username, ai.session.BaseURL))
+	ai.logger.Info("Starting authentication with user %s and fqdn %s", ai.username, ai.session.BaseURL)
 	response, err := ai.session.Post(
 		context.Background(),
 		"Security/StartAuthentication",
@@ -267,6 +270,7 @@ func (ai *ArkIdentity) startAuthentication() (*identity.StartAuthResponse, error
 			"User":                  ai.username,
 			"Version":               "1.0",
 			"PlatformTokenResponse": true,
+			"AssociatedEntityType":  "API",
 			"MfaRequestor":          "DeviceAgent",
 		},
 	)
@@ -294,8 +298,8 @@ func (ai *ArkIdentity) startAuthentication() (*identity.StartAuthResponse, error
 	return &parsedRes, nil
 }
 
-func (ai *ArkIdentity) advanceAuthentication(mechanismID string, sessionID string, answer string, action string) (interface{}, error) {
-	ai.logger.Info(fmt.Sprintf("Advancing authentication with action %s", action))
+func (ai *ArkIdentity) advanceAuthentication(mechanismID string, sessionID string, answer string, action string, isIdpAuth bool) (interface{}, error) {
+	ai.logger.Info("Advancing authentication with action %s", action)
 	response, err := ai.session.Post(
 		context.Background(),
 		"Security/AdvanceAuthentication",
@@ -319,13 +323,20 @@ func (ai *ArkIdentity) advanceAuthentication(mechanismID string, sessionID strin
 	if err != nil {
 		return nil, err
 	}
+	if isIdpAuth {
+		var finalRes identity.IdpAuthStatusResponse
+		if err = json.Unmarshal(bodyBytes, &finalRes); err != nil {
+			return nil, err
+		}
+		return &finalRes, nil
+	}
 	var parsedRes identity.AdvanceAuthMidResponse
-	if err := json.Unmarshal(bodyBytes, &parsedRes); err != nil {
+	if err = json.Unmarshal(bodyBytes, &parsedRes); err != nil {
 		return nil, err
 	}
 	if parsedRes.Result.Summary == "LoginSuccess" {
 		var finalRes identity.AdvanceAuthResponse
-		if err := json.Unmarshal(bodyBytes, &finalRes); err != nil {
+		if err = json.Unmarshal(bodyBytes, &finalRes); err != nil {
 			return nil, err
 		}
 		return &finalRes, nil
@@ -334,7 +345,7 @@ func (ai *ArkIdentity) advanceAuthentication(mechanismID string, sessionID strin
 }
 
 func (ai *ArkIdentity) identityIdpAuthStatus(sessionID string) (*identity.IdpAuthStatusResponse, error) {
-	ai.logger.Info(fmt.Sprintf("Checking identity idp authentication status with session %s", sessionID))
+	ai.logger.Info("Checking identity idp authentication status with session %s", sessionID)
 	response, err := ai.session.Post(
 		context.Background(),
 		"Security/OobAuthStatus",
@@ -359,6 +370,50 @@ func (ai *ArkIdentity) identityIdpAuthStatus(sessionID string) (*identity.IdpAut
 	return &parsedRes, nil
 }
 
+func (ai *ArkIdentity) performPinCodeIdpAuthentication(startAuthResponse *identity.StartAuthResponse, profile *models.ArkProfile, interactive bool) error {
+	if !interactive {
+		return errors.New("non-interactive mode is not supported for OOB PIN code authentication")
+	}
+	var answer string
+	prompt := &survey.Password{
+		Message: "Please enter the PIN code displayed after you logged in to your identity provider",
+	}
+	err := survey.AskOne(prompt, &answer)
+	if err != nil {
+		return err
+	}
+	if answer == "" {
+		return errors.New("PIN code cannot be empty")
+	}
+	oobAdvanceResp, err := ai.advanceAuthentication("OOBAUTHPIN", startAuthResponse.Result.IdpLoginSessionID, answer, "Answer", true)
+	if err != nil {
+		return err
+	}
+	if !oobAdvanceResp.(*identity.IdpAuthStatusResponse).Success {
+		return errors.New("failed to perform idp authentication with OOB PIN")
+	}
+	if oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.Summary == "LoginSuccess" && oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.Token != "" {
+		ai.sessionDetails = &identity.AdvanceAuthResult{
+			Token:         oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.Token,
+			TokenLifetime: oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.TokenLifetime,
+			RefreshToken:  oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.RefreshToken,
+		}
+		ai.session.UpdateToken(oobAdvanceResp.(*identity.IdpAuthStatusResponse).Result.Token, "Bearer")
+		delta := ai.sessionDetails.TokenLifetime
+		if delta == 0 {
+			delta = DefaultTokenLifetimeSeconds
+		}
+		ai.sessionExp = commonmodels.ArkRFC3339Time(time.Now().Add(time.Duration(delta) * time.Second))
+		if ai.cacheAuthentication {
+			if err := ai.saveCache(profile); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	return errors.New("failed to perform idp authentication with OOB PIN, please try again")
+}
+
 func (ai *ArkIdentity) performIdpAuthentication(startAuthResponse *identity.StartAuthResponse, profile *models.ArkProfile, interactive bool) error {
 	if ai.isPolling {
 		return errors.New("MFA / IDP Polling is already in progress")
@@ -371,6 +426,10 @@ func (ai *ArkIdentity) performIdpAuthentication(startAuthResponse *identity.Star
 
 	// Error can be ignored
 	_ = webbrowser.Open(startAuthResponse.Result.IdpRedirectShortURL)
+
+	if startAuthResponse.Result.IdpOobAuthPinRequired {
+		return ai.performPinCodeIdpAuthentication(startAuthResponse, profile, interactive)
+	}
 
 	ai.isPolling = true
 	startTime := time.Now()
@@ -423,10 +482,6 @@ func (ai *ArkIdentity) pickMechanism(challenge *identity.Challenge) (*identity.M
 			}
 		}
 	}
-	var defaultChoice string
-	if ai.mfaType != "" {
-		defaultChoice = factors[strings.ToLower(ai.mfaType)]
-	}
 	options := make([]string, len(supportedMechanisms))
 	for i, m := range supportedMechanisms {
 		options[i] = factors[strings.ToLower(m.Name)]
@@ -435,7 +490,15 @@ func (ai *ArkIdentity) pickMechanism(challenge *identity.Challenge) (*identity.M
 	prompt := &survey.Select{
 		Message: "Please pick one of the following MFA methods",
 		Options: options,
-		Default: defaultChoice,
+	}
+	if ai.mfaType != "" {
+		mfaTypeFactor := factors[strings.ToLower(ai.mfaType)]
+		for _, option := range options {
+			if option == mfaTypeFactor {
+				prompt.Default = option
+				break
+			}
+		}
 	}
 
 	var selectedOption string
@@ -550,7 +613,7 @@ func (ai *ArkIdentity) pollAuthentication(profile *models.ArkProfile, mechanism 
 			if mfaCode == "ERROR" {
 				return errors.New("failed to get answer for MFA factor")
 			}
-			advanceResp, err = ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, mfaCode, "Answer")
+			advanceResp, err = ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, mfaCode, "Answer", false)
 			if err != nil {
 				return err
 			}
@@ -579,7 +642,7 @@ func (ai *ArkIdentity) pollAuthentication(profile *models.ArkProfile, mechanism 
 				chanRead <- "CONTINUE"
 			}
 		case <-time.After(pollIntervalMs):
-			advanceResp, err = ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "Poll")
+			advanceResp, err = ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "Poll", false)
 			if err != nil {
 				return err
 			}
@@ -639,7 +702,7 @@ func (ai *ArkIdentity) performUpAuthentication(
 		}
 		ai.password = answer
 	}
-	advanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, ai.password, "Answer")
+	advanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, ai.password, "Answer", false)
 	if err != nil {
 		return "", -1, err
 	}
@@ -755,7 +818,7 @@ func (ai *ArkIdentity) AuthIdentity(profile *models.ArkProfile, interactive bool
 			}
 		} else {
 			currentChallengeIdx++
-			oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB")
+			oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB", false)
 			if err != nil {
 				return err
 			}
@@ -788,7 +851,7 @@ func (ai *ArkIdentity) AuthIdentity(profile *models.ArkProfile, interactive bool
 	if ai.mfaType != "" && currentChallengeIdx == 1 {
 		for _, mechanism := range startAuthResponse.Result.Challenges[currentChallengeIdx].Mechanisms {
 			if strings.ToLower(mechanism.Name) == ai.mfaType {
-				oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB")
+				oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB", false)
 				if err != nil {
 					return err
 				}
@@ -806,7 +869,7 @@ func (ai *ArkIdentity) AuthIdentity(profile *models.ArkProfile, interactive bool
 		if err != nil {
 			return err
 		}
-		oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB")
+		oobAdvanceResp, err := ai.advanceAuthentication(mechanism.MechanismID, startAuthResponse.Result.SessionID, "", "StartOOB", false)
 		if err != nil {
 			return err
 		}

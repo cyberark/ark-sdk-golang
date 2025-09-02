@@ -3,17 +3,18 @@ package safes
 import (
 	"context"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	safesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/pcloud/safes"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"net/url"
 	"reflect"
 	"sync"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	safesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/safes/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 // Constants for safes URLs

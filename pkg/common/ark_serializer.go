@@ -1,11 +1,18 @@
+// Package common provides JSON serialization and deserialization utilities for the ARK SDK.
+//
+// This package handles conversion between different JSON key naming conventions (camelCase
+// and snake_case) and provides utilities for serializing/deserializing JSON data with
+// optional schema validation. It supports both simple conversions and schema-aware
+// transformations that preserve specific field mappings based on struct tags.
 package common
 
 import (
 	"encoding/json"
-	"github.com/iancoleman/strcase"
 	"io"
 	"reflect"
 	"strings"
+
+	"github.com/iancoleman/strcase"
 )
 
 func resolveFieldsSquashed(schema reflect.Type) []reflect.StructField {
@@ -48,6 +55,22 @@ func findFieldByName(schema reflect.Type, name string) *reflect.StructField {
 }
 
 // SerializeResponseToJSON takes an io.ReadCloser response and serializes it to a JSON string.
+//
+// SerializeResponseToJSON reads all data from the provided io.ReadCloser, attempts to
+// parse it as JSON, and returns a properly formatted JSON string. If the input data
+// is not valid JSON, it returns the original data as a string. This function is useful
+// for normalizing response data into a consistent JSON format.
+//
+// Parameters:
+//   - response: The io.ReadCloser containing the response data to serialize
+//
+// Returns a JSON string representation of the response data, or the original data
+// as a string if JSON parsing fails.
+//
+// Example:
+//
+//	jsonStr := SerializeResponseToJSON(httpResponse.Body)
+//	fmt.Println(jsonStr) // Outputs properly formatted JSON
 func SerializeResponseToJSON(response io.ReadCloser) string {
 	data, err := io.ReadAll(response)
 	if err != nil {
@@ -66,6 +89,24 @@ func SerializeResponseToJSON(response io.ReadCloser) string {
 }
 
 // ConvertToSnakeCase converts a map with camelCase keys to snake_case keys.
+//
+// ConvertToSnakeCase recursively processes data structures, converting all string keys
+// from camelCase to snake_case format. It supports nested maps, slices, and arbitrary
+// data types. When a schema is provided, it uses struct field information to determine
+// whether specific fields should be converted or preserved as-is (e.g., for map fields
+// with string keys that should not be converted).
+//
+// Parameters:
+//   - data: The data structure to convert (supports maps, slices, and primitive types)
+//   - schema: Optional reflect.Type pointer for schema-aware conversion (nil for simple conversion)
+//
+// Returns the converted data structure with snake_case keys.
+//
+// Example:
+//
+//	input := map[string]interface{}{"firstName": "John", "lastName": "Doe"}
+//	result := ConvertToSnakeCase(input, nil)
+//	// result: map[string]interface{}{"first_name": "John", "last_name": "Doe"}
 func ConvertToSnakeCase(data interface{}, schema *reflect.Type) interface{} {
 	switch v := data.(type) {
 	case map[string]interface{}:
@@ -101,6 +142,24 @@ func ConvertToSnakeCase(data interface{}, schema *reflect.Type) interface{} {
 }
 
 // ConvertToCamelCase converts a map with snake_case keys to camelCase keys.
+//
+// ConvertToCamelCase recursively processes data structures, converting all string keys
+// from snake_case to camelCase format. It supports nested maps, slices, and arbitrary
+// data types. When a schema is provided, it uses struct field information to determine
+// whether specific fields should be converted or preserved as-is (e.g., for map fields
+// with string keys that should not be converted).
+//
+// Parameters:
+//   - data: The data structure to convert (supports maps, slices, and primitive types)
+//   - schema: Optional reflect.Type pointer for schema-aware conversion (nil for simple conversion)
+//
+// Returns the converted data structure with camelCase keys.
+//
+// Example:
+//
+//	input := map[string]interface{}{"first_name": "John", "last_name": "Doe"}
+//	result := ConvertToCamelCase(input, nil)
+//	// result: map[string]interface{}{"firstName": "John", "lastName": "Doe"}
 func ConvertToCamelCase(data interface{}, schema *reflect.Type) interface{} {
 	switch v := data.(type) {
 	case map[string]interface{}:
@@ -136,6 +195,25 @@ func ConvertToCamelCase(data interface{}, schema *reflect.Type) interface{} {
 }
 
 // DeserializeJSONSnake takes an io.ReadCloser response and deserializes it into a map with snake_case keys.
+//
+// DeserializeJSONSnake reads JSON data from the provided io.ReadCloser, parses it,
+// and converts all keys from the original format to snake_case. This function is
+// useful for normalizing JSON responses that may have keys in camelCase or other
+// formats to a consistent snake_case format.
+//
+// Parameters:
+//   - response: The io.ReadCloser containing JSON data to deserialize
+//
+// Returns the deserialized data with snake_case keys and any error encountered
+// during JSON decoding.
+//
+// Example:
+//
+//	data, err := DeserializeJSONSnake(httpResponse.Body)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	// data contains the JSON with snake_case keys
 func DeserializeJSONSnake(response io.ReadCloser) (interface{}, error) {
 	var result interface{}
 	err := json.NewDecoder(response).Decode(&result)
@@ -146,6 +224,26 @@ func DeserializeJSONSnake(response io.ReadCloser) (interface{}, error) {
 }
 
 // SerializeJSONCamel takes an interface and serializes it into a map with camelCase keys.
+//
+// SerializeJSONCamel converts the provided data structure to JSON, then parses it
+// back into a map with all keys converted to camelCase format. This function is
+// useful for preparing data for APIs or systems that expect camelCase key naming
+// conventions.
+//
+// Parameters:
+//   - item: The data structure to serialize (must be JSON-serializable)
+//
+// Returns a map with camelCase keys and any error encountered during JSON
+// marshaling or unmarshaling.
+//
+// Example:
+//
+//	input := struct{ FirstName string }{FirstName: "John"}
+//	result, err := SerializeJSONCamel(input)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	// result: map[string]interface{}{"firstName": "John"}
 func SerializeJSONCamel(item interface{}) (map[string]interface{}, error) {
 	resultBytes, err := json.Marshal(item)
 	if err != nil {
@@ -160,6 +258,28 @@ func SerializeJSONCamel(item interface{}) (map[string]interface{}, error) {
 }
 
 // DeserializeJSONSnakeSchema takes an io.ReadCloser response and deserializes it into a map with snake_case keys.
+//
+// DeserializeJSONSnakeSchema reads JSON data from the provided io.ReadCloser, parses it,
+// and converts all keys from the original format to snake_case using schema-aware
+// conversion. The schema parameter allows for more intelligent key conversion by
+// considering struct field types and tags, which helps preserve certain fields
+// (like maps with string keys) that should not be converted.
+//
+// Parameters:
+//   - response: The io.ReadCloser containing JSON data to deserialize
+//   - schema: Pointer to reflect.Type for schema-aware conversion (can be nil)
+//
+// Returns the deserialized data with snake_case keys and any error encountered
+// during JSON decoding.
+//
+// Example:
+//
+//	var schemaType reflect.Type = reflect.TypeOf(MyStruct{})
+//	data, err := DeserializeJSONSnakeSchema(httpResponse.Body, &schemaType)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	// data contains the JSON with schema-aware snake_case keys
 func DeserializeJSONSnakeSchema(response io.ReadCloser, schema *reflect.Type) (interface{}, error) {
 	var result interface{}
 	err := json.NewDecoder(response).Decode(&result)
@@ -170,6 +290,29 @@ func DeserializeJSONSnakeSchema(response io.ReadCloser, schema *reflect.Type) (i
 }
 
 // SerializeJSONCamelSchema takes an interface and serializes it into a map with camelCase keys.
+//
+// SerializeJSONCamelSchema converts the provided data structure to JSON, then parses it
+// back into a map with all keys converted to camelCase format using schema-aware
+// conversion. The schema parameter allows for more intelligent key conversion by
+// considering struct field types and tags, which helps preserve certain fields
+// (like maps with string keys) that should not be converted.
+//
+// Parameters:
+//   - item: The data structure to serialize (must be JSON-serializable)
+//   - schema: Pointer to reflect.Type for schema-aware conversion (can be nil)
+//
+// Returns a map with camelCase keys and any error encountered during JSON
+// marshaling or unmarshaling.
+//
+// Example:
+//
+//	var schemaType reflect.Type = reflect.TypeOf(MyStruct{})
+//	input := struct{ FirstName string }{FirstName: "John"}
+//	result, err := SerializeJSONCamelSchema(input, &schemaType)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	// result: map[string]interface{}{"firstName": "John"}
 func SerializeJSONCamelSchema(item interface{}, schema *reflect.Type) (map[string]interface{}, error) {
 	resultBytes, err := json.Marshal(item)
 	if err != nil {

@@ -5,15 +5,16 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/models"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/models"
+	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
+	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
 )
 
 // ArkIdentityServiceUser is a struct that represents identity authentication with service user.
@@ -67,7 +68,7 @@ func (ai *ArkIdentityServiceUser) loadCache(profile *models.ArkProfile) bool {
 	if ai.keyring != nil && profile != nil {
 		token, err := ai.keyring.LoadToken(profile, ai.username+"_identity_service_user", false)
 		if err != nil {
-			ai.logger.Error(fmt.Sprintf("Error loading token from cache: %v", err))
+			ai.logger.Error("Error loading token from cache: %v", err.Error())
 			return false
 		}
 		if token != nil && token.Username == ai.username {
@@ -101,7 +102,7 @@ func (ai *ArkIdentityServiceUser) saveCache(profile *models.ArkProfile) error {
 // AuthIdentity Authenticates to Identity with a service user.
 // This method creates an auth token and authorizes to the service.
 func (ai *ArkIdentityServiceUser) AuthIdentity(profile *models.ArkProfile, force bool) error {
-	ai.logger.Info(fmt.Sprintf("Authenticating to service user via endpoint [%s]", ai.identityURL))
+	ai.logger.Info("Authenticating to service user via endpoint [%s]", ai.identityURL)
 	if ai.cacheAuthentication && !force && ai.loadCache(profile) {
 		if time.Time(ai.sessionExp).After(time.Now()) {
 			ai.logger.Info("Loaded identity service user details from cache")
@@ -187,7 +188,7 @@ func (ai *ArkIdentityServiceUser) AuthIdentity(profile *models.ArkProfile, force
 	ai.sessionToken = idTokens[0]
 	ai.session.UpdateToken(ai.sessionToken, "Bearer")
 	ai.sessionExp = commonmodels.ArkRFC3339Time(time.Now().Add(4 * time.Hour))
-	ai.logger.Info(fmt.Sprintf("Created a service user session via endpoint [%s] with user [%s] to platform", ai.identityURL, ai.username))
+	ai.logger.Info("Created a service user session via endpoint [%s] with user [%s] to platform", ai.identityURL, ai.username)
 
 	if ai.cacheAuthentication {
 		if err := ai.saveCache(profile); err != nil {

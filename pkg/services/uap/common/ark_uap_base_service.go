@@ -3,14 +3,15 @@ package uap
 import (
 	"context"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"reflect"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (
@@ -51,7 +52,7 @@ func (s *ArkUAPBaseService) refreshUapAuth(client *common.ArkClient) error {
 }
 
 // BaseAddPolicy adds a new policy.
-func (s *ArkUAPBaseService) BaseAddPolicy(addPolicy map[string]interface{}) (*commonmodels.ArkUAPResponse, error) {
+func (s *ArkUAPBaseService) BaseAddPolicy(addPolicy map[string]interface{}) (*uapcommonmodels.ArkUAPResponse, error) {
 	s.logger.Info("Adding new policy")
 	response, err := s.client.Post(context.Background(), policiesURL, addPolicy)
 	if err != nil {
@@ -70,7 +71,7 @@ func (s *ArkUAPBaseService) BaseAddPolicy(addPolicy map[string]interface{}) (*co
 	if err != nil {
 		return nil, err
 	}
-	var policyResponse commonmodels.ArkUAPResponse
+	var policyResponse uapcommonmodels.ArkUAPResponse
 	err = mapstructure.Decode(policyIDJSON, &policyResponse)
 	if err != nil {
 		return nil, err
@@ -140,10 +141,10 @@ func (s *ArkUAPBaseService) BaseDeletePolicy(policyID string) error {
 }
 
 // BaseListPolicies retrieves all policies with optional filters.
-func (s *ArkUAPBaseService) BaseListPolicies(filters *commonmodels.ArkUAPFilters) (<-chan *ArkUAPBasePolicyPage, error) {
+func (s *ArkUAPBaseService) BaseListPolicies(filters *uapcommonmodels.ArkUAPFilters) (<-chan *ArkUAPBasePolicyPage, error) {
 	s.logger.Info("Listing policies")
 	if filters == nil {
-		filters = commonmodels.NewArkUAPFilters()
+		filters = uapcommonmodels.NewArkUAPFilters()
 	}
 
 	pageChannel := make(chan *ArkUAPBasePolicyPage)
@@ -162,7 +163,7 @@ func (s *ArkUAPBaseService) BaseListPolicies(filters *commonmodels.ArkUAPFilters
 			pageCount++
 
 			// Build query parameters
-			request := commonmodels.ArkUAPGetAccessPoliciesRequest{
+			request := uapcommonmodels.ArkUAPGetAccessPoliciesRequest{
 				Filters:   filters,
 				NextToken: nextToken,
 			}
@@ -249,7 +250,7 @@ func (s *ArkUAPBaseService) BaseListPolicies(filters *commonmodels.ArkUAPFilters
 // BasePolicyByName retrieves a policy by its name.
 func (s *ArkUAPBaseService) BasePolicyByName(policyName string) (map[string]interface{}, error) {
 	s.logger.Info("Retrieving policy by name [%s]", policyName)
-	filters := commonmodels.NewArkUAPFilters()
+	filters := uapcommonmodels.NewArkUAPFilters()
 	filters.TextSearch = policyName
 	policies, err := s.BaseListPolicies(filters)
 	if err != nil {
@@ -262,7 +263,7 @@ func (s *ArkUAPBaseService) BasePolicyByName(policyName string) (map[string]inte
 			if !ok {
 				continue
 			}
-			var metadata commonmodels.ArkUAPMetadata
+			var metadata uapcommonmodels.ArkUAPMetadata
 			err = mapstructure.Decode(metadataJSON, &metadata)
 			if err != nil {
 				continue
@@ -297,7 +298,7 @@ func (s *ArkUAPBaseService) BasePolicyStatus(policyID string, policyName string,
 	if !ok {
 		return "", fmt.Errorf("policy metadata not found for ID '%s' and name '%s'", policyID, policyName)
 	}
-	var metadata commonmodels.ArkUAPMetadata
+	var metadata uapcommonmodels.ArkUAPMetadata
 	err = mapstructure.Decode(metadataJSON, &metadata)
 	if err != nil {
 		return "", fmt.Errorf("failed to decode policy metadata for ID '%s' and name '%s': %w", policyID, policyName, err)
@@ -306,8 +307,8 @@ func (s *ArkUAPBaseService) BasePolicyStatus(policyID string, policyName string,
 }
 
 // BasePoliciesStats retrieves statistics about policies.
-func (s *ArkUAPBaseService) BasePoliciesStats(filters *commonmodels.ArkUAPFilters) (*commonmodels.ArkUAPPoliciesStats, error) {
-	policiesStats := &commonmodels.ArkUAPPoliciesStats{
+func (s *ArkUAPBaseService) BasePoliciesStats(filters *uapcommonmodels.ArkUAPFilters) (*uapcommonmodels.ArkUAPPoliciesStats, error) {
+	policiesStats := &uapcommonmodels.ArkUAPPoliciesStats{
 		PoliciesCount:            0,
 		PoliciesCountPerStatus:   make(map[string]int),
 		PoliciesCountPerProvider: make(map[string]int),
@@ -324,7 +325,7 @@ func (s *ArkUAPBaseService) BasePoliciesStats(filters *commonmodels.ArkUAPFilter
 			if !ok {
 				continue
 			}
-			var metadata commonmodels.ArkUAPMetadata
+			var metadata uapcommonmodels.ArkUAPMetadata
 			err = mapstructure.Decode(metadataJSON, &metadata)
 			if err != nil {
 				continue

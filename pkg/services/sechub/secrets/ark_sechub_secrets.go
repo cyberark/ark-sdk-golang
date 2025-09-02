@@ -10,8 +10,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	secretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secrets"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	secretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secrets/models"
 	"github.com/mitchellh/mapstructure"
 )
 

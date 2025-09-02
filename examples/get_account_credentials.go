@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	accountsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/pcloud/accounts"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/pcloud"
+	accountsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/accounts/models"
+
 	"os"
 )
 

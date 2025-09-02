@@ -2,17 +2,18 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
-	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	uapsia "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/common"
-	uapdbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
+	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db/models"
+	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/uap"
-	"os"
+	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	uapsia "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/common/models"
+	uapdbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db/models"
 )
 
 func main() {

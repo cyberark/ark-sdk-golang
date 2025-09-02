@@ -4,16 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
-	dbworkspacemodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"regexp"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	dbsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db/models"
+	dbworkspacemodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (
@@ -240,7 +241,7 @@ func (s *ArkSIASecretsDBService) UpdateSecret(updateSecret *dbsecretsmodels.ArkS
 		}
 		updateSecret.SecretID = secrets.Secrets[0].SecretID
 	}
-	s.Logger.Info(fmt.Sprintf("Updating existing db secret with id [%s]", updateSecret.SecretID))
+	s.Logger.Info("Updating existing db secret with id [%s]", updateSecret.SecretID)
 	updateSecretMap := make(map[string]interface{})
 	if updateSecret.NewSecretName != "" {
 		updateSecretMap["secret_name"] = updateSecret.NewSecretName
@@ -345,7 +346,7 @@ func (s *ArkSIASecretsDBService) DeleteSecret(deleteSecret *dbsecretsmodels.ArkS
 		}
 		deleteSecret.SecretID = secrets.Secrets[0].SecretID
 	}
-	s.Logger.Info(fmt.Sprintf("Deleting db secret by id [%s]", deleteSecret.SecretID))
+	s.Logger.Info("Deleting db secret by id [%s]", deleteSecret.SecretID)
 	response, err := s.client.Delete(context.Background(), fmt.Sprintf(secretURL, deleteSecret.SecretID), nil)
 	if err != nil {
 		return err
@@ -416,7 +417,7 @@ func (s *ArkSIASecretsDBService) EnableSecret(enableSecret *dbsecretsmodels.ArkS
 		}
 		enableSecret.SecretID = secrets.Secrets[0].SecretID
 	}
-	s.Logger.Info(fmt.Sprintf("Enabling db secret by id [%s]", enableSecret.SecretID))
+	s.Logger.Info("Enabling db secret by id [%s]", enableSecret.SecretID)
 	response, err := s.client.Post(context.Background(), fmt.Sprintf(enableSecretURL, enableSecret.SecretID), nil)
 	if err != nil {
 		return err
@@ -442,7 +443,7 @@ func (s *ArkSIASecretsDBService) DisableSecret(enableSecret *dbsecretsmodels.Ark
 		}
 		enableSecret.SecretID = secrets.Secrets[0].SecretID
 	}
-	s.Logger.Info(fmt.Sprintf("Disabling db secret by id [%s]", enableSecret.SecretID))
+	s.Logger.Info("Disabling db secret by id [%s]", enableSecret.SecretID)
 	response, err := s.client.Post(context.Background(), fmt.Sprintf(disableSecretURL, enableSecret.SecretID), nil)
 	if err != nil {
 		return err

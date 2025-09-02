@@ -1,0 +1,2672 @@
+	github.com/cyberark/ark-sdk-golang/cmd		coverage: 0.0% of statements
+=== RUN   TestNewBasicKeyring
+=== RUN   TestNewBasicKeyring/success_creates_keyring_with_default_folder
+=== RUN   TestNewBasicKeyring/success_creates_keyring_with_env_var_folder
+=== RUN   TestNewBasicKeyring/success_handles_existing_folder
+=== RUN   TestNewBasicKeyring/error_returns_nil_on_folder_creation_failure
+--- PASS: TestNewBasicKeyring (0.04s)
+    --- PASS: TestNewBasicKeyring/success_creates_keyring_with_default_folder (0.04s)
+    --- PASS: TestNewBasicKeyring/success_creates_keyring_with_env_var_folder (0.00s)
+    --- PASS: TestNewBasicKeyring/success_handles_existing_folder (0.00s)
+    --- PASS: TestNewBasicKeyring/error_returns_nil_on_folder_creation_failure (0.00s)
+=== RUN   TestBasicKeyring_SetPassword
+=== RUN   TestBasicKeyring_SetPassword/success_sets_password_new_keyring
+=== RUN   TestBasicKeyring_SetPassword/success_sets_password_existing_keyring
+=== RUN   TestBasicKeyring_SetPassword/success_overwrites_existing_password
+=== RUN   TestBasicKeyring_SetPassword/edge_case_empty_service_name
+=== RUN   TestBasicKeyring_SetPassword/edge_case_empty_username
+=== RUN   TestBasicKeyring_SetPassword/edge_case_empty_password
+--- PASS: TestBasicKeyring_SetPassword (0.06s)
+    --- PASS: TestBasicKeyring_SetPassword/success_sets_password_new_keyring (0.01s)
+    --- PASS: TestBasicKeyring_SetPassword/success_sets_password_existing_keyring (0.02s)
+    --- PASS: TestBasicKeyring_SetPassword/success_overwrites_existing_password (0.01s)
+    --- PASS: TestBasicKeyring_SetPassword/edge_case_empty_service_name (0.01s)
+    --- PASS: TestBasicKeyring_SetPassword/edge_case_empty_username (0.00s)
+    --- PASS: TestBasicKeyring_SetPassword/edge_case_empty_password (0.02s)
+=== RUN   TestBasicKeyring_GetPassword
+=== RUN   TestBasicKeyring_GetPassword/success_gets_existing_password
+=== RUN   TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_keyring
+=== RUN   TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_service
+=== RUN   TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_username
+=== RUN   TestBasicKeyring_GetPassword/success_gets_multiple_passwords
+=== RUN   TestBasicKeyring_GetPassword/edge_case_empty_service_name
+=== RUN   TestBasicKeyring_GetPassword/edge_case_empty_username
+--- PASS: TestBasicKeyring_GetPassword (0.07s)
+    --- PASS: TestBasicKeyring_GetPassword/success_gets_existing_password (0.02s)
+    --- PASS: TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_keyring (0.00s)
+    --- PASS: TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_service (0.01s)
+    --- PASS: TestBasicKeyring_GetPassword/success_returns_empty_for_nonexistent_username (0.01s)
+    --- PASS: TestBasicKeyring_GetPassword/success_gets_multiple_passwords (0.03s)
+    --- PASS: TestBasicKeyring_GetPassword/edge_case_empty_service_name (0.00s)
+    --- PASS: TestBasicKeyring_GetPassword/edge_case_empty_username (0.00s)
+=== RUN   TestBasicKeyring_DeletePassword
+=== RUN   TestBasicKeyring_DeletePassword/success_deletes_existing_password
+=== RUN   TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_keyring
+=== RUN   TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_service
+=== RUN   TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_username
+=== RUN   TestBasicKeyring_DeletePassword/success_deletes_one_of_multiple_passwords
+--- PASS: TestBasicKeyring_DeletePassword (0.04s)
+    --- PASS: TestBasicKeyring_DeletePassword/success_deletes_existing_password (0.01s)
+    --- PASS: TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_keyring (0.00s)
+    --- PASS: TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_service (0.00s)
+    --- PASS: TestBasicKeyring_DeletePassword/success_idempotent_nonexistent_username (0.00s)
+    --- PASS: TestBasicKeyring_DeletePassword/success_deletes_one_of_multiple_passwords (0.02s)
+=== RUN   TestBasicKeyring_Integration
+=== RUN   TestBasicKeyring_Integration/integration_complete_lifecycle
+--- PASS: TestBasicKeyring_Integration (0.02s)
+    --- PASS: TestBasicKeyring_Integration/integration_complete_lifecycle (0.02s)
+=== RUN   TestConstants
+=== RUN   TestConstants/nonce_size_correct_value
+=== PAUSE TestConstants/nonce_size_correct_value
+=== RUN   TestConstants/tag_size_correct_value
+=== PAUSE TestConstants/tag_size_correct_value
+=== RUN   TestConstants/block_size_correct_value
+=== PAUSE TestConstants/block_size_correct_value
+=== RUN   TestConstants/default_folder_correct_value
+=== PAUSE TestConstants/default_folder_correct_value
+=== RUN   TestConstants/env_var_correct_value
+=== PAUSE TestConstants/env_var_correct_value
+=== CONT  TestConstants/nonce_size_correct_value
+=== CONT  TestConstants/block_size_correct_value
+=== CONT  TestConstants/tag_size_correct_value
+=== CONT  TestConstants/env_var_correct_value
+=== CONT  TestConstants/default_folder_correct_value
+--- PASS: TestConstants (0.00s)
+    --- PASS: TestConstants/nonce_size_correct_value (0.00s)
+    --- PASS: TestConstants/block_size_correct_value (0.00s)
+    --- PASS: TestConstants/tag_size_correct_value (0.00s)
+    --- PASS: TestConstants/env_var_correct_value (0.00s)
+    --- PASS: TestConstants/default_folder_correct_value (0.00s)
+=== RUN   TestHeaderTransport_RoundTrip
+=== RUN   TestHeaderTransport_RoundTrip/success_adds_single_header
+=== PAUSE TestHeaderTransport_RoundTrip/success_adds_single_header
+=== RUN   TestHeaderTransport_RoundTrip/success_overwrites_existing_headers
+=== PAUSE TestHeaderTransport_RoundTrip/success_overwrites_existing_headers
+=== RUN   TestHeaderTransport_RoundTrip/success_handles_empty_headers_map
+=== PAUSE TestHeaderTransport_RoundTrip/success_handles_empty_headers_map
+=== RUN   TestHeaderTransport_RoundTrip/success_handles_nil_headers_map
+=== PAUSE TestHeaderTransport_RoundTrip/success_handles_nil_headers_map
+=== RUN   TestHeaderTransport_RoundTrip/edge_case_empty_header_values
+=== PAUSE TestHeaderTransport_RoundTrip/edge_case_empty_header_values
+=== RUN   TestHeaderTransport_RoundTrip/edge_case_special_characters_in_headers
+=== PAUSE TestHeaderTransport_RoundTrip/edge_case_special_characters_in_headers
+=== RUN   TestHeaderTransport_RoundTrip/error_propagates_transport_error
+=== PAUSE TestHeaderTransport_RoundTrip/error_propagates_transport_error
+=== CONT  TestHeaderTransport_RoundTrip/success_adds_single_header
+=== CONT  TestHeaderTransport_RoundTrip/edge_case_empty_header_values
+=== CONT  TestHeaderTransport_RoundTrip/edge_case_special_characters_in_headers
+=== CONT  TestHeaderTransport_RoundTrip/success_handles_empty_headers_map
+=== CONT  TestHeaderTransport_RoundTrip/success_overwrites_existing_headers
+=== CONT  TestHeaderTransport_RoundTrip/success_handles_nil_headers_map
+=== CONT  TestHeaderTransport_RoundTrip/error_propagates_transport_error
+--- PASS: TestHeaderTransport_RoundTrip (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/edge_case_special_characters_in_headers (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/success_adds_single_header (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/success_overwrites_existing_headers (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/success_handles_nil_headers_map (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/success_handles_empty_headers_map (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/error_propagates_transport_error (0.00s)
+    --- PASS: TestHeaderTransport_RoundTrip/edge_case_empty_header_values (0.00s)
+=== RUN   TestBasicAuthTransport_RoundTrip
+=== RUN   TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_normal_credentials
+=== PAUSE TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_normal_credentials
+=== RUN   TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_with_special_characters
+=== PAUSE TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_with_special_characters
+=== RUN   TestBasicAuthTransport_RoundTrip/success_overwrites_existing_auth_header
+=== PAUSE TestBasicAuthTransport_RoundTrip/success_overwrites_existing_auth_header
+=== RUN   TestBasicAuthTransport_RoundTrip/edge_case_empty_username
+=== PAUSE TestBasicAuthTransport_RoundTrip/edge_case_empty_username
+=== RUN   TestBasicAuthTransport_RoundTrip/edge_case_empty_password
+=== PAUSE TestBasicAuthTransport_RoundTrip/edge_case_empty_password
+=== RUN   TestBasicAuthTransport_RoundTrip/edge_case_both_empty
+=== PAUSE TestBasicAuthTransport_RoundTrip/edge_case_both_empty
+=== RUN   TestBasicAuthTransport_RoundTrip/success_preserves_other_headers
+=== PAUSE TestBasicAuthTransport_RoundTrip/success_preserves_other_headers
+=== RUN   TestBasicAuthTransport_RoundTrip/error_propagates_transport_error
+=== PAUSE TestBasicAuthTransport_RoundTrip/error_propagates_transport_error
+=== CONT  TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_normal_credentials
+=== CONT  TestBasicAuthTransport_RoundTrip/edge_case_empty_username
+=== CONT  TestBasicAuthTransport_RoundTrip/edge_case_empty_password
+=== CONT  TestBasicAuthTransport_RoundTrip/success_overwrites_existing_auth_header
+=== CONT  TestBasicAuthTransport_RoundTrip/error_propagates_transport_error
+=== CONT  TestBasicAuthTransport_RoundTrip/success_preserves_other_headers
+=== CONT  TestBasicAuthTransport_RoundTrip/edge_case_both_empty
+=== CONT  TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_with_special_characters
+--- PASS: TestBasicAuthTransport_RoundTrip (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_normal_credentials (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/edge_case_empty_username (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/edge_case_empty_password (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/success_overwrites_existing_auth_header (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/error_propagates_transport_error (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/success_preserves_other_headers (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/edge_case_both_empty (0.00s)
+    --- PASS: TestBasicAuthTransport_RoundTrip/success_sets_basic_auth_with_special_characters (0.00s)
+=== RUN   TestHeaderTransport_Integration
+=== RUN   TestHeaderTransport_Integration/integration_real_http_server
+--- PASS: TestHeaderTransport_Integration (0.00s)
+    --- PASS: TestHeaderTransport_Integration/integration_real_http_server (0.00s)
+=== RUN   TestBasicAuthTransport_Integration
+=== RUN   TestBasicAuthTransport_Integration/integration_real_http_server
+--- PASS: TestBasicAuthTransport_Integration (0.00s)
+    --- PASS: TestBasicAuthTransport_Integration/integration_real_http_server (0.00s)
+=== RUN   TestTransportStructures
+=== RUN   TestTransportStructures/header_transport_struct_fields
+=== PAUSE TestTransportStructures/header_transport_struct_fields
+=== RUN   TestTransportStructures/basic_auth_transport_struct_fields
+=== PAUSE TestTransportStructures/basic_auth_transport_struct_fields
+=== CONT  TestTransportStructures/header_transport_struct_fields
+=== CONT  TestTransportStructures/basic_auth_transport_struct_fields
+--- PASS: TestTransportStructures (0.00s)
+    --- PASS: TestTransportStructures/header_transport_struct_fields (0.00s)
+    --- PASS: TestTransportStructures/basic_auth_transport_struct_fields (0.00s)
+=== RUN   TestRoundTripperInterface
+=== RUN   TestRoundTripperInterface/header_transport_implements_interface
+=== PAUSE TestRoundTripperInterface/header_transport_implements_interface
+=== RUN   TestRoundTripperInterface/basic_auth_transport_implements_interface
+=== PAUSE TestRoundTripperInterface/basic_auth_transport_implements_interface
+=== CONT  TestRoundTripperInterface/header_transport_implements_interface
+=== CONT  TestRoundTripperInterface/basic_auth_transport_implements_interface
+--- PASS: TestRoundTripperInterface (0.00s)
+    --- PASS: TestRoundTripperInterface/header_transport_implements_interface (0.51s)
+    --- PASS: TestRoundTripperInterface/basic_auth_transport_implements_interface (0.51s)
+PASS
+coverage: 80.0% of statements
+ok  	github.com/cyberark/ark-sdk-golang/internal/common	1.310s	coverage: 80.0% of statements
+=== RUN   TestNewArkAPI
+=== RUN   TestNewArkAPI/success_with_profile_provided
+=== PAUSE TestNewArkAPI/success_with_profile_provided
+=== RUN   TestNewArkAPI/success_with_nil_profile_loads_default
+=== PAUSE TestNewArkAPI/success_with_nil_profile_loads_default
+=== RUN   TestNewArkAPI/success_with_empty_authenticators
+=== PAUSE TestNewArkAPI/success_with_empty_authenticators
+=== CONT  TestNewArkAPI/success_with_profile_provided
+=== CONT  TestNewArkAPI/success_with_nil_profile_loads_default
+=== CONT  TestNewArkAPI/success_with_empty_authenticators
+--- PASS: TestNewArkAPI (0.00s)
+    --- PASS: TestNewArkAPI/success_with_profile_provided (0.00s)
+    --- PASS: TestNewArkAPI/success_with_empty_authenticators (0.00s)
+    --- PASS: TestNewArkAPI/success_with_nil_profile_loads_default (0.00s)
+=== RUN   TestArkAPI_loadServiceAuthenticators
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_required_authenticators_only
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_required_authenticators_only
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_optional_authenticators_only
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_optional_authenticators_only
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_mixed_authenticators
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_mixed_authenticators
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_nonexistent_authenticators
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_nonexistent_authenticators
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_partially_matching_authenticators
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_partially_matching_authenticators
+=== RUN   TestArkAPI_loadServiceAuthenticators/load_empty_config
+=== PAUSE TestArkAPI_loadServiceAuthenticators/load_empty_config
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_required_authenticators_only
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_mixed_authenticators
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_nonexistent_authenticators
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_empty_config
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_partially_matching_authenticators
+=== CONT  TestArkAPI_loadServiceAuthenticators/load_optional_authenticators_only
+--- PASS: TestArkAPI_loadServiceAuthenticators (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_required_authenticators_only (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_mixed_authenticators (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_empty_config (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_nonexistent_authenticators (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_partially_matching_authenticators (0.00s)
+    --- PASS: TestArkAPI_loadServiceAuthenticators/load_optional_authenticators_only (0.00s)
+=== RUN   TestArkAPI_Authenticator
+=== RUN   TestArkAPI_Authenticator/authenticator_not_found
+=== PAUSE TestArkAPI_Authenticator/authenticator_not_found
+=== RUN   TestArkAPI_Authenticator/empty_authenticator_name
+=== PAUSE TestArkAPI_Authenticator/empty_authenticator_name
+=== RUN   TestArkAPI_Authenticator/special_characters_in_name
+=== PAUSE TestArkAPI_Authenticator/special_characters_in_name
+=== CONT  TestArkAPI_Authenticator/authenticator_not_found
+=== CONT  TestArkAPI_Authenticator/empty_authenticator_name
+=== CONT  TestArkAPI_Authenticator/special_characters_in_name
+--- PASS: TestArkAPI_Authenticator (0.00s)
+    --- PASS: TestArkAPI_Authenticator/authenticator_not_found (0.00s)
+    --- PASS: TestArkAPI_Authenticator/empty_authenticator_name (0.00s)
+    --- PASS: TestArkAPI_Authenticator/special_characters_in_name (0.00s)
+=== RUN   TestArkAPI_Profile
+=== RUN   TestArkAPI_Profile/profile_with_valid_data
+=== PAUSE TestArkAPI_Profile/profile_with_valid_data
+=== RUN   TestArkAPI_Profile/profile_with_empty_name
+=== PAUSE TestArkAPI_Profile/profile_with_empty_name
+=== RUN   TestArkAPI_Profile/nil_profile
+=== PAUSE TestArkAPI_Profile/nil_profile
+=== CONT  TestArkAPI_Profile/profile_with_valid_data
+=== CONT  TestArkAPI_Profile/profile_with_empty_name
+=== CONT  TestArkAPI_Profile/nil_profile
+--- PASS: TestArkAPI_Profile (0.00s)
+    --- PASS: TestArkAPI_Profile/profile_with_valid_data (0.00s)
+    --- PASS: TestArkAPI_Profile/profile_with_empty_name (0.00s)
+    --- PASS: TestArkAPI_Profile/nil_profile (0.00s)
+=== RUN   TestArkAPI_ServiceCaching_Pattern
+=== RUN   TestArkAPI_ServiceCaching_Pattern/services_map_is_initialized
+=== PAUSE TestArkAPI_ServiceCaching_Pattern/services_map_is_initialized
+=== RUN   TestArkAPI_ServiceCaching_Pattern/services_map_starts_empty
+=== PAUSE TestArkAPI_ServiceCaching_Pattern/services_map_starts_empty
+=== RUN   TestArkAPI_ServiceCaching_Pattern/can_store_service_in_map
+=== PAUSE TestArkAPI_ServiceCaching_Pattern/can_store_service_in_map
+=== CONT  TestArkAPI_ServiceCaching_Pattern/services_map_is_initialized
+=== CONT  TestArkAPI_ServiceCaching_Pattern/can_store_service_in_map
+=== CONT  TestArkAPI_ServiceCaching_Pattern/services_map_starts_empty
+--- PASS: TestArkAPI_ServiceCaching_Pattern (0.00s)
+    --- PASS: TestArkAPI_ServiceCaching_Pattern/services_map_is_initialized (0.00s)
+    --- PASS: TestArkAPI_ServiceCaching_Pattern/can_store_service_in_map (0.00s)
+    --- PASS: TestArkAPI_ServiceCaching_Pattern/services_map_starts_empty (0.00s)
+PASS
+coverage: 5.1% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg	0.901s	coverage: 5.1% of statements
+=== RUN   TestNewArkBaseAction
+=== RUN   TestNewArkBaseAction/success_creates_action_with_logger
+=== PAUSE TestNewArkBaseAction/success_creates_action_with_logger
+=== CONT  TestNewArkBaseAction/success_creates_action_with_logger
+--- PASS: TestNewArkBaseAction (0.00s)
+    --- PASS: TestNewArkBaseAction/success_creates_action_with_logger (0.00s)
+=== RUN   TestArkBaseAction_CommonActionsConfiguration
+=== RUN   TestArkBaseAction_CommonActionsConfiguration/success_adds_all_persistent_flags
+=== PAUSE TestArkBaseAction_CommonActionsConfiguration/success_adds_all_persistent_flags
+=== RUN   TestArkBaseAction_CommonActionsConfiguration/success_sets_correct_flag_types_and_defaults
+=== PAUSE TestArkBaseAction_CommonActionsConfiguration/success_sets_correct_flag_types_and_defaults
+=== CONT  TestArkBaseAction_CommonActionsConfiguration/success_adds_all_persistent_flags
+=== CONT  TestArkBaseAction_CommonActionsConfiguration/success_sets_correct_flag_types_and_defaults
+--- PASS: TestArkBaseAction_CommonActionsConfiguration (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsConfiguration/success_adds_all_persistent_flags (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsConfiguration/success_sets_correct_flag_types_and_defaults (0.00s)
+=== RUN   TestArkBaseAction_CommonActionsExecution
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_sets_defaults_with_no_flags
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_raw_flag_true
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_silent_flag_true
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_verbose_flag_true
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_allow_output_flag_true
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_disable_cert_verification_true
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_trusted_cert_flag
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_profile_name_flag
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_sets_deploy_env_when_not_set
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_preserves_existing_deploy_env
+=== RUN   TestArkBaseAction_CommonActionsExecution/success_handles_multiple_flags_combination
+=== RUN   TestArkBaseAction_CommonActionsExecution/edge_case_handles_flag_parsing_errors_gracefully
+--- PASS: TestArkBaseAction_CommonActionsExecution (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_sets_defaults_with_no_flags (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_raw_flag_true (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_silent_flag_true (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_verbose_flag_true (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_allow_output_flag_true (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_disable_cert_verification_true (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_trusted_cert_flag (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_profile_name_flag (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_sets_deploy_env_when_not_set (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_preserves_existing_deploy_env (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/success_handles_multiple_flags_combination (0.00s)
+    --- PASS: TestArkBaseAction_CommonActionsExecution/edge_case_handles_flag_parsing_errors_gracefully (0.00s)
+=== RUN   TestArkBaseAction_StructFields
+=== RUN   TestArkBaseAction_StructFields/success_struct_has_expected_fields
+=== PAUSE TestArkBaseAction_StructFields/success_struct_has_expected_fields
+=== RUN   TestArkBaseAction_StructFields/success_logger_field_has_correct_type
+=== PAUSE TestArkBaseAction_StructFields/success_logger_field_has_correct_type
+=== CONT  TestArkBaseAction_StructFields/success_struct_has_expected_fields
+=== CONT  TestArkBaseAction_StructFields/success_logger_field_has_correct_type
+--- PASS: TestArkBaseAction_StructFields (0.00s)
+    --- PASS: TestArkBaseAction_StructFields/success_struct_has_expected_fields (0.00s)
+    --- PASS: TestArkBaseAction_StructFields/success_logger_field_has_correct_type (0.00s)
+=== RUN   TestArkActionInterface
+=== RUN   TestArkActionInterface/success_arkbaseaction_struct_fields_support_interface_pattern
+=== PAUSE TestArkActionInterface/success_arkbaseaction_struct_fields_support_interface_pattern
+=== CONT  TestArkActionInterface/success_arkbaseaction_struct_fields_support_interface_pattern
+--- PASS: TestArkActionInterface (0.00s)
+    --- PASS: TestArkActionInterface/success_arkbaseaction_struct_fields_support_interface_pattern (0.00s)
+=== RUN   TestNewArkCacheAction
+=== RUN   TestNewArkCacheAction/success_creates_cache_action_with_embedded_base_action
+=== PAUSE TestNewArkCacheAction/success_creates_cache_action_with_embedded_base_action
+=== RUN   TestNewArkCacheAction/success_embedded_base_action_has_logger
+=== PAUSE TestNewArkCacheAction/success_embedded_base_action_has_logger
+=== CONT  TestNewArkCacheAction/success_creates_cache_action_with_embedded_base_action
+=== CONT  TestNewArkCacheAction/success_embedded_base_action_has_logger
+--- PASS: TestNewArkCacheAction (0.00s)
+    --- PASS: TestNewArkCacheAction/success_creates_cache_action_with_embedded_base_action (0.00s)
+    --- PASS: TestNewArkCacheAction/success_embedded_base_action_has_logger (0.00s)
+=== RUN   TestArkCacheAction_DefineAction
+=== RUN   TestArkCacheAction_DefineAction/success_adds_cache_command_to_parent
+=== PAUSE TestArkCacheAction_DefineAction/success_adds_cache_command_to_parent
+=== RUN   TestArkCacheAction_DefineAction/success_adds_clear_subcommand
+=== PAUSE TestArkCacheAction_DefineAction/success_adds_clear_subcommand
+=== RUN   TestArkCacheAction_DefineAction/success_cache_command_has_persistent_prerun
+=== PAUSE TestArkCacheAction_DefineAction/success_cache_command_has_persistent_prerun
+=== RUN   TestArkCacheAction_DefineAction/success_cache_command_has_persistent_flags
+=== PAUSE TestArkCacheAction_DefineAction/success_cache_command_has_persistent_flags
+=== RUN   TestArkCacheAction_DefineAction/success_clear_command_has_run_function
+=== PAUSE TestArkCacheAction_DefineAction/success_clear_command_has_run_function
+=== CONT  TestArkCacheAction_DefineAction/success_adds_cache_command_to_parent
+=== CONT  TestArkCacheAction_DefineAction/success_cache_command_has_persistent_flags
+=== CONT  TestArkCacheAction_DefineAction/success_adds_clear_subcommand
+=== CONT  TestArkCacheAction_DefineAction/success_clear_command_has_run_function
+=== CONT  TestArkCacheAction_DefineAction/success_cache_command_has_persistent_prerun
+--- PASS: TestArkCacheAction_DefineAction (0.00s)
+    --- PASS: TestArkCacheAction_DefineAction/success_adds_cache_command_to_parent (0.00s)
+    --- PASS: TestArkCacheAction_DefineAction/success_cache_command_has_persistent_flags (0.00s)
+    --- PASS: TestArkCacheAction_DefineAction/success_clear_command_has_run_function (0.00s)
+    --- PASS: TestArkCacheAction_DefineAction/success_adds_clear_subcommand (0.00s)
+    --- PASS: TestArkCacheAction_DefineAction/success_cache_command_has_persistent_prerun (0.00s)
+=== RUN   TestArkCacheAction_runClearCacheAction
+=== RUN   TestArkCacheAction_runClearCacheAction/success_clears_cache_files_from_default_location
+=== RUN   TestArkCacheAction_runClearCacheAction/success_clears_cache_files_from_env_override_location
+=== RUN   TestArkCacheAction_runClearCacheAction/success_handles_missing_files_gracefully
+=== RUN   TestArkCacheAction_runClearCacheAction/success_handles_missing_cache_directory_gracefully
+--- PASS: TestArkCacheAction_runClearCacheAction (0.01s)
+    --- PASS: TestArkCacheAction_runClearCacheAction/success_clears_cache_files_from_default_location (0.01s)
+    --- PASS: TestArkCacheAction_runClearCacheAction/success_clears_cache_files_from_env_override_location (0.00s)
+    --- PASS: TestArkCacheAction_runClearCacheAction/success_handles_missing_files_gracefully (0.00s)
+    --- PASS: TestArkCacheAction_runClearCacheAction/success_handles_missing_cache_directory_gracefully (0.00s)
+=== RUN   TestArkCacheAction_StructFields
+=== RUN   TestArkCacheAction_StructFields/success_struct_embeds_arkbaseaction
+=== PAUSE TestArkCacheAction_StructFields/success_struct_embeds_arkbaseaction
+=== RUN   TestArkCacheAction_StructFields/success_implements_arkaction_interface
+=== PAUSE TestArkCacheAction_StructFields/success_implements_arkaction_interface
+=== CONT  TestArkCacheAction_StructFields/success_struct_embeds_arkbaseaction
+=== CONT  TestArkCacheAction_StructFields/success_implements_arkaction_interface
+--- PASS: TestArkCacheAction_StructFields (0.00s)
+    --- PASS: TestArkCacheAction_StructFields/success_struct_embeds_arkbaseaction (0.00s)
+    --- PASS: TestArkCacheAction_StructFields/success_implements_arkaction_interface (0.00s)
+=== RUN   TestArkCacheAction_IntegrationWithArkAction
+=== RUN   TestArkCacheAction_IntegrationWithArkAction/success_can_be_used_as_arkaction_interface
+=== PAUSE TestArkCacheAction_IntegrationWithArkAction/success_can_be_used_as_arkaction_interface
+=== RUN   TestArkCacheAction_IntegrationWithArkAction/success_inherits_common_action_methods
+=== PAUSE TestArkCacheAction_IntegrationWithArkAction/success_inherits_common_action_methods
+=== CONT  TestArkCacheAction_IntegrationWithArkAction/success_can_be_used_as_arkaction_interface
+=== CONT  TestArkCacheAction_IntegrationWithArkAction/success_inherits_common_action_methods
+--- PASS: TestArkCacheAction_IntegrationWithArkAction (0.00s)
+    --- PASS: TestArkCacheAction_IntegrationWithArkAction/success_can_be_used_as_arkaction_interface (0.00s)
+    --- PASS: TestArkCacheAction_IntegrationWithArkAction/success_inherits_common_action_methods (0.00s)
+=== RUN   TestNewArkConfigureAction
+=== RUN   TestNewArkConfigureAction/success_creates_action_with_profile_loader
+=== PAUSE TestNewArkConfigureAction/success_creates_action_with_profile_loader
+=== CONT  TestNewArkConfigureAction/success_creates_action_with_profile_loader
+--- PASS: TestNewArkConfigureAction (0.00s)
+    --- PASS: TestNewArkConfigureAction/success_creates_action_with_profile_loader (0.00s)
+=== RUN   TestArkConfigureAction_DefineAction
+=== RUN   TestArkConfigureAction_DefineAction/success_adds_configure_command_with_flags
+=== PAUSE TestArkConfigureAction_DefineAction/success_adds_configure_command_with_flags
+=== RUN   TestArkConfigureAction_DefineAction/success_adds_profile_flags
+=== PAUSE TestArkConfigureAction_DefineAction/success_adds_profile_flags
+=== RUN   TestArkConfigureAction_DefineAction/edge_case_handles_nil_profile_loader
+=== PAUSE TestArkConfigureAction_DefineAction/edge_case_handles_nil_profile_loader
+=== CONT  TestArkConfigureAction_DefineAction/success_adds_configure_command_with_flags
+=== CONT  TestArkConfigureAction_DefineAction/edge_case_handles_nil_profile_loader
+=== CONT  TestArkConfigureAction_DefineAction/success_adds_profile_flags
+--- PASS: TestArkConfigureAction_DefineAction (0.00s)
+    --- PASS: TestArkConfigureAction_DefineAction/success_adds_configure_command_with_flags (0.00s)
+    --- PASS: TestArkConfigureAction_DefineAction/edge_case_handles_nil_profile_loader (0.00s)
+    --- PASS: TestArkConfigureAction_DefineAction/success_adds_profile_flags (0.00s)
+=== RUN   TestArkConfigureAction_runSilentConfigureAction
+=== RUN   TestArkConfigureAction_runSilentConfigureAction/success_creates_new_profile_with_default_name
+=== RUN   TestArkConfigureAction_runSilentConfigureAction/success_loads_existing_profile
+=== RUN   TestArkConfigureAction_runSilentConfigureAction/success_merges_flag_values
+=== RUN   TestArkConfigureAction_runSilentConfigureAction/edge_case_handles_flag_parsing_errors
+--- PASS: TestArkConfigureAction_runSilentConfigureAction (0.00s)
+    --- PASS: TestArkConfigureAction_runSilentConfigureAction/success_creates_new_profile_with_default_name (0.00s)
+    --- PASS: TestArkConfigureAction_runSilentConfigureAction/success_loads_existing_profile (0.00s)
+    --- PASS: TestArkConfigureAction_runSilentConfigureAction/success_merges_flag_values (0.00s)
+    --- PASS: TestArkConfigureAction_runSilentConfigureAction/edge_case_handles_flag_parsing_errors (0.00s)
+=== RUN   TestArkConfigureAction_StructFields
+=== RUN   TestArkConfigureAction_StructFields/success_struct_has_expected_fields
+=== PAUSE TestArkConfigureAction_StructFields/success_struct_has_expected_fields
+=== RUN   TestArkConfigureAction_StructFields/success_profilesloader_field_has_correct_type
+=== PAUSE TestArkConfigureAction_StructFields/success_profilesloader_field_has_correct_type
+=== CONT  TestArkConfigureAction_StructFields/success_struct_has_expected_fields
+=== CONT  TestArkConfigureAction_StructFields/success_profilesloader_field_has_correct_type
+--- PASS: TestArkConfigureAction_StructFields (0.00s)
+    --- PASS: TestArkConfigureAction_StructFields/success_struct_has_expected_fields (0.00s)
+    --- PASS: TestArkConfigureAction_StructFields/success_profilesloader_field_has_correct_type (0.00s)
+=== RUN   TestArkConfigureAction_ArkActionInterface
+=== RUN   TestArkConfigureAction_ArkActionInterface/success_implements_arkaction_interface
+=== PAUSE TestArkConfigureAction_ArkActionInterface/success_implements_arkaction_interface
+=== CONT  TestArkConfigureAction_ArkActionInterface/success_implements_arkaction_interface
+--- PASS: TestArkConfigureAction_ArkActionInterface (0.00s)
+    --- PASS: TestArkConfigureAction_ArkActionInterface/success_implements_arkaction_interface (0.00s)
+=== RUN   TestNewArkBaseExecAction
+=== RUN   TestNewArkBaseExecAction/success_normal_parameters
+=== PAUSE TestNewArkBaseExecAction/success_normal_parameters
+=== RUN   TestNewArkBaseExecAction/success_nil_exec_action
+=== PAUSE TestNewArkBaseExecAction/success_nil_exec_action
+=== RUN   TestNewArkBaseExecAction/success_nil_profiles_loader
+=== PAUSE TestNewArkBaseExecAction/success_nil_profiles_loader
+=== RUN   TestNewArkBaseExecAction/success_empty_action_name
+=== PAUSE TestNewArkBaseExecAction/success_empty_action_name
+=== RUN   TestNewArkBaseExecAction/success_long_action_name
+=== PAUSE TestNewArkBaseExecAction/success_long_action_name
+=== CONT  TestNewArkBaseExecAction/success_normal_parameters
+=== CONT  TestNewArkBaseExecAction/success_nil_profiles_loader
+=== CONT  TestNewArkBaseExecAction/success_long_action_name
+=== CONT  TestNewArkBaseExecAction/success_nil_exec_action
+=== CONT  TestNewArkBaseExecAction/success_empty_action_name
+--- PASS: TestNewArkBaseExecAction (0.00s)
+    --- PASS: TestNewArkBaseExecAction/success_normal_parameters (0.00s)
+    --- PASS: TestNewArkBaseExecAction/success_nil_profiles_loader (0.00s)
+    --- PASS: TestNewArkBaseExecAction/success_long_action_name (0.00s)
+    --- PASS: TestNewArkBaseExecAction/success_nil_exec_action (0.00s)
+    --- PASS: TestNewArkBaseExecAction/success_empty_action_name (0.00s)
+=== RUN   TestArkBaseExecAction_DefineAction
+=== RUN   TestArkBaseExecAction_DefineAction/success_defines_exec_command
+=== PAUSE TestArkBaseExecAction_DefineAction/success_defines_exec_command
+=== RUN   TestArkBaseExecAction_DefineAction/success_adds_persistent_flags
+=== PAUSE TestArkBaseExecAction_DefineAction/success_adds_persistent_flags
+=== RUN   TestArkBaseExecAction_DefineAction/success_sets_persistent_prerun
+=== PAUSE TestArkBaseExecAction_DefineAction/success_sets_persistent_prerun
+=== RUN   TestArkBaseExecAction_DefineAction/error_define_exec_action_fails
+=== PAUSE TestArkBaseExecAction_DefineAction/error_define_exec_action_fails
+=== RUN   TestArkBaseExecAction_DefineAction/success_nil_exec_action
+=== PAUSE TestArkBaseExecAction_DefineAction/success_nil_exec_action
+=== RUN   TestArkBaseExecAction_DefineAction/success_adds_custom_exec_subcommand
+=== PAUSE TestArkBaseExecAction_DefineAction/success_adds_custom_exec_subcommand
+=== CONT  TestArkBaseExecAction_DefineAction/success_defines_exec_command
+=== CONT  TestArkBaseExecAction_DefineAction/error_define_exec_action_fails
+=== CONT  TestArkBaseExecAction_DefineAction/success_adds_custom_exec_subcommand
+=== CONT  TestArkBaseExecAction_DefineAction/success_sets_persistent_prerun
+=== CONT  TestArkBaseExecAction_DefineAction/success_adds_persistent_flags
+Error defining exec action failed to define exec action
+=== CONT  TestArkBaseExecAction_DefineAction/success_nil_exec_action
+--- PASS: TestArkBaseExecAction_DefineAction (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/success_defines_exec_command (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/success_sets_persistent_prerun (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/success_adds_persistent_flags (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/error_define_exec_action_fails (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/success_adds_custom_exec_subcommand (0.00s)
+    --- PASS: TestArkBaseExecAction_DefineAction/success_nil_exec_action (0.00s)
+=== RUN   TestArkBaseExecAction_runExecAction
+=== RUN   TestArkBaseExecAction_runExecAction/error_exec_command_not_found
+Failed to find exec command
+=== RUN   TestArkBaseExecAction_runExecAction/error_profile_not_found
+Please configure a profile before trying to login
+=== RUN   TestArkBaseExecAction_runExecAction/error_nil_profile
+Please configure a profile before trying to login
+=== RUN   TestArkBaseExecAction_runExecAction/error_no_authenticators_available
+Failed to load authenticators, tokens are either expired or authenticators are not logged in, please login first
+=== RUN   TestArkBaseExecAction_runExecAction/success_valid_profile_and_authenticators
+Failed to load authenticators, tokens are either expired or authenticators are not logged in, please login first
+=== RUN   TestArkBaseExecAction_runExecAction/success_retry_count_respected
+Failed to load authenticators, tokens are either expired or authenticators are not logged in, please login first
+=== RUN   TestArkBaseExecAction_runExecAction/success_refresh_auth_flag_set
+Failed to load authenticators, tokens are either expired or authenticators are not logged in, please login first
+--- PASS: TestArkBaseExecAction_runExecAction (0.21s)
+    --- PASS: TestArkBaseExecAction_runExecAction/error_exec_command_not_found (0.00s)
+    --- PASS: TestArkBaseExecAction_runExecAction/error_profile_not_found (0.00s)
+    --- PASS: TestArkBaseExecAction_runExecAction/error_nil_profile (0.00s)
+    --- PASS: TestArkBaseExecAction_runExecAction/error_no_authenticators_available (0.03s)
+    --- PASS: TestArkBaseExecAction_runExecAction/success_valid_profile_and_authenticators (0.00s)
+    --- PASS: TestArkBaseExecAction_runExecAction/success_retry_count_respected (0.00s)
+    --- PASS: TestArkBaseExecAction_runExecAction/success_refresh_auth_flag_set (0.18s)
+=== RUN   TestArkBaseExecAction_Integration
+=== RUN   TestArkBaseExecAction_Integration/success_complete_flow_with_mock_loader
+=== PAUSE TestArkBaseExecAction_Integration/success_complete_flow_with_mock_loader
+=== RUN   TestArkBaseExecAction_Integration/success_action_structure_validation
+=== PAUSE TestArkBaseExecAction_Integration/success_action_structure_validation
+=== CONT  TestArkBaseExecAction_Integration/success_complete_flow_with_mock_loader
+=== CONT  TestArkBaseExecAction_Integration/success_action_structure_validation
+--- PASS: TestArkBaseExecAction_Integration (0.00s)
+    --- PASS: TestArkBaseExecAction_Integration/success_action_structure_validation (0.00s)
+    --- PASS: TestArkBaseExecAction_Integration/success_complete_flow_with_mock_loader (0.00s)
+=== RUN   TestNewArkLoginAction
+=== RUN   TestNewArkLoginAction/success_normal_profile_loader
+=== PAUSE TestNewArkLoginAction/success_normal_profile_loader
+=== RUN   TestNewArkLoginAction/success_nil_profile_loader
+=== PAUSE TestNewArkLoginAction/success_nil_profile_loader
+=== CONT  TestNewArkLoginAction/success_normal_profile_loader
+=== CONT  TestNewArkLoginAction/success_nil_profile_loader
+--- PASS: TestNewArkLoginAction (0.00s)
+    --- PASS: TestNewArkLoginAction/success_normal_profile_loader (0.00s)
+    --- PASS: TestNewArkLoginAction/success_nil_profile_loader (0.00s)
+=== RUN   TestArkLoginAction_DefineAction
+=== RUN   TestArkLoginAction_DefineAction/success_defines_login_command
+=== PAUSE TestArkLoginAction_DefineAction/success_defines_login_command
+=== RUN   TestArkLoginAction_DefineAction/success_adds_required_flags
+=== PAUSE TestArkLoginAction_DefineAction/success_adds_required_flags
+=== RUN   TestArkLoginAction_DefineAction/success_adds_authenticator_flags
+=== PAUSE TestArkLoginAction_DefineAction/success_adds_authenticator_flags
+=== RUN   TestArkLoginAction_DefineAction/success_nil_profilesloader
+=== PAUSE TestArkLoginAction_DefineAction/success_nil_profilesloader
+=== CONT  TestArkLoginAction_DefineAction/success_defines_login_command
+=== CONT  TestArkLoginAction_DefineAction/success_adds_authenticator_flags
+=== CONT  TestArkLoginAction_DefineAction/success_nil_profilesloader
+=== CONT  TestArkLoginAction_DefineAction/success_adds_required_flags
+--- PASS: TestArkLoginAction_DefineAction (0.00s)
+    --- PASS: TestArkLoginAction_DefineAction/success_defines_login_command (0.00s)
+    --- PASS: TestArkLoginAction_DefineAction/success_adds_authenticator_flags (0.00s)
+    --- PASS: TestArkLoginAction_DefineAction/success_nil_profilesloader (0.00s)
+    --- PASS: TestArkLoginAction_DefineAction/success_adds_required_flags (0.00s)
+=== RUN   TestArkLoginAction_runLoginAction
+=== RUN   TestArkLoginAction_runLoginAction/error_profile_not_found
+=== RUN   TestArkLoginAction_runLoginAction/error_nil_profile
+=== RUN   TestArkLoginAction_runLoginAction/success_empty_auth_profiles
+=== RUN   TestArkLoginAction_runLoginAction/success_valid_profile_loaded
+=== RUN   TestArkLoginAction_runLoginAction/success_force_flag_set
+=== RUN   TestArkLoginAction_runLoginAction/success_show_tokens_flag_set
+=== RUN   TestArkLoginAction_runLoginAction/success_no_shared_secrets_flag_set
+--- PASS: TestArkLoginAction_runLoginAction (0.02s)
+    --- PASS: TestArkLoginAction_runLoginAction/error_profile_not_found (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/error_nil_profile (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/success_empty_auth_profiles (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/success_valid_profile_loaded (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/success_force_flag_set (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/success_show_tokens_flag_set (0.00s)
+    --- PASS: TestArkLoginAction_runLoginAction/success_no_shared_secrets_flag_set (0.01s)
+=== RUN   TestArkLoginAction_Integration
+=== RUN   TestArkLoginAction_Integration/success_complete_flow_with_mock_loader
+=== PAUSE TestArkLoginAction_Integration/success_complete_flow_with_mock_loader
+=== RUN   TestArkLoginAction_Integration/success_action_structure_validation
+=== PAUSE TestArkLoginAction_Integration/success_action_structure_validation
+=== CONT  TestArkLoginAction_Integration/success_complete_flow_with_mock_loader
+=== CONT  TestArkLoginAction_Integration/success_action_structure_validation
+--- PASS: TestArkLoginAction_Integration (0.00s)
+    --- PASS: TestArkLoginAction_Integration/success_complete_flow_with_mock_loader (0.00s)
+    --- PASS: TestArkLoginAction_Integration/success_action_structure_validation (0.00s)
+=== RUN   TestNewArkProfilesAction
+=== RUN   TestNewArkProfilesAction/success_creates_action_with_profile_loader
+=== PAUSE TestNewArkProfilesAction/success_creates_action_with_profile_loader
+=== RUN   TestNewArkProfilesAction/success_handles_nil_loader
+=== PAUSE TestNewArkProfilesAction/success_handles_nil_loader
+=== CONT  TestNewArkProfilesAction/success_creates_action_with_profile_loader
+=== CONT  TestNewArkProfilesAction/success_handles_nil_loader
+--- PASS: TestNewArkProfilesAction (0.00s)
+    --- PASS: TestNewArkProfilesAction/success_creates_action_with_profile_loader (0.00s)
+    --- PASS: TestNewArkProfilesAction/success_handles_nil_loader (0.00s)
+=== RUN   TestArkProfilesAction_DefineAction
+=== RUN   TestArkProfilesAction_DefineAction/success_adds_profiles_command_with_subcommands
+=== PAUSE TestArkProfilesAction_DefineAction/success_adds_profiles_command_with_subcommands
+=== RUN   TestArkProfilesAction_DefineAction/success_configures_list_command_flags
+=== PAUSE TestArkProfilesAction_DefineAction/success_configures_list_command_flags
+=== RUN   TestArkProfilesAction_DefineAction/success_configures_show_command_flags
+=== PAUSE TestArkProfilesAction_DefineAction/success_configures_show_command_flags
+=== RUN   TestArkProfilesAction_DefineAction/success_configures_delete_command_flags
+=== PAUSE TestArkProfilesAction_DefineAction/success_configures_delete_command_flags
+=== RUN   TestArkProfilesAction_DefineAction/success_configures_clone_command_flags
+=== PAUSE TestArkProfilesAction_DefineAction/success_configures_clone_command_flags
+=== CONT  TestArkProfilesAction_DefineAction/success_adds_profiles_command_with_subcommands
+=== CONT  TestArkProfilesAction_DefineAction/success_configures_delete_command_flags
+=== CONT  TestArkProfilesAction_DefineAction/success_configures_clone_command_flags
+=== CONT  TestArkProfilesAction_DefineAction/success_configures_list_command_flags
+=== CONT  TestArkProfilesAction_DefineAction/success_configures_show_command_flags
+--- PASS: TestArkProfilesAction_DefineAction (0.00s)
+    --- PASS: TestArkProfilesAction_DefineAction/success_configures_delete_command_flags (0.00s)
+    --- PASS: TestArkProfilesAction_DefineAction/success_configures_clone_command_flags (0.00s)
+    --- PASS: TestArkProfilesAction_DefineAction/success_configures_list_command_flags (0.00s)
+    --- PASS: TestArkProfilesAction_DefineAction/success_adds_profiles_command_with_subcommands (0.00s)
+    --- PASS: TestArkProfilesAction_DefineAction/success_configures_show_command_flags (0.00s)
+=== RUN   TestArkProfilesAction_runListAction
+=== RUN   TestArkProfilesAction_runListAction/success_lists_all_profiles_without_filters
+=== PAUSE TestArkProfilesAction_runListAction/success_lists_all_profiles_without_filters
+=== RUN   TestArkProfilesAction_runListAction/success_handles_no_profiles_found
+=== PAUSE TestArkProfilesAction_runListAction/success_handles_no_profiles_found
+=== RUN   TestArkProfilesAction_runListAction/success_filters_profiles_by_name
+=== PAUSE TestArkProfilesAction_runListAction/success_filters_profiles_by_name
+=== RUN   TestArkProfilesAction_runListAction/success_filters_profiles_by_auth_type
+=== PAUSE TestArkProfilesAction_runListAction/success_filters_profiles_by_auth_type
+=== RUN   TestArkProfilesAction_runListAction/success_shows_all_data_when_flag_set
+=== PAUSE TestArkProfilesAction_runListAction/success_shows_all_data_when_flag_set
+=== RUN   TestArkProfilesAction_runListAction/error_handles_load_profiles_error
+=== PAUSE TestArkProfilesAction_runListAction/error_handles_load_profiles_error
+=== CONT  TestArkProfilesAction_runListAction/success_lists_all_profiles_without_filters
+=== CONT  TestArkProfilesAction_runListAction/success_filters_profiles_by_auth_type
+[
+  "profile1",
+  "profile2"
+]
+[]
+=== CONT  TestArkProfilesAction_runListAction/error_handles_load_profiles_error
+No loadedProfiles were found
+=== CONT  TestArkProfilesAction_runListAction/success_filters_profiles_by_name
+[
+  "test-profile"
+]
+=== CONT  TestArkProfilesAction_runListAction/success_shows_all_data_when_flag_set
+=== CONT  TestArkProfilesAction_runListAction/success_handles_no_profiles_found
+No loadedProfiles were found
+[
+  {
+    "profile_name": "profile1",
+    "profile_description": "Test profile for profile1",
+    "auth_profiles": {
+      "isp": {
+        "username": "testuser",
+        "auth_method": "identity",
+        "auth_method_settings": {
+          "identity_mfa_method": "",
+          "identity_mfa_interactive": false,
+          "identity_application": "",
+          "identity_url": "https://identity.example.com",
+          "identity_tenant_subdomain": "test"
+        }
+      }
+    }
+  }
+]
+--- PASS: TestArkProfilesAction_runListAction (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/success_lists_all_profiles_without_filters (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/success_filters_profiles_by_auth_type (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/error_handles_load_profiles_error (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/success_filters_profiles_by_name (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/success_handles_no_profiles_found (0.00s)
+    --- PASS: TestArkProfilesAction_runListAction/success_shows_all_data_when_flag_set (0.00s)
+=== RUN   TestArkProfilesAction_runShowAction
+=== RUN   TestArkProfilesAction_runShowAction/success_shows_specified_profile
+=== PAUSE TestArkProfilesAction_runShowAction/success_shows_specified_profile
+=== RUN   TestArkProfilesAction_runShowAction/success_uses_default_profile_when_no_name_specified
+=== PAUSE TestArkProfilesAction_runShowAction/success_uses_default_profile_when_no_name_specified
+=== RUN   TestArkProfilesAction_runShowAction/error_handles_profile_not_found
+=== PAUSE TestArkProfilesAction_runShowAction/error_handles_profile_not_found
+=== CONT  TestArkProfilesAction_runShowAction/success_shows_specified_profile
+=== CONT  TestArkProfilesAction_runShowAction/error_handles_profile_not_found
+=== CONT  TestArkProfilesAction_runShowAction/success_uses_default_profile_when_no_name_specified
+No profile was found for the name nonexistent
+{
+  "profile_name": "test-profile",
+  "profile_description": "Test profile for test-profile",
+  "auth_profiles": {
+    "isp": {
+      "username": "testuser",
+      "auth_method": "identity",
+      "auth_method_settings": {
+        "identity_mfa_method": "",
+        "identity_mfa_interactive": false,
+        "identity_application": "",
+        "identity_url": "https://identity.example.com",
+        "identity_tenant_subdomain": "test"
+      }
+    }
+  }
+}
+{
+  "profile_name": "default",
+  "profile_description": "Test profile for default",
+  "auth_profiles": {
+    "isp": {
+      "username": "testuser",
+      "auth_method": "identity",
+      "auth_method_settings": {
+        "identity_mfa_method": "",
+        "identity_mfa_interactive": false,
+        "identity_application": "",
+        "identity_url": "https://identity.example.com",
+        "identity_tenant_subdomain": "test"
+      }
+    }
+  }
+}
+--- PASS: TestArkProfilesAction_runShowAction (0.00s)
+    --- PASS: TestArkProfilesAction_runShowAction/error_handles_profile_not_found (0.00s)
+    --- PASS: TestArkProfilesAction_runShowAction/success_shows_specified_profile (0.00s)
+    --- PASS: TestArkProfilesAction_runShowAction/success_uses_default_profile_when_no_name_specified (0.00s)
+=== RUN   TestArkProfilesAction_runDeleteAction
+=== RUN   TestArkProfilesAction_runDeleteAction/success_deletes_profile_with_yes_flag
+=== PAUSE TestArkProfilesAction_runDeleteAction/success_deletes_profile_with_yes_flag
+=== RUN   TestArkProfilesAction_runDeleteAction/error_handles_profile_not_found_for_deletion
+=== PAUSE TestArkProfilesAction_runDeleteAction/error_handles_profile_not_found_for_deletion
+=== RUN   TestArkProfilesAction_runDeleteAction/error_handles_delete_failure
+=== PAUSE TestArkProfilesAction_runDeleteAction/error_handles_delete_failure
+=== CONT  TestArkProfilesAction_runDeleteAction/success_deletes_profile_with_yes_flag
+=== CONT  TestArkProfilesAction_runDeleteAction/error_handles_delete_failure
+=== CONT  TestArkProfilesAction_runDeleteAction/error_handles_profile_not_found_for_deletion
+No profile was found for the name nonexistent
+--- PASS: TestArkProfilesAction_runDeleteAction (0.00s)
+    --- PASS: TestArkProfilesAction_runDeleteAction/success_deletes_profile_with_yes_flag (0.00s)
+    --- PASS: TestArkProfilesAction_runDeleteAction/error_handles_delete_failure (0.00s)
+    --- PASS: TestArkProfilesAction_runDeleteAction/error_handles_profile_not_found_for_deletion (0.00s)
+=== RUN   TestArkProfilesAction_runClearAction
+=== RUN   TestArkProfilesAction_runClearAction/success_clears_all_profiles_with_yes_flag
+=== PAUSE TestArkProfilesAction_runClearAction/success_clears_all_profiles_with_yes_flag
+=== RUN   TestArkProfilesAction_runClearAction/error_handles_clear_failure
+=== PAUSE TestArkProfilesAction_runClearAction/error_handles_clear_failure
+=== CONT  TestArkProfilesAction_runClearAction/success_clears_all_profiles_with_yes_flag
+=== CONT  TestArkProfilesAction_runClearAction/error_handles_clear_failure
+--- PASS: TestArkProfilesAction_runClearAction (0.00s)
+    --- PASS: TestArkProfilesAction_runClearAction/success_clears_all_profiles_with_yes_flag (0.00s)
+    --- PASS: TestArkProfilesAction_runClearAction/error_handles_clear_failure (0.00s)
+=== RUN   TestArkProfilesAction_runCloneAction
+=== RUN   TestArkProfilesAction_runCloneAction/success_clones_profile_with_default_name
+=== PAUSE TestArkProfilesAction_runCloneAction/success_clones_profile_with_default_name
+=== RUN   TestArkProfilesAction_runCloneAction/success_clones_profile_with_custom_name
+=== PAUSE TestArkProfilesAction_runCloneAction/success_clones_profile_with_custom_name
+=== RUN   TestArkProfilesAction_runCloneAction/error_handles_source_profile_not_found
+=== PAUSE TestArkProfilesAction_runCloneAction/error_handles_source_profile_not_found
+=== RUN   TestArkProfilesAction_runCloneAction/error_handles_save_failure
+=== PAUSE TestArkProfilesAction_runCloneAction/error_handles_save_failure
+=== CONT  TestArkProfilesAction_runCloneAction/success_clones_profile_with_default_name
+=== CONT  TestArkProfilesAction_runCloneAction/error_handles_source_profile_not_found
+=== CONT  TestArkProfilesAction_runCloneAction/error_handles_save_failure
+No profile was found for the name nonexistent
+=== CONT  TestArkProfilesAction_runCloneAction/success_clones_profile_with_custom_name
+--- PASS: TestArkProfilesAction_runCloneAction (0.00s)
+    --- PASS: TestArkProfilesAction_runCloneAction/success_clones_profile_with_default_name (0.00s)
+    --- PASS: TestArkProfilesAction_runCloneAction/error_handles_save_failure (0.00s)
+    --- PASS: TestArkProfilesAction_runCloneAction/error_handles_source_profile_not_found (0.00s)
+    --- PASS: TestArkProfilesAction_runCloneAction/success_clones_profile_with_custom_name (0.00s)
+=== RUN   TestArkProfilesAction_StructFields
+=== RUN   TestArkProfilesAction_StructFields/success_struct_has_expected_fields
+=== PAUSE TestArkProfilesAction_StructFields/success_struct_has_expected_fields
+=== RUN   TestArkProfilesAction_StructFields/success_profilesloader_field_has_correct_type
+=== PAUSE TestArkProfilesAction_StructFields/success_profilesloader_field_has_correct_type
+=== CONT  TestArkProfilesAction_StructFields/success_struct_has_expected_fields
+=== CONT  TestArkProfilesAction_StructFields/success_profilesloader_field_has_correct_type
+--- PASS: TestArkProfilesAction_StructFields (0.00s)
+    --- PASS: TestArkProfilesAction_StructFields/success_struct_has_expected_fields (0.00s)
+    --- PASS: TestArkProfilesAction_StructFields/success_profilesloader_field_has_correct_type (0.00s)
+=== RUN   TestArkProfilesAction_ArkActionInterface
+=== RUN   TestArkProfilesAction_ArkActionInterface/success_implements_arkaction_interface
+=== PAUSE TestArkProfilesAction_ArkActionInterface/success_implements_arkaction_interface
+=== CONT  TestArkProfilesAction_ArkActionInterface/success_implements_arkaction_interface
+--- PASS: TestArkProfilesAction_ArkActionInterface (0.00s)
+    --- PASS: TestArkProfilesAction_ArkActionInterface/success_implements_arkaction_interface (0.00s)
+=== RUN   TestNewArkServiceExecAction
+=== RUN   TestNewArkServiceExecAction/success_creates_action_with_profile_loader
+=== PAUSE TestNewArkServiceExecAction/success_creates_action_with_profile_loader
+=== RUN   TestNewArkServiceExecAction/success_creates_action_with_nil_loader
+=== PAUSE TestNewArkServiceExecAction/success_creates_action_with_nil_loader
+=== CONT  TestNewArkServiceExecAction/success_creates_action_with_profile_loader
+=== CONT  TestNewArkServiceExecAction/success_creates_action_with_nil_loader
+--- PASS: TestNewArkServiceExecAction (0.00s)
+    --- PASS: TestNewArkServiceExecAction/success_creates_action_with_profile_loader (0.00s)
+    --- PASS: TestNewArkServiceExecAction/success_creates_action_with_nil_loader (0.00s)
+=== RUN   TestArkServiceExecAction_isComplexType
+=== RUN   TestArkServiceExecAction_isComplexType/success_map_string_struct_is_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_map_string_struct_is_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_slice_struct_is_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_slice_struct_is_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_array_struct_is_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_array_struct_is_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_string_is_not_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_string_is_not_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_int_is_not_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_int_is_not_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_slice_string_is_not_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_slice_string_is_not_complex
+=== RUN   TestArkServiceExecAction_isComplexType/success_map_string_string_is_not_complex
+=== PAUSE TestArkServiceExecAction_isComplexType/success_map_string_string_is_not_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_map_string_struct_is_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_string_is_not_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_int_is_not_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_slice_string_is_not_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_array_struct_is_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_slice_struct_is_complex
+=== CONT  TestArkServiceExecAction_isComplexType/success_map_string_string_is_not_complex
+--- PASS: TestArkServiceExecAction_isComplexType (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_map_string_struct_is_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_string_is_not_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_int_is_not_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_slice_string_is_not_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_array_struct_is_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_slice_struct_is_complex (0.00s)
+    --- PASS: TestArkServiceExecAction_isComplexType/success_map_string_string_is_not_complex (0.00s)
+=== RUN   TestArkServiceExecAction_fillRemainingSchema
+=== RUN   TestArkServiceExecAction_fillRemainingSchema/success_adds_complex_type_flags
+=== PAUSE TestArkServiceExecAction_fillRemainingSchema/success_adds_complex_type_flags
+=== RUN   TestArkServiceExecAction_fillRemainingSchema/success_handles_empty_schema
+=== PAUSE TestArkServiceExecAction_fillRemainingSchema/success_handles_empty_schema
+=== CONT  TestArkServiceExecAction_fillRemainingSchema/success_adds_complex_type_flags
+=== CONT  TestArkServiceExecAction_fillRemainingSchema/success_handles_empty_schema
+--- PASS: TestArkServiceExecAction_fillRemainingSchema (0.00s)
+    --- PASS: TestArkServiceExecAction_fillRemainingSchema/success_adds_complex_type_flags (0.00s)
+    --- PASS: TestArkServiceExecAction_fillRemainingSchema/success_handles_empty_schema (0.00s)
+=== RUN   TestArkServiceExecAction_fillParsedFlag
+=== RUN   TestArkServiceExecAction_fillParsedFlag/success_parses_json_for_complex_slice
+=== PAUSE TestArkServiceExecAction_fillParsedFlag/success_parses_json_for_complex_slice
+=== RUN   TestArkServiceExecAction_fillParsedFlag/error_invalid_json_for_complex_type
+=== PAUSE TestArkServiceExecAction_fillParsedFlag/error_invalid_json_for_complex_type
+=== RUN   TestArkServiceExecAction_fillParsedFlag/error_invalid_choice_value
+=== PAUSE TestArkServiceExecAction_fillParsedFlag/error_invalid_choice_value
+=== RUN   TestArkServiceExecAction_fillParsedFlag/success_valid_choice_value
+=== PAUSE TestArkServiceExecAction_fillParsedFlag/success_valid_choice_value
+=== CONT  TestArkServiceExecAction_fillParsedFlag/success_parses_json_for_complex_slice
+=== CONT  TestArkServiceExecAction_fillParsedFlag/error_invalid_choice_value
+=== CONT  TestArkServiceExecAction_fillParsedFlag/success_valid_choice_value
+=== CONT  TestArkServiceExecAction_fillParsedFlag/error_invalid_json_for_complex_type
+--- PASS: TestArkServiceExecAction_fillParsedFlag (0.00s)
+    --- PASS: TestArkServiceExecAction_fillParsedFlag/error_invalid_choice_value (0.00s)
+    --- PASS: TestArkServiceExecAction_fillParsedFlag/success_valid_choice_value (0.00s)
+    --- PASS: TestArkServiceExecAction_fillParsedFlag/success_parses_json_for_complex_slice (0.00s)
+    --- PASS: TestArkServiceExecAction_fillParsedFlag/error_invalid_json_for_complex_type (0.00s)
+=== RUN   TestArkServiceExecAction_parseFlag
+=== RUN   TestArkServiceExecAction_parseFlag/success_parses_string_flag
+=== PAUSE TestArkServiceExecAction_parseFlag/success_parses_string_flag
+=== RUN   TestArkServiceExecAction_parseFlag/success_parses_int_flag
+=== PAUSE TestArkServiceExecAction_parseFlag/success_parses_int_flag
+=== RUN   TestArkServiceExecAction_parseFlag/success_skips_unchanged_flag
+=== PAUSE TestArkServiceExecAction_parseFlag/success_skips_unchanged_flag
+=== CONT  TestArkServiceExecAction_parseFlag/success_parses_string_flag
+=== CONT  TestArkServiceExecAction_parseFlag/success_skips_unchanged_flag
+=== CONT  TestArkServiceExecAction_parseFlag/success_parses_int_flag
+--- PASS: TestArkServiceExecAction_parseFlag (0.00s)
+    --- PASS: TestArkServiceExecAction_parseFlag/success_skips_unchanged_flag (0.00s)
+    --- PASS: TestArkServiceExecAction_parseFlag/success_parses_string_flag (0.00s)
+    --- PASS: TestArkServiceExecAction_parseFlag/success_parses_int_flag (0.00s)
+=== RUN   TestArkServiceExecAction_findMethodByName
+=== RUN   TestArkServiceExecAction_findMethodByName/success_finds_exact_match
+=== PAUSE TestArkServiceExecAction_findMethodByName/success_finds_exact_match
+=== RUN   TestArkServiceExecAction_findMethodByName/success_finds_case_insensitive_match
+=== PAUSE TestArkServiceExecAction_findMethodByName/success_finds_case_insensitive_match
+=== RUN   TestArkServiceExecAction_findMethodByName/error_method_not_found
+=== PAUSE TestArkServiceExecAction_findMethodByName/error_method_not_found
+=== CONT  TestArkServiceExecAction_findMethodByName/success_finds_exact_match
+=== CONT  TestArkServiceExecAction_findMethodByName/error_method_not_found
+=== CONT  TestArkServiceExecAction_findMethodByName/success_finds_case_insensitive_match
+--- PASS: TestArkServiceExecAction_findMethodByName (0.00s)
+    --- PASS: TestArkServiceExecAction_findMethodByName/success_finds_exact_match (0.00s)
+    --- PASS: TestArkServiceExecAction_findMethodByName/error_method_not_found (0.00s)
+    --- PASS: TestArkServiceExecAction_findMethodByName/success_finds_case_insensitive_match (0.00s)
+=== RUN   TestArkServiceExecAction_DefineExecAction
+=== RUN   TestArkServiceExecAction_DefineExecAction/success_defines_actions_without_error
+=== PAUSE TestArkServiceExecAction_DefineExecAction/success_defines_actions_without_error
+=== CONT  TestArkServiceExecAction_DefineExecAction/success_defines_actions_without_error
+--- PASS: TestArkServiceExecAction_DefineExecAction (0.00s)
+    --- PASS: TestArkServiceExecAction_DefineExecAction/success_defines_actions_without_error (0.00s)
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput/success_handles_struct_output
+=== PAUSE TestArkServiceExecAction_serializeAndPrintOutput/success_handles_struct_output
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput/success_handles_int_output
+=== PAUSE TestArkServiceExecAction_serializeAndPrintOutput/success_handles_int_output
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput/success_handles_string_output
+=== PAUSE TestArkServiceExecAction_serializeAndPrintOutput/success_handles_string_output
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput/success_handles_empty_result
+=== PAUSE TestArkServiceExecAction_serializeAndPrintOutput/success_handles_empty_result
+=== RUN   TestArkServiceExecAction_serializeAndPrintOutput/success_handles_nil_pointer
+=== PAUSE TestArkServiceExecAction_serializeAndPrintOutput/success_handles_nil_pointer
+=== CONT  TestArkServiceExecAction_serializeAndPrintOutput/success_handles_struct_output
+{
+  "key": "value"
+}
+=== CONT  TestArkServiceExecAction_serializeAndPrintOutput/success_handles_empty_result
+Test Action finished successfully
+=== CONT  TestArkServiceExecAction_serializeAndPrintOutput/success_handles_string_output
+test result
+=== CONT  TestArkServiceExecAction_serializeAndPrintOutput/success_handles_nil_pointer
+Test Action finished successfully
+=== CONT  TestArkServiceExecAction_serializeAndPrintOutput/success_handles_int_output
+42
+--- PASS: TestArkServiceExecAction_serializeAndPrintOutput (0.00s)
+    --- PASS: TestArkServiceExecAction_serializeAndPrintOutput/success_handles_struct_output (0.00s)
+    --- PASS: TestArkServiceExecAction_serializeAndPrintOutput/success_handles_empty_result (0.00s)
+    --- PASS: TestArkServiceExecAction_serializeAndPrintOutput/success_handles_string_output (0.00s)
+    --- PASS: TestArkServiceExecAction_serializeAndPrintOutput/success_handles_nil_pointer (0.00s)
+    --- PASS: TestArkServiceExecAction_serializeAndPrintOutput/success_handles_int_output (0.00s)
+=== RUN   TestArkServiceExecAction_defineServiceExecAction
+=== RUN   TestArkServiceExecAction_defineServiceExecAction/success_creates_simple_action
+=== PAUSE TestArkServiceExecAction_defineServiceExecAction/success_creates_simple_action
+=== RUN   TestArkServiceExecAction_defineServiceExecAction/success_creates_action_with_parent
+=== PAUSE TestArkServiceExecAction_defineServiceExecAction/success_creates_action_with_parent
+=== RUN   TestArkServiceExecAction_defineServiceExecAction/success_creates_action_without_schemas
+=== PAUSE TestArkServiceExecAction_defineServiceExecAction/success_creates_action_without_schemas
+=== CONT  TestArkServiceExecAction_defineServiceExecAction/success_creates_simple_action
+=== CONT  TestArkServiceExecAction_defineServiceExecAction/success_creates_action_without_schemas
+=== CONT  TestArkServiceExecAction_defineServiceExecAction/success_creates_action_with_parent
+--- PASS: TestArkServiceExecAction_defineServiceExecAction (0.00s)
+    --- PASS: TestArkServiceExecAction_defineServiceExecAction/success_creates_action_without_schemas (0.00s)
+    --- PASS: TestArkServiceExecAction_defineServiceExecAction/success_creates_simple_action (0.00s)
+    --- PASS: TestArkServiceExecAction_defineServiceExecAction/success_creates_action_with_parent (0.00s)
+=== RUN   TestArkServiceExecAction_defineServiceExecActions
+=== RUN   TestArkServiceExecAction_defineServiceExecActions/success_defines_action_without_subactions
+=== PAUSE TestArkServiceExecAction_defineServiceExecActions/success_defines_action_without_subactions
+=== RUN   TestArkServiceExecAction_defineServiceExecActions/success_defines_action_with_subactions
+=== PAUSE TestArkServiceExecAction_defineServiceExecActions/success_defines_action_with_subactions
+=== CONT  TestArkServiceExecAction_defineServiceExecActions/success_defines_action_without_subactions
+=== CONT  TestArkServiceExecAction_defineServiceExecActions/success_defines_action_with_subactions
+--- PASS: TestArkServiceExecAction_defineServiceExecActions (0.00s)
+    --- PASS: TestArkServiceExecAction_defineServiceExecActions/success_defines_action_without_subactions (0.00s)
+    --- PASS: TestArkServiceExecAction_defineServiceExecActions/success_defines_action_with_subactions (0.00s)
+PASS
+coverage: 44.3% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/actions	0.902s	coverage: 44.3% of statements
+	github.com/cyberark/ark-sdk-golang/pkg/auth		coverage: 0.0% of statements
+	github.com/cyberark/ark-sdk-golang/pkg/auth/identity		coverage: 0.0% of statements
+	github.com/cyberark/ark-sdk-golang/pkg/cli		coverage: 0.0% of statements
+=== RUN   TestIsConnectionRefused
+=== RUN   TestIsConnectionRefused/nil_error
+=== PAUSE TestIsConnectionRefused/nil_error
+=== RUN   TestIsConnectionRefused/generic_error
+=== PAUSE TestIsConnectionRefused/generic_error
+=== RUN   TestIsConnectionRefused/direct_syscall_ECONNREFUSED
+=== PAUSE TestIsConnectionRefused/direct_syscall_ECONNREFUSED
+=== RUN   TestIsConnectionRefused/wrapped_syscall_ECONNREFUSED
+=== PAUSE TestIsConnectionRefused/wrapped_syscall_ECONNREFUSED
+=== RUN   TestIsConnectionRefused/net.OpError_with_syscall_ECONNREFUSED
+=== PAUSE TestIsConnectionRefused/net.OpError_with_syscall_ECONNREFUSED
+=== RUN   TestIsConnectionRefused/net.OpError_with_os.SyscallError_ECONNREFUSED
+=== PAUSE TestIsConnectionRefused/net.OpError_with_os.SyscallError_ECONNREFUSED
+=== RUN   TestIsConnectionRefused/net.OpError_with_different_syscall_error
+=== PAUSE TestIsConnectionRefused/net.OpError_with_different_syscall_error
+=== RUN   TestIsConnectionRefused/net.OpError_with_os.SyscallError_different_error
+=== PAUSE TestIsConnectionRefused/net.OpError_with_os.SyscallError_different_error
+=== RUN   TestIsConnectionRefused/net.OpError_with_generic_error
+=== PAUSE TestIsConnectionRefused/net.OpError_with_generic_error
+=== RUN   TestIsConnectionRefused/os.SyscallError_with_different_error
+=== PAUSE TestIsConnectionRefused/os.SyscallError_with_different_error
+=== RUN   TestIsConnectionRefused/ECONNRESET_error
+=== PAUSE TestIsConnectionRefused/ECONNRESET_error
+=== RUN   TestIsConnectionRefused/ETIMEDOUT_error
+=== PAUSE TestIsConnectionRefused/ETIMEDOUT_error
+=== RUN   TestIsConnectionRefused/deeply_nested_error_with_ECONNREFUSED
+=== PAUSE TestIsConnectionRefused/deeply_nested_error_with_ECONNREFUSED
+=== RUN   TestIsConnectionRefused/net.OpError_with_nil_Err
+=== PAUSE TestIsConnectionRefused/net.OpError_with_nil_Err
+=== CONT  TestIsConnectionRefused/nil_error
+=== CONT  TestIsConnectionRefused/net.OpError_with_os.SyscallError_different_error
+=== CONT  TestIsConnectionRefused/net.OpError_with_different_syscall_error
+=== CONT  TestIsConnectionRefused/direct_syscall_ECONNREFUSED
+=== CONT  TestIsConnectionRefused/generic_error
+=== CONT  TestIsConnectionRefused/net.OpError_with_os.SyscallError_ECONNREFUSED
+=== CONT  TestIsConnectionRefused/net.OpError_with_syscall_ECONNREFUSED
+=== CONT  TestIsConnectionRefused/net.OpError_with_nil_Err
+=== CONT  TestIsConnectionRefused/deeply_nested_error_with_ECONNREFUSED
+=== CONT  TestIsConnectionRefused/ETIMEDOUT_error
+=== CONT  TestIsConnectionRefused/net.OpError_with_generic_error
+=== CONT  TestIsConnectionRefused/os.SyscallError_with_different_error
+=== CONT  TestIsConnectionRefused/ECONNRESET_error
+=== CONT  TestIsConnectionRefused/wrapped_syscall_ECONNREFUSED
+--- PASS: TestIsConnectionRefused (0.00s)
+    --- PASS: TestIsConnectionRefused/nil_error (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_different_syscall_error (0.00s)
+    --- PASS: TestIsConnectionRefused/direct_syscall_ECONNREFUSED (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_os.SyscallError_different_error (0.00s)
+    --- PASS: TestIsConnectionRefused/generic_error (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_syscall_ECONNREFUSED (0.00s)
+    --- PASS: TestIsConnectionRefused/ETIMEDOUT_error (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_nil_Err (0.00s)
+    --- PASS: TestIsConnectionRefused/deeply_nested_error_with_ECONNREFUSED (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_os.SyscallError_ECONNREFUSED (0.00s)
+    --- PASS: TestIsConnectionRefused/net.OpError_with_generic_error (0.00s)
+    --- PASS: TestIsConnectionRefused/ECONNRESET_error (0.00s)
+    --- PASS: TestIsConnectionRefused/os.SyscallError_with_different_error (0.00s)
+    --- PASS: TestIsConnectionRefused/wrapped_syscall_ECONNREFUSED (0.00s)
+=== RUN   TestExpandFolder
+=== RUN   TestExpandFolder/empty_string
+=== PAUSE TestExpandFolder/empty_string
+=== RUN   TestExpandFolder/simple_path_without_trailing_slash
+=== PAUSE TestExpandFolder/simple_path_without_trailing_slash
+=== RUN   TestExpandFolder/simple_path_with_trailing_slash
+=== PAUSE TestExpandFolder/simple_path_with_trailing_slash
+=== RUN   TestExpandFolder/tilde_expansion_root_only
+=== PAUSE TestExpandFolder/tilde_expansion_root_only
+=== RUN   TestExpandFolder/tilde_expansion_root_with_slash
+=== PAUSE TestExpandFolder/tilde_expansion_root_with_slash
+=== RUN   TestExpandFolder/tilde_expansion_with_subpath
+=== PAUSE TestExpandFolder/tilde_expansion_with_subpath
+=== RUN   TestExpandFolder/tilde_expansion_with_subpath_and_trailing_slash
+=== PAUSE TestExpandFolder/tilde_expansion_with_subpath_and_trailing_slash
+=== RUN   TestExpandFolder/tilde_expansion_deep_path
+=== PAUSE TestExpandFolder/tilde_expansion_deep_path
+=== RUN   TestExpandFolder/environment_variable_expansion
+=== PAUSE TestExpandFolder/environment_variable_expansion
+=== RUN   TestExpandFolder/environment_variable_with_subpath
+=== PAUSE TestExpandFolder/environment_variable_with_subpath
+=== RUN   TestExpandFolder/environment_variable_with_braces
+=== PAUSE TestExpandFolder/environment_variable_with_braces
+=== RUN   TestExpandFolder/environment_variable_with_braces_and_subpath
+=== PAUSE TestExpandFolder/environment_variable_with_braces_and_subpath
+=== RUN   TestExpandFolder/non_existent_environment_variable
+=== PAUSE TestExpandFolder/non_existent_environment_variable
+=== RUN   TestExpandFolder/absolute_path_without_expansion
+=== PAUSE TestExpandFolder/absolute_path_without_expansion
+=== RUN   TestExpandFolder/relative_path
+=== PAUSE TestExpandFolder/relative_path
+=== RUN   TestExpandFolder/path_with_spaces
+=== PAUSE TestExpandFolder/path_with_spaces
+=== RUN   TestExpandFolder/path_with_special_characters
+=== PAUSE TestExpandFolder/path_with_special_characters
+=== RUN   TestExpandFolder/multiple_slashes
+=== PAUSE TestExpandFolder/multiple_slashes
+=== RUN   TestExpandFolder/single_dot_path
+=== PAUSE TestExpandFolder/single_dot_path
+=== RUN   TestExpandFolder/double_dot_path
+=== PAUSE TestExpandFolder/double_dot_path
+=== RUN   TestExpandFolder/mixed_tilde_and_env_var_order_matters
+=== PAUSE TestExpandFolder/mixed_tilde_and_env_var_order_matters
+=== RUN   TestExpandFolder/env_var_then_tilde_no_expansion
+=== PAUSE TestExpandFolder/env_var_then_tilde_no_expansion
+=== RUN   TestExpandFolder/very_long_path
+=== PAUSE TestExpandFolder/very_long_path
+=== RUN   TestExpandFolder/path_with_unicode_characters
+=== PAUSE TestExpandFolder/path_with_unicode_characters
+=== RUN   TestExpandFolder/path_with_tabs_and_newlines
+=== PAUSE TestExpandFolder/path_with_tabs_and_newlines
+=== RUN   TestExpandFolder/path_starting_with_multiple_tildes
+=== PAUSE TestExpandFolder/path_starting_with_multiple_tildes
+=== RUN   TestExpandFolder/tilde_in_middle_not_expanded
+=== PAUSE TestExpandFolder/tilde_in_middle_not_expanded
+=== CONT  TestExpandFolder/empty_string
+=== CONT  TestExpandFolder/absolute_path_without_expansion
+=== CONT  TestExpandFolder/non_existent_environment_variable
+=== CONT  TestExpandFolder/tilde_expansion_with_subpath
+=== CONT  TestExpandFolder/relative_path
+=== CONT  TestExpandFolder/tilde_expansion_deep_path
+=== CONT  TestExpandFolder/path_with_tabs_and_newlines
+=== CONT  TestExpandFolder/path_with_unicode_characters
+=== CONT  TestExpandFolder/very_long_path
+=== CONT  TestExpandFolder/single_dot_path
+=== CONT  TestExpandFolder/mixed_tilde_and_env_var_order_matters
+=== CONT  TestExpandFolder/double_dot_path
+=== CONT  TestExpandFolder/path_with_special_characters
+=== CONT  TestExpandFolder/multiple_slashes
+=== CONT  TestExpandFolder/path_with_spaces
+=== CONT  TestExpandFolder/tilde_expansion_root_only
+=== CONT  TestExpandFolder/tilde_expansion_root_with_slash
+=== CONT  TestExpandFolder/environment_variable_with_braces_and_subpath
+=== CONT  TestExpandFolder/environment_variable_with_braces
+=== CONT  TestExpandFolder/environment_variable_with_subpath
+=== CONT  TestExpandFolder/environment_variable_expansion
+=== CONT  TestExpandFolder/simple_path_without_trailing_slash
+=== CONT  TestExpandFolder/env_var_then_tilde_no_expansion
+=== CONT  TestExpandFolder/tilde_in_middle_not_expanded
+=== CONT  TestExpandFolder/path_starting_with_multiple_tildes
+=== CONT  TestExpandFolder/tilde_expansion_with_subpath_and_trailing_slash
+=== CONT  TestExpandFolder/simple_path_with_trailing_slash
+--- PASS: TestExpandFolder (0.00s)
+    --- PASS: TestExpandFolder/empty_string (0.00s)
+    --- PASS: TestExpandFolder/absolute_path_without_expansion (0.00s)
+    --- PASS: TestExpandFolder/non_existent_environment_variable (0.00s)
+    --- PASS: TestExpandFolder/tilde_expansion_with_subpath (0.00s)
+    --- PASS: TestExpandFolder/relative_path (0.00s)
+    --- PASS: TestExpandFolder/tilde_expansion_deep_path (0.00s)
+    --- PASS: TestExpandFolder/path_with_tabs_and_newlines (0.00s)
+    --- PASS: TestExpandFolder/path_with_unicode_characters (0.00s)
+    --- PASS: TestExpandFolder/very_long_path (0.00s)
+    --- PASS: TestExpandFolder/single_dot_path (0.00s)
+    --- PASS: TestExpandFolder/mixed_tilde_and_env_var_order_matters (0.00s)
+    --- PASS: TestExpandFolder/double_dot_path (0.00s)
+    --- PASS: TestExpandFolder/path_with_special_characters (0.00s)
+    --- PASS: TestExpandFolder/multiple_slashes (0.00s)
+    --- PASS: TestExpandFolder/path_with_spaces (0.00s)
+    --- PASS: TestExpandFolder/tilde_expansion_root_only (0.00s)
+    --- PASS: TestExpandFolder/tilde_expansion_root_with_slash (0.00s)
+    --- PASS: TestExpandFolder/environment_variable_with_braces_and_subpath (0.00s)
+    --- PASS: TestExpandFolder/environment_variable_with_braces (0.00s)
+    --- PASS: TestExpandFolder/environment_variable_with_subpath (0.00s)
+    --- PASS: TestExpandFolder/environment_variable_expansion (0.00s)
+    --- PASS: TestExpandFolder/simple_path_without_trailing_slash (0.00s)
+    --- PASS: TestExpandFolder/env_var_then_tilde_no_expansion (0.00s)
+    --- PASS: TestExpandFolder/tilde_in_middle_not_expanded (0.00s)
+    --- PASS: TestExpandFolder/path_starting_with_multiple_tildes (0.00s)
+    --- PASS: TestExpandFolder/tilde_expansion_with_subpath_and_trailing_slash (0.00s)
+    --- PASS: TestExpandFolder/simple_path_with_trailing_slash (0.00s)
+=== RUN   TestNewArkKeyring
+=== RUN   TestNewArkKeyring/success_normal_service_name
+=== PAUSE TestNewArkKeyring/success_normal_service_name
+=== RUN   TestNewArkKeyring/success_empty_service_name
+=== PAUSE TestNewArkKeyring/success_empty_service_name
+=== RUN   TestNewArkKeyring/success_special_characters_service_name
+=== PAUSE TestNewArkKeyring/success_special_characters_service_name
+=== RUN   TestNewArkKeyring/success_long_service_name
+=== PAUSE TestNewArkKeyring/success_long_service_name
+=== CONT  TestNewArkKeyring/success_normal_service_name
+=== CONT  TestNewArkKeyring/success_special_characters_service_name
+=== CONT  TestNewArkKeyring/success_empty_service_name
+=== CONT  TestNewArkKeyring/success_long_service_name
+--- PASS: TestNewArkKeyring (0.00s)
+    --- PASS: TestNewArkKeyring/success_normal_service_name (0.00s)
+    --- PASS: TestNewArkKeyring/success_special_characters_service_name (0.00s)
+    --- PASS: TestNewArkKeyring/success_empty_service_name (0.00s)
+    --- PASS: TestNewArkKeyring/success_long_service_name (0.00s)
+=== RUN   TestArkKeyring_isDocker
+=== RUN   TestArkKeyring_isDocker/success_no_dockerenv_file_no_docker_cgroup
+=== RUN   TestArkKeyring_isDocker/success_validates_dockerenv_check_logic
+=== RUN   TestArkKeyring_isDocker/success_validates_cgroup_check_logic
+--- PASS: TestArkKeyring_isDocker (0.00s)
+    --- PASS: TestArkKeyring_isDocker/success_no_dockerenv_file_no_docker_cgroup (0.00s)
+    --- PASS: TestArkKeyring_isDocker/success_validates_dockerenv_check_logic (0.00s)
+    --- PASS: TestArkKeyring_isDocker/success_validates_cgroup_check_logic (0.00s)
+=== RUN   TestArkKeyring_isWSL
+=== RUN   TestArkKeyring_isWSL/success_not_wsl_environment
+=== RUN   TestArkKeyring_isWSL/success_proc_version_read_failure
+--- PASS: TestArkKeyring_isWSL (0.00s)
+    --- PASS: TestArkKeyring_isWSL/success_not_wsl_environment (0.00s)
+    --- PASS: TestArkKeyring_isWSL/success_proc_version_read_failure (0.00s)
+=== RUN   TestArkKeyring_GetKeyring
+=== RUN   TestArkKeyring_GetKeyring/success_enforce_basic_keyring_true
+=== RUN   TestArkKeyring_GetKeyring/success_basic_keyring_env_var_set
+=== RUN   TestArkKeyring_GetKeyring/success_windows_os
+=== RUN   TestArkKeyring_GetKeyring/success_no_dbus_session
+=== RUN   TestArkKeyring_GetKeyring/success_darwin_or_linux_with_dbus
+--- PASS: TestArkKeyring_GetKeyring (0.00s)
+    --- PASS: TestArkKeyring_GetKeyring/success_enforce_basic_keyring_true (0.00s)
+    --- PASS: TestArkKeyring_GetKeyring/success_basic_keyring_env_var_set (0.00s)
+    --- PASS: TestArkKeyring_GetKeyring/success_windows_os (0.00s)
+    --- PASS: TestArkKeyring_GetKeyring/success_no_dbus_session (0.00s)
+    --- PASS: TestArkKeyring_GetKeyring/success_darwin_or_linux_with_dbus (0.00s)
+=== RUN   TestArkKeyring_SaveToken
+=== RUN   TestArkKeyring_SaveToken/success_save_with_basic_keyring
+=== RUN   TestArkKeyring_SaveToken/success_save_with_auto_keyring
+=== RUN   TestArkKeyring_SaveToken/success_save_with_empty_postfix
+=== RUN   TestArkKeyring_SaveToken/success_save_token_with_nil_refresh
+=== RUN   TestArkKeyring_SaveToken/success_save_internal_token_type
+--- PASS: TestArkKeyring_SaveToken (0.02s)
+    --- PASS: TestArkKeyring_SaveToken/success_save_with_basic_keyring (0.00s)
+    --- PASS: TestArkKeyring_SaveToken/success_save_with_auto_keyring (0.01s)
+    --- PASS: TestArkKeyring_SaveToken/success_save_with_empty_postfix (0.01s)
+    --- PASS: TestArkKeyring_SaveToken/success_save_token_with_nil_refresh (0.00s)
+    --- PASS: TestArkKeyring_SaveToken/success_save_internal_token_type (0.00s)
+=== RUN   TestArkKeyring_LoadToken
+=== RUN   TestArkKeyring_LoadToken/success_load_valid_token
+=== RUN   TestArkKeyring_LoadToken/success_no_token_found
+=== RUN   TestArkKeyring_LoadToken/success_expired_token_no_refresh_removed
+=== RUN   TestArkKeyring_LoadToken/success_expired_token_old_cache_removed
+--- PASS: TestArkKeyring_LoadToken (0.30s)
+    --- PASS: TestArkKeyring_LoadToken/success_load_valid_token (0.27s)
+    --- PASS: TestArkKeyring_LoadToken/success_no_token_found (0.00s)
+    --- PASS: TestArkKeyring_LoadToken/success_expired_token_no_refresh_removed (0.01s)
+    --- PASS: TestArkKeyring_LoadToken/success_expired_token_old_cache_removed (0.01s)
+=== RUN   TestArkKeyring_LoadToken_JsonParsing
+=== RUN   TestArkKeyring_LoadToken_JsonParsing/error_invalid_json_data
+=== RUN   TestArkKeyring_LoadToken_JsonParsing/success_valid_json_parsing
+--- PASS: TestArkKeyring_LoadToken_JsonParsing (0.11s)
+    --- PASS: TestArkKeyring_LoadToken_JsonParsing/error_invalid_json_data (0.11s)
+    --- PASS: TestArkKeyring_LoadToken_JsonParsing/success_valid_json_parsing (0.01s)
+=== RUN   TestArkKeyring_Integration
+--- PASS: TestArkKeyring_Integration (0.00s)
+=== RUN   TestStrToLogLevel
+=== RUN   TestStrToLogLevel/success_debug_uppercase
+=== PAUSE TestStrToLogLevel/success_debug_uppercase
+=== RUN   TestStrToLogLevel/success_debug_lowercase
+=== PAUSE TestStrToLogLevel/success_debug_lowercase
+=== RUN   TestStrToLogLevel/success_info_uppercase
+=== PAUSE TestStrToLogLevel/success_info_uppercase
+=== RUN   TestStrToLogLevel/success_info_mixed_case
+=== PAUSE TestStrToLogLevel/success_info_mixed_case
+=== RUN   TestStrToLogLevel/success_warning_uppercase
+=== PAUSE TestStrToLogLevel/success_warning_uppercase
+=== RUN   TestStrToLogLevel/success_error_uppercase
+=== PAUSE TestStrToLogLevel/success_error_uppercase
+=== RUN   TestStrToLogLevel/success_critical_uppercase
+=== PAUSE TestStrToLogLevel/success_critical_uppercase
+=== RUN   TestStrToLogLevel/default_unknown_string
+=== PAUSE TestStrToLogLevel/default_unknown_string
+=== RUN   TestStrToLogLevel/default_empty_string
+=== PAUSE TestStrToLogLevel/default_empty_string
+=== RUN   TestStrToLogLevel/default_invalid_string
+=== PAUSE TestStrToLogLevel/default_invalid_string
+=== CONT  TestStrToLogLevel/success_debug_uppercase
+=== CONT  TestStrToLogLevel/success_warning_uppercase
+=== CONT  TestStrToLogLevel/success_error_uppercase
+=== CONT  TestStrToLogLevel/default_empty_string
+=== CONT  TestStrToLogLevel/success_info_uppercase
+=== CONT  TestStrToLogLevel/success_info_mixed_case
+=== CONT  TestStrToLogLevel/success_debug_lowercase
+=== CONT  TestStrToLogLevel/default_invalid_string
+=== CONT  TestStrToLogLevel/default_unknown_string
+=== CONT  TestStrToLogLevel/success_critical_uppercase
+--- PASS: TestStrToLogLevel (0.00s)
+    --- PASS: TestStrToLogLevel/success_debug_uppercase (0.00s)
+    --- PASS: TestStrToLogLevel/success_warning_uppercase (0.00s)
+    --- PASS: TestStrToLogLevel/default_empty_string (0.00s)
+    --- PASS: TestStrToLogLevel/success_error_uppercase (0.00s)
+    --- PASS: TestStrToLogLevel/success_info_uppercase (0.00s)
+    --- PASS: TestStrToLogLevel/success_info_mixed_case (0.00s)
+    --- PASS: TestStrToLogLevel/success_debug_lowercase (0.00s)
+    --- PASS: TestStrToLogLevel/default_invalid_string (0.00s)
+    --- PASS: TestStrToLogLevel/default_unknown_string (0.00s)
+    --- PASS: TestStrToLogLevel/success_critical_uppercase (0.00s)
+=== RUN   TestLogLevelFromEnv
+=== RUN   TestLogLevelFromEnv/success_debug_from_env
+=== RUN   TestLogLevelFromEnv/success_info_from_env
+=== RUN   TestLogLevelFromEnv/success_warning_from_env
+=== RUN   TestLogLevelFromEnv/success_error_from_env
+=== RUN   TestLogLevelFromEnv/success_critical_from_env
+=== RUN   TestLogLevelFromEnv/default_empty_env_var
+=== RUN   TestLogLevelFromEnv/default_unset_env_var
+=== RUN   TestLogLevelFromEnv/default_invalid_env_value
+--- PASS: TestLogLevelFromEnv (0.00s)
+    --- PASS: TestLogLevelFromEnv/success_debug_from_env (0.00s)
+    --- PASS: TestLogLevelFromEnv/success_info_from_env (0.00s)
+    --- PASS: TestLogLevelFromEnv/success_warning_from_env (0.00s)
+    --- PASS: TestLogLevelFromEnv/success_error_from_env (0.00s)
+    --- PASS: TestLogLevelFromEnv/success_critical_from_env (0.00s)
+    --- PASS: TestLogLevelFromEnv/default_empty_env_var (0.00s)
+    --- PASS: TestLogLevelFromEnv/default_unset_env_var (0.00s)
+    --- PASS: TestLogLevelFromEnv/default_invalid_env_value (0.00s)
+=== RUN   TestNewArkLogger
+=== RUN   TestNewArkLogger/success_basic_logger
+=== PAUSE TestNewArkLogger/success_basic_logger
+=== RUN   TestNewArkLogger/success_env_resolver_logger
+=== PAUSE TestNewArkLogger/success_env_resolver_logger
+=== RUN   TestNewArkLogger/success_critical_level
+=== PAUSE TestNewArkLogger/success_critical_level
+=== RUN   TestNewArkLogger/success_empty_name
+=== PAUSE TestNewArkLogger/success_empty_name
+=== CONT  TestNewArkLogger/success_basic_logger
+=== CONT  TestNewArkLogger/success_critical_level
+=== CONT  TestNewArkLogger/success_empty_name
+=== CONT  TestNewArkLogger/success_env_resolver_logger
+--- PASS: TestNewArkLogger (0.00s)
+    --- PASS: TestNewArkLogger/success_basic_logger (0.00s)
+    --- PASS: TestNewArkLogger/success_critical_level (0.00s)
+    --- PASS: TestNewArkLogger/success_empty_name (0.00s)
+    --- PASS: TestNewArkLogger/success_env_resolver_logger (0.00s)
+=== RUN   TestArkLogger_LogLevel
+=== RUN   TestArkLogger_LogLevel/success_static_level
+=== RUN   TestArkLogger_LogLevel/success_env_level_debug
+=== RUN   TestArkLogger_LogLevel/success_env_level_critical
+=== RUN   TestArkLogger_LogLevel/success_env_unset_defaults_critical
+=== RUN   TestArkLogger_LogLevel/success_env_invalid_defaults_critical
+--- PASS: TestArkLogger_LogLevel (0.00s)
+    --- PASS: TestArkLogger_LogLevel/success_static_level (0.00s)
+    --- PASS: TestArkLogger_LogLevel/success_env_level_debug (0.00s)
+    --- PASS: TestArkLogger_LogLevel/success_env_level_critical (0.00s)
+    --- PASS: TestArkLogger_LogLevel/success_env_unset_defaults_critical (0.00s)
+    --- PASS: TestArkLogger_LogLevel/success_env_invalid_defaults_critical (0.00s)
+=== RUN   TestArkLogger_SetVerbose
+=== RUN   TestArkLogger_SetVerbose/success_set_true_from_false
+=== PAUSE TestArkLogger_SetVerbose/success_set_true_from_false
+=== RUN   TestArkLogger_SetVerbose/success_set_false_from_true
+=== PAUSE TestArkLogger_SetVerbose/success_set_false_from_true
+=== RUN   TestArkLogger_SetVerbose/success_set_true_from_true
+=== PAUSE TestArkLogger_SetVerbose/success_set_true_from_true
+=== RUN   TestArkLogger_SetVerbose/success_set_false_from_false
+=== PAUSE TestArkLogger_SetVerbose/success_set_false_from_false
+=== CONT  TestArkLogger_SetVerbose/success_set_true_from_false
+=== CONT  TestArkLogger_SetVerbose/success_set_true_from_true
+=== CONT  TestArkLogger_SetVerbose/success_set_false_from_false
+=== CONT  TestArkLogger_SetVerbose/success_set_false_from_true
+--- PASS: TestArkLogger_SetVerbose (0.00s)
+    --- PASS: TestArkLogger_SetVerbose/success_set_true_from_false (0.00s)
+    --- PASS: TestArkLogger_SetVerbose/success_set_true_from_true (0.00s)
+    --- PASS: TestArkLogger_SetVerbose/success_set_false_from_false (0.00s)
+    --- PASS: TestArkLogger_SetVerbose/success_set_false_from_true (0.00s)
+=== RUN   TestArkLogger_Debug
+=== RUN   TestArkLogger_Debug/success_debug_output
+=== PAUSE TestArkLogger_Debug/success_debug_output
+=== RUN   TestArkLogger_Debug/success_no_output_verbose_false
+=== PAUSE TestArkLogger_Debug/success_no_output_verbose_false
+=== RUN   TestArkLogger_Debug/success_no_output_level_too_low
+=== PAUSE TestArkLogger_Debug/success_no_output_level_too_low
+=== RUN   TestArkLogger_Debug/success_no_output_critical_level
+=== PAUSE TestArkLogger_Debug/success_no_output_critical_level
+=== RUN   TestArkLogger_Debug/success_debug_no_args
+=== PAUSE TestArkLogger_Debug/success_debug_no_args
+=== CONT  TestArkLogger_Debug/success_debug_output
+=== CONT  TestArkLogger_Debug/success_no_output_critical_level
+=== CONT  TestArkLogger_Debug/success_no_output_level_too_low
+=== CONT  TestArkLogger_Debug/success_debug_no_args
+=== CONT  TestArkLogger_Debug/success_no_output_verbose_false
+--- PASS: TestArkLogger_Debug (0.00s)
+    --- PASS: TestArkLogger_Debug/success_no_output_critical_level (0.00s)
+    --- PASS: TestArkLogger_Debug/success_debug_output (0.00s)
+    --- PASS: TestArkLogger_Debug/success_no_output_level_too_low (0.00s)
+    --- PASS: TestArkLogger_Debug/success_debug_no_args (0.00s)
+    --- PASS: TestArkLogger_Debug/success_no_output_verbose_false (0.00s)
+=== RUN   TestArkLogger_Info
+=== RUN   TestArkLogger_Info/success_info_output
+=== PAUSE TestArkLogger_Info/success_info_output
+=== RUN   TestArkLogger_Info/success_info_debug_level
+=== PAUSE TestArkLogger_Info/success_info_debug_level
+=== RUN   TestArkLogger_Info/success_no_output_verbose_false
+=== PAUSE TestArkLogger_Info/success_no_output_verbose_false
+=== RUN   TestArkLogger_Info/success_no_output_level_too_low
+=== PAUSE TestArkLogger_Info/success_no_output_level_too_low
+=== CONT  TestArkLogger_Info/success_info_output
+=== CONT  TestArkLogger_Info/success_no_output_verbose_false
+=== CONT  TestArkLogger_Info/success_no_output_level_too_low
+=== CONT  TestArkLogger_Info/success_info_debug_level
+--- PASS: TestArkLogger_Info (0.00s)
+    --- PASS: TestArkLogger_Info/success_info_output (0.00s)
+    --- PASS: TestArkLogger_Info/success_no_output_verbose_false (0.00s)
+    --- PASS: TestArkLogger_Info/success_no_output_level_too_low (0.00s)
+    --- PASS: TestArkLogger_Info/success_info_debug_level (0.00s)
+=== RUN   TestArkLogger_Warning
+=== RUN   TestArkLogger_Warning/success_warning_output
+=== PAUSE TestArkLogger_Warning/success_warning_output
+=== RUN   TestArkLogger_Warning/success_warning_higher_level
+=== PAUSE TestArkLogger_Warning/success_warning_higher_level
+=== RUN   TestArkLogger_Warning/success_no_output_verbose_false
+=== PAUSE TestArkLogger_Warning/success_no_output_verbose_false
+=== RUN   TestArkLogger_Warning/success_no_output_level_too_low
+=== PAUSE TestArkLogger_Warning/success_no_output_level_too_low
+=== CONT  TestArkLogger_Warning/success_warning_output
+=== CONT  TestArkLogger_Warning/success_no_output_verbose_false
+=== CONT  TestArkLogger_Warning/success_no_output_level_too_low
+=== CONT  TestArkLogger_Warning/success_warning_higher_level
+--- PASS: TestArkLogger_Warning (0.00s)
+    --- PASS: TestArkLogger_Warning/success_no_output_verbose_false (0.00s)
+    --- PASS: TestArkLogger_Warning/success_warning_output (0.00s)
+    --- PASS: TestArkLogger_Warning/success_no_output_level_too_low (0.00s)
+    --- PASS: TestArkLogger_Warning/success_warning_higher_level (0.00s)
+=== RUN   TestArkLogger_Error
+=== RUN   TestArkLogger_Error/success_error_output
+=== PAUSE TestArkLogger_Error/success_error_output
+=== RUN   TestArkLogger_Error/success_error_higher_level
+=== PAUSE TestArkLogger_Error/success_error_higher_level
+=== RUN   TestArkLogger_Error/success_no_output_verbose_false
+=== PAUSE TestArkLogger_Error/success_no_output_verbose_false
+=== RUN   TestArkLogger_Error/success_no_output_level_too_low
+=== PAUSE TestArkLogger_Error/success_no_output_level_too_low
+=== CONT  TestArkLogger_Error/success_error_output
+=== CONT  TestArkLogger_Error/success_no_output_verbose_false
+=== CONT  TestArkLogger_Error/success_no_output_level_too_low
+=== CONT  TestArkLogger_Error/success_error_higher_level
+--- PASS: TestArkLogger_Error (0.00s)
+    --- PASS: TestArkLogger_Error/success_error_output (0.00s)
+    --- PASS: TestArkLogger_Error/success_no_output_verbose_false (0.00s)
+    --- PASS: TestArkLogger_Error/success_no_output_level_too_low (0.00s)
+    --- PASS: TestArkLogger_Error/success_error_higher_level (0.00s)
+=== RUN   TestGetLogger
+=== RUN   TestGetLogger/success_default_style
+=== RUN   TestGetLogger/success_env_log_level
+=== RUN   TestGetLogger/success_explicit_default_style
+=== RUN   TestGetLogger/success_unknown_style_returns_nil
+=== RUN   TestGetLogger/success_empty_app_name
+--- PASS: TestGetLogger (0.00s)
+    --- PASS: TestGetLogger/success_default_style (0.00s)
+    --- PASS: TestGetLogger/success_env_log_level (0.00s)
+    --- PASS: TestGetLogger/success_explicit_default_style (0.00s)
+    --- PASS: TestGetLogger/success_unknown_style_returns_nil (0.00s)
+    --- PASS: TestGetLogger/success_empty_app_name (0.00s)
+=== RUN   TestGlobalLogger
+--- PASS: TestGlobalLogger (0.00s)
+=== RUN   TestRandomIPAddress
+=== RUN   TestRandomIPAddress/success_generates_valid_ipv4_format
+=== PAUSE TestRandomIPAddress/success_generates_valid_ipv4_format
+=== RUN   TestRandomIPAddress/success_generates_dotted_decimal_notation
+=== PAUSE TestRandomIPAddress/success_generates_dotted_decimal_notation
+=== RUN   TestRandomIPAddress/success_generates_consistent_format
+=== PAUSE TestRandomIPAddress/success_generates_consistent_format
+=== RUN   TestRandomIPAddress/success_generates_non_empty_result
+=== PAUSE TestRandomIPAddress/success_generates_non_empty_result
+=== RUN   TestRandomIPAddress/success_octets_within_valid_range
+=== PAUSE TestRandomIPAddress/success_octets_within_valid_range
+=== CONT  TestRandomIPAddress/success_generates_valid_ipv4_format
+=== CONT  TestRandomIPAddress/success_generates_non_empty_result
+=== CONT  TestRandomIPAddress/success_octets_within_valid_range
+=== CONT  TestRandomIPAddress/success_generates_consistent_format
+=== CONT  TestRandomIPAddress/success_generates_dotted_decimal_notation
+--- PASS: TestRandomIPAddress (0.00s)
+    --- PASS: TestRandomIPAddress/success_octets_within_valid_range (0.00s)
+    --- PASS: TestRandomIPAddress/success_generates_valid_ipv4_format (0.00s)
+    --- PASS: TestRandomIPAddress/success_generates_consistent_format (0.00s)
+    --- PASS: TestRandomIPAddress/success_generates_non_empty_result (0.00s)
+    --- PASS: TestRandomIPAddress/success_generates_dotted_decimal_notation (0.00s)
+=== RUN   TestRandomString
+=== RUN   TestRandomString/success_normal_length
+=== PAUSE TestRandomString/success_normal_length
+=== RUN   TestRandomString/success_zero_length
+=== PAUSE TestRandomString/success_zero_length
+=== RUN   TestRandomString/success_single_character
+=== PAUSE TestRandomString/success_single_character
+=== RUN   TestRandomString/success_large_length
+=== PAUSE TestRandomString/success_large_length
+=== RUN   TestRandomString/success_contains_only_alphanumeric
+=== PAUSE TestRandomString/success_contains_only_alphanumeric
+=== RUN   TestRandomString/success_character_set_validation
+=== PAUSE TestRandomString/success_character_set_validation
+=== CONT  TestRandomString/success_normal_length
+=== CONT  TestRandomString/success_large_length
+=== CONT  TestRandomString/success_single_character
+=== CONT  TestRandomString/success_zero_length
+=== CONT  TestRandomString/success_character_set_validation
+=== CONT  TestRandomString/success_contains_only_alphanumeric
+--- PASS: TestRandomString (0.00s)
+    --- PASS: TestRandomString/success_normal_length (0.00s)
+    --- PASS: TestRandomString/success_large_length (0.00s)
+    --- PASS: TestRandomString/success_single_character (0.00s)
+    --- PASS: TestRandomString/success_zero_length (0.00s)
+    --- PASS: TestRandomString/success_character_set_validation (0.00s)
+    --- PASS: TestRandomString/success_contains_only_alphanumeric (0.00s)
+=== RUN   TestRandomNumberString
+=== RUN   TestRandomNumberString/success_normal_length
+=== PAUSE TestRandomNumberString/success_normal_length
+=== RUN   TestRandomNumberString/success_zero_length
+=== PAUSE TestRandomNumberString/success_zero_length
+=== RUN   TestRandomNumberString/success_single_digit
+=== PAUSE TestRandomNumberString/success_single_digit
+=== RUN   TestRandomNumberString/success_large_length
+=== PAUSE TestRandomNumberString/success_large_length
+=== RUN   TestRandomNumberString/success_contains_only_digits
+=== PAUSE TestRandomNumberString/success_contains_only_digits
+=== RUN   TestRandomNumberString/success_digit_character_set_validation
+=== PAUSE TestRandomNumberString/success_digit_character_set_validation
+=== RUN   TestRandomNumberString/success_numeric_string_format
+=== PAUSE TestRandomNumberString/success_numeric_string_format
+=== CONT  TestRandomNumberString/success_normal_length
+=== CONT  TestRandomNumberString/success_contains_only_digits
+=== CONT  TestRandomNumberString/success_numeric_string_format
+=== CONT  TestRandomNumberString/success_large_length
+=== CONT  TestRandomNumberString/success_single_digit
+=== CONT  TestRandomNumberString/success_zero_length
+=== CONT  TestRandomNumberString/success_digit_character_set_validation
+--- PASS: TestRandomNumberString (0.00s)
+    --- PASS: TestRandomNumberString/success_normal_length (0.00s)
+    --- PASS: TestRandomNumberString/success_contains_only_digits (0.00s)
+    --- PASS: TestRandomNumberString/success_large_length (0.00s)
+    --- PASS: TestRandomNumberString/success_single_digit (0.00s)
+    --- PASS: TestRandomNumberString/success_digit_character_set_validation (0.00s)
+    --- PASS: TestRandomNumberString/success_numeric_string_format (0.00s)
+    --- PASS: TestRandomNumberString/success_zero_length (0.00s)
+=== RUN   TestRandomPassword
+=== RUN   TestRandomPassword/success_minimum_valid_length
+=== PAUSE TestRandomPassword/success_minimum_valid_length
+=== RUN   TestRandomPassword/success_normal_length_password
+=== PAUSE TestRandomPassword/success_normal_length_password
+=== RUN   TestRandomPassword/success_long_password
+=== PAUSE TestRandomPassword/success_long_password
+=== RUN   TestRandomPassword/success_character_set_validation
+=== PAUSE TestRandomPassword/success_character_set_validation
+=== RUN   TestRandomPassword/success_complexity_requirements_met
+=== PAUSE TestRandomPassword/success_complexity_requirements_met
+=== RUN   TestRandomPassword/error_length_too_short_panics
+=== PAUSE TestRandomPassword/error_length_too_short_panics
+=== RUN   TestRandomPassword/error_length_zero_panics
+=== PAUSE TestRandomPassword/error_length_zero_panics
+=== RUN   TestRandomPassword/error_negative_length_panics
+=== PAUSE TestRandomPassword/error_negative_length_panics
+=== CONT  TestRandomPassword/success_minimum_valid_length
+=== CONT  TestRandomPassword/success_complexity_requirements_met
+=== CONT  TestRandomPassword/error_length_zero_panics
+=== CONT  TestRandomPassword/error_length_too_short_panics
+=== CONT  TestRandomPassword/success_long_password
+=== CONT  TestRandomPassword/error_negative_length_panics
+=== CONT  TestRandomPassword/success_character_set_validation
+=== CONT  TestRandomPassword/success_normal_length_password
+--- PASS: TestRandomPassword (0.00s)
+    --- PASS: TestRandomPassword/error_length_zero_panics (0.00s)
+    --- PASS: TestRandomPassword/error_length_too_short_panics (0.00s)
+    --- PASS: TestRandomPassword/error_negative_length_panics (0.00s)
+    --- PASS: TestRandomPassword/success_minimum_valid_length (0.00s)
+    --- PASS: TestRandomPassword/success_character_set_validation (0.00s)
+    --- PASS: TestRandomPassword/success_complexity_requirements_met (0.00s)
+    --- PASS: TestRandomPassword/success_normal_length_password (0.00s)
+    --- PASS: TestRandomPassword/success_long_password (0.00s)
+=== RUN   TestRandomChar
+=== RUN   TestRandomChar/success_digit_charset
+=== PAUSE TestRandomChar/success_digit_charset
+=== RUN   TestRandomChar/success_lowercase_charset
+=== PAUSE TestRandomChar/success_lowercase_charset
+=== RUN   TestRandomChar/success_uppercase_charset
+=== PAUSE TestRandomChar/success_uppercase_charset
+=== RUN   TestRandomChar/success_single_character_charset
+=== PAUSE TestRandomChar/success_single_character_charset
+=== RUN   TestRandomChar/success_special_characters
+=== PAUSE TestRandomChar/success_special_characters
+=== CONT  TestRandomChar/success_digit_charset
+=== CONT  TestRandomChar/success_single_character_charset
+=== CONT  TestRandomChar/success_lowercase_charset
+=== CONT  TestRandomChar/success_uppercase_charset
+=== CONT  TestRandomChar/success_special_characters
+--- PASS: TestRandomChar (0.00s)
+    --- PASS: TestRandomChar/success_digit_charset (0.00s)
+    --- PASS: TestRandomChar/success_single_character_charset (0.00s)
+    --- PASS: TestRandomChar/success_lowercase_charset (0.00s)
+    --- PASS: TestRandomChar/success_uppercase_charset (0.00s)
+    --- PASS: TestRandomChar/success_special_characters (0.00s)
+=== RUN   TestShuffle
+=== RUN   TestShuffle/success_shuffles_byte_array
+=== PAUSE TestShuffle/success_shuffles_byte_array
+=== RUN   TestShuffle/success_empty_array
+=== PAUSE TestShuffle/success_empty_array
+=== RUN   TestShuffle/success_single_element
+=== PAUSE TestShuffle/success_single_element
+=== RUN   TestShuffle/success_two_elements
+=== PAUSE TestShuffle/success_two_elements
+=== RUN   TestShuffle/success_duplicate_characters
+=== PAUSE TestShuffle/success_duplicate_characters
+=== CONT  TestShuffle/success_shuffles_byte_array
+=== CONT  TestShuffle/success_two_elements
+=== CONT  TestShuffle/success_duplicate_characters
+=== CONT  TestShuffle/success_single_element
+=== CONT  TestShuffle/success_empty_array
+--- PASS: TestShuffle (0.00s)
+    --- PASS: TestShuffle/success_two_elements (0.00s)
+    --- PASS: TestShuffle/success_single_element (0.00s)
+    --- PASS: TestShuffle/success_shuffles_byte_array (0.00s)
+    --- PASS: TestShuffle/success_duplicate_characters (0.00s)
+    --- PASS: TestShuffle/success_empty_array (0.00s)
+=== RUN   TestRandomFunctions_Determinism
+=== RUN   TestRandomFunctions_Determinism/success_random_string_produces_different_outputs
+=== PAUSE TestRandomFunctions_Determinism/success_random_string_produces_different_outputs
+=== RUN   TestRandomFunctions_Determinism/success_random_password_produces_different_outputs
+=== PAUSE TestRandomFunctions_Determinism/success_random_password_produces_different_outputs
+=== CONT  TestRandomFunctions_Determinism/success_random_string_produces_different_outputs
+=== CONT  TestRandomFunctions_Determinism/success_random_password_produces_different_outputs
+--- PASS: TestRandomFunctions_Determinism (0.00s)
+    --- PASS: TestRandomFunctions_Determinism/success_random_string_produces_different_outputs (0.00s)
+    --- PASS: TestRandomFunctions_Determinism/success_random_password_produces_different_outputs (0.00s)
+=== RUN   TestRetryCall
+=== RUN   TestRetryCall/success_on_first_try
+=== PAUSE TestRetryCall/success_on_first_try
+=== RUN   TestRetryCall/success_on_second_try
+=== PAUSE TestRetryCall/success_on_second_try
+=== RUN   TestRetryCall/exhaust_all_retries
+=== PAUSE TestRetryCall/exhaust_all_retries
+=== RUN   TestRetryCall/zero_tries
+=== PAUSE TestRetryCall/zero_tries
+=== RUN   TestRetryCall/one_try_that_fails
+=== PAUSE TestRetryCall/one_try_that_fails
+=== RUN   TestRetryCall/with_int_jitter
+=== PAUSE TestRetryCall/with_int_jitter
+=== RUN   TestRetryCall/with_range_jitter
+=== PAUSE TestRetryCall/with_range_jitter
+=== RUN   TestRetryCall/logger_called_for_each_retry
+=== PAUSE TestRetryCall/logger_called_for_each_retry
+=== RUN   TestRetryCall/logger_nil_-_no_panic
+=== PAUSE TestRetryCall/logger_nil_-_no_panic
+=== CONT  TestRetryCall/success_on_first_try
+=== CONT  TestRetryCall/with_int_jitter
+=== CONT  TestRetryCall/success_on_second_try
+=== CONT  TestRetryCall/logger_nil_-_no_panic
+=== CONT  TestRetryCall/with_range_jitter
+=== CONT  TestRetryCall/logger_called_for_each_retry
+=== CONT  TestRetryCall/one_try_that_fails
+=== CONT  TestRetryCall/exhaust_all_retries
+=== CONT  TestRetryCall/zero_tries
+--- PASS: TestRetryCall (0.00s)
+    --- PASS: TestRetryCall/success_on_first_try (0.00s)
+    --- PASS: TestRetryCall/logger_nil_-_no_panic (0.00s)
+    --- PASS: TestRetryCall/one_try_that_fails (0.00s)
+    --- PASS: TestRetryCall/zero_tries (0.00s)
+    --- PASS: TestRetryCall/with_range_jitter (1.00s)
+    --- PASS: TestRetryCall/success_on_second_try (1.00s)
+    --- PASS: TestRetryCall/exhaust_all_retries (1.00s)
+    --- PASS: TestRetryCall/with_int_jitter (1.00s)
+    --- PASS: TestRetryCall/logger_called_for_each_retry (3.00s)
+=== RUN   TestSerializeResponseToJSON
+=== RUN   TestSerializeResponseToJSON/success_valid_json_object
+=== RUN   TestSerializeResponseToJSON/success_valid_json_array
+=== RUN   TestSerializeResponseToJSON/error_invalid_json
+=== RUN   TestSerializeResponseToJSON/success_empty_string
+=== RUN   TestSerializeResponseToJSON/success_plain_text
+=== RUN   TestSerializeResponseToJSON/success_json_string
+=== RUN   TestSerializeResponseToJSON/success_json_number
+=== RUN   TestSerializeResponseToJSON/success_json_boolean
+=== RUN   TestSerializeResponseToJSON/success_json_null
+--- PASS: TestSerializeResponseToJSON (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_valid_json_object (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_valid_json_array (0.00s)
+    --- PASS: TestSerializeResponseToJSON/error_invalid_json (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_empty_string (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_plain_text (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_json_string (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_json_number (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_json_boolean (0.00s)
+    --- PASS: TestSerializeResponseToJSON/success_json_null (0.00s)
+=== RUN   TestConvertToSnakeCase
+=== RUN   TestConvertToSnakeCase/simple_map_with_camel_case_keys
+=== RUN   TestConvertToSnakeCase/nested_map
+=== RUN   TestConvertToSnakeCase/array_of_maps
+=== RUN   TestConvertToSnakeCase/primitive_types_unchanged
+=== RUN   TestConvertToSnakeCase/number_unchanged
+=== RUN   TestConvertToSnakeCase/boolean_unchanged
+=== RUN   TestConvertToSnakeCase/nil_input
+--- PASS: TestConvertToSnakeCase (0.00s)
+    --- PASS: TestConvertToSnakeCase/simple_map_with_camel_case_keys (0.00s)
+    --- PASS: TestConvertToSnakeCase/nested_map (0.00s)
+    --- PASS: TestConvertToSnakeCase/array_of_maps (0.00s)
+    --- PASS: TestConvertToSnakeCase/primitive_types_unchanged (0.00s)
+    --- PASS: TestConvertToSnakeCase/number_unchanged (0.00s)
+    --- PASS: TestConvertToSnakeCase/boolean_unchanged (0.00s)
+    --- PASS: TestConvertToSnakeCase/nil_input (0.00s)
+=== RUN   TestConvertToCamelCase
+=== RUN   TestConvertToCamelCase/simple_map_with_snake_case_keys
+=== RUN   TestConvertToCamelCase/nested_map
+=== RUN   TestConvertToCamelCase/array_of_maps
+=== RUN   TestConvertToCamelCase/primitive_types_unchanged
+=== RUN   TestConvertToCamelCase/number_unchanged
+=== RUN   TestConvertToCamelCase/boolean_unchanged
+=== RUN   TestConvertToCamelCase/nil_input
+--- PASS: TestConvertToCamelCase (0.00s)
+    --- PASS: TestConvertToCamelCase/simple_map_with_snake_case_keys (0.00s)
+    --- PASS: TestConvertToCamelCase/nested_map (0.00s)
+    --- PASS: TestConvertToCamelCase/array_of_maps (0.00s)
+    --- PASS: TestConvertToCamelCase/primitive_types_unchanged (0.00s)
+    --- PASS: TestConvertToCamelCase/number_unchanged (0.00s)
+    --- PASS: TestConvertToCamelCase/boolean_unchanged (0.00s)
+    --- PASS: TestConvertToCamelCase/nil_input (0.00s)
+=== RUN   TestDeserializeJSONSnake
+=== RUN   TestDeserializeJSONSnake/simple_json_object_with_camel_case_keys
+=== RUN   TestDeserializeJSONSnake/nested_json_object
+=== RUN   TestDeserializeJSONSnake/json_array
+=== RUN   TestDeserializeJSONSnake/invalid_json
+=== RUN   TestDeserializeJSONSnake/empty_json
+--- PASS: TestDeserializeJSONSnake (0.00s)
+    --- PASS: TestDeserializeJSONSnake/simple_json_object_with_camel_case_keys (0.00s)
+    --- PASS: TestDeserializeJSONSnake/nested_json_object (0.00s)
+    --- PASS: TestDeserializeJSONSnake/json_array (0.00s)
+    --- PASS: TestDeserializeJSONSnake/invalid_json (0.00s)
+    --- PASS: TestDeserializeJSONSnake/empty_json (0.00s)
+=== RUN   TestSerializeJSONCamel
+=== RUN   TestSerializeJSONCamel/simple_struct
+=== RUN   TestSerializeJSONCamel/map_with_snake_case_keys
+=== RUN   TestSerializeJSONCamel/nested_structure
+=== RUN   TestSerializeJSONCamel/invalid_input_channel
+--- PASS: TestSerializeJSONCamel (0.00s)
+    --- PASS: TestSerializeJSONCamel/simple_struct (0.00s)
+    --- PASS: TestSerializeJSONCamel/map_with_snake_case_keys (0.00s)
+    --- PASS: TestSerializeJSONCamel/nested_structure (0.00s)
+    --- PASS: TestSerializeJSONCamel/invalid_input_channel (0.00s)
+=== RUN   TestDeserializeJSONSnakeSchema
+=== RUN   TestDeserializeJSONSnakeSchema/json_without_schema
+=== RUN   TestDeserializeJSONSnakeSchema/invalid_json
+--- PASS: TestDeserializeJSONSnakeSchema (0.00s)
+    --- PASS: TestDeserializeJSONSnakeSchema/json_without_schema (0.00s)
+    --- PASS: TestDeserializeJSONSnakeSchema/invalid_json (0.00s)
+=== RUN   TestSerializeJSONCamelSchema
+=== RUN   TestSerializeJSONCamelSchema/map_without_schema
+=== RUN   TestSerializeJSONCamelSchema/invalid_input_with_schema
+--- PASS: TestSerializeJSONCamelSchema (0.00s)
+    --- PASS: TestSerializeJSONCamelSchema/map_without_schema (0.00s)
+    --- PASS: TestSerializeJSONCamelSchema/invalid_input_with_schema (0.00s)
+=== RUN   TestResolveFieldsSquashed
+=== RUN   TestResolveFieldsSquashed/simple_struct
+=== RUN   TestResolveFieldsSquashed/embedded_struct
+=== RUN   TestResolveFieldsSquashed/pointer_to_struct
+--- PASS: TestResolveFieldsSquashed (0.00s)
+    --- PASS: TestResolveFieldsSquashed/simple_struct (0.00s)
+    --- PASS: TestResolveFieldsSquashed/embedded_struct (0.00s)
+    --- PASS: TestResolveFieldsSquashed/pointer_to_struct (0.00s)
+=== RUN   TestFindFieldByName
+=== RUN   TestFindFieldByName/find_existing_field
+=== RUN   TestFindFieldByName/find_field_with_different_case
+=== RUN   TestFindFieldByName/field_not_found
+=== RUN   TestFindFieldByName/find_field_in_pointer_type
+--- PASS: TestFindFieldByName (0.00s)
+    --- PASS: TestFindFieldByName/find_existing_field (0.00s)
+    --- PASS: TestFindFieldByName/find_field_with_different_case (0.00s)
+    --- PASS: TestFindFieldByName/field_not_found (0.00s)
+    --- PASS: TestFindFieldByName/find_field_in_pointer_type (0.00s)
+=== RUN   TestSerializeResponseToJSON_ErrorHandling
+--- PASS: TestSerializeResponseToJSON_ErrorHandling (0.00s)
+=== RUN   TestDisableColor
+=== RUN   TestDisableColor/success_disable_color_from_enabled_state
+=== RUN   TestDisableColor/success_disable_color_from_disabled_state
+--- PASS: TestDisableColor (0.00s)
+    --- PASS: TestDisableColor/success_disable_color_from_enabled_state (0.00s)
+    --- PASS: TestDisableColor/success_disable_color_from_disabled_state (0.00s)
+=== RUN   TestEnableColor
+=== RUN   TestEnableColor/success_enable_color_from_disabled_state
+=== RUN   TestEnableColor/success_enable_color_from_enabled_state
+--- PASS: TestEnableColor (0.00s)
+    --- PASS: TestEnableColor/success_enable_color_from_disabled_state (0.00s)
+    --- PASS: TestEnableColor/success_enable_color_from_enabled_state (0.00s)
+=== RUN   TestIsColoring
+=== RUN   TestIsColoring/success_coloring_enabled
+=== PAUSE TestIsColoring/success_coloring_enabled
+=== RUN   TestIsColoring/success_coloring_disabled
+=== PAUSE TestIsColoring/success_coloring_disabled
+=== RUN   TestIsColoring/success_default_state
+=== PAUSE TestIsColoring/success_default_state
+=== CONT  TestIsColoring/success_coloring_enabled
+=== CONT  TestIsColoring/success_coloring_disabled
+=== CONT  TestIsColoring/success_default_state
+--- PASS: TestIsColoring (0.00s)
+    --- PASS: TestIsColoring/success_coloring_enabled (0.00s)
+    --- PASS: TestIsColoring/success_coloring_disabled (0.00s)
+    --- PASS: TestIsColoring/success_default_state (0.00s)
+=== RUN   TestEnableInteractive
+=== RUN   TestEnableInteractive/success_enable_interactive_from_disabled_state
+=== RUN   TestEnableInteractive/success_enable_interactive_from_enabled_state
+--- PASS: TestEnableInteractive (0.00s)
+    --- PASS: TestEnableInteractive/success_enable_interactive_from_disabled_state (0.00s)
+    --- PASS: TestEnableInteractive/success_enable_interactive_from_enabled_state (0.00s)
+=== RUN   TestDisableInteractive
+=== RUN   TestDisableInteractive/success_disable_interactive_from_enabled_state
+=== RUN   TestDisableInteractive/success_disable_interactive_from_disabled_state
+--- PASS: TestDisableInteractive (0.00s)
+    --- PASS: TestDisableInteractive/success_disable_interactive_from_enabled_state (0.00s)
+    --- PASS: TestDisableInteractive/success_disable_interactive_from_disabled_state (0.00s)
+=== RUN   TestIsInteractive
+=== RUN   TestIsInteractive/success_interactive_enabled
+=== PAUSE TestIsInteractive/success_interactive_enabled
+=== RUN   TestIsInteractive/success_interactive_disabled
+=== PAUSE TestIsInteractive/success_interactive_disabled
+=== RUN   TestIsInteractive/success_default_state
+=== PAUSE TestIsInteractive/success_default_state
+=== CONT  TestIsInteractive/success_interactive_enabled
+=== CONT  TestIsInteractive/success_default_state
+=== CONT  TestIsInteractive/success_interactive_disabled
+--- PASS: TestIsInteractive (0.00s)
+    --- PASS: TestIsInteractive/success_interactive_enabled (0.00s)
+    --- PASS: TestIsInteractive/success_default_state (0.00s)
+    --- PASS: TestIsInteractive/success_interactive_disabled (0.00s)
+=== RUN   TestAllowOutput
+=== RUN   TestAllowOutput/success_allow_output_from_disallowed_state
+=== RUN   TestAllowOutput/success_allow_output_from_allowed_state
+--- PASS: TestAllowOutput (0.00s)
+    --- PASS: TestAllowOutput/success_allow_output_from_disallowed_state (0.00s)
+    --- PASS: TestAllowOutput/success_allow_output_from_allowed_state (0.00s)
+=== RUN   TestDisallowOutput
+=== RUN   TestDisallowOutput/success_disallow_output_from_allowed_state
+=== RUN   TestDisallowOutput/success_disallow_output_from_disallowed_state
+--- PASS: TestDisallowOutput (0.00s)
+    --- PASS: TestDisallowOutput/success_disallow_output_from_allowed_state (0.00s)
+    --- PASS: TestDisallowOutput/success_disallow_output_from_disallowed_state (0.00s)
+=== RUN   TestIsAllowingOutput
+=== RUN   TestIsAllowingOutput/success_output_allowed
+=== PAUSE TestIsAllowingOutput/success_output_allowed
+=== RUN   TestIsAllowingOutput/success_output_disallowed
+=== PAUSE TestIsAllowingOutput/success_output_disallowed
+=== RUN   TestIsAllowingOutput/success_default_state
+=== PAUSE TestIsAllowingOutput/success_default_state
+=== CONT  TestIsAllowingOutput/success_output_allowed
+=== CONT  TestIsAllowingOutput/success_default_state
+=== CONT  TestIsAllowingOutput/success_output_disallowed
+--- PASS: TestIsAllowingOutput (0.00s)
+    --- PASS: TestIsAllowingOutput/success_output_allowed (0.00s)
+    --- PASS: TestIsAllowingOutput/success_default_state (0.00s)
+    --- PASS: TestIsAllowingOutput/success_output_disallowed (0.00s)
+=== RUN   TestEnableVerboseLogging
+=== RUN   TestEnableVerboseLogging/success_enable_with_custom_log_level
+=== RUN   TestEnableVerboseLogging/success_enable_with_empty_log_level_defaults_to_debug
+=== RUN   TestEnableVerboseLogging/success_enable_with_debug_log_level
+=== RUN   TestEnableVerboseLogging/success_enable_with_error_log_level
+--- PASS: TestEnableVerboseLogging (0.00s)
+    --- PASS: TestEnableVerboseLogging/success_enable_with_custom_log_level (0.00s)
+    --- PASS: TestEnableVerboseLogging/success_enable_with_empty_log_level_defaults_to_debug (0.00s)
+    --- PASS: TestEnableVerboseLogging/success_enable_with_debug_log_level (0.00s)
+    --- PASS: TestEnableVerboseLogging/success_enable_with_error_log_level (0.00s)
+=== RUN   TestDisableVerboseLogging
+=== RUN   TestDisableVerboseLogging/success_disable_verbose_logging
+=== RUN   TestDisableVerboseLogging/success_disable_from_already_critical_level
+--- PASS: TestDisableVerboseLogging (0.00s)
+    --- PASS: TestDisableVerboseLogging/success_disable_verbose_logging (0.00s)
+    --- PASS: TestDisableVerboseLogging/success_disable_from_already_critical_level (0.00s)
+=== RUN   TestSetLoggerStyle
+=== RUN   TestSetLoggerStyle/success_set_default_logger_style
+=== RUN   TestSetLoggerStyle/success_set_non_default_logger_style_defaults_to_default
+=== RUN   TestSetLoggerStyle/success_set_empty_logger_style_defaults_to_default
+--- PASS: TestSetLoggerStyle (0.00s)
+    --- PASS: TestSetLoggerStyle/success_set_default_logger_style (0.00s)
+    --- PASS: TestSetLoggerStyle/success_set_non_default_logger_style_defaults_to_default (0.00s)
+    --- PASS: TestSetLoggerStyle/success_set_empty_logger_style_defaults_to_default (0.00s)
+=== RUN   TestEnableCertificateVerification
+=== RUN   TestEnableCertificateVerification/success_enable_cert_verification_from_disabled_state
+=== RUN   TestEnableCertificateVerification/success_enable_cert_verification_from_enabled_state
+--- PASS: TestEnableCertificateVerification (0.00s)
+    --- PASS: TestEnableCertificateVerification/success_enable_cert_verification_from_disabled_state (0.00s)
+    --- PASS: TestEnableCertificateVerification/success_enable_cert_verification_from_enabled_state (0.00s)
+=== RUN   TestDisableCertificateVerification
+=== RUN   TestDisableCertificateVerification/success_disable_cert_verification_from_enabled_state
+=== RUN   TestDisableCertificateVerification/success_disable_cert_verification_from_disabled_state
+--- PASS: TestDisableCertificateVerification (0.00s)
+    --- PASS: TestDisableCertificateVerification/success_disable_cert_verification_from_enabled_state (0.00s)
+    --- PASS: TestDisableCertificateVerification/success_disable_cert_verification_from_disabled_state (0.00s)
+=== RUN   TestIsVerifyingCertificates
+=== RUN   TestIsVerifyingCertificates/success_cert_verification_enabled_no_env_var
+=== RUN   TestIsVerifyingCertificates/success_cert_verification_disabled_no_env_var
+=== RUN   TestIsVerifyingCertificates/success_env_var_overrides_enabled_state
+=== RUN   TestIsVerifyingCertificates/success_env_var_overrides_disabled_state
+=== RUN   TestIsVerifyingCertificates/success_empty_env_var_uses_internal_state
+--- PASS: TestIsVerifyingCertificates (0.00s)
+    --- PASS: TestIsVerifyingCertificates/success_cert_verification_enabled_no_env_var (0.00s)
+    --- PASS: TestIsVerifyingCertificates/success_cert_verification_disabled_no_env_var (0.00s)
+    --- PASS: TestIsVerifyingCertificates/success_env_var_overrides_enabled_state (0.00s)
+    --- PASS: TestIsVerifyingCertificates/success_env_var_overrides_disabled_state (0.00s)
+    --- PASS: TestIsVerifyingCertificates/success_empty_env_var_uses_internal_state (0.00s)
+=== RUN   TestSetTrustedCertificate
+=== RUN   TestSetTrustedCertificate/success_set_valid_certificate
+=== PAUSE TestSetTrustedCertificate/success_set_valid_certificate
+=== RUN   TestSetTrustedCertificate/success_set_empty_certificate
+=== PAUSE TestSetTrustedCertificate/success_set_empty_certificate
+=== RUN   TestSetTrustedCertificate/success_override_existing_certificate
+=== PAUSE TestSetTrustedCertificate/success_override_existing_certificate
+=== RUN   TestSetTrustedCertificate/success_set_special_characters_certificate
+=== PAUSE TestSetTrustedCertificate/success_set_special_characters_certificate
+=== CONT  TestSetTrustedCertificate/success_set_valid_certificate
+=== CONT  TestSetTrustedCertificate/success_override_existing_certificate
+=== CONT  TestSetTrustedCertificate/success_set_empty_certificate
+=== CONT  TestSetTrustedCertificate/success_set_special_characters_certificate
+--- PASS: TestSetTrustedCertificate (0.00s)
+    --- PASS: TestSetTrustedCertificate/success_set_valid_certificate (0.00s)
+    --- PASS: TestSetTrustedCertificate/success_set_empty_certificate (0.00s)
+    --- PASS: TestSetTrustedCertificate/success_override_existing_certificate (0.00s)
+    --- PASS: TestSetTrustedCertificate/success_set_special_characters_certificate (0.00s)
+=== RUN   TestTrustedCertificate
+=== RUN   TestTrustedCertificate/success_return_set_certificate
+=== PAUSE TestTrustedCertificate/success_return_set_certificate
+=== RUN   TestTrustedCertificate/success_return_empty_when_no_certificate_set
+=== PAUSE TestTrustedCertificate/success_return_empty_when_no_certificate_set
+=== RUN   TestTrustedCertificate/success_return_complex_certificate
+=== PAUSE TestTrustedCertificate/success_return_complex_certificate
+=== CONT  TestTrustedCertificate/success_return_set_certificate
+=== CONT  TestTrustedCertificate/success_return_empty_when_no_certificate_set
+=== CONT  TestTrustedCertificate/success_return_complex_certificate
+--- PASS: TestTrustedCertificate (0.00s)
+    --- PASS: TestTrustedCertificate/success_return_set_certificate (0.00s)
+    --- PASS: TestTrustedCertificate/success_return_empty_when_no_certificate_set (0.00s)
+    --- PASS: TestTrustedCertificate/success_return_complex_certificate (0.00s)
+=== RUN   TestSystemConfig_Integration
+=== RUN   TestSystemConfig_Integration/complete_cycle_color_and_interactive_settings
+=== RUN   TestSystemConfig_Integration/complete_cycle_certificate_and_trusted_cert
+--- PASS: TestSystemConfig_Integration (0.00s)
+    --- PASS: TestSystemConfig_Integration/complete_cycle_color_and_interactive_settings (0.00s)
+    --- PASS: TestSystemConfig_Integration/complete_cycle_certificate_and_trusted_cert (0.00s)
+=== RUN   TestUserAgent
+=== RUN   TestUserAgent/success_user_agent_contains_chrome_and_sdk_version
+=== RUN   TestUserAgent/success_user_agent_with_different_version
+=== RUN   TestUserAgent/success_user_agent_with_default_version
+=== RUN   TestUserAgent/success_user_agent_with_beta_version
+=== RUN   TestUserAgent/success_user_agent_format_consistency
+=== RUN   TestUserAgent/success_user_agent_contains_space_separator
+=== RUN   TestUserAgent/success_user_agent_with_empty_version
+--- PASS: TestUserAgent (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_contains_chrome_and_sdk_version (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_with_different_version (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_with_default_version (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_with_beta_version (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_format_consistency (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_contains_space_separator (0.00s)
+    --- PASS: TestUserAgent/success_user_agent_with_empty_version (0.00s)
+=== RUN   TestUserAgent_MultipleCallsConsistency
+=== RUN   TestUserAgent_MultipleCallsConsistency/success_multiple_calls_same_version_consistent_format
+--- PASS: TestUserAgent_MultipleCallsConsistency (0.00s)
+    --- PASS: TestUserAgent_MultipleCallsConsistency/success_multiple_calls_same_version_consistent_format (0.00s)
+=== RUN   TestUserAgent_BrowserComponent
+=== RUN   TestUserAgent_BrowserComponent/success_browser_component_not_empty
+=== PAUSE TestUserAgent_BrowserComponent/success_browser_component_not_empty
+=== RUN   TestUserAgent_BrowserComponent/success_sdk_component_format
+=== PAUSE TestUserAgent_BrowserComponent/success_sdk_component_format
+=== CONT  TestUserAgent_BrowserComponent/success_browser_component_not_empty
+=== CONT  TestUserAgent_BrowserComponent/success_sdk_component_format
+--- PASS: TestUserAgent_BrowserComponent (0.00s)
+    --- PASS: TestUserAgent_BrowserComponent/success_browser_component_not_empty (0.00s)
+    --- PASS: TestUserAgent_BrowserComponent/success_sdk_component_format (0.00s)
+=== RUN   TestUserAgent_Integration
+=== RUN   TestUserAgent_Integration/complete_cycle_version_and_user_agent
+--- PASS: TestUserAgent_Integration (0.00s)
+    --- PASS: TestUserAgent_Integration/complete_cycle_version_and_user_agent (0.00s)
+=== RUN   TestSetArkVersion
+=== RUN   TestSetArkVersion/success_set_valid_version
+=== RUN   TestSetArkVersion/success_set_semantic_version
+=== RUN   TestSetArkVersion/success_ignore_empty_version
+=== RUN   TestSetArkVersion/success_set_version_with_build_metadata
+=== RUN   TestSetArkVersion/success_override_existing_version
+=== RUN   TestSetArkVersion/success_set_development_version
+=== RUN   TestSetArkVersion/success_set_version_with_special_characters
+=== RUN   TestSetArkVersion/edge_case_whitespace_only_version
+--- PASS: TestSetArkVersion (0.00s)
+    --- PASS: TestSetArkVersion/success_set_valid_version (0.00s)
+    --- PASS: TestSetArkVersion/success_set_semantic_version (0.00s)
+    --- PASS: TestSetArkVersion/success_ignore_empty_version (0.00s)
+    --- PASS: TestSetArkVersion/success_set_version_with_build_metadata (0.00s)
+    --- PASS: TestSetArkVersion/success_override_existing_version (0.00s)
+    --- PASS: TestSetArkVersion/success_set_development_version (0.00s)
+    --- PASS: TestSetArkVersion/success_set_version_with_special_characters (0.00s)
+    --- PASS: TestSetArkVersion/edge_case_whitespace_only_version (0.00s)
+=== RUN   TestArkVersion
+=== RUN   TestArkVersion/success_return_default_version
+=== PAUSE TestArkVersion/success_return_default_version
+=== RUN   TestArkVersion/success_return_set_version
+=== PAUSE TestArkVersion/success_return_set_version
+=== RUN   TestArkVersion/success_return_semantic_version
+=== PAUSE TestArkVersion/success_return_semantic_version
+=== RUN   TestArkVersion/success_return_version_with_build_metadata
+=== PAUSE TestArkVersion/success_return_version_with_build_metadata
+=== RUN   TestArkVersion/success_return_development_version
+=== PAUSE TestArkVersion/success_return_development_version
+=== RUN   TestArkVersion/success_return_complex_version
+=== PAUSE TestArkVersion/success_return_complex_version
+=== RUN   TestArkVersion/success_return_version_after_multiple_sets
+=== PAUSE TestArkVersion/success_return_version_after_multiple_sets
+=== CONT  TestArkVersion/success_return_default_version
+=== CONT  TestArkVersion/success_return_version_after_multiple_sets
+=== CONT  TestArkVersion/success_return_semantic_version
+=== CONT  TestArkVersion/success_return_complex_version
+=== CONT  TestArkVersion/success_return_set_version
+=== CONT  TestArkVersion/success_return_development_version
+=== CONT  TestArkVersion/success_return_version_with_build_metadata
+--- PASS: TestArkVersion (0.00s)
+    --- PASS: TestArkVersion/success_return_default_version (0.00s)
+    --- PASS: TestArkVersion/success_return_version_after_multiple_sets (0.00s)
+    --- PASS: TestArkVersion/success_return_semantic_version (0.00s)
+    --- PASS: TestArkVersion/success_return_set_version (0.00s)
+    --- PASS: TestArkVersion/success_return_complex_version (0.00s)
+    --- PASS: TestArkVersion/success_return_development_version (0.00s)
+    --- PASS: TestArkVersion/success_return_version_with_build_metadata (0.00s)
+=== RUN   TestArkVersion_EmptyStringBehavior
+=== RUN   TestArkVersion_EmptyStringBehavior/success_empty_string_preserves_previous_version
+=== RUN   TestArkVersion_EmptyStringBehavior/success_multiple_empty_strings_preserve_version
+=== RUN   TestArkVersion_EmptyStringBehavior/success_empty_string_then_valid_version
+--- PASS: TestArkVersion_EmptyStringBehavior (0.00s)
+    --- PASS: TestArkVersion_EmptyStringBehavior/success_empty_string_preserves_previous_version (0.00s)
+    --- PASS: TestArkVersion_EmptyStringBehavior/success_multiple_empty_strings_preserve_version (0.00s)
+    --- PASS: TestArkVersion_EmptyStringBehavior/success_empty_string_then_valid_version (0.00s)
+=== RUN   TestArkVersion_Integration
+=== RUN   TestArkVersion_Integration/complete_cycle_multiple_version_updates
+=== RUN   TestArkVersion_Integration/complete_cycle_with_special_versions
+=== RUN   TestArkVersion_Integration/complete_cycle_build_metadata_versions
+--- PASS: TestArkVersion_Integration (0.00s)
+    --- PASS: TestArkVersion_Integration/complete_cycle_multiple_version_updates (0.00s)
+    --- PASS: TestArkVersion_Integration/complete_cycle_with_special_versions (0.00s)
+    --- PASS: TestArkVersion_Integration/complete_cycle_build_metadata_versions (0.00s)
+=== RUN   TestArkVersion_ConcurrentAccess
+=== RUN   TestArkVersion_ConcurrentAccess/success_concurrent_reads
+--- PASS: TestArkVersion_ConcurrentAccess (0.00s)
+    --- PASS: TestArkVersion_ConcurrentAccess/success_concurrent_reads (0.00s)
+PASS
+coverage: 62.8% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/common	4.628s	coverage: 62.8% of statements
+	github.com/cyberark/ark-sdk-golang/pkg/common/args		coverage: 0.0% of statements
+?   	github.com/cyberark/ark-sdk-golang/pkg/common/connections	[no test files]
+=== RUN   TestSSHPort
+=== RUN   TestSSHPort/constant_has_correct_value
+=== PAUSE TestSSHPort/constant_has_correct_value
+=== CONT  TestSSHPort/constant_has_correct_value
+--- PASS: TestSSHPort (0.00s)
+    --- PASS: TestSSHPort/constant_has_correct_value (0.00s)
+=== RUN   TestNewArkSSHConnection
+=== RUN   TestNewArkSSHConnection/success_creates_new_instance
+=== PAUSE TestNewArkSSHConnection/success_creates_new_instance
+=== CONT  TestNewArkSSHConnection/success_creates_new_instance
+--- PASS: TestNewArkSSHConnection (0.00s)
+    --- PASS: TestNewArkSSHConnection/success_creates_new_instance (0.00s)
+=== RUN   TestArkSSHConnection_Connect_Validation
+=== RUN   TestArkSSHConnection_Connect_Validation/success_already_connected
+=== PAUSE TestArkSSHConnection_Connect_Validation/success_already_connected
+=== RUN   TestArkSSHConnection_Connect_Validation/error_invalid_private_key_file
+=== PAUSE TestArkSSHConnection_Connect_Validation/error_invalid_private_key_file
+=== RUN   TestArkSSHConnection_Connect_Validation/error_unreadable_private_key_file
+=== PAUSE TestArkSSHConnection_Connect_Validation/error_unreadable_private_key_file
+=== RUN   TestArkSSHConnection_Connect_Validation/error_invalid_private_key_contents
+=== PAUSE TestArkSSHConnection_Connect_Validation/error_invalid_private_key_contents
+=== RUN   TestArkSSHConnection_Connect_Validation/success_default_retry_count
+=== PAUSE TestArkSSHConnection_Connect_Validation/success_default_retry_count
+=== RUN   TestArkSSHConnection_Connect_Validation/success_password_auth_setup
+=== PAUSE TestArkSSHConnection_Connect_Validation/success_password_auth_setup
+=== CONT  TestArkSSHConnection_Connect_Validation/success_already_connected
+=== CONT  TestArkSSHConnection_Connect_Validation/error_unreadable_private_key_file
+=== CONT  TestArkSSHConnection_Connect_Validation/error_invalid_private_key_contents
+=== CONT  TestArkSSHConnection_Connect_Validation/success_password_auth_setup
+=== CONT  TestArkSSHConnection_Connect_Validation/error_invalid_private_key_file
+=== CONT  TestArkSSHConnection_Connect_Validation/success_default_retry_count
+--- PASS: TestArkSSHConnection_Connect_Validation (0.00s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/success_already_connected (0.00s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/error_invalid_private_key_contents (0.00s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/error_unreadable_private_key_file (0.00s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/error_invalid_private_key_file (0.00s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/success_default_retry_count (0.16s)
+    --- PASS: TestArkSSHConnection_Connect_Validation/success_password_auth_setup (0.16s)
+=== RUN   TestArkSSHConnection_Disconnect
+=== RUN   TestArkSSHConnection_Disconnect/success_not_connected
+=== PAUSE TestArkSSHConnection_Disconnect/success_not_connected
+=== CONT  TestArkSSHConnection_Disconnect/success_not_connected
+--- PASS: TestArkSSHConnection_Disconnect (0.00s)
+    --- PASS: TestArkSSHConnection_Disconnect/success_not_connected (0.00s)
+=== RUN   TestArkSSHConnection_SuspendConnection
+=== RUN   TestArkSSHConnection_SuspendConnection/success_suspend_not_suspended
+=== PAUSE TestArkSSHConnection_SuspendConnection/success_suspend_not_suspended
+=== RUN   TestArkSSHConnection_SuspendConnection/success_suspend_already_suspended
+=== PAUSE TestArkSSHConnection_SuspendConnection/success_suspend_already_suspended
+=== CONT  TestArkSSHConnection_SuspendConnection/success_suspend_not_suspended
+=== CONT  TestArkSSHConnection_SuspendConnection/success_suspend_already_suspended
+--- PASS: TestArkSSHConnection_SuspendConnection (0.00s)
+    --- PASS: TestArkSSHConnection_SuspendConnection/success_suspend_not_suspended (0.00s)
+    --- PASS: TestArkSSHConnection_SuspendConnection/success_suspend_already_suspended (0.00s)
+=== RUN   TestArkSSHConnection_RestoreConnection
+=== RUN   TestArkSSHConnection_RestoreConnection/success_restore_suspended
+=== PAUSE TestArkSSHConnection_RestoreConnection/success_restore_suspended
+=== RUN   TestArkSSHConnection_RestoreConnection/success_restore_not_suspended
+=== PAUSE TestArkSSHConnection_RestoreConnection/success_restore_not_suspended
+=== CONT  TestArkSSHConnection_RestoreConnection/success_restore_suspended
+=== CONT  TestArkSSHConnection_RestoreConnection/success_restore_not_suspended
+--- PASS: TestArkSSHConnection_RestoreConnection (0.00s)
+    --- PASS: TestArkSSHConnection_RestoreConnection/success_restore_suspended (0.00s)
+    --- PASS: TestArkSSHConnection_RestoreConnection/success_restore_not_suspended (0.00s)
+=== RUN   TestArkSSHConnection_IsSuspended
+=== RUN   TestArkSSHConnection_IsSuspended/returns_true_when_suspended
+=== PAUSE TestArkSSHConnection_IsSuspended/returns_true_when_suspended
+=== RUN   TestArkSSHConnection_IsSuspended/returns_false_when_not_suspended
+=== PAUSE TestArkSSHConnection_IsSuspended/returns_false_when_not_suspended
+=== CONT  TestArkSSHConnection_IsSuspended/returns_true_when_suspended
+=== CONT  TestArkSSHConnection_IsSuspended/returns_false_when_not_suspended
+--- PASS: TestArkSSHConnection_IsSuspended (0.00s)
+    --- PASS: TestArkSSHConnection_IsSuspended/returns_true_when_suspended (0.00s)
+    --- PASS: TestArkSSHConnection_IsSuspended/returns_false_when_not_suspended (0.00s)
+=== RUN   TestArkSSHConnection_IsConnected
+=== RUN   TestArkSSHConnection_IsConnected/returns_true_when_connected
+=== PAUSE TestArkSSHConnection_IsConnected/returns_true_when_connected
+=== RUN   TestArkSSHConnection_IsConnected/returns_false_when_not_connected
+=== PAUSE TestArkSSHConnection_IsConnected/returns_false_when_not_connected
+=== CONT  TestArkSSHConnection_IsConnected/returns_true_when_connected
+=== CONT  TestArkSSHConnection_IsConnected/returns_false_when_not_connected
+--- PASS: TestArkSSHConnection_IsConnected (0.00s)
+    --- PASS: TestArkSSHConnection_IsConnected/returns_true_when_connected (0.00s)
+    --- PASS: TestArkSSHConnection_IsConnected/returns_false_when_not_connected (0.00s)
+=== RUN   TestArkSSHConnection_RunCommand_Validation
+=== RUN   TestArkSSHConnection_RunCommand_Validation/error_not_connected
+=== PAUSE TestArkSSHConnection_RunCommand_Validation/error_not_connected
+=== RUN   TestArkSSHConnection_RunCommand_Validation/error_suspended
+=== PAUSE TestArkSSHConnection_RunCommand_Validation/error_suspended
+=== RUN   TestArkSSHConnection_RunCommand_Validation/error_connected_and_suspended
+=== PAUSE TestArkSSHConnection_RunCommand_Validation/error_connected_and_suspended
+=== CONT  TestArkSSHConnection_RunCommand_Validation/error_not_connected
+=== CONT  TestArkSSHConnection_RunCommand_Validation/error_suspended
+=== CONT  TestArkSSHConnection_RunCommand_Validation/error_connected_and_suspended
+--- PASS: TestArkSSHConnection_RunCommand_Validation (0.00s)
+    --- PASS: TestArkSSHConnection_RunCommand_Validation/error_not_connected (0.00s)
+    --- PASS: TestArkSSHConnection_RunCommand_Validation/error_suspended (0.00s)
+    --- PASS: TestArkSSHConnection_RunCommand_Validation/error_connected_and_suspended (0.00s)
+PASS
+coverage: 50.6% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/common/connections/ssh	0.952s	coverage: 50.6% of statements
+=== RUN   TestNewArkWinRMConnection
+=== RUN   TestNewArkWinRMConnection/success_creates_new_instance
+=== PAUSE TestNewArkWinRMConnection/success_creates_new_instance
+=== CONT  TestNewArkWinRMConnection/success_creates_new_instance
+--- PASS: TestNewArkWinRMConnection (0.00s)
+    --- PASS: TestNewArkWinRMConnection/success_creates_new_instance (0.00s)
+=== RUN   TestArkWinRMConnection_Connect_Validation
+=== RUN   TestArkWinRMConnection_Connect_Validation/success_already_connected
+=== PAUSE TestArkWinRMConnection_Connect_Validation/success_already_connected
+=== RUN   TestArkWinRMConnection_Connect_Validation/error_missing_credentials
+=== PAUSE TestArkWinRMConnection_Connect_Validation/error_missing_credentials
+=== RUN   TestArkWinRMConnection_Connect_Validation/error_invalid_certificate_path
+=== PAUSE TestArkWinRMConnection_Connect_Validation/error_invalid_certificate_path
+=== RUN   TestArkWinRMConnection_Connect_Validation/success_valid_certificate_path
+=== PAUSE TestArkWinRMConnection_Connect_Validation/success_valid_certificate_path
+=== CONT  TestArkWinRMConnection_Connect_Validation/success_already_connected
+=== CONT  TestArkWinRMConnection_Connect_Validation/error_invalid_certificate_path
+=== CONT  TestArkWinRMConnection_Connect_Validation/success_valid_certificate_path
+=== CONT  TestArkWinRMConnection_Connect_Validation/error_missing_credentials
+--- PASS: TestArkWinRMConnection_Connect_Validation (0.00s)
+    --- PASS: TestArkWinRMConnection_Connect_Validation/success_already_connected (0.00s)
+    --- PASS: TestArkWinRMConnection_Connect_Validation/error_invalid_certificate_path (0.00s)
+    --- PASS: TestArkWinRMConnection_Connect_Validation/success_valid_certificate_path (0.00s)
+    --- PASS: TestArkWinRMConnection_Connect_Validation/error_missing_credentials (0.00s)
+=== RUN   TestArkWinRMConnection_Disconnect
+=== RUN   TestArkWinRMConnection_Disconnect/success_not_connected
+=== PAUSE TestArkWinRMConnection_Disconnect/success_not_connected
+=== CONT  TestArkWinRMConnection_Disconnect/success_not_connected
+--- PASS: TestArkWinRMConnection_Disconnect (0.00s)
+    --- PASS: TestArkWinRMConnection_Disconnect/success_not_connected (0.00s)
+=== RUN   TestArkWinRMConnection_SuspendConnection
+=== RUN   TestArkWinRMConnection_SuspendConnection/success_suspend_not_suspended
+=== PAUSE TestArkWinRMConnection_SuspendConnection/success_suspend_not_suspended
+=== RUN   TestArkWinRMConnection_SuspendConnection/success_suspend_already_suspended
+=== PAUSE TestArkWinRMConnection_SuspendConnection/success_suspend_already_suspended
+=== CONT  TestArkWinRMConnection_SuspendConnection/success_suspend_not_suspended
+=== CONT  TestArkWinRMConnection_SuspendConnection/success_suspend_already_suspended
+--- PASS: TestArkWinRMConnection_SuspendConnection (0.00s)
+    --- PASS: TestArkWinRMConnection_SuspendConnection/success_suspend_not_suspended (0.00s)
+    --- PASS: TestArkWinRMConnection_SuspendConnection/success_suspend_already_suspended (0.00s)
+=== RUN   TestArkWinRMConnection_RestoreConnection
+=== RUN   TestArkWinRMConnection_RestoreConnection/success_restore_suspended
+=== PAUSE TestArkWinRMConnection_RestoreConnection/success_restore_suspended
+=== RUN   TestArkWinRMConnection_RestoreConnection/success_restore_not_suspended
+=== PAUSE TestArkWinRMConnection_RestoreConnection/success_restore_not_suspended
+=== CONT  TestArkWinRMConnection_RestoreConnection/success_restore_suspended
+=== CONT  TestArkWinRMConnection_RestoreConnection/success_restore_not_suspended
+--- PASS: TestArkWinRMConnection_RestoreConnection (0.00s)
+    --- PASS: TestArkWinRMConnection_RestoreConnection/success_restore_suspended (0.00s)
+    --- PASS: TestArkWinRMConnection_RestoreConnection/success_restore_not_suspended (0.00s)
+=== RUN   TestArkWinRMConnection_IsSuspended
+=== RUN   TestArkWinRMConnection_IsSuspended/returns_true_when_suspended
+=== PAUSE TestArkWinRMConnection_IsSuspended/returns_true_when_suspended
+=== RUN   TestArkWinRMConnection_IsSuspended/returns_false_when_not_suspended
+=== PAUSE TestArkWinRMConnection_IsSuspended/returns_false_when_not_suspended
+=== CONT  TestArkWinRMConnection_IsSuspended/returns_true_when_suspended
+=== CONT  TestArkWinRMConnection_IsSuspended/returns_false_when_not_suspended
+--- PASS: TestArkWinRMConnection_IsSuspended (0.00s)
+    --- PASS: TestArkWinRMConnection_IsSuspended/returns_true_when_suspended (0.00s)
+    --- PASS: TestArkWinRMConnection_IsSuspended/returns_false_when_not_suspended (0.00s)
+=== RUN   TestArkWinRMConnection_IsConnected
+=== RUN   TestArkWinRMConnection_IsConnected/returns_true_when_connected
+=== PAUSE TestArkWinRMConnection_IsConnected/returns_true_when_connected
+=== RUN   TestArkWinRMConnection_IsConnected/returns_false_when_not_connected
+=== PAUSE TestArkWinRMConnection_IsConnected/returns_false_when_not_connected
+=== CONT  TestArkWinRMConnection_IsConnected/returns_true_when_connected
+=== CONT  TestArkWinRMConnection_IsConnected/returns_false_when_not_connected
+--- PASS: TestArkWinRMConnection_IsConnected (0.00s)
+    --- PASS: TestArkWinRMConnection_IsConnected/returns_true_when_connected (0.00s)
+    --- PASS: TestArkWinRMConnection_IsConnected/returns_false_when_not_connected (0.00s)
+=== RUN   TestArkWinRMConnection_RunCommand_ValidationLogic
+=== RUN   TestArkWinRMConnection_RunCommand_ValidationLogic/error_not_connected
+=== PAUSE TestArkWinRMConnection_RunCommand_ValidationLogic/error_not_connected
+=== RUN   TestArkWinRMConnection_RunCommand_ValidationLogic/error_suspended
+=== PAUSE TestArkWinRMConnection_RunCommand_ValidationLogic/error_suspended
+=== CONT  TestArkWinRMConnection_RunCommand_ValidationLogic/error_not_connected
+=== CONT  TestArkWinRMConnection_RunCommand_ValidationLogic/error_suspended
+--- PASS: TestArkWinRMConnection_RunCommand_ValidationLogic (0.00s)
+    --- PASS: TestArkWinRMConnection_RunCommand_ValidationLogic/error_not_connected (0.00s)
+    --- PASS: TestArkWinRMConnection_RunCommand_ValidationLogic/error_suspended (0.00s)
+=== RUN   TestConstants
+=== RUN   TestConstants/winrm_https_port_correct
+=== PAUSE TestConstants/winrm_https_port_correct
+=== RUN   TestConstants/connection_timeout_correct
+=== PAUSE TestConstants/connection_timeout_correct
+=== RUN   TestConstants/max_single_command_size_correct
+=== PAUSE TestConstants/max_single_command_size_correct
+=== RUN   TestConstants/max_chunk_size_correct
+=== PAUSE TestConstants/max_chunk_size_correct
+=== CONT  TestConstants/winrm_https_port_correct
+=== CONT  TestConstants/max_single_command_size_correct
+=== CONT  TestConstants/connection_timeout_correct
+=== CONT  TestConstants/max_chunk_size_correct
+--- PASS: TestConstants (0.00s)
+    --- PASS: TestConstants/winrm_https_port_correct (0.00s)
+    --- PASS: TestConstants/max_single_command_size_correct (0.00s)
+    --- PASS: TestConstants/connection_timeout_correct (0.00s)
+    --- PASS: TestConstants/max_chunk_size_correct (0.00s)
+PASS
+coverage: 25.6% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/common/connections/winrm	0.941s	coverage: 25.6% of statements
+=== RUN   TestNewArkISPServiceClient
+=== RUN   TestNewArkISPServiceClient/success_with_valid_parameters
+=== PAUSE TestNewArkISPServiceClient/success_with_valid_parameters
+=== RUN   TestNewArkISPServiceClient/success_with_empty_tenant_env_defaults_to_prod
+=== PAUSE TestNewArkISPServiceClient/success_with_empty_tenant_env_defaults_to_prod
+=== RUN   TestNewArkISPServiceClient/success_with_base_path_appended
+=== PAUSE TestNewArkISPServiceClient/success_with_base_path_appended
+=== RUN   TestNewArkISPServiceClient/error_invalid_service_url_resolution
+=== PAUSE TestNewArkISPServiceClient/error_invalid_service_url_resolution
+=== RUN   TestNewArkISPServiceClient/success_with_nil_cookie_jar
+=== PAUSE TestNewArkISPServiceClient/success_with_nil_cookie_jar
+=== CONT  TestNewArkISPServiceClient/success_with_valid_parameters
+=== CONT  TestNewArkISPServiceClient/error_invalid_service_url_resolution
+=== CONT  TestNewArkISPServiceClient/success_with_base_path_appended
+=== CONT  TestNewArkISPServiceClient/success_with_nil_cookie_jar
+=== CONT  TestNewArkISPServiceClient/success_with_empty_tenant_env_defaults_to_prod
+--- PASS: TestNewArkISPServiceClient (0.00s)
+    --- PASS: TestNewArkISPServiceClient/success_with_valid_parameters (0.00s)
+    --- PASS: TestNewArkISPServiceClient/error_invalid_service_url_resolution (0.00s)
+    --- PASS: TestNewArkISPServiceClient/success_with_base_path_appended (0.00s)
+    --- PASS: TestNewArkISPServiceClient/success_with_empty_tenant_env_defaults_to_prod (0.00s)
+    --- PASS: TestNewArkISPServiceClient/success_with_nil_cookie_jar (0.00s)
+=== RUN   TestResolveServiceURL
+=== RUN   TestResolveServiceURL/success_with_subdomain_from_token
+=== PAUSE TestResolveServiceURL/success_with_subdomain_from_token
+=== RUN   TestResolveServiceURL/success_with_platform_domain_from_token
+=== PAUSE TestResolveServiceURL/success_with_platform_domain_from_token
+=== RUN   TestResolveServiceURL/success_with_shell_prefix_removal
+=== PAUSE TestResolveServiceURL/success_with_shell_prefix_removal
+=== RUN   TestResolveServiceURL/success_fallback_to_tenant_subdomain
+=== PAUSE TestResolveServiceURL/success_fallback_to_tenant_subdomain
+=== RUN   TestResolveServiceURL/success_fallback_to_base_tenant_url
+=== PAUSE TestResolveServiceURL/success_fallback_to_base_tenant_url
+=== RUN   TestResolveServiceURL/success_fallback_to_unique_name
+=== PAUSE TestResolveServiceURL/success_fallback_to_unique_name
+=== RUN   TestResolveServiceURL/success_without_service_name
+=== PAUSE TestResolveServiceURL/success_without_service_name
+=== RUN   TestResolveServiceURL/error_cannot_resolve_tenant_subdomain
+=== PAUSE TestResolveServiceURL/error_cannot_resolve_tenant_subdomain
+=== RUN   TestResolveServiceURL/error_invalid_token_format
+=== PAUSE TestResolveServiceURL/error_invalid_token_format
+=== CONT  TestResolveServiceURL/success_with_subdomain_from_token
+=== CONT  TestResolveServiceURL/success_fallback_to_unique_name
+=== CONT  TestResolveServiceURL/error_cannot_resolve_tenant_subdomain
+=== CONT  TestResolveServiceURL/success_fallback_to_base_tenant_url
+=== CONT  TestResolveServiceURL/success_without_service_name
+=== CONT  TestResolveServiceURL/success_fallback_to_tenant_subdomain
+=== CONT  TestResolveServiceURL/success_with_shell_prefix_removal
+=== CONT  TestResolveServiceURL/success_with_platform_domain_from_token
+=== CONT  TestResolveServiceURL/error_invalid_token_format
+--- PASS: TestResolveServiceURL (0.00s)
+    --- PASS: TestResolveServiceURL/success_with_subdomain_from_token (0.00s)
+    --- PASS: TestResolveServiceURL/success_fallback_to_unique_name (0.00s)
+    --- PASS: TestResolveServiceURL/error_cannot_resolve_tenant_subdomain (0.00s)
+    --- PASS: TestResolveServiceURL/success_fallback_to_base_tenant_url (0.00s)
+    --- PASS: TestResolveServiceURL/success_without_service_name (0.00s)
+    --- PASS: TestResolveServiceURL/success_fallback_to_tenant_subdomain (0.00s)
+    --- PASS: TestResolveServiceURL/success_with_shell_prefix_removal (0.00s)
+    --- PASS: TestResolveServiceURL/success_with_platform_domain_from_token (0.00s)
+    --- PASS: TestResolveServiceURL/error_invalid_token_format (0.00s)
+=== RUN   TestArkISPServiceClient_TenantEnv
+=== RUN   TestArkISPServiceClient_TenantEnv/success_production_environment
+=== PAUSE TestArkISPServiceClient_TenantEnv/success_production_environment
+=== RUN   TestArkISPServiceClient_TenantEnv/success_development_environment
+=== PAUSE TestArkISPServiceClient_TenantEnv/success_development_environment
+=== RUN   TestArkISPServiceClient_TenantEnv/success_staging_environment
+=== PAUSE TestArkISPServiceClient_TenantEnv/success_staging_environment
+=== RUN   TestArkISPServiceClient_TenantEnv/success_empty_environment
+=== PAUSE TestArkISPServiceClient_TenantEnv/success_empty_environment
+=== CONT  TestArkISPServiceClient_TenantEnv/success_production_environment
+=== CONT  TestArkISPServiceClient_TenantEnv/success_empty_environment
+=== CONT  TestArkISPServiceClient_TenantEnv/success_staging_environment
+=== CONT  TestArkISPServiceClient_TenantEnv/success_development_environment
+--- PASS: TestArkISPServiceClient_TenantEnv (0.00s)
+    --- PASS: TestArkISPServiceClient_TenantEnv/success_production_environment (0.00s)
+    --- PASS: TestArkISPServiceClient_TenantEnv/success_empty_environment (0.00s)
+    --- PASS: TestArkISPServiceClient_TenantEnv/success_staging_environment (0.00s)
+    --- PASS: TestArkISPServiceClient_TenantEnv/success_development_environment (0.00s)
+=== RUN   TestArkISPServiceClient_TenantID
+=== RUN   TestArkISPServiceClient_TenantID/error_empty_token
+=== PAUSE TestArkISPServiceClient_TenantID/error_empty_token
+=== CONT  TestArkISPServiceClient_TenantID/error_empty_token
+--- PASS: TestArkISPServiceClient_TenantID (0.00s)
+    --- PASS: TestArkISPServiceClient_TenantID/error_empty_token (0.00s)
+=== RUN   TestFromISPAuth
+=== RUN   TestFromISPAuth/success_with_domain_in_username
+=== PAUSE TestFromISPAuth/success_with_domain_in_username
+=== RUN   TestFromISPAuth/error_invalid_token_in_auth
+=== PAUSE TestFromISPAuth/error_invalid_token_in_auth
+=== CONT  TestFromISPAuth/success_with_domain_in_username
+=== CONT  TestFromISPAuth/error_invalid_token_in_auth
+--- PASS: TestFromISPAuth (0.00s)
+    --- PASS: TestFromISPAuth/error_invalid_token_in_auth (0.00s)
+    --- PASS: TestFromISPAuth/success_with_domain_in_username (0.00s)
+PASS
+coverage: 74.8% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/common/isp	1.154s	coverage: 74.8% of statements
+=== RUN   TestArkProfile_UnmarshalJSON
+=== RUN   TestArkProfile_UnmarshalJSON/success_complete_profile_with_identity_auth
+=== PAUSE TestArkProfile_UnmarshalJSON/success_complete_profile_with_identity_auth
+=== RUN   TestArkProfile_UnmarshalJSON/success_multiple_auth_profiles
+=== PAUSE TestArkProfile_UnmarshalJSON/success_multiple_auth_profiles
+=== RUN   TestArkProfile_UnmarshalJSON/success_empty_auth_profiles
+=== PAUSE TestArkProfile_UnmarshalJSON/success_empty_auth_profiles
+=== RUN   TestArkProfile_UnmarshalJSON/success_minimal_profile
+=== PAUSE TestArkProfile_UnmarshalJSON/success_minimal_profile
+=== RUN   TestArkProfile_UnmarshalJSON/error_invalid_json
+=== PAUSE TestArkProfile_UnmarshalJSON/error_invalid_json
+=== RUN   TestArkProfile_UnmarshalJSON/error_missing_required_fields
+=== PAUSE TestArkProfile_UnmarshalJSON/error_missing_required_fields
+=== RUN   TestArkProfile_UnmarshalJSON/error_invalid_auth_method
+=== PAUSE TestArkProfile_UnmarshalJSON/error_invalid_auth_method
+=== RUN   TestArkProfile_UnmarshalJSON/error_malformed_auth_profile
+=== PAUSE TestArkProfile_UnmarshalJSON/error_malformed_auth_profile
+=== RUN   TestArkProfile_UnmarshalJSON/edge_case_null_auth_profiles
+=== PAUSE TestArkProfile_UnmarshalJSON/edge_case_null_auth_profiles
+=== RUN   TestArkProfile_UnmarshalJSON/edge_case_special_characters_in_names
+=== PAUSE TestArkProfile_UnmarshalJSON/edge_case_special_characters_in_names
+=== RUN   TestArkProfile_UnmarshalJSON/error_invalid_auth_profile_json_structure
+=== PAUSE TestArkProfile_UnmarshalJSON/error_invalid_auth_profile_json_structure
+=== CONT  TestArkProfile_UnmarshalJSON/success_complete_profile_with_identity_auth
+=== CONT  TestArkProfile_UnmarshalJSON/error_invalid_auth_method
+=== CONT  TestArkProfile_UnmarshalJSON/edge_case_special_characters_in_names
+=== CONT  TestArkProfile_UnmarshalJSON/error_invalid_auth_profile_json_structure
+=== CONT  TestArkProfile_UnmarshalJSON/edge_case_null_auth_profiles
+=== CONT  TestArkProfile_UnmarshalJSON/error_invalid_json
+=== CONT  TestArkProfile_UnmarshalJSON/success_minimal_profile
+=== CONT  TestArkProfile_UnmarshalJSON/success_empty_auth_profiles
+=== CONT  TestArkProfile_UnmarshalJSON/error_missing_required_fields
+=== CONT  TestArkProfile_UnmarshalJSON/success_multiple_auth_profiles
+=== CONT  TestArkProfile_UnmarshalJSON/error_malformed_auth_profile
+--- PASS: TestArkProfile_UnmarshalJSON (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/error_invalid_auth_method (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/edge_case_special_characters_in_names (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/success_complete_profile_with_identity_auth (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/error_invalid_auth_profile_json_structure (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/error_invalid_json (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/success_empty_auth_profiles (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/edge_case_null_auth_profiles (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/success_minimal_profile (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/error_missing_required_fields (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/error_malformed_auth_profile (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON/success_multiple_auth_profiles (0.00s)
+=== RUN   TestArkProfile_UnmarshalJSON_Integration
+=== RUN   TestArkProfile_UnmarshalJSON_Integration/integration_identity_service_user_auth
+=== PAUSE TestArkProfile_UnmarshalJSON_Integration/integration_identity_service_user_auth
+=== CONT  TestArkProfile_UnmarshalJSON_Integration/integration_identity_service_user_auth
+--- PASS: TestArkProfile_UnmarshalJSON_Integration (0.00s)
+    --- PASS: TestArkProfile_UnmarshalJSON_Integration/integration_identity_service_user_auth (0.00s)
+=== RUN   TestArkProfile_RoundTrip
+--- PASS: TestArkProfile_RoundTrip (0.00s)
+PASS
+coverage: 90.9% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/models	1.298s	coverage: 90.9% of statements
+?   	github.com/cyberark/ark-sdk-golang/pkg/models/actions	[no test files]
+	github.com/cyberark/ark-sdk-golang/pkg/models/auth		coverage: 0.0% of statements
+=== RUN   TestGetDeployEnv
+=== RUN   TestGetDeployEnv/returns_prod_when_env_var_not_set
+=== RUN   TestGetDeployEnv/returns_prod_when_env_var_set_to_prod
+=== RUN   TestGetDeployEnv/returns_gov_prod_when_env_var_set_to_gov_prod
+=== RUN   TestGetDeployEnv/returns_unknown_when_env_var_set_to_unknown
+--- PASS: TestGetDeployEnv (0.00s)
+    --- PASS: TestGetDeployEnv/returns_prod_when_env_var_not_set (0.00s)
+    --- PASS: TestGetDeployEnv/returns_prod_when_env_var_set_to_prod (0.00s)
+    --- PASS: TestGetDeployEnv/returns_gov_prod_when_env_var_set_to_gov_prod (0.00s)
+    --- PASS: TestGetDeployEnv/returns_unknown_when_env_var_set_to_unknown (0.00s)
+=== RUN   TestCheckIfIdentityGeneratedSuffix
+=== RUN   TestCheckIfIdentityGeneratedSuffix/matches_pattern_in_prod
+=== RUN   TestCheckIfIdentityGeneratedSuffix/does_not_match_pattern_in_prod
+=== RUN   TestCheckIfIdentityGeneratedSuffix/matches_pattern_in_gov
+=== RUN   TestCheckIfIdentityGeneratedSuffix/does_not_match_pattern_in_gov
+=== RUN   TestCheckIfIdentityGeneratedSuffix/unknown_env_returns_false
+--- PASS: TestCheckIfIdentityGeneratedSuffix (0.00s)
+    --- PASS: TestCheckIfIdentityGeneratedSuffix/matches_pattern_in_prod (0.00s)
+    --- PASS: TestCheckIfIdentityGeneratedSuffix/does_not_match_pattern_in_prod (0.00s)
+    --- PASS: TestCheckIfIdentityGeneratedSuffix/matches_pattern_in_gov (0.00s)
+    --- PASS: TestCheckIfIdentityGeneratedSuffix/does_not_match_pattern_in_gov (0.00s)
+    --- PASS: TestCheckIfIdentityGeneratedSuffix/unknown_env_returns_false (0.00s)
+=== RUN   TestIsGovCloud
+=== RUN   TestIsGovCloud/true_when_AWS_REGION_starts_with_us-gov
+=== RUN   TestIsGovCloud/true_when_AWS_DEFAULT_REGION_starts_with_us-gov
+=== RUN   TestIsGovCloud/false_when_AWS_REGION_starts_with_eu-west
+=== RUN   TestIsGovCloud/false_when_AWS_DEFAULT_REGION_starts_with_eu-west
+=== RUN   TestIsGovCloud/false_when_AWS_REGION_empty
+=== RUN   TestIsGovCloud/false_when_AWS_DEFAULT_REGION_empty
+=== RUN   TestIsGovCloud/false_when_no_env_vars_set
+--- PASS: TestIsGovCloud (0.00s)
+    --- PASS: TestIsGovCloud/true_when_AWS_REGION_starts_with_us-gov (0.00s)
+    --- PASS: TestIsGovCloud/true_when_AWS_DEFAULT_REGION_starts_with_us-gov (0.00s)
+    --- PASS: TestIsGovCloud/false_when_AWS_REGION_starts_with_eu-west (0.00s)
+    --- PASS: TestIsGovCloud/false_when_AWS_DEFAULT_REGION_starts_with_eu-west (0.00s)
+    --- PASS: TestIsGovCloud/false_when_AWS_REGION_empty (0.00s)
+    --- PASS: TestIsGovCloud/false_when_AWS_DEFAULT_REGION_empty (0.00s)
+    --- PASS: TestIsGovCloud/false_when_no_env_vars_set (0.00s)
+=== RUN   TestArkRFC3339Time_UnmarshalJSON
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_microseconds
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_microseconds
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_without_microseconds
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_without_microseconds
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_timezone_offset
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_timezone_offset
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_negative_timezone
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_negative_timezone
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_unquoted_time_string
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_unquoted_time_string
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_leap_year_date
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_leap_year_date
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/success_end_of_year
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/success_end_of_year
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_invalid_date_format
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_invalid_date_format
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_invalid_month
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_invalid_month
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_invalid_day
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_invalid_day
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_missing_timezone
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_missing_timezone
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_empty_string
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_empty_string
+=== RUN   TestArkRFC3339Time_UnmarshalJSON/error_invalid_json
+=== PAUSE TestArkRFC3339Time_UnmarshalJSON/error_invalid_json
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_microseconds
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_end_of_year
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_leap_year_date
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_unquoted_time_string
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_negative_timezone
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_invalid_date_format
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_missing_timezone
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_timezone_offset
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_invalid_json
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_empty_string
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_invalid_day
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/error_invalid_month
+=== CONT  TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_without_microseconds
+--- PASS: TestArkRFC3339Time_UnmarshalJSON (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_end_of_year (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_leap_year_date (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_unquoted_time_string (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_invalid_date_format (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_missing_timezone (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_invalid_json (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_empty_string (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_invalid_day (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/error_invalid_month (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_without_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_negative_timezone (0.00s)
+    --- PASS: TestArkRFC3339Time_UnmarshalJSON/success_valid_rfc3339_with_timezone_offset (0.00s)
+=== RUN   TestArkRFC3339Time_MarshalJSON
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_utc_time_with_microseconds
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_utc_time_with_microseconds
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_utc_time_without_microseconds
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_utc_time_without_microseconds
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_time_with_positive_timezone
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_time_with_positive_timezone
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_time_with_negative_timezone
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_time_with_negative_timezone
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_leap_year_date
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_leap_year_date
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_end_of_year
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_end_of_year
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_zero_time
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_zero_time
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_unix_epoch
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_unix_epoch
+=== RUN   TestArkRFC3339Time_MarshalJSON/success_far_future_date
+=== PAUSE TestArkRFC3339Time_MarshalJSON/success_far_future_date
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_utc_time_with_microseconds
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_end_of_year
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_time_with_positive_timezone
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_far_future_date
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_unix_epoch
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_time_with_negative_timezone
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_utc_time_without_microseconds
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_zero_time
+=== CONT  TestArkRFC3339Time_MarshalJSON/success_leap_year_date
+--- PASS: TestArkRFC3339Time_MarshalJSON (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_end_of_year (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_time_with_positive_timezone (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_far_future_date (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_utc_time_with_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_unix_epoch (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_time_with_negative_timezone (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_utc_time_without_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_zero_time (0.00s)
+    --- PASS: TestArkRFC3339Time_MarshalJSON/success_leap_year_date (0.00s)
+=== RUN   TestArkRFC3339Time_RoundTrip
+=== RUN   TestArkRFC3339Time_RoundTrip/round_trip_utc_time
+=== PAUSE TestArkRFC3339Time_RoundTrip/round_trip_utc_time
+=== RUN   TestArkRFC3339Time_RoundTrip/round_trip_timezone_offset
+=== PAUSE TestArkRFC3339Time_RoundTrip/round_trip_timezone_offset
+=== RUN   TestArkRFC3339Time_RoundTrip/round_trip_negative_timezone
+=== PAUSE TestArkRFC3339Time_RoundTrip/round_trip_negative_timezone
+=== RUN   TestArkRFC3339Time_RoundTrip/round_trip_zero_microseconds
+=== PAUSE TestArkRFC3339Time_RoundTrip/round_trip_zero_microseconds
+=== RUN   TestArkRFC3339Time_RoundTrip/round_trip_maximum_microseconds
+=== PAUSE TestArkRFC3339Time_RoundTrip/round_trip_maximum_microseconds
+=== CONT  TestArkRFC3339Time_RoundTrip/round_trip_utc_time
+=== CONT  TestArkRFC3339Time_RoundTrip/round_trip_timezone_offset
+=== CONT  TestArkRFC3339Time_RoundTrip/round_trip_negative_timezone
+=== CONT  TestArkRFC3339Time_RoundTrip/round_trip_zero_microseconds
+=== CONT  TestArkRFC3339Time_RoundTrip/round_trip_maximum_microseconds
+--- PASS: TestArkRFC3339Time_RoundTrip (0.00s)
+    --- PASS: TestArkRFC3339Time_RoundTrip/round_trip_utc_time (0.00s)
+    --- PASS: TestArkRFC3339Time_RoundTrip/round_trip_timezone_offset (0.00s)
+    --- PASS: TestArkRFC3339Time_RoundTrip/round_trip_negative_timezone (0.00s)
+    --- PASS: TestArkRFC3339Time_RoundTrip/round_trip_zero_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_RoundTrip/round_trip_maximum_microseconds (0.00s)
+=== RUN   TestArkRFC3339Time_EdgeCases
+=== RUN   TestArkRFC3339Time_EdgeCases/edge_case_single_quotes
+=== PAUSE TestArkRFC3339Time_EdgeCases/edge_case_single_quotes
+=== RUN   TestArkRFC3339Time_EdgeCases/success_partial_microseconds
+=== PAUSE TestArkRFC3339Time_EdgeCases/success_partial_microseconds
+=== RUN   TestArkRFC3339Time_EdgeCases/error_missing_timezone_indicator
+=== PAUSE TestArkRFC3339Time_EdgeCases/error_missing_timezone_indicator
+=== RUN   TestArkRFC3339Time_EdgeCases/edge_case_no_quotes_valid_format
+=== PAUSE TestArkRFC3339Time_EdgeCases/edge_case_no_quotes_valid_format
+=== CONT  TestArkRFC3339Time_EdgeCases/edge_case_single_quotes
+=== CONT  TestArkRFC3339Time_EdgeCases/success_partial_microseconds
+=== CONT  TestArkRFC3339Time_EdgeCases/error_missing_timezone_indicator
+=== CONT  TestArkRFC3339Time_EdgeCases/edge_case_no_quotes_valid_format
+--- PASS: TestArkRFC3339Time_EdgeCases (0.00s)
+    --- PASS: TestArkRFC3339Time_EdgeCases/edge_case_single_quotes (0.00s)
+    --- PASS: TestArkRFC3339Time_EdgeCases/success_partial_microseconds (0.00s)
+    --- PASS: TestArkRFC3339Time_EdgeCases/error_missing_timezone_indicator (0.00s)
+    --- PASS: TestArkRFC3339Time_EdgeCases/edge_case_no_quotes_valid_format (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/models/common	1.109s	coverage: 100.0% of statements
+?   	github.com/cyberark/ark-sdk-golang/pkg/models/common/connections	[no test files]
+?   	github.com/cyberark/ark-sdk-golang/pkg/models/common/connections/connectiondata	[no test files]
+=== RUN   TestNewDirectoryServiceQueryRequest
+=== RUN   TestNewDirectoryServiceQueryRequest/success_empty_search_string
+=== PAUSE TestNewDirectoryServiceQueryRequest/success_empty_search_string
+=== RUN   TestNewDirectoryServiceQueryRequest/success_with_search_string
+=== PAUSE TestNewDirectoryServiceQueryRequest/success_with_search_string
+=== RUN   TestNewDirectoryServiceQueryRequest/success_special_characters_search
+=== PAUSE TestNewDirectoryServiceQueryRequest/success_special_characters_search
+=== RUN   TestNewDirectoryServiceQueryRequest/success_unicode_search
+=== PAUSE TestNewDirectoryServiceQueryRequest/success_unicode_search
+=== RUN   TestNewDirectoryServiceQueryRequest/edge_case_single_character
+=== PAUSE TestNewDirectoryServiceQueryRequest/edge_case_single_character
+=== RUN   TestNewDirectoryServiceQueryRequest/edge_case_long_search_string
+=== PAUSE TestNewDirectoryServiceQueryRequest/edge_case_long_search_string
+=== CONT  TestNewDirectoryServiceQueryRequest/success_empty_search_string
+=== CONT  TestNewDirectoryServiceQueryRequest/success_with_search_string
+=== CONT  TestNewDirectoryServiceQueryRequest/success_unicode_search
+=== CONT  TestNewDirectoryServiceQueryRequest/edge_case_long_search_string
+=== CONT  TestNewDirectoryServiceQueryRequest/edge_case_single_character
+=== CONT  TestNewDirectoryServiceQueryRequest/success_special_characters_search
+--- PASS: TestNewDirectoryServiceQueryRequest (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/success_empty_search_string (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/edge_case_single_character (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/edge_case_long_search_string (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/success_unicode_search (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/success_special_characters_search (0.00s)
+    --- PASS: TestNewDirectoryServiceQueryRequest/success_with_search_string (0.00s)
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/success_empty_role_name
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/success_empty_role_name
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/success_with_role_name
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/success_with_role_name
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_spaces
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_spaces
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_special_characters
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_special_characters
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_single_character_role
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_single_character_role
+=== RUN   TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_unicode_role_name
+=== PAUSE TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_unicode_role_name
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/success_empty_role_name
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_spaces
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_special_characters
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_unicode_role_name
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_single_character_role
+=== CONT  TestNewDirectoryServiceQuerySpecificRoleRequest/success_with_role_name
+--- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/success_empty_role_name (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_spaces (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/success_role_with_special_characters (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_unicode_role_name (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/edge_case_single_character_role (0.00s)
+    --- PASS: TestNewDirectoryServiceQuerySpecificRoleRequest/success_with_role_name (0.00s)
+=== RUN   TestDirectoryTypes_Constants
+=== RUN   TestDirectoryTypes_Constants/ad_constant_value
+=== PAUSE TestDirectoryTypes_Constants/ad_constant_value
+=== RUN   TestDirectoryTypes_Constants/identity_constant_value
+=== PAUSE TestDirectoryTypes_Constants/identity_constant_value
+=== RUN   TestDirectoryTypes_Constants/fds_constant_value
+=== PAUSE TestDirectoryTypes_Constants/fds_constant_value
+=== CONT  TestDirectoryTypes_Constants/ad_constant_value
+=== CONT  TestDirectoryTypes_Constants/identity_constant_value
+=== CONT  TestDirectoryTypes_Constants/fds_constant_value
+--- PASS: TestDirectoryTypes_Constants (0.00s)
+    --- PASS: TestDirectoryTypes_Constants/ad_constant_value (0.00s)
+    --- PASS: TestDirectoryTypes_Constants/identity_constant_value (0.00s)
+    --- PASS: TestDirectoryTypes_Constants/fds_constant_value (0.00s)
+=== RUN   TestAllDirectoryTypes_Variable
+=== RUN   TestAllDirectoryTypes_Variable/all_directory_types_content
+=== RUN   TestAllDirectoryTypes_Variable/all_directory_types_matches_constants
+--- PASS: TestAllDirectoryTypes_Variable (0.00s)
+    --- PASS: TestAllDirectoryTypes_Variable/all_directory_types_content (0.00s)
+    --- PASS: TestAllDirectoryTypes_Variable/all_directory_types_matches_constants (0.00s)
+=== RUN   TestStructJSONMarshaling
+=== RUN   TestStructJSONMarshaling/directory_service_metadata_marshaling
+=== PAUSE TestStructJSONMarshaling/directory_service_metadata_marshaling
+=== RUN   TestStructJSONMarshaling/directory_search_args_marshaling
+=== PAUSE TestStructJSONMarshaling/directory_search_args_marshaling
+=== RUN   TestStructJSONMarshaling/group_row_marshaling
+=== PAUSE TestStructJSONMarshaling/group_row_marshaling
+=== RUN   TestStructJSONMarshaling/user_row_marshaling
+=== PAUSE TestStructJSONMarshaling/user_row_marshaling
+=== RUN   TestStructJSONMarshaling/role_row_marshaling
+=== PAUSE TestStructJSONMarshaling/role_row_marshaling
+=== CONT  TestStructJSONMarshaling/directory_service_metadata_marshaling
+=== CONT  TestStructJSONMarshaling/user_row_marshaling
+=== CONT  TestStructJSONMarshaling/role_row_marshaling
+=== CONT  TestStructJSONMarshaling/group_row_marshaling
+=== CONT  TestStructJSONMarshaling/directory_search_args_marshaling
+--- PASS: TestStructJSONMarshaling (0.00s)
+    --- PASS: TestStructJSONMarshaling/directory_service_metadata_marshaling (0.00s)
+    --- PASS: TestStructJSONMarshaling/directory_search_args_marshaling (0.00s)
+    --- PASS: TestStructJSONMarshaling/group_row_marshaling (0.00s)
+    --- PASS: TestStructJSONMarshaling/user_row_marshaling (0.00s)
+    --- PASS: TestStructJSONMarshaling/role_row_marshaling (0.00s)
+=== RUN   TestStructDefaults
+=== RUN   TestStructDefaults/directory_service_metadata_defaults
+=== PAUSE TestStructDefaults/directory_service_metadata_defaults
+=== RUN   TestStructDefaults/directory_search_args_defaults
+=== PAUSE TestStructDefaults/directory_search_args_defaults
+=== RUN   TestStructDefaults/group_row_defaults
+=== PAUSE TestStructDefaults/group_row_defaults
+=== CONT  TestStructDefaults/directory_service_metadata_defaults
+=== CONT  TestStructDefaults/group_row_defaults
+=== CONT  TestStructDefaults/directory_search_args_defaults
+--- PASS: TestStructDefaults (0.00s)
+    --- PASS: TestStructDefaults/directory_service_metadata_defaults (0.00s)
+    --- PASS: TestStructDefaults/group_row_defaults (0.00s)
+    --- PASS: TestStructDefaults/directory_search_args_defaults (0.00s)
+=== RUN   TestGetTenantID
+=== RUN   TestGetTenantID/valid_pod_fqdn
+=== PAUSE TestGetTenantID/valid_pod_fqdn
+=== RUN   TestGetTenantID/tenant_only
+=== PAUSE TestGetTenantID/tenant_only
+=== CONT  TestGetTenantID/valid_pod_fqdn
+=== CONT  TestGetTenantID/tenant_only
+--- PASS: TestGetTenantID (0.00s)
+    --- PASS: TestGetTenantID/valid_pod_fqdn (0.00s)
+    --- PASS: TestGetTenantID/tenant_only (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/models/common/identity	1.247s	coverage: 100.0% of statements
+=== RUN   TestDefaultProfileName
+=== RUN   TestDefaultProfileName/returns_default_profile_name
+=== PAUSE TestDefaultProfileName/returns_default_profile_name
+=== CONT  TestDefaultProfileName/returns_default_profile_name
+--- PASS: TestDefaultProfileName (0.00s)
+    --- PASS: TestDefaultProfileName/returns_default_profile_name (0.00s)
+=== RUN   TestGetProfilesFolder
+=== RUN   TestGetProfilesFolder/returns_env_var_when_set
+=== RUN   TestGetProfilesFolder/returns_default_path_when_env_not_set
+=== RUN   TestGetProfilesFolder/returns_empty_env_var_when_empty
+--- PASS: TestGetProfilesFolder (0.00s)
+    --- PASS: TestGetProfilesFolder/returns_env_var_when_set (0.00s)
+    --- PASS: TestGetProfilesFolder/returns_default_path_when_env_not_set (0.00s)
+    --- PASS: TestGetProfilesFolder/returns_empty_env_var_when_empty (0.00s)
+=== RUN   TestDeduceProfileName
+=== RUN   TestDeduceProfileName/returns_provided_name_when_different_from_default
+=== RUN   TestDeduceProfileName/returns_env_var_when_provided_name_empty
+=== RUN   TestDeduceProfileName/returns_env_var_when_provided_name_is_default
+=== RUN   TestDeduceProfileName/returns_provided_name_when_env_not_set
+=== RUN   TestDeduceProfileName/returns_default_when_no_name_and_no_env
+=== RUN   TestDeduceProfileName/returns_default_name_when_provided_as_default
+--- PASS: TestDeduceProfileName (0.00s)
+    --- PASS: TestDeduceProfileName/returns_provided_name_when_different_from_default (0.00s)
+    --- PASS: TestDeduceProfileName/returns_env_var_when_provided_name_empty (0.00s)
+    --- PASS: TestDeduceProfileName/returns_env_var_when_provided_name_is_default (0.00s)
+    --- PASS: TestDeduceProfileName/returns_provided_name_when_env_not_set (0.00s)
+    --- PASS: TestDeduceProfileName/returns_default_when_no_name_and_no_env (0.00s)
+    --- PASS: TestDeduceProfileName/returns_default_name_when_provided_as_default (0.00s)
+=== RUN   TestDefaultProfilesLoader
+=== RUN   TestDefaultProfilesLoader/returns_filesystem_loader
+=== PAUSE TestDefaultProfilesLoader/returns_filesystem_loader
+=== CONT  TestDefaultProfilesLoader/returns_filesystem_loader
+--- PASS: TestDefaultProfilesLoader (0.00s)
+    --- PASS: TestDefaultProfilesLoader/returns_filesystem_loader (0.00s)
+=== RUN   TestFileSystemProfilesLoader_ProfileExists
+=== RUN   TestFileSystemProfilesLoader_ProfileExists/returns_true_when_profile_exists
+=== RUN   TestFileSystemProfilesLoader_ProfileExists/returns_false_when_profile_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_ProfileExists (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_ProfileExists/returns_true_when_profile_exists (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_ProfileExists/returns_false_when_profile_does_not_exist (0.00s)
+=== RUN   TestFileSystemProfilesLoader_SaveProfile
+=== RUN   TestFileSystemProfilesLoader_SaveProfile/success_saves_profile
+=== RUN   TestFileSystemProfilesLoader_SaveProfile/success_creates_directory_if_not_exists
+--- PASS: TestFileSystemProfilesLoader_SaveProfile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_SaveProfile/success_saves_profile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_SaveProfile/success_creates_directory_if_not_exists (0.00s)
+=== RUN   TestFileSystemProfilesLoader_LoadProfile
+=== RUN   TestFileSystemProfilesLoader_LoadProfile/success_loads_existing_profile
+=== RUN   TestFileSystemProfilesLoader_LoadProfile/returns_nil_when_profile_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_LoadProfile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadProfile/success_loads_existing_profile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadProfile/returns_nil_when_profile_does_not_exist (0.00s)
+=== RUN   TestFileSystemProfilesLoader_LoadDefaultProfile
+=== RUN   TestFileSystemProfilesLoader_LoadDefaultProfile/success_loads_default_profile
+=== RUN   TestFileSystemProfilesLoader_LoadDefaultProfile/returns_empty_profile_when_default_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_LoadDefaultProfile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadDefaultProfile/success_loads_default_profile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadDefaultProfile/returns_empty_profile_when_default_does_not_exist (0.00s)
+=== RUN   TestFileSystemProfilesLoader_DeleteProfile
+=== RUN   TestFileSystemProfilesLoader_DeleteProfile/success_deletes_existing_profile
+=== RUN   TestFileSystemProfilesLoader_DeleteProfile/success_idempotent_when_profile_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_DeleteProfile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_DeleteProfile/success_deletes_existing_profile (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_DeleteProfile/success_idempotent_when_profile_does_not_exist (0.00s)
+=== RUN   TestFileSystemProfilesLoader_LoadAllProfiles
+=== RUN   TestFileSystemProfilesLoader_LoadAllProfiles/success_loads_all_profiles
+=== RUN   TestFileSystemProfilesLoader_LoadAllProfiles/returns_nil_when_directory_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_LoadAllProfiles (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadAllProfiles/success_loads_all_profiles (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_LoadAllProfiles/returns_nil_when_directory_does_not_exist (0.00s)
+=== RUN   TestFileSystemProfilesLoader_ClearAllProfiles
+=== RUN   TestFileSystemProfilesLoader_ClearAllProfiles/success_clears_all_profiles
+=== RUN   TestFileSystemProfilesLoader_ClearAllProfiles/success_idempotent_when_directory_does_not_exist
+--- PASS: TestFileSystemProfilesLoader_ClearAllProfiles (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_ClearAllProfiles/success_clears_all_profiles (0.00s)
+    --- PASS: TestFileSystemProfilesLoader_ClearAllProfiles/success_idempotent_when_directory_does_not_exist (0.00s)
+PASS
+coverage: 89.0% of statements
+ok  	github.com/cyberark/ark-sdk-golang/pkg/profiles	1.363s	coverage: 89.0% of statements

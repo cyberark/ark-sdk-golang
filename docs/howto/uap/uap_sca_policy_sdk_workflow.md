@@ -14,8 +14,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	uapscamodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sca"
+	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	uapscamodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sca/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/uap"
 	"os"
 )

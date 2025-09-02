@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
+	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
 	"os"
 )
