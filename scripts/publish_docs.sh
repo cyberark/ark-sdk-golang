@@ -13,9 +13,13 @@ ALIAS="latest"
 echo "Current VERSION: ${VERSION}"
 echo "Major: ${MAJOR}  Alias: ${ALIAS}"
 
+# Make sure gh-pages is up to date
+echo "Making sure gh-pages is latest"
+git fetch origin gh-pages:gh-pages
+
 # Get existing deployed list from gh-pages
 echo "Reading deployed versions..."
-LIST="$(mike list -b gh-pages || true)"
+LIST="$(poetry run mike list -b gh-pages || true)"
 echo "---- mike list ----"
 echo "${LIST}"
 echo "-------------------"
@@ -31,12 +35,11 @@ same_major_versions="$(printf '%s\n' "$LIST" \
 delete_args=""
 if [ -n "$existing_alias_target" ]; then
   echo "Found alias $existing_alias_target; will delete."
-  delete_args="$existing_alias_target"
-elif [ -n "$same_major_versions" ]; then
+  delete_args+="$existing_alias_target"
+fi
+if [ -n "$same_major_versions" ]; then
   echo "Found versions with the same major: $same_major_versions"
-  delete_args="$same_major_versions"
-else
-  echo "No existing deployments for major; treating as new major."
+  delete_args+="$same_major_versions"
 fi
 
 # Delete previous same-major deployments/alias if present
