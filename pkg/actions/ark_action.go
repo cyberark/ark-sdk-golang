@@ -1,25 +1,54 @@
+// Package actions provides base functionality for Ark SDK command line actions.
+//
+// This package defines the core interfaces and base implementations for creating
+// command line actions in the Ark SDK. It includes configuration management,
+// flag handling, and common execution patterns that can be shared across
+// different CLI commands.
 package actions
 
 import (
+	"os"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 // ArkAction is an interface that defines the structure for actions in the Ark SDK.
+//
+// ArkAction provides a contract for implementing command line actions that can
+// be integrated with the Ark SDK CLI framework. Implementations should define
+// their specific command behavior through the DefineAction method.
 type ArkAction interface {
+	// DefineAction configures the provided cobra command with action-specific behavior
 	DefineAction(cmd *cobra.Command)
 }
 
 // ArkBaseAction is a struct that implements the ArkAction interface as a base action.
+//
+// ArkBaseAction provides common functionality that can be shared across different
+// action implementations. It includes logger management and common flag handling
+// patterns. This struct can be embedded in more specific action implementations
+// to provide consistent behavior across the CLI.
 type ArkBaseAction struct {
+	// logger is the internal logger instance for the action
 	logger *common.ArkLogger
 }
 
 // NewArkBaseAction creates a new instance of ArkBaseAction.
+//
+// NewArkBaseAction initializes a new ArkBaseAction with a configured logger.
+// The logger is set up with a default configuration using the "ArkBaseAction"
+// name and Unknown log level.
+//
+// Returns a new ArkBaseAction instance ready for use.
+//
+// Example:
+//
+//	action := NewArkBaseAction()
+//	action.CommonActionsConfiguration(cmd)
 func NewArkBaseAction() *ArkBaseAction {
 	return &ArkBaseAction{
 		logger: common.GetLogger("ArkBaseAction", common.Unknown),
@@ -27,6 +56,29 @@ func NewArkBaseAction() *ArkBaseAction {
 }
 
 // CommonActionsConfiguration sets up common flags for the command line interface.
+//
+// CommonActionsConfiguration adds standard persistent flags to the provided cobra
+// command that are commonly used across different Ark SDK actions. These flags
+// control logging behavior, output formatting, certificate handling, and other
+// common CLI options.
+//
+// The following flags are added:
+//   - raw: Controls whether output should be in raw format
+//   - silent: Enables silent execution without interactive prompts
+//   - allow-output: Allows stdout/stderr output even in silent mode
+//   - verbose: Enables verbose logging
+//   - logger-style: Specifies the style for verbose logging
+//   - log-level: Sets the log level for verbose mode
+//   - disable-cert-verification: Disables HTTPS certificate verification (unsafe)
+//   - trusted-cert: Specifies a trusted certificate for HTTPS calls
+//
+// Parameters:
+//   - cmd: The cobra command to configure with persistent flags
+//
+// Example:
+//
+//	action := NewArkBaseAction()
+//	action.CommonActionsConfiguration(rootCmd)
 func (a *ArkBaseAction) CommonActionsConfiguration(cmd *cobra.Command) {
 	cmd.PersistentFlags().Bool("raw", false, "Whether to raw output")
 	cmd.PersistentFlags().Bool("silent", false, "Silent execution, no interactiveness")
@@ -39,6 +91,29 @@ func (a *ArkBaseAction) CommonActionsConfiguration(cmd *cobra.Command) {
 }
 
 // CommonActionsExecution executes common actions based on the command line flags.
+//
+// CommonActionsExecution processes the standard flags set up by CommonActionsConfiguration
+// and applies the corresponding configuration changes to the Ark SDK runtime. This
+// function should be called early in command execution to ensure proper setup.
+//
+// The function performs the following operations:
+//  1. Sets default states for color, interactivity, logging, and certificates
+//  2. Processes each flag and applies the corresponding configuration
+//  3. Handles certificate verification settings (disable or trusted cert)
+//  4. Configures profile name if provided
+//  5. Sets default DEPLOY_ENV if not already set
+//
+// Parameters:
+//   - cmd: The cobra command containing the parsed flags
+//   - args: Command line arguments (not currently used but part of cobra pattern)
+//
+// The function ignores flag parsing errors and uses default values in such cases,
+// following the principle of graceful degradation for CLI flag handling.
+//
+// Example:
+//
+//	action := NewArkBaseAction()
+//	action.CommonActionsExecution(cmd, args)
 func (a *ArkBaseAction) CommonActionsExecution(cmd *cobra.Command, args []string) {
 	common.EnableColor()
 	common.EnableInteractive()

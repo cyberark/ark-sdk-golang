@@ -2,17 +2,18 @@ package uap
 
 import (
 	"fmt"
+	"reflect"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
 	"github.com/mitchellh/mapstructure"
-	"reflect"
 )
 
 // ArkUAPPolicyPage represents a page of common policies in the UAP service.
-type ArkUAPPolicyPage = common.ArkPage[commonuapmodels.ArkUAPCommonAccessPolicy]
+type ArkUAPPolicyPage = common.ArkPage[uapcommonmodels.ArkUAPCommonAccessPolicy]
 
 // UapServiceConfig defines the service configuration for ArkUAPService.
 var UapServiceConfig = services.ArkServiceConfig{
@@ -56,16 +57,16 @@ func (s *ArkUAPService) ListPolicies() (<-chan *ArkUAPPolicyPage, error) {
 	s.Logger.Info("Listing all policies")
 	policyPagesWithType := make(chan *ArkUAPPolicyPage)
 	go func() {
-		filters := commonuapmodels.NewArkUAPFilters()
+		filters := uapcommonmodels.NewArkUAPFilters()
 		policyPages, err := s.baseService.BaseListPolicies(filters)
 		if err != nil {
 			return
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			policies := ArkUAPPolicyPage{Items: make([]*commonuapmodels.ArkUAPCommonAccessPolicy, len(page.Items))}
+			policies := ArkUAPPolicyPage{Items: make([]*uapcommonmodels.ArkUAPCommonAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var commonPolicy commonuapmodels.ArkUAPCommonAccessPolicy
+				var commonPolicy uapcommonmodels.ArkUAPCommonAccessPolicy
 				err = mapstructure.Decode(*policy, &commonPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -80,12 +81,12 @@ func (s *ArkUAPService) ListPolicies() (<-chan *ArkUAPPolicyPage, error) {
 }
 
 // ListPoliciesBy retrieves policies based on the provided filters.
-func (s *ArkUAPService) ListPoliciesBy(filters *commonuapmodels.ArkUAPFilters) (<-chan *ArkUAPPolicyPage, error) {
+func (s *ArkUAPService) ListPoliciesBy(filters *uapcommonmodels.ArkUAPFilters) (<-chan *ArkUAPPolicyPage, error) {
 	s.Logger.Info("Listing policies by filter")
 	policyPagesWithType := make(chan *ArkUAPPolicyPage)
 	go func() {
 		if filters == nil {
-			filters = commonuapmodels.NewArkUAPFilters()
+			filters = uapcommonmodels.NewArkUAPFilters()
 		}
 		policyPages, err := s.baseService.BaseListPolicies(filters)
 		if err != nil {
@@ -95,9 +96,9 @@ func (s *ArkUAPService) ListPoliciesBy(filters *commonuapmodels.ArkUAPFilters) (
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			policies := ArkUAPPolicyPage{Items: make([]*commonuapmodels.ArkUAPCommonAccessPolicy, len(page.Items))}
+			policies := ArkUAPPolicyPage{Items: make([]*uapcommonmodels.ArkUAPCommonAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var commonPolicy commonuapmodels.ArkUAPCommonAccessPolicy
+				var commonPolicy uapcommonmodels.ArkUAPCommonAccessPolicy
 				err = mapstructure.Decode(*policy, &commonPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -112,7 +113,7 @@ func (s *ArkUAPService) ListPoliciesBy(filters *commonuapmodels.ArkUAPFilters) (
 }
 
 // PolicyStatus retrieves the status of a policy by its ID or name.
-func (s *ArkUAPService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPGetPolicyStatus) (string, error) {
+func (s *ArkUAPService) PolicyStatus(getPolicyStatus *uapcommonmodels.ArkUAPGetPolicyStatus) (string, error) {
 	if getPolicyStatus == nil {
 		return "", fmt.Errorf("getPolicyStatus cannot be nil")
 	}
@@ -120,14 +121,14 @@ func (s *ArkUAPService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPGetP
 		return "", fmt.Errorf("either PolicyID or PolicyName must be provided to retrieve policy status")
 	}
 	s.Logger.Info("Retrieving policy status for ID [%s] and name [%s]", getPolicyStatus.PolicyID, getPolicyStatus.PolicyName)
-	respType := reflect.TypeOf(commonuapmodels.ArkUAPCommonAccessPolicy{})
+	respType := reflect.TypeOf(uapcommonmodels.ArkUAPCommonAccessPolicy{})
 	return s.baseService.BasePolicyStatus(getPolicyStatus.PolicyID, getPolicyStatus.PolicyName, &respType)
 }
 
 // PoliciesStats retrieves statistics for all policies.
-func (s *ArkUAPService) PoliciesStats() (*commonuapmodels.ArkUAPPoliciesStats, error) {
+func (s *ArkUAPService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats, error) {
 	s.Logger.Info("Retrieving policies statistics")
-	filters := commonuapmodels.NewArkUAPFilters()
+	filters := uapcommonmodels.NewArkUAPFilters()
 	stats, err := s.baseService.BasePoliciesStats(filters)
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve policies statistics: %w", err)

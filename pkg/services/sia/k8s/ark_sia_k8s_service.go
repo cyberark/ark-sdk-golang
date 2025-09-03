@@ -12,8 +12,8 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	k8smodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	k8smodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s/models"
 )
 
 const (

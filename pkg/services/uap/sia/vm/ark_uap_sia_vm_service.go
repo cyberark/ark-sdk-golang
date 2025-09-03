@@ -7,15 +7,15 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	vmmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/vm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	uapsiavmmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/vm/models"
 	"github.com/mitchellh/mapstructure"
 )
 
 // ArkUAPVMPolicyPage represents a page of SIA VM policies in the UAP service.
-type ArkUAPVMPolicyPage = common.ArkPage[vmmodels.ArkUAPSIAVMAccessPolicy]
+type ArkUAPVMPolicyPage = common.ArkPage[uapsiavmmodels.ArkUAPSIAVMAccessPolicy]
 
 // ArkUAPSIAVMServiceConfig defines the service configuration for ArkUAPSIAVMService.
 var ArkUAPSIAVMServiceConfig = services.ArkServiceConfig{
@@ -55,7 +55,7 @@ func NewArkUAPSIAVMService(authenticators ...auth.ArkAuth) (*ArkUAPSIAVMService,
 }
 
 // AddPolicy adds a new policy with the given information.
-func (s *ArkUAPSIAVMService) AddPolicy(addPolicy *vmmodels.ArkUAPSIAVMAccessPolicy) (*vmmodels.ArkUAPSIAVMAccessPolicy, error) {
+func (s *ArkUAPSIAVMService) AddPolicy(addPolicy *uapsiavmmodels.ArkUAPSIAVMAccessPolicy) (*uapsiavmmodels.ArkUAPSIAVMAccessPolicy, error) {
 	s.Logger.Info("Adding new policy [%s]", addPolicy.Metadata.Name)
 	addPolicy.Metadata.PolicyEntitlement.TargetCategory = commonmodels.CategoryTypeVM
 	if addPolicy.Metadata.PolicyTags == nil {
@@ -74,21 +74,21 @@ func (s *ArkUAPSIAVMService) AddPolicy(addPolicy *vmmodels.ArkUAPSIAVMAccessPoli
 	if err != nil {
 		return nil, err
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: policyResp.PolicyID,
 	})
 }
 
 // Policy retrieves a policy by its ID.
-func (s *ArkUAPSIAVMService) Policy(policyRequest *commonuapmodels.ArkUAPGetPolicyRequest) (*vmmodels.ArkUAPSIAVMAccessPolicy, error) {
+func (s *ArkUAPSIAVMService) Policy(policyRequest *uapcommonmodels.ArkUAPGetPolicyRequest) (*uapsiavmmodels.ArkUAPSIAVMAccessPolicy, error) {
 	s.Logger.Info("Retrieving policy [%s]", policyRequest.PolicyID)
-	respType := reflect.TypeOf(vmmodels.ArkUAPSIAVMAccessPolicy{})
+	respType := reflect.TypeOf(uapsiavmmodels.ArkUAPSIAVMAccessPolicy{})
 	policyJSON, err := s.baseService.BasePolicy(policyRequest.PolicyID, &respType)
 	if err != nil {
 		return nil, err
 	}
 	policyJSONSnake := common.ConvertToSnakeCase(policyJSON, &respType)
-	var vmPolicy vmmodels.ArkUAPSIAVMAccessPolicy
+	var vmPolicy uapsiavmmodels.ArkUAPSIAVMAccessPolicy
 	err = vmPolicy.Deserialize(policyJSONSnake.(map[string]interface{}))
 	if err != nil {
 		return nil, err
@@ -97,9 +97,9 @@ func (s *ArkUAPSIAVMService) Policy(policyRequest *commonuapmodels.ArkUAPGetPoli
 }
 
 // UpdatePolicy edits an existing policy with the given information.
-func (s *ArkUAPSIAVMService) UpdatePolicy(updatePolicy *vmmodels.ArkUAPSIAVMAccessPolicy) (*vmmodels.ArkUAPSIAVMAccessPolicy, error) {
+func (s *ArkUAPSIAVMService) UpdatePolicy(updatePolicy *uapsiavmmodels.ArkUAPSIAVMAccessPolicy) (*uapsiavmmodels.ArkUAPSIAVMAccessPolicy, error) {
 	s.Logger.Info("Updating policy [%s]", updatePolicy.Metadata.PolicyID)
-	policyType := reflect.TypeOf(vmmodels.ArkUAPSIAVMAccessPolicy{})
+	policyType := reflect.TypeOf(uapsiavmmodels.ArkUAPSIAVMAccessPolicy{})
 	updatePolicySerialized, err := updatePolicy.Serialize()
 	if err != nil {
 		return nil, err
@@ -112,7 +112,7 @@ func (s *ArkUAPSIAVMService) UpdatePolicy(updatePolicy *vmmodels.ArkUAPSIAVMAcce
 	if err != nil {
 		return nil, err
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: updatePolicy.Metadata.PolicyID,
 	})
 }
@@ -122,7 +122,7 @@ func (s *ArkUAPSIAVMService) ListPolicies() (<-chan *ArkUAPVMPolicyPage, error) 
 	s.Logger.Info("Listing all policies")
 	policyPagesWithType := make(chan *ArkUAPVMPolicyPage)
 	go func() {
-		filters := commonuapmodels.NewArkUAPFilters()
+		filters := uapcommonmodels.NewArkUAPFilters()
 		filters.TargetCategory = []string{commonmodels.CategoryTypeVM}
 		policyPages, err := s.baseService.BaseListPolicies(filters)
 		if err != nil {
@@ -130,9 +130,9 @@ func (s *ArkUAPSIAVMService) ListPolicies() (<-chan *ArkUAPVMPolicyPage, error) 
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			vmPolicies := ArkUAPVMPolicyPage{Items: make([]*vmmodels.ArkUAPSIAVMAccessPolicy, len(page.Items))}
+			vmPolicies := ArkUAPVMPolicyPage{Items: make([]*uapsiavmmodels.ArkUAPSIAVMAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var vmPolicy vmmodels.ArkUAPSIAVMAccessPolicy
+				var vmPolicy uapsiavmmodels.ArkUAPSIAVMAccessPolicy
 				err = mapstructure.Decode(*policy, &vmPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -147,13 +147,13 @@ func (s *ArkUAPSIAVMService) ListPolicies() (<-chan *ArkUAPVMPolicyPage, error) 
 }
 
 // ListPoliciesBy retrieves policies based on the provided filters.
-func (s *ArkUAPSIAVMService) ListPoliciesBy(filters *vmmodels.ArkUAPSIAVMFilters) (<-chan *ArkUAPVMPolicyPage, error) {
+func (s *ArkUAPSIAVMService) ListPoliciesBy(filters *uapsiavmmodels.ArkUAPSIAVMFilters) (<-chan *ArkUAPVMPolicyPage, error) {
 	s.Logger.Info("Listing policies by filter")
 	policyPagesWithType := make(chan *ArkUAPVMPolicyPage)
 	go func() {
 		if filters == nil {
-			filters = &vmmodels.ArkUAPSIAVMFilters{
-				ArkUAPFilters: *commonuapmodels.NewArkUAPFilters(),
+			filters = &uapsiavmmodels.ArkUAPSIAVMFilters{
+				ArkUAPFilters: *uapcommonmodels.NewArkUAPFilters(),
 			}
 		}
 		filters.TargetCategory = []string{commonmodels.CategoryTypeVM}
@@ -165,9 +165,9 @@ func (s *ArkUAPSIAVMService) ListPoliciesBy(filters *vmmodels.ArkUAPSIAVMFilters
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			vmPolicies := ArkUAPVMPolicyPage{Items: make([]*vmmodels.ArkUAPSIAVMAccessPolicy, len(page.Items))}
+			vmPolicies := ArkUAPVMPolicyPage{Items: make([]*uapsiavmmodels.ArkUAPSIAVMAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var vmPolicy vmmodels.ArkUAPSIAVMAccessPolicy
+				var vmPolicy uapsiavmmodels.ArkUAPSIAVMAccessPolicy
 				err = mapstructure.Decode(*policy, &vmPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -182,13 +182,13 @@ func (s *ArkUAPSIAVMService) ListPoliciesBy(filters *vmmodels.ArkUAPSIAVMFilters
 }
 
 // DeletePolicy deletes a policy by its ID.
-func (s *ArkUAPSIAVMService) DeletePolicy(deletePolicy *commonuapmodels.ArkUAPDeletePolicyRequest) error {
+func (s *ArkUAPSIAVMService) DeletePolicy(deletePolicy *uapcommonmodels.ArkUAPDeletePolicyRequest) error {
 	s.Logger.Info("Deleting policy [%s]", deletePolicy.PolicyID)
 	return s.baseService.BaseDeletePolicy(deletePolicy.PolicyID)
 }
 
 // PolicyStatus retrieves the status of a policy by its ID or name.
-func (s *ArkUAPSIAVMService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPGetPolicyStatus) (string, error) {
+func (s *ArkUAPSIAVMService) PolicyStatus(getPolicyStatus *uapcommonmodels.ArkUAPGetPolicyStatus) (string, error) {
 	if getPolicyStatus == nil {
 		return "", fmt.Errorf("getPolicyStatus cannot be nil")
 	}
@@ -196,14 +196,14 @@ func (s *ArkUAPSIAVMService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUA
 		return "", fmt.Errorf("either PolicyID or PolicyName must be provided to retrieve policy status")
 	}
 	s.Logger.Info("Retrieving policy status for ID [%s] and name [%s]", getPolicyStatus.PolicyID, getPolicyStatus.PolicyName)
-	respType := reflect.TypeOf(vmmodels.ArkUAPSIAVMAccessPolicy{})
+	respType := reflect.TypeOf(uapsiavmmodels.ArkUAPSIAVMAccessPolicy{})
 	return s.baseService.BasePolicyStatus(getPolicyStatus.PolicyID, getPolicyStatus.PolicyName, &respType)
 }
 
 // PoliciesStats calculates policies statistics.
-func (s *ArkUAPSIAVMService) PoliciesStats() (*commonuapmodels.ArkUAPPoliciesStats, error) {
+func (s *ArkUAPSIAVMService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats, error) {
 	s.Logger.Info("Calculating policies statistics")
-	filters := commonuapmodels.NewArkUAPFilters()
+	filters := uapcommonmodels.NewArkUAPFilters()
 	filters.TargetCategory = []string{commonmodels.CategoryTypeVM}
 	return s.baseService.BasePoliciesStats(filters)
 }

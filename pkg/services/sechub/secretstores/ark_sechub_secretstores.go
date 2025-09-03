@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"net/url"
 
+	secretstoresmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sechub/secretstores/models"
 	"github.com/mitchellh/mapstructure"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	secretstoresmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sechub/secretstores"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 )
 

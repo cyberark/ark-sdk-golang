@@ -3,12 +3,12 @@ package sia
 import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/access"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s"
 	dbsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db"
 	vmsecrets "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	workspacesdb "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets"
 )

@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/cmgr"
-	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/cmgr"
+	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/services/cmgr/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
-	"os"
+	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access/models"
 )
 
 func main() {

@@ -7,10 +7,10 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	scamodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sca"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	uapscamodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sca/models"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -19,7 +19,7 @@ const (
 )
 
 // ArkUAPSCAPolicyPage represents a page of SCA policies in the UAP service.
-type ArkUAPSCAPolicyPage = common.ArkPage[scamodels.ArkUAPSCACloudConsoleAccessPolicy]
+type ArkUAPSCAPolicyPage = common.ArkPage[uapscamodels.ArkUAPSCACloudConsoleAccessPolicy]
 
 // ArkUAPSCAServiceConfig defines the service configuration for ArkUAPSCAService.
 var ArkUAPSCAServiceConfig = services.ArkServiceConfig{
@@ -58,19 +58,19 @@ func NewArkUAPSCAService(authenticators ...auth.ArkAuth) (*ArkUAPSCAService, err
 	return uapScaService, nil
 }
 
-func (s *ArkUAPSCAService) serializeTargets(policy *scamodels.ArkUAPSCACloudConsoleAccessPolicy, policyJSON map[string]interface{}) error {
+func (s *ArkUAPSCAService) serializeTargets(policy *uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, policyJSON map[string]interface{}) error {
 	var err error
 	policy.Targets.ClearTargetsFromData(policyJSON["targets"].(map[string]interface{}))
 	policyJSON["targets"], err = policy.Targets.SerializeTargets()
 	return err
 }
 
-func (s *ArkUAPSCAService) deserializeTargets(policy *scamodels.ArkUAPSCACloudConsoleAccessPolicy, policyJSON map[string]interface{}) error {
+func (s *ArkUAPSCAService) deserializeTargets(policy *uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, policyJSON map[string]interface{}) error {
 	return policy.Targets.DeserializeTargets(policyJSON["targets"].(map[string]interface{}))
 }
 
 // AddPolicy adds a new policy with the given information.
-func (s *ArkUAPSCAService) AddPolicy(addPolicy *scamodels.ArkUAPSCACloudConsoleAccessPolicy) (*scamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
+func (s *ArkUAPSCAService) AddPolicy(addPolicy *uapscamodels.ArkUAPSCACloudConsoleAccessPolicy) (*uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
 	s.Logger.Info("Adding new policy [%s]", addPolicy.Metadata.Name)
 	addPolicy.Metadata.PolicyEntitlement.TargetCategory = commonmodels.CategoryTypeCloudConsole
 	if addPolicy.Metadata.PolicyTags == nil {
@@ -90,17 +90,17 @@ func (s *ArkUAPSCAService) AddPolicy(addPolicy *scamodels.ArkUAPSCACloudConsoleA
 	}
 	retryCount := 0
 	for {
-		policy, err := s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+		policy, err := s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 			PolicyID: policyResp.PolicyID,
 		})
 		if err != nil {
 			return nil, err
 		}
-		if policy.Metadata.Status.Status == commonuapmodels.StatusTypeActive {
+		if policy.Metadata.Status.Status == uapcommonmodels.StatusTypeActive {
 			break
 		}
-		if policy.Metadata.Status.Status == commonuapmodels.StatusTypeError {
-			return nil, fmt.Errorf("policy [%s] is in error state: %s", policyResp.PolicyID)
+		if policy.Metadata.Status.Status == uapcommonmodels.StatusTypeError {
+			return nil, fmt.Errorf("policy [%s] is in error state: %s", policyResp.PolicyID, policy.Metadata.Status.Status)
 		}
 		if retryCount >= policyStatusActiveRetryCount {
 			s.Logger.Warning("Policy [%s] is not active after 10 retries, "+
@@ -109,20 +109,20 @@ func (s *ArkUAPSCAService) AddPolicy(addPolicy *scamodels.ArkUAPSCACloudConsoleA
 		}
 		retryCount++
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: policyResp.PolicyID,
 	})
 }
 
 // Policy retrieves a policy by its ID.
-func (s *ArkUAPSCAService) Policy(policyRequest *commonuapmodels.ArkUAPGetPolicyRequest) (*scamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
+func (s *ArkUAPSCAService) Policy(policyRequest *uapcommonmodels.ArkUAPGetPolicyRequest) (*uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
 	s.Logger.Info("Retrieving policy [%s]", policyRequest.PolicyID)
-	respType := reflect.TypeOf(scamodels.ArkUAPSCACloudConsoleAccessPolicy{})
+	respType := reflect.TypeOf(uapscamodels.ArkUAPSCACloudConsoleAccessPolicy{})
 	policyJSON, err := s.baseService.BasePolicy(policyRequest.PolicyID, &respType)
 	if err != nil {
 		return nil, err
 	}
-	var scaPolicy scamodels.ArkUAPSCACloudConsoleAccessPolicy
+	var scaPolicy uapscamodels.ArkUAPSCACloudConsoleAccessPolicy
 	err = mapstructure.Decode(policyJSON, &scaPolicy)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,7 @@ func (s *ArkUAPSCAService) Policy(policyRequest *commonuapmodels.ArkUAPGetPolicy
 }
 
 // UpdatePolicy edits an existing policy with the given information.
-func (s *ArkUAPSCAService) UpdatePolicy(updatePolicy *scamodels.ArkUAPSCACloudConsoleAccessPolicy) (*scamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
+func (s *ArkUAPSCAService) UpdatePolicy(updatePolicy *uapscamodels.ArkUAPSCACloudConsoleAccessPolicy) (*uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, error) {
 	s.Logger.Info("Updating policy [%s]", updatePolicy.Metadata.PolicyID)
 	policyJSON, err := common.SerializeJSONCamel(updatePolicy)
 	if err != nil {
@@ -151,17 +151,17 @@ func (s *ArkUAPSCAService) UpdatePolicy(updatePolicy *scamodels.ArkUAPSCACloudCo
 	}
 	retryCount := 0
 	for {
-		policy, err := s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+		policy, err := s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 			PolicyID: updatePolicy.Metadata.PolicyID,
 		})
 		if err != nil {
 			return nil, err
 		}
-		if policy.Metadata.Status.Status == commonuapmodels.StatusTypeActive {
+		if policy.Metadata.Status.Status == uapcommonmodels.StatusTypeActive {
 			break
 		}
-		if policy.Metadata.Status.Status == commonuapmodels.StatusTypeError {
-			return nil, fmt.Errorf("policy [%s] is in error state: %s", updatePolicy.Metadata.PolicyID)
+		if policy.Metadata.Status.Status == uapcommonmodels.StatusTypeError {
+			return nil, fmt.Errorf("policy [%s] is in error state: %s", updatePolicy.Metadata.PolicyID, policy.Metadata.Status.Status)
 		}
 		if retryCount >= policyStatusActiveRetryCount {
 			s.Logger.Warning("Policy [%s] is not active after 10 retries, "+
@@ -170,7 +170,7 @@ func (s *ArkUAPSCAService) UpdatePolicy(updatePolicy *scamodels.ArkUAPSCACloudCo
 		}
 		retryCount++
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: updatePolicy.Metadata.PolicyID,
 	})
 }
@@ -180,7 +180,7 @@ func (s *ArkUAPSCAService) ListPolicies() (<-chan *ArkUAPSCAPolicyPage, error) {
 	s.Logger.Info("Listing all policies")
 	policyPagesWithType := make(chan *ArkUAPSCAPolicyPage)
 	go func() {
-		filters := commonuapmodels.NewArkUAPFilters()
+		filters := uapcommonmodels.NewArkUAPFilters()
 		filters.TargetCategory = []string{commonmodels.CategoryTypeCloudConsole}
 		policyPages, err := s.baseService.BaseListPolicies(filters)
 		if err != nil {
@@ -188,9 +188,9 @@ func (s *ArkUAPSCAService) ListPolicies() (<-chan *ArkUAPSCAPolicyPage, error) {
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			scaPolicies := ArkUAPSCAPolicyPage{Items: make([]*scamodels.ArkUAPSCACloudConsoleAccessPolicy, len(page.Items))}
+			scaPolicies := ArkUAPSCAPolicyPage{Items: make([]*uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var scaPolicy scamodels.ArkUAPSCACloudConsoleAccessPolicy
+				var scaPolicy uapscamodels.ArkUAPSCACloudConsoleAccessPolicy
 				err = mapstructure.Decode(*policy, &scaPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -205,13 +205,13 @@ func (s *ArkUAPSCAService) ListPolicies() (<-chan *ArkUAPSCAPolicyPage, error) {
 }
 
 // ListPoliciesBy retrieves policies based on the provided filters.
-func (s *ArkUAPSCAService) ListPoliciesBy(filters *scamodels.ArkUAPSCAFilters) (<-chan *ArkUAPSCAPolicyPage, error) {
+func (s *ArkUAPSCAService) ListPoliciesBy(filters *uapscamodels.ArkUAPSCAFilters) (<-chan *ArkUAPSCAPolicyPage, error) {
 	s.Logger.Info("Listing policies by filter")
 	policyPagesWithType := make(chan *ArkUAPSCAPolicyPage)
 	go func() {
 		if filters == nil {
-			filters = &scamodels.ArkUAPSCAFilters{
-				ArkUAPFilters: *commonuapmodels.NewArkUAPFilters(),
+			filters = &uapscamodels.ArkUAPSCAFilters{
+				ArkUAPFilters: *uapcommonmodels.NewArkUAPFilters(),
 			}
 		}
 		filters.TargetCategory = []string{commonmodels.CategoryTypeCloudConsole}
@@ -223,9 +223,9 @@ func (s *ArkUAPSCAService) ListPoliciesBy(filters *scamodels.ArkUAPSCAFilters) (
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			scaPolicies := ArkUAPSCAPolicyPage{Items: make([]*scamodels.ArkUAPSCACloudConsoleAccessPolicy, len(page.Items))}
+			scaPolicies := ArkUAPSCAPolicyPage{Items: make([]*uapscamodels.ArkUAPSCACloudConsoleAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var scaPolicy scamodels.ArkUAPSCACloudConsoleAccessPolicy
+				var scaPolicy uapscamodels.ArkUAPSCACloudConsoleAccessPolicy
 				err = mapstructure.Decode(*policy, &scaPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -240,13 +240,13 @@ func (s *ArkUAPSCAService) ListPoliciesBy(filters *scamodels.ArkUAPSCAFilters) (
 }
 
 // DeletePolicy deletes a policy by its ID.
-func (s *ArkUAPSCAService) DeletePolicy(deletePolicy *commonuapmodels.ArkUAPDeletePolicyRequest) error {
+func (s *ArkUAPSCAService) DeletePolicy(deletePolicy *uapcommonmodels.ArkUAPDeletePolicyRequest) error {
 	s.Logger.Info("Deleting policy [%s]", deletePolicy.PolicyID)
 	return s.baseService.BaseDeletePolicy(deletePolicy.PolicyID)
 }
 
 // PolicyStatus retrieves the status of a policy by its ID or name.
-func (s *ArkUAPSCAService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPGetPolicyStatus) (string, error) {
+func (s *ArkUAPSCAService) PolicyStatus(getPolicyStatus *uapcommonmodels.ArkUAPGetPolicyStatus) (string, error) {
 	if getPolicyStatus == nil {
 		return "", fmt.Errorf("getPolicyStatus cannot be nil")
 	}
@@ -254,14 +254,14 @@ func (s *ArkUAPSCAService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPG
 		return "", fmt.Errorf("either PolicyID or PolicyName must be provided to retrieve policy status")
 	}
 	s.Logger.Info("Retrieving policy status for ID [%s] and name [%s]", getPolicyStatus.PolicyID, getPolicyStatus.PolicyName)
-	respType := reflect.TypeOf(scamodels.ArkUAPSCACloudConsoleAccessPolicy{})
+	respType := reflect.TypeOf(uapscamodels.ArkUAPSCACloudConsoleAccessPolicy{})
 	return s.baseService.BasePolicyStatus(getPolicyStatus.PolicyID, getPolicyStatus.PolicyName, &respType)
 }
 
 // PoliciesStats calculates policies statistics.
-func (s *ArkUAPSCAService) PoliciesStats() (*commonuapmodels.ArkUAPPoliciesStats, error) {
+func (s *ArkUAPSCAService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats, error) {
 	s.Logger.Info("Calculating policies statistics")
-	filters := commonuapmodels.NewArkUAPFilters()
+	filters := uapcommonmodels.NewArkUAPFilters()
 	filters.TargetCategory = []string{commonmodels.CategoryTypeCloudConsole}
 	return s.baseService.BasePoliciesStats(filters)
 }

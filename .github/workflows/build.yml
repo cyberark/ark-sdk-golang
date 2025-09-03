@@ -21,13 +21,13 @@ jobs:
             echo "VERSION file was not updated. Failing the build."
             exit 1
           fi
-      - name: Set up golang 1.24
+      - name: Golang 1.24
         uses: actions/setup-go@v4
         with:
           go-version: 1.24.0
-      - name: Install golint
+      - name: Pre-requisites
         run: go install golang.org/x/lint/golint@latest
-      - name: Calculate environment variables
+      - name: Environment variables
         id: calculate_version
         run: |
           main_version=$(cat VERSION | tr -d '\n')
@@ -53,12 +53,14 @@ jobs:
           echo "BUILD_DATE=$(date +'%d-%m-%Y %H:%M:%S')" >> $GITHUB_ENV
           echo "Calculated BUILD_VERSION: $version"
           echo "Calculated BUILD_TAG: $tag"
-      - name: Install dependencies
+      - name: Dependencies
         run: go mod download
-      - name: Run linters
-        run: ./scripts/golint.sh
+      - name: Validate
+        run: make validate
       - name: Build
-        run: ./scripts/build.sh
+        run: make all
+      - name: Test
+        run: make unit-test-all
       - name: Tag
         continue-on-error: true
         uses: rickstaa/action-create-tag@v1

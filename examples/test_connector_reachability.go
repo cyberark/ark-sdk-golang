@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia"
+	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access/models"
+
 	"os"
 )
 

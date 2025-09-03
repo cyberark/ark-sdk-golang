@@ -3,14 +3,15 @@ package cmgr
 import (
 	"context"
 	"fmt"
+	"io"
+	"net/http"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/cmgr"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/services/cmgr/models"
 	"github.com/mitchellh/mapstructure"
-	"io"
-	"net/http"
 )
 
 const (

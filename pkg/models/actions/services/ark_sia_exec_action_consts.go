@@ -2,25 +2,25 @@ package services
 
 import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
-	siaaccess "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
-	siadbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/db"
-	siak8s "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/k8s"
-	siasecretsdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/db"
-	siasecretsvm "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
-	siasshca "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sshca"
-	siasso "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
-	siaworkspacesdb "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
-	siatargetsets "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/targetsets"
+	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access/models"
+	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/db/models"
+	siak8s "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s/models"
+	secretsdbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/db/models"
+	secretsvmmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm/models"
+	siasshca "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sshca/models"
+	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso/models"
+	workspacesdbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db/models"
+	targetsetsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets/models"
 )
 
 // SSOActionToSchemaMap is a map that defines the mapping between SSO action names and their corresponding schema types.
 var SSOActionToSchemaMap = map[string]interface{}{
-	"short-lived-password":           &siasso.ArkSIASSOGetShortLivedPassword{},
-	"short-lived-client-certificate": &siasso.ArkSIASSOGetShortLivedClientCertificate{},
-	"short-lived-oracle-wallet":      &siasso.ArkSIASSOGetShortLivedOracleWallet{},
-	"short-lived-rdp-file":           &siasso.ArkSIASSOGetShortLivedRDPFile{},
-	"short-lived-token-info":         &siasso.ArkSIASSOGetTokenInfo{},
-	"short-lived-ssh-key":            &siasso.ArkSIASSOGetSSHKey{},
+	"short-lived-password":           &ssomodels.ArkSIASSOGetShortLivedPassword{},
+	"short-lived-client-certificate": &ssomodels.ArkSIASSOGetShortLivedClientCertificate{},
+	"short-lived-oracle-wallet":      &ssomodels.ArkSIASSOGetShortLivedOracleWallet{},
+	"short-lived-rdp-file":           &ssomodels.ArkSIASSOGetShortLivedRDPFile{},
+	"short-lived-token-info":         &ssomodels.ArkSIASSOGetTokenInfo{},
+	"short-lived-ssh-key":            &ssomodels.ArkSIASSOGetSSHKey{},
 }
 
 // SSOAction is a struct that defines the SSO action for the Ark service.
@@ -42,25 +42,25 @@ var K8SAction = actions.ArkServiceActionDefinition{
 
 // TargetSetsActionToSchemaMap is a map that defines the mapping between TargetSets action names and their corresponding schema types.
 var TargetSetsActionToSchemaMap = map[string]interface{}{
-	"add-target-set":          &siatargetsets.ArkSIAAddTargetSet{},
-	"bulk-add-target-sets":    &siatargetsets.ArkSIABulkAddTargetSets{},
-	"delete-target-set":       &siatargetsets.ArkSIADeleteTargetSet{},
-	"bulk-delete-target-sets": &siatargetsets.ArkSIABulkDeleteTargetSets{},
-	"update-target-set":       &siatargetsets.ArkSIAUpdateTargetSet{},
+	"add-target-set":          &targetsetsmodels.ArkSIAAddTargetSet{},
+	"bulk-add-target-sets":    &targetsetsmodels.ArkSIABulkAddTargetSets{},
+	"delete-target-set":       &targetsetsmodels.ArkSIADeleteTargetSet{},
+	"bulk-delete-target-sets": &targetsetsmodels.ArkSIABulkDeleteTargetSets{},
+	"update-target-set":       &targetsetsmodels.ArkSIAUpdateTargetSet{},
 	"list-target-sets":        nil,
-	"list-target-sets-by":     &siatargetsets.ArkSIATargetSetsFilter{},
-	"target-set":              &siatargetsets.ArkSIAGetTargetSet{},
+	"list-target-sets-by":     &targetsetsmodels.ArkSIATargetSetsFilter{},
+	"target-set":              &targetsetsmodels.ArkSIAGetTargetSet{},
 	"target-sets-stats":       nil,
 }
 
 // DBWorkspaceActionToSchemaMap is a map that defines the mapping between DB workspace action names and their corresponding schema types.
 var DBWorkspaceActionToSchemaMap = map[string]interface{}{
-	"add-database":      &siaworkspacesdb.ArkSIADBAddDatabase{},
-	"delete-database":   &siaworkspacesdb.ArkSIADBDeleteDatabase{},
-	"update-database":   &siaworkspacesdb.ArkSIADBUpdateDatabase{},
-	"database":          &siaworkspacesdb.ArkSIADBGetDatabase{},
+	"add-database":      &workspacesdbmodels.ArkSIADBAddDatabase{},
+	"delete-database":   &workspacesdbmodels.ArkSIADBDeleteDatabase{},
+	"update-database":   &workspacesdbmodels.ArkSIADBUpdateDatabase{},
+	"database":          &workspacesdbmodels.ArkSIADBGetDatabase{},
 	"list-databases":    nil,
-	"list-databases-by": &siaworkspacesdb.ArkSIADBDatabasesFilter{},
+	"list-databases-by": &workspacesdbmodels.ArkSIADBDatabasesFilter{},
 	"databases-stats":   nil,
 	"list-engine-types": nil,
 	"list-family-types": nil,
@@ -89,12 +89,12 @@ var WorkspacesAction = actions.ArkServiceActionDefinition{
 
 // SecretsVMActionToSchemaMap is a map that defines the mapping between Secrets VM action names and their corresponding schema types.
 var SecretsVMActionToSchemaMap = map[string]interface{}{
-	"add-secret":      &siasecretsvm.ArkSIAVMAddSecret{},
-	"change-secret":   &siasecretsvm.ArkSIAVMChangeSecret{},
-	"delete-secret":   &siasecretsvm.ArkSIAVMDeleteSecret{},
+	"add-secret":      &secretsvmmodels.ArkSIAVMAddSecret{},
+	"change-secret":   &secretsvmmodels.ArkSIAVMChangeSecret{},
+	"delete-secret":   &secretsvmmodels.ArkSIAVMDeleteSecret{},
 	"list-secrets":    nil,
-	"list-secrets-by": &siasecretsvm.ArkSIAVMSecretsFilter{},
-	"secret":          &siasecretsvm.ArkSIAVMGetSecret{},
+	"list-secrets-by": &secretsvmmodels.ArkSIAVMSecretsFilter{},
+	"secret":          &secretsvmmodels.ArkSIAVMGetSecret{},
 	"secrets-stats":   nil,
 }
 
@@ -106,14 +106,14 @@ var SecretsVMAction = actions.ArkServiceActionDefinition{
 
 // SecretsDBActionToSchemaMap is a map that defines the mapping between Secrets DB action names and their corresponding schema types.
 var SecretsDBActionToSchemaMap = map[string]interface{}{
-	"add-secret":      &siasecretsdb.ArkSIADBAddSecret{},
-	"update-secret":   &siasecretsdb.ArkSIADBUpdateSecret{},
-	"delete-secret":   &siasecretsdb.ArkSIADBDeleteSecret{},
+	"add-secret":      &secretsdbmodels.ArkSIADBAddSecret{},
+	"update-secret":   &secretsdbmodels.ArkSIADBUpdateSecret{},
+	"delete-secret":   &secretsdbmodels.ArkSIADBDeleteSecret{},
 	"list-secrets":    nil,
-	"list-secrets-by": &siasecretsdb.ArkSIADBSecretsFilter{},
-	"enable-secret":   &siasecretsdb.ArkSIADBEnableSecret{},
-	"disable-secret":  &siasecretsdb.ArkSIADBDisableSecret{},
-	"secret":          &siasecretsdb.ArkSIADBGetSecret{},
+	"list-secrets-by": &secretsdbmodels.ArkSIADBSecretsFilter{},
+	"enable-secret":   &secretsdbmodels.ArkSIADBEnableSecret{},
+	"disable-secret":  &secretsdbmodels.ArkSIADBDisableSecret{},
+	"secret":          &secretsdbmodels.ArkSIADBGetSecret{},
 	"secrets-stats":   nil,
 }
 
@@ -134,11 +134,11 @@ var SecretsAction = actions.ArkServiceActionDefinition{
 
 // AccessActionToSchemaMap is a map that defines the mapping between Access action names and their corresponding schema types.
 var AccessActionToSchemaMap = map[string]interface{}{
-	"connector-setup-script":      &siaaccess.ArkSIAGetConnectorSetupScript{},
-	"install-connector":           &siaaccess.ArkSIAInstallConnector{},
-	"uninstall-connector":         &siaaccess.ArkSIAUninstallConnector{},
-	"test-connector-reachability": &siaaccess.ArkSIATestConnectorReachability{},
-	"delete-connector":            &siaaccess.ArkSIADeleteConnector{},
+	"connector-setup-script":      &accessmodels.ArkSIAGetConnectorSetupScript{},
+	"install-connector":           &accessmodels.ArkSIAInstallConnector{},
+	"uninstall-connector":         &accessmodels.ArkSIAUninstallConnector{},
+	"test-connector-reachability": &accessmodels.ArkSIATestConnectorReachability{},
+	"delete-connector":            &accessmodels.ArkSIADeleteConnector{},
 }
 
 // AccessAction is a struct that defines the Access action for the Ark service.
@@ -164,11 +164,11 @@ var SSHCaAction = actions.ArkServiceActionDefinition{
 
 // DbActionToSchemaMap is a map that defines the mapping between ssh-ca action names and their corresponding schema types.
 var DbActionToSchemaMap = map[string]interface{}{
-	"psql":                      &siadbmodels.ArkSIADBPsqlExecution{},
-	"mysql":                     &siadbmodels.ArkSIADBMysqlExecution{},
-	"sqlcmd":                    &siadbmodels.ArkSIADBSqlcmdExecution{},
-	"generate-oracle-tnsnames":  &siadbmodels.ArkSIADBOracleGenerateAssets{},
-	"generate-proxy-full-chain": &siadbmodels.ArkSIADBProxyFullChainGenerateAssets{},
+	"psql":                      &dbmodels.ArkSIADBPsqlExecution{},
+	"mysql":                     &dbmodels.ArkSIADBMysqlExecution{},
+	"sqlcmd":                    &dbmodels.ArkSIADBSqlcmdExecution{},
+	"generate-oracle-tnsnames":  &dbmodels.ArkSIADBOracleGenerateAssets{},
+	"generate-proxy-full-chain": &dbmodels.ArkSIADBProxyFullChainGenerateAssets{},
 }
 
 // DbAction is a struct that defines the Access action for the Ark service.

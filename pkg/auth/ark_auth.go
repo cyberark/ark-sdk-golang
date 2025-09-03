@@ -2,10 +2,11 @@ package auth
 
 import (
 	"errors"
-	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 	"net/url"
 	"slices"
 	"time"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
@@ -160,7 +161,7 @@ func (a *ArkAuthBase) Authenticate(profile *models.ArkProfile, authProfile *auth
 // IsAuthenticated checks if the authentication is already loaded for the specified profile.
 func (a *ArkAuthBase) IsAuthenticated(profile *models.ArkProfile) bool {
 	var err error
-	a.Logger.Info("Checking if [" + a.Authenticator.AuthenticatorName() + "] is authenticated")
+	a.Logger.Info("Checking if [%s] is authenticated", a.Authenticator.AuthenticatorName())
 	if a.Token != nil {
 		a.Logger.Info("Token is already loaded")
 		return true
@@ -183,7 +184,7 @@ func (a *ArkAuthBase) IsAuthenticated(profile *models.ArkProfile) bool {
 // LoadAuthentication loads the authentication token for the specified profile and refreshes it if necessary.
 func (a *ArkAuthBase) LoadAuthentication(profile *models.ArkProfile, refreshAuth bool) (*auth.ArkToken, error) {
 	var err error
-	a.Logger.Info("Trying to load [" + a.Authenticator.AuthenticatorName() + "] authentication")
+	a.Logger.Info("Trying to load [%s] authentication", a.Authenticator.AuthenticatorName())
 	if profile == nil {
 		if a.ActiveProfile != nil {
 			profile = a.ActiveProfile
@@ -199,7 +200,7 @@ func (a *ArkAuthBase) LoadAuthentication(profile *models.ArkProfile, refreshAuth
 		}
 	}
 	if authProfile != nil {
-		a.Logger.Info("Loading authentication for profile [" + profile.ProfileName + "] and auth profile [" + a.Authenticator.AuthenticatorName() + "] of type [" + string(authProfile.AuthMethod) + "]")
+		a.Logger.Info("Loading authentication for profile [%s] and auth profile [%s] of type [%s]", profile.ProfileName, a.Authenticator.AuthenticatorName(), string(authProfile.AuthMethod))
 		if a.CacheKeyring != nil {
 			a.Token, err = a.CacheKeyring.LoadToken(profile, a.ResolveCachePostfix(authProfile), false)
 			if err != nil {

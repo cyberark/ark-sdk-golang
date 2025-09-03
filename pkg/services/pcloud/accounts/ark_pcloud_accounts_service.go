@@ -3,16 +3,17 @@ package accounts
 import (
 	"context"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	accountsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/pcloud/accounts"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	accountsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/accounts/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 // API endpoint paths for account-related operations

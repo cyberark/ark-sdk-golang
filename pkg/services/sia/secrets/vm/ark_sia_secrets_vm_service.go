@@ -3,16 +3,17 @@ package vmsecrets
 import (
 	"context"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	vmsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/secrets/vm"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"regexp"
 	"slices"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	vmsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (

@@ -4,18 +4,19 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"strings"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/identity"
-	directoriesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/directories"
-	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/roles"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories"
+	directoriesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories/models"
+	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles/models"
 	"github.com/mitchellh/mapstructure"
-	"io"
-	"net/http"
-	"strings"
 )
 
 const (
@@ -123,7 +124,7 @@ func (s *ArkIdentityRolesService) CreateRole(createRole *rolesmodels.ArkIdentity
 		RoleName: createRole.RoleName,
 		RoleID:   roleID,
 	}
-	s.Logger.Info(fmt.Sprintf("Role created with id [%s]", roleID))
+	s.Logger.Info("Role created with id [%s]", roleID)
 	if len(createRole.AdminRights) > 0 {
 		err = s.AddAdminRightsToRole(&rolesmodels.ArkIdentityAddAdminRightsToRole{
 			RoleID:      roleDetails.RoleID,
@@ -145,7 +146,7 @@ func (s *ArkIdentityRolesService) UpdateRole(updateRole *rolesmodels.ArkIdentity
 		}
 		updateRole.RoleID = roleID
 	}
-	s.Logger.Info(fmt.Sprintf("Updating identity role [%s]", updateRole.RoleID))
+	s.Logger.Info("Updating identity role [%s]", updateRole.RoleID)
 	updateDict := map[string]interface{}{
 		"Name": updateRole.RoleID,
 	}
@@ -189,7 +190,7 @@ func (s *ArkIdentityRolesService) ListRoleMembers(listRoleMembers *rolesmodels.A
 		}
 		listRoleMembers.RoleID = roleID
 	}
-	s.Logger.Info(fmt.Sprintf("Listing identity role [%s] members", listRoleMembers.RoleID))
+	s.Logger.Info("Listing identity role [%s] members", listRoleMembers.RoleID)
 	requestBody := map[string]interface{}{
 		"Name": listRoleMembers.RoleID,
 	}
@@ -233,7 +234,7 @@ func (s *ArkIdentityRolesService) ListRoleMembers(listRoleMembers *rolesmodels.A
 
 // AddAdminRightsToRole adds admin rights to a role in the identity service.
 func (s *ArkIdentityRolesService) AddAdminRightsToRole(addAdminRightsToRole *rolesmodels.ArkIdentityAddAdminRightsToRole) error {
-	s.Logger.Info(fmt.Sprintf("Adding admin rights [%v] to role [%s]", addAdminRightsToRole.AdminRights, addAdminRightsToRole.RoleName))
+	s.Logger.Info("Adding admin rights [%v] to role [%s]", addAdminRightsToRole.AdminRights, addAdminRightsToRole.RoleName)
 
 	if addAdminRightsToRole.RoleID == "" && addAdminRightsToRole.RoleName == "" {
 		return fmt.Errorf("either role ID or role name must be given")
@@ -282,7 +283,7 @@ func (s *ArkIdentityRolesService) AddAdminRightsToRole(addAdminRightsToRole *rol
 
 // RoleIDByName retrieves the role ID by its name.
 func (s *ArkIdentityRolesService) RoleIDByName(roleIDByName *rolesmodels.ArkIdentityRoleIDByName) (string, error) {
-	s.Logger.Info(fmt.Sprintf("Retrieving role ID for name [%s]", roleIDByName.RoleName))
+	s.Logger.Info("Retrieving role ID for name [%s]", roleIDByName.RoleName)
 	directoriesService, err := directories.NewArkIdentityDirectoriesService(s.ispAuth)
 	if err != nil {
 		return "", fmt.Errorf("failed to initialize directories service: %v", err)
@@ -340,7 +341,7 @@ func (s *ArkIdentityRolesService) RoleIDByName(roleIDByName *rolesmodels.ArkIden
 
 // AddUserToRole adds a user to a role in the identity service.
 func (s *ArkIdentityRolesService) AddUserToRole(addUserToRole *rolesmodels.ArkIdentityAddUserToRole) error {
-	s.Logger.Info(fmt.Sprintf("Adding user [%s] to role [%s]", addUserToRole.Username, addUserToRole.RoleName))
+	s.Logger.Info("Adding user [%s] to role [%s]", addUserToRole.Username, addUserToRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: addUserToRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -376,7 +377,7 @@ func (s *ArkIdentityRolesService) AddUserToRole(addUserToRole *rolesmodels.ArkId
 
 // AddGroupToRole adds a group to a role in the identity service.
 func (s *ArkIdentityRolesService) AddGroupToRole(addGroupToRole *rolesmodels.ArkIdentityAddGroupToRole) error {
-	s.Logger.Info(fmt.Sprintf("Adding group [%s] to role [%s]", addGroupToRole.GroupName, addGroupToRole.RoleName))
+	s.Logger.Info("Adding group [%s] to role [%s]", addGroupToRole.GroupName, addGroupToRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: addGroupToRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -412,7 +413,7 @@ func (s *ArkIdentityRolesService) AddGroupToRole(addGroupToRole *rolesmodels.Ark
 
 // AddRoleToRole adds a role to another role in the identity service.
 func (s *ArkIdentityRolesService) AddRoleToRole(addRoleToRole *rolesmodels.ArkIdentityAddRoleToRole) error {
-	s.Logger.Info(fmt.Sprintf("Adding role [%s] to role [%s]", addRoleToRole.RoleNameToAdd, addRoleToRole.RoleName))
+	s.Logger.Info("Adding role [%s] to role [%s]", addRoleToRole.RoleNameToAdd, addRoleToRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: addRoleToRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -448,7 +449,7 @@ func (s *ArkIdentityRolesService) AddRoleToRole(addRoleToRole *rolesmodels.ArkId
 
 // RemoveUserFromRole removes a user from a role in the identity service.
 func (s *ArkIdentityRolesService) RemoveUserFromRole(removeUserFromRole *rolesmodels.ArkIdentityRemoveUserFromRole) error {
-	s.Logger.Info(fmt.Sprintf("Removing user [%s] from role [%s]", removeUserFromRole.Username, removeUserFromRole.RoleName))
+	s.Logger.Info("Removing user [%s] from role [%s]", removeUserFromRole.Username, removeUserFromRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: removeUserFromRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -484,7 +485,7 @@ func (s *ArkIdentityRolesService) RemoveUserFromRole(removeUserFromRole *rolesmo
 
 // RemoveGroupFromRole removes a group from a role in the identity service.
 func (s *ArkIdentityRolesService) RemoveGroupFromRole(removeGroupFromRole *rolesmodels.ArkIdentityRemoveGroupFromRole) error {
-	s.Logger.Info(fmt.Sprintf("Removing group [%s] from role [%s]", removeGroupFromRole.GroupName, removeGroupFromRole.RoleName))
+	s.Logger.Info("Removing group [%s] from role [%s]", removeGroupFromRole.GroupName, removeGroupFromRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: removeGroupFromRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -520,7 +521,7 @@ func (s *ArkIdentityRolesService) RemoveGroupFromRole(removeGroupFromRole *roles
 
 // RemoveRoleFromRole removes a role from another role in the identity service.
 func (s *ArkIdentityRolesService) RemoveRoleFromRole(removeRoleFromRole *rolesmodels.ArkIdentityRemoveRoleFromRole) error {
-	s.Logger.Info(fmt.Sprintf("Removing role [%s] from role [%s]", removeRoleFromRole.RoleNameToRemove, removeRoleFromRole.RoleName))
+	s.Logger.Info("Removing role [%s] from role [%s]", removeRoleFromRole.RoleNameToRemove, removeRoleFromRole.RoleName)
 	roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: removeRoleFromRole.RoleName})
 	if err != nil {
 		return fmt.Errorf("failed to retrieve role ID by name: %v", err)
@@ -556,7 +557,7 @@ func (s *ArkIdentityRolesService) RemoveRoleFromRole(removeRoleFromRole *rolesmo
 
 // DeleteRole deletes a role in the identity service.
 func (s *ArkIdentityRolesService) DeleteRole(deleteRole *rolesmodels.ArkIdentityDeleteRole) error {
-	s.Logger.Info(fmt.Sprintf("Deleting role [%s]", deleteRole.RoleName))
+	s.Logger.Info("Deleting role [%s]", deleteRole.RoleName)
 	if deleteRole.RoleName != "" && deleteRole.RoleID == "" {
 		roleID, err := s.RoleIDByName(&rolesmodels.ArkIdentityRoleIDByName{RoleName: deleteRole.RoleName})
 		if err != nil {

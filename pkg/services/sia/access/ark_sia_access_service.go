@@ -4,6 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"strings"
+	"time"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/connections"
@@ -13,13 +18,9 @@ import (
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
 	connectionsmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common/connections"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/common/connections/connectiondata"
-	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/access"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	accessmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/access/models"
 	"github.com/mitchellh/mapstructure"
-	"io"
-	"net/http"
-	"strings"
-	"time"
 )
 
 const (
@@ -394,11 +395,9 @@ func (s *ArkSIAAccessService) ConnectorSetupScript(getConnectorSetupScript *acce
 // InstallConnector installs the connector on the target machine.
 func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.ArkSIAInstallConnector) (*accessmodels.ArkSIAAccessConnectorID, error) {
 	s.Logger.Info(
-		fmt.Sprintf(
-			"Installing connector on machine [%s] of type [%s]",
-			installConnector.TargetMachine,
-			installConnector.ConnectorOS,
-		),
+		"Installing connector on machine [%s] of type [%s]",
+		installConnector.TargetMachine,
+		installConnector.ConnectorOS,
 	)
 	installationScript, err := s.ConnectorSetupScript(&accessmodels.ArkSIAGetConnectorSetupScript{
 		ConnectorOS:     installConnector.ConnectorOS,
@@ -424,10 +423,8 @@ func (s *ArkSIAAccessService) InstallConnector(installConnector *accessmodels.Ar
 // UninstallConnector uninstalls the connector from the target machine.
 func (s *ArkSIAAccessService) UninstallConnector(uninstallConnector *accessmodels.ArkSIAUninstallConnector) error {
 	s.Logger.Info(
-		fmt.Sprintf(
-			"Uninstalling connector [%s] from machine",
-			uninstallConnector.ConnectorID,
-		),
+		"Uninstalling connector [%s] from machine",
+		uninstallConnector.ConnectorID,
 	)
 	err := s.uninstallConnectorOnMachine(
 		uninstallConnector.ConnectorOS,
@@ -452,10 +449,8 @@ func (s *ArkSIAAccessService) UninstallConnector(uninstallConnector *accessmodel
 // DeleteConnector deletes the connector from the target machine.
 func (s *ArkSIAAccessService) DeleteConnector(deleteConnector *accessmodels.ArkSIADeleteConnector) error {
 	s.Logger.Info(
-		fmt.Sprintf(
-			"Deleting connector [%s] from machine",
-			deleteConnector.ConnectorID,
-		),
+		"Deleting connector [%s] from machine",
+		deleteConnector.ConnectorID,
 	)
 	currentTryCount := 0
 	for {

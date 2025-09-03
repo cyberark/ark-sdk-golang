@@ -1,3 +1,48 @@
+// Package api provides the main ARK SDK API interface for accessing all ARK services
+// in the ARK SDK Golang. This package serves as the central entry point for interacting
+// with various ARK services including SIA, SecHub, PCloud, Identity, and other components.
+//
+// The ArkAPI struct acts as a service factory and registry, managing authenticators,
+// service instances, and configuration profiles. It provides lazy loading of services,
+// meaning services are only instantiated when first accessed, and subsequent calls
+// return the cached instance.
+//
+// Key features:
+//   - Centralized access to all ARK services
+//   - Lazy loading and caching of service instances
+//   - Authenticator management and distribution to services
+//   - Profile-based configuration management
+//   - Service dependency injection with authenticators
+//   - Consistent error handling across all services
+//
+// The API supports multiple authenticators that are automatically distributed to
+// services based on their configuration requirements. Each service specifies
+// required and optional authenticators, and the API ensures the appropriate
+// authenticators are provided during service initialization.
+//
+// Example:
+//
+//	// Create authenticators
+//	ispAuth := &auth.ArkISPAuth{...}
+//	authenticators := []auth.ArkAuth{ispAuth}
+//
+//	// Create API instance
+//	api, err := NewArkAPI(authenticators, nil) // nil uses default profile
+//	if err != nil {
+//		// handle error
+//	}
+//
+//	// Access services (lazy loaded)
+//	ssoService, err := api.SiaSso()
+//	if err != nil {
+//		// handle error
+//	}
+//
+//	// Get specific authenticator
+//	auth, err := api.Authenticator("isp")
+//	if err != nil {
+//		// handle error
+//	}
 package api
 
 import (
@@ -37,7 +82,21 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sm"
 )
 
-// ArkAPI Wraps different API functionality of Ark Services.
+// ArkAPI wraps different API functionality of Ark Services.
+//
+// ArkAPI serves as the central entry point and service factory for all ARK services.
+// It manages authenticators, service instances, and configuration profiles, providing
+// a unified interface for accessing various ARK components including SIA, SecHub,
+// PCloud, Identity, and other services.
+//
+// The struct implements lazy loading for services - each service is only instantiated
+// when first accessed through its corresponding method. Subsequent calls return the
+// cached instance, ensuring efficient resource usage and consistent service state.
+//
+// Service creation follows a dependency injection pattern where authenticators are
+// automatically distributed to services based on their configuration requirements.
+// Each service specifies required and optional authenticators, and ArkAPI ensures
+// the appropriate authenticators are provided during initialization.
 type ArkAPI struct {
 	authenticators []auth.ArkAuth
 	services       map[string]*services.ArkService
@@ -45,6 +104,36 @@ type ArkAPI struct {
 }
 
 // NewArkAPI creates a new ArkAPI instance with the provided authenticators and profile.
+//
+// Initializes a new ArkAPI instance that serves as the central access point for all
+// ARK services. The instance manages the provided authenticators and distributes them
+// to services as needed. If no profile is provided (nil), the default profile is
+// loaded automatically.
+//
+// The services map is initialized empty and services are created lazily when first
+// accessed through their respective getter methods. This approach ensures optimal
+// resource usage and faster startup times.
+//
+// Parameters:
+//   - authenticators: Slice of authenticators to be used by services. Each service
+//     will receive the authenticators it requires based on its configuration
+//   - profile: Configuration profile to use. If nil, the default profile is loaded
+//     automatically using the default profile loader
+//
+// Returns a pointer to the initialized ArkAPI instance, or an error if the default
+// profile cannot be loaded when profile is nil.
+//
+// Example:
+//
+//	// With explicit profile
+//	profile := &models.ArkProfile{...}
+//	api, err := NewArkAPI(authenticators, profile)
+//
+//	// With default profile (recommended)
+//	api, err := NewArkAPI(authenticators, nil)
+//	if err != nil {
+//		// handle profile loading error
+//	}
 func NewArkAPI(authenticators []auth.ArkAuth, profile *models.ArkProfile) (*ArkAPI, error) {
 	var err error
 	if profile == nil {
@@ -60,6 +149,21 @@ func NewArkAPI(authenticators []auth.ArkAuth, profile *models.ArkProfile) (*ArkA
 	}, nil
 }
 
+// loadServiceAuthenticators filters and returns authenticators required by a service configuration.
+//
+// This internal method processes the API's authenticator collection and returns only
+// those authenticators that are required or optional for the specified service.
+// Required authenticators are processed first, followed by optional authenticators.
+//
+// The method ensures that services receive only the authenticators they need,
+// following the dependency injection pattern. This approach provides better
+// security isolation and cleaner service initialization.
+//
+// Parameters:
+//   - config: Service configuration specifying required and optional authenticator names
+//
+// Returns a slice of authenticators that match the service's requirements.
+// If no matching authenticators are found, returns an empty slice.
 func (api *ArkAPI) loadServiceAuthenticators(config services.ArkServiceConfig) []auth.ArkAuth {
 	var authenticators []auth.ArkAuth
 	for _, authenticator := range api.authenticators {
@@ -80,6 +184,27 @@ func (api *ArkAPI) loadServiceAuthenticators(config services.ArkServiceConfig) [
 }
 
 // Authenticator returns the authenticator with the specified name from the ArkAPI instance.
+//
+// Searches through the API's authenticator collection and returns the first
+// authenticator that matches the specified name. This method provides access
+// to specific authenticators for custom operations or debugging purposes.
+//
+// The search is case-sensitive and matches the exact authenticator name as
+// returned by the authenticator's AuthenticatorName() method.
+//
+// Parameters:
+//   - authenticatorName: The exact name of the authenticator to retrieve
+//
+// Returns the matching authenticator, or an error if no authenticator with
+// the specified name is found.
+//
+// Example:
+//
+//	ispAuth, err := api.Authenticator("isp")
+//	if err != nil {
+//		// handle authenticator not found
+//	}
+//	// use ispAuth for custom operations
 func (api *ArkAPI) Authenticator(authenticatorName string) (auth.ArkAuth, error) {
 	for _, authenticator := range api.authenticators {
 		if authenticator.AuthenticatorName() == authenticatorName {
@@ -90,11 +215,46 @@ func (api *ArkAPI) Authenticator(authenticatorName string) (auth.ArkAuth, error)
 }
 
 // Profile returns the profile associated with the ArkAPI instance.
+//
+// Provides access to the configuration profile that was set during API initialization.
+// The profile contains environment-specific settings, endpoints, and other configuration
+// parameters used by the various ARK services.
+//
+// The returned profile is the same instance that was either explicitly provided to
+// NewArkAPI or automatically loaded as the default profile when nil was passed.
+//
+// Returns a pointer to the ArkProfile instance. The profile is never nil for a
+// properly initialized ArkAPI instance.
+//
+// Example:
+//
+//	profile := api.Profile()
+//	fmt.Printf("Using profile: %s\n", profile.ProfileName)
 func (api *ArkAPI) Profile() *models.ArkProfile {
 	return api.profile
 }
 
 // SiaSso returns the SiaSSO service from the ArkAPI instance. If the service is not already created, it creates a new one.
+//
+// Provides access to the SIA Single Sign-On service for authentication and user
+// session management operations. The service is created using lazy loading - if
+// this is the first call, a new service instance is created and cached. Subsequent
+// calls return the cached instance.
+//
+// The service is initialized with authenticators that match its configuration
+// requirements. If the service cannot be created due to missing authenticators
+// or initialization errors, an error is returned.
+//
+// Returns a pointer to the ArkSIASSOService instance, or an error if the service
+// cannot be created or initialized.
+//
+// Example:
+//
+//	ssoService, err := api.SiaSso()
+//	if err != nil {
+//		// handle service creation error
+//	}
+//	// use ssoService for SSO operations
 func (api *ArkAPI) SiaSso() (*siasso.ArkSIASSOService, error) {
 	if ssoServiceInterface, ok := api.services[siasso.SIASSOServiceConfig.ServiceName]; ok {
 		return (*ssoServiceInterface).(*siasso.ArkSIASSOService), nil
@@ -109,6 +269,26 @@ func (api *ArkAPI) SiaSso() (*siasso.ArkSIASSOService, error) {
 }
 
 // SiaK8s returns the SiaK8s service from the ArkAPI instance. If the service is not already created, it creates a new one.
+//
+// Provides access to the SIA Kubernetes service for managing Kubernetes cluster
+// access and operations. The service is created using lazy loading - if this is
+// the first call, a new service instance is created and cached. Subsequent calls
+// return the cached instance.
+//
+// The service is initialized with authenticators that match its configuration
+// requirements. If the service cannot be created due to missing authenticators
+// or initialization errors, an error is returned.
+//
+// Returns a pointer to the ArkSIAK8SService instance, or an error if the service
+// cannot be created or initialized.
+//
+// Example:
+//
+//	k8sService, err := api.SiaK8s()
+//	if err != nil {
+//		// handle service creation error
+//	}
+//	// use k8sService for Kubernetes operations
 func (api *ArkAPI) SiaK8s() (*siak8s.ArkSIAK8SService, error) {
 	if k8sServiceInterface, ok := api.services[siak8s.SIAK8SServiceConfig.ServiceName]; ok {
 		return (*k8sServiceInterface).(*siak8s.ArkSIAK8SService), nil

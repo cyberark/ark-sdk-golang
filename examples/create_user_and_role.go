@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
-	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/roles"
-	usersmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/users"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/identity"
+	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles/models"
+	usersmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/users/models"
+
 	"os"
 )
 

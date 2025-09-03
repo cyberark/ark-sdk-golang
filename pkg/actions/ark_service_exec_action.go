@@ -3,11 +3,12 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"os"
 	"reflect"
 	"slices"
 	"strings"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/cli"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
@@ -22,12 +23,43 @@ import (
 )
 
 // ArkServiceExecAction is a struct that implements the ArkExecAction interface for executing service actions.
+//
+// ArkServiceExecAction provides functionality for dynamically executing service actions
+// based on service action definitions. It handles the parsing of command-line flags,
+// schema validation, method invocation, and output serialization for service operations.
+//
+// The action supports:
+//   - Dynamic command generation from service action definitions
+//   - Complex type parsing for JSON and array inputs
+//   - Flag validation with choices and required field checking
+//   - Method reflection and invocation on service APIs
+//   - Multiple output format serialization (JSON, primitive types, channels)
+//   - Request file input support for complex payloads
 type ArkServiceExecAction struct {
+	// ArkExecAction interface for execution capabilities
 	ArkExecAction
+	// ArkBaseExecAction provides common execution functionality
 	*ArkBaseExecAction
 }
 
 // NewArkServiceExecAction creates a new instance of ArkServiceExecAction.
+//
+// NewArkServiceExecAction initializes a new ArkServiceExecAction with the provided
+// profile loader and embedded ArkBaseExecAction for common execution functionality.
+// The action is configured with reflection-based method invocation capabilities
+// for dynamic service action execution.
+//
+// Parameters:
+//   - profilesLoader: A pointer to a ProfileLoader for handling profile operations
+//
+// Returns a new ArkServiceExecAction instance ready for defining and executing
+// service commands.
+//
+// Example:
+//
+//	loader := profiles.NewProfileLoader()
+//	serviceExecAction := NewArkServiceExecAction(loader)
+//	serviceExecAction.DefineExecAction(rootCmd)
 func NewArkServiceExecAction(profilesLoader *profiles.ProfileLoader) *ArkServiceExecAction {
 	action := &ArkServiceExecAction{}
 	var actionInterface ArkExecAction = action
@@ -36,6 +68,17 @@ func NewArkServiceExecAction(profilesLoader *profiles.ProfileLoader) *ArkService
 	return action
 }
 
+// isComplexType determines if a struct field represents a complex type requiring JSON parsing.
+//
+// isComplexType checks if the field is a map[string]struct or slice/array of structs,
+// which require special handling during flag parsing as they need to be parsed from
+// JSON strings rather than simple flag values.
+//
+// Parameters:
+//   - field: The reflect.StructField to check for complexity
+//
+// Returns true if the field is a complex type (map[string]struct or []struct),
+// false otherwise.
 func (s *ArkServiceExecAction) isComplexType(field reflect.StructField) bool {
 	if field.Type.Kind() == reflect.Map && field.Type.Key().Kind() == reflect.String && field.Type.Elem().Kind() == reflect.Struct {
 		return true
@@ -46,6 +89,22 @@ func (s *ArkServiceExecAction) isComplexType(field reflect.StructField) bool {
 	return false
 }
 
+// fillRemainingSchema adds flags for complex types and squashed struct fields.
+//
+// fillRemainingSchema processes a schema struct and adds command-line flags for
+// complex types (maps and slices of structs) that require JSON parsing, and
+// recursively processes squashed struct fields to flatten their fields into
+// the parent command's flag set.
+//
+// Parameters:
+//   - schema: The schema interface to process for flag generation
+//   - flags: The pflag.FlagSet to add the generated flags to
+//
+// The function handles:
+//   - Complex types by adding string flags with JSON parsing hints
+//   - Squashed struct fields by recursively processing embedded structs
+//   - Flag naming from struct tags (flag, mapstructure, or field name)
+//   - Description enhancement for complex types
 func (s *ArkServiceExecAction) fillRemainingSchema(schema interface{}, flags *pflag.FlagSet) {
 	schemaType := reflect.TypeOf(schema).Elem()
 	for i := 0; i < schemaType.NumField(); i++ {
@@ -78,6 +137,25 @@ func (s *ArkServiceExecAction) fillRemainingSchema(schema interface{}, flags *pf
 	}
 }
 
+// defineServiceExecAction creates a cobra command for a service action definition.
+//
+// defineServiceExecAction processes a service action definition and creates the
+// corresponding cobra command with subcommands for each schema. It handles flag
+// generation, validation, and default value assignment based on struct tags.
+//
+// Parameters:
+//   - actionDef: The service action definition to process
+//   - cmd: The parent cobra command to add the action command to
+//   - parentActionsDef: Slice of parent action definitions for nested actions
+//
+// Returns the created action command and any error encountered during processing.
+//
+// The function handles:
+//   - Command creation with proper naming from action definitions
+//   - Schema-based subcommand generation
+//   - Flag parsing using sflags library
+//   - Required field marking based on validation tags
+//   - Default value assignment from struct tags
 func (s *ArkServiceExecAction) defineServiceExecAction(
 	actionDef *actions.ArkServiceActionDefinition,
 	cmd *cobra.Command,
@@ -160,6 +238,23 @@ func (s *ArkServiceExecAction) defineServiceExecAction(
 	return actionCmd, nil
 }
 
+// defineServiceExecActions recursively defines service execution actions and their subactions.
+//
+// defineServiceExecActions processes a service action definition and its nested
+// subactions, creating a hierarchy of cobra commands. It recursively processes
+// subactions to build a complete command tree structure.
+//
+// Parameters:
+//   - actionDef: The service action definition to process
+//   - cmd: The parent cobra command to add actions to
+//   - parentActionsDef: Slice of parent action definitions for context
+//
+// Returns an error if any action definition processing fails.
+//
+// The function handles:
+//   - Primary action definition processing through defineServiceExecAction
+//   - Recursive subaction processing for nested command structures
+//   - Error propagation from nested action creation
 func (s *ArkServiceExecAction) defineServiceExecActions(
 	actionDef *actions.ArkServiceActionDefinition,
 	cmd *cobra.Command,
@@ -180,6 +275,26 @@ func (s *ArkServiceExecAction) defineServiceExecActions(
 	return nil
 }
 
+// fillParsedFlag processes complex flag values and validates choices for schema fields.
+//
+// fillParsedFlag handles the parsing of complex types (JSON objects and arrays)
+// from string flag values and validates that field values match defined choices
+// constraints. It processes mapstructure tags to find matching schema fields
+// and applies appropriate transformations and validations.
+//
+// Parameters:
+//   - schemaElem: The reflect.Type of the schema struct to process
+//   - flags: Map of flag names to values being processed
+//   - key: The specific flag key being processed
+//   - f: The pflag.Flag being processed for error reporting
+//
+// Returns an error if JSON parsing fails or choice validation fails.
+//
+// The function handles:
+//   - JSON unmarshaling for complex map and slice types
+//   - Choice validation for string, string slice, and map types
+//   - Recursive processing of squashed struct fields
+//   - Error reporting with context about which flag failed
 func (s *ArkServiceExecAction) fillParsedFlag(schemaElem reflect.Type, flags map[string]interface{}, key string, f *pflag.Flag) error {
 	for i := 0; i < schemaElem.NumField(); i++ {
 		field := schemaElem.Field(i)
@@ -235,6 +350,26 @@ func (s *ArkServiceExecAction) fillParsedFlag(schemaElem reflect.Type, flags map
 	return nil
 }
 
+// parseFlag extracts and converts flag values to appropriate types for schema processing.
+//
+// parseFlag handles the extraction of flag values from cobra commands and converts
+// them to the appropriate Go types for later processing by mapstructure. It supports
+// all common Go primitive types and collections, then applies complex type processing
+// and choice validation through fillParsedFlag.
+//
+// Parameters:
+//   - f: The pflag.Flag to process
+//   - cmd: The cobra.Command containing the flag values
+//   - flags: Map to store the parsed flag values
+//   - schema: The schema interface for validation and complex type processing
+//
+// Returns an error if flag parsing or validation fails.
+//
+// The function handles:
+//   - Type-specific flag value extraction (bool, int variants, float variants, slices, maps)
+//   - Conversion of flag names from kebab-case to snake_case
+//   - Delegation to fillParsedFlag for complex type processing and validation
+//   - Skipping unchanged flags to avoid unnecessary processing
 func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flags map[string]interface{}, schema interface{}) error {
 	if !f.Changed {
 		return nil
@@ -336,6 +471,22 @@ func (s *ArkServiceExecAction) parseFlag(f *pflag.Flag, cmd *cobra.Command, flag
 	return s.fillParsedFlag(schemaElem, flags, key, f)
 }
 
+// serializeAndPrintOutput formats and displays the results of service action execution.
+//
+// serializeAndPrintOutput processes the reflection values returned from service
+// method execution and formats them appropriately for console output. It handles
+// various result types including structs, maps, arrays, channels, and primitive types.
+//
+// Parameters:
+//   - result: Slice of reflect.Value containing the method execution results
+//   - actionName: The name of the action being executed (for generic success messages)
+//
+// The function handles:
+//   - JSON serialization for complex types (structs, maps, arrays, slices)
+//   - Channel processing for paginated results with Items field extraction
+//   - Integer formatting for numeric results
+//   - Generic success messages when no specific output is available
+//   - Error handling for JSON serialization failures with fallback output
 func (s *ArkServiceExecAction) serializeAndPrintOutput(result []reflect.Value, actionName string) {
 	shouldPrintGenericResult := true
 	for _, res := range result {
@@ -400,6 +551,23 @@ func (s *ArkServiceExecAction) serializeAndPrintOutput(result []reflect.Value, a
 	}
 }
 
+// findMethodByName locates a method on a reflect.Value using case-insensitive matching.
+//
+// findMethodByName searches for a method by name on the provided reflection value,
+// first attempting an exact match and then falling back to case-insensitive matching
+// if the exact match fails. This provides flexibility for method name variations.
+//
+// Parameters:
+//   - value: The reflect.Value to search for methods on
+//   - methodName: The name of the method to find
+//
+// Returns a pointer to the reflect.Value representing the method and any error
+// encountered during the search.
+//
+// The function handles:
+//   - Exact method name matching first
+//   - Case-insensitive fallback matching through all available methods
+//   - Error reporting when no matching method is found
 func (s *ArkServiceExecAction) findMethodByName(value reflect.Value, methodName string) (*reflect.Value, error) {
 	actionMethod := value.MethodByName(methodName)
 	if !actionMethod.IsValid() {
@@ -417,7 +585,27 @@ func (s *ArkServiceExecAction) findMethodByName(value reflect.Value, methodName 
 	return &actionMethod, nil
 }
 
-// DefineExecAction defines the exec action for the ArkServiceExecAction.
+// DefineExecAction defines the execution actions for all supported service operations.
+//
+// DefineExecAction processes all supported service action definitions and creates
+// the corresponding cobra command hierarchy for service execution. It iterates through
+// the available service actions and creates the complete command structure for
+// dynamic service operation execution.
+//
+// Parameters:
+//   - cmd: The parent cobra command to add service execution commands to
+//
+// Returns an error if any service action definition processing fails.
+//
+// The function handles:
+//   - Processing all supported service actions from the services package
+//   - Creating command hierarchies for each service action through defineServiceExecActions
+//   - Error propagation from nested action processing
+//
+// Example:
+//
+//	err := serviceExecAction.DefineExecAction(rootCmd)
+//	// This adds all supported service commands to rootCmd
 func (s *ArkServiceExecAction) DefineExecAction(cmd *cobra.Command) error {
 	for _, actionDef := range services.SupportedServiceActions {
 		err := s.defineServiceExecActions(actionDef, cmd, nil)
@@ -428,7 +616,34 @@ func (s *ArkServiceExecAction) DefineExecAction(cmd *cobra.Command) error {
 	return nil
 }
 
-// RunExecAction runs the exec action for the ArkServiceExecAction.
+// RunExecAction executes a service action using reflection-based method invocation.
+//
+// RunExecAction processes the command hierarchy to determine the target service and action,
+// then uses reflection to locate and invoke the appropriate method on the API service.
+// It handles flag parsing, schema validation, method resolution, and output formatting
+// for dynamic service action execution.
+//
+// Parameters:
+//   - api: The ArkCLIAPI instance containing the service methods
+//   - cmd: The cobra command being executed
+//   - execCmd: The parent execution command for context
+//   - execArgs: Command line arguments for the execution
+//
+// Returns an error if service resolution, method invocation, or parameter processing fails.
+//
+// The function handles:
+//   - Service path resolution from command hierarchy
+//   - Method name transformation and case-insensitive lookup
+//   - Schema resolution from service action definitions
+//   - Flag parsing and validation against schema constraints
+//   - Request file input for complex payloads
+//   - Method invocation with appropriate parameters
+//   - Result serialization and output formatting
+//
+// Example:
+//
+//	err := serviceExecAction.RunExecAction(api, cmd, execCmd, args)
+//	// Executes the service method and displays formatted output
 func (s *ArkServiceExecAction) RunExecAction(api *cli.ArkCLIAPI, cmd *cobra.Command, execCmd *cobra.Command, execArgs []string) error {
 	serviceParts := make([]string, 0)
 	for currentCmd := cmd.Parent(); currentCmd != execCmd; currentCmd = currentCmd.Parent() {

@@ -18,11 +18,11 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/db"
-	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/sso"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/sia/workspaces/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/db/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso"
+	ssomodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/sso/models"
+	workspacesdbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/db/models"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -342,7 +342,7 @@ func (s *ArkSIADBService) GenerateOracleTnsNames(generateOracleAssets *dbmodels.
 		generateOracleAssets.ResponseFormat,
 		map[string]interface{}{"folder": generateOracleAssets.Folder},
 		generateOracleAssets.IncludeSSO,
-		db.FamilyTypeOracle,
+		workspacesdbmodels.FamilyTypeOracle,
 	)
 	if err != nil {
 		return err

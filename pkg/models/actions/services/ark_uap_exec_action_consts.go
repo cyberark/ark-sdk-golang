@@ -2,22 +2,22 @@ package services
 
 import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sca"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/db"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/vm"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	scamodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sca/models"
+	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db/models"
+	vmmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/vm/models"
 )
 
 // UAPSCAActionToSchemaMap defines the mapping of actions to schemas for the UAP SCA service.
 var UAPSCAActionToSchemaMap = map[string]interface{}{
-	"add-policy":       &sca.ArkUAPSCACloudConsoleAccessPolicy{},
-	"delete-policy":    &common.ArkUAPDeletePolicyRequest{},
-	"update-policy":    &sca.ArkUAPSCACloudConsoleAccessPolicy{},
-	"policy":           &common.ArkUAPGetPolicyRequest{},
+	"add-policy":       &scamodels.ArkUAPSCACloudConsoleAccessPolicy{},
+	"delete-policy":    &uapcommonmodels.ArkUAPDeletePolicyRequest{},
+	"update-policy":    &scamodels.ArkUAPSCACloudConsoleAccessPolicy{},
+	"policy":           &uapcommonmodels.ArkUAPGetPolicyRequest{},
 	"list-policies":    nil,
-	"list-policies-by": &sca.ArkUAPSCAFilters{},
+	"list-policies-by": &scamodels.ArkUAPSCAFilters{},
 	"policies-stats":   nil,
-	"policy-status":    &common.ArkUAPGetPolicyStatus{},
+	"policy-status":    &uapcommonmodels.ArkUAPGetPolicyStatus{},
 }
 
 // UAPSCAActions defines the actions for the UAP SCA service.
@@ -28,14 +28,14 @@ var UAPSCAActions = actions.ArkServiceActionDefinition{
 
 // UAPSIADBActionToSchemaMap defines the mapping of actions to schemas for the UAP SIA DB service.
 var UAPSIADBActionToSchemaMap = map[string]interface{}{
-	"add-policy":       &db.ArkUAPSIADBAccessPolicy{},
-	"delete-policy":    &common.ArkUAPDeletePolicyRequest{},
-	"update-policy":    &db.ArkUAPSIADBAccessPolicy{},
-	"policy":           &common.ArkUAPGetPolicyRequest{},
+	"add-policy":       &dbmodels.ArkUAPSIADBAccessPolicy{},
+	"delete-policy":    &uapcommonmodels.ArkUAPDeletePolicyRequest{},
+	"update-policy":    &dbmodels.ArkUAPSIADBAccessPolicy{},
+	"policy":           &uapcommonmodels.ArkUAPGetPolicyRequest{},
 	"list-policies":    nil,
-	"list-policies-by": &db.ArkUAPSIADBFilters{},
+	"list-policies-by": &dbmodels.ArkUAPSIADBFilters{},
 	"policies-stats":   nil,
-	"policy-status":    &common.ArkUAPGetPolicyStatus{},
+	"policy-status":    &uapcommonmodels.ArkUAPGetPolicyStatus{},
 }
 
 // UAPSIADBAction defines the actions for the UAP SIA DB service.
@@ -46,14 +46,14 @@ var UAPSIADBAction = actions.ArkServiceActionDefinition{
 
 // UAPSIAVMActionToSchemaMap defines the mapping of actions to schemas for the UAP SIA VM service.
 var UAPSIAVMActionToSchemaMap = map[string]interface{}{
-	"add-policy":       &vm.ArkUAPSIAVMAccessPolicy{},
-	"delete-policy":    &common.ArkUAPDeletePolicyRequest{},
-	"update-policy":    &vm.ArkUAPSIAVMAccessPolicy{},
-	"policy":           &common.ArkUAPGetPolicyRequest{},
+	"add-policy":       &vmmodels.ArkUAPSIAVMAccessPolicy{},
+	"delete-policy":    &uapcommonmodels.ArkUAPDeletePolicyRequest{},
+	"update-policy":    &vmmodels.ArkUAPSIAVMAccessPolicy{},
+	"policy":           &uapcommonmodels.ArkUAPGetPolicyRequest{},
 	"list-policies":    nil,
-	"list-policies-by": &vm.ArkUAPSIAVMFilters{},
+	"list-policies-by": &vmmodels.ArkUAPSIAVMFilters{},
 	"policies-stats":   nil,
-	"policy-status":    &common.ArkUAPGetPolicyStatus{},
+	"policy-status":    &uapcommonmodels.ArkUAPGetPolicyStatus{},
 }
 
 // UAPSIAVMAction defines the actions for the UAP SIA VM service.
@@ -66,8 +66,8 @@ var UAPSIAVMAction = actions.ArkServiceActionDefinition{
 var UAPActionToSchemaMap = map[string]interface{}{
 	"policies-stats":   nil,
 	"list-policies":    nil,
-	"list-policies-by": &common.ArkUAPFilters{},
-	"policy-status":    &common.ArkUAPGetPolicyStatus{},
+	"list-policies-by": &uapcommonmodels.ArkUAPFilters{},
+	"policy-status":    &uapcommonmodels.ArkUAPGetPolicyStatus{},
 }
 
 // UAPActions defines the actions for the UAP service, including subactions for SCA and SIA DB.

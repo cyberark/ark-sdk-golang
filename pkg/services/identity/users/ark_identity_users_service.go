@@ -4,20 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/cyberark/ark-sdk-golang/pkg/auth"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
-	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/roles"
-	usersmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/identity/users"
-	"github.com/cyberark/ark-sdk-golang/pkg/services"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories"
-	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/auth"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories"
+	"github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles"
+	rolesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/roles/models"
+	usersmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/users/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (
@@ -372,7 +373,7 @@ func (s *ArkIdentityUsersService) UserByName(user *usersmodels.ArkIdentityUserBy
 				t := time.Unix(0, int64(parsedTime*1e6)).UTC()
 				lastLogin = &t
 			} else {
-				s.Logger.Debug(fmt.Sprintf("Failed to parse last login [%s] [%s]", rawLastLogin, err.Error()))
+				s.Logger.Debug("Failed to parse last login [%s] [%s]", rawLastLogin, err.Error())
 			}
 		}
 	}
@@ -430,7 +431,7 @@ func (s *ArkIdentityUsersService) UserByID(userByID *usersmodels.ArkIdentityUser
 				t := time.Unix(0, int64(parsedTime*1e6)).UTC()
 				lastLogin = &t
 			} else {
-				s.Logger.Debug(fmt.Sprintf("Failed to parse last login [%s] [%s]", rawLastLogin, err.Error()))
+				s.Logger.Debug("Failed to parse last login [%s] [%s]", rawLastLogin, err.Error())
 			}
 		}
 	}

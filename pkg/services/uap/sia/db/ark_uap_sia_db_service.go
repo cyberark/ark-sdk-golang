@@ -7,15 +7,15 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	commonuapmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/common"
-	dbmodels "github.com/cyberark/ark-sdk-golang/pkg/models/services/uap/sia/db"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
+	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
+	uapsiadbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db/models"
 	"github.com/mitchellh/mapstructure"
 )
 
 // ArkUAPDBPolicyPage represents a page of SIA DB policies in the UAP service.
-type ArkUAPDBPolicyPage = common.ArkPage[dbmodels.ArkUAPSIADBAccessPolicy]
+type ArkUAPDBPolicyPage = common.ArkPage[uapsiadbmodels.ArkUAPSIADBAccessPolicy]
 
 // ArkUAPSIADBServiceConfig defines the service configuration for ArkUAPSIADBService.
 var ArkUAPSIADBServiceConfig = services.ArkServiceConfig{
@@ -54,7 +54,7 @@ func NewArkUAPSIADBService(authenticators ...auth.ArkAuth) (*ArkUAPSIADBService,
 	return uapSiaDbService, nil
 }
 
-func (s *ArkUAPSIADBService) serializeProfile(policy *dbmodels.ArkUAPSIADBAccessPolicy, policyJSON map[string]interface{}) error {
+func (s *ArkUAPSIADBService) serializeProfile(policy *uapsiadbmodels.ArkUAPSIADBAccessPolicy, policyJSON map[string]interface{}) error {
 	// Fill the profiles for the instances
 	var err error
 	for name := range policy.Targets {
@@ -70,7 +70,7 @@ func (s *ArkUAPSIADBService) serializeProfile(policy *dbmodels.ArkUAPSIADBAccess
 	return nil
 }
 
-func (s *ArkUAPSIADBService) deserializeProfile(policy *dbmodels.ArkUAPSIADBAccessPolicy, policyJSON map[string]interface{}) error {
+func (s *ArkUAPSIADBService) deserializeProfile(policy *uapsiadbmodels.ArkUAPSIADBAccessPolicy, policyJSON map[string]interface{}) error {
 	// Fill the profiles for the instances
 	var err error
 	for name := range policy.Targets {
@@ -88,7 +88,7 @@ func (s *ArkUAPSIADBService) deserializeProfile(policy *dbmodels.ArkUAPSIADBAcce
 }
 
 // AddPolicy adds a new policy with the given information.
-func (s *ArkUAPSIADBService) AddPolicy(addPolicy *dbmodels.ArkUAPSIADBAccessPolicy) (*dbmodels.ArkUAPSIADBAccessPolicy, error) {
+func (s *ArkUAPSIADBService) AddPolicy(addPolicy *uapsiadbmodels.ArkUAPSIADBAccessPolicy) (*uapsiadbmodels.ArkUAPSIADBAccessPolicy, error) {
 	s.Logger.Info("Adding new policy [%s]", addPolicy.Metadata.Name)
 	addPolicy.Metadata.PolicyEntitlement.TargetCategory = commonmodels.CategoryTypeDB
 	if addPolicy.Metadata.PolicyTags == nil {
@@ -107,20 +107,20 @@ func (s *ArkUAPSIADBService) AddPolicy(addPolicy *dbmodels.ArkUAPSIADBAccessPoli
 	if err != nil {
 		return nil, err
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: policyResp.PolicyID,
 	})
 }
 
 // Policy retrieves a policy by its ID.
-func (s *ArkUAPSIADBService) Policy(policyRequest *commonuapmodels.ArkUAPGetPolicyRequest) (*dbmodels.ArkUAPSIADBAccessPolicy, error) {
+func (s *ArkUAPSIADBService) Policy(policyRequest *uapcommonmodels.ArkUAPGetPolicyRequest) (*uapsiadbmodels.ArkUAPSIADBAccessPolicy, error) {
 	s.Logger.Info("Retrieving policy [%s]", policyRequest.PolicyID)
-	respType := reflect.TypeOf(dbmodels.ArkUAPSIADBAccessPolicy{})
+	respType := reflect.TypeOf(uapsiadbmodels.ArkUAPSIADBAccessPolicy{})
 	policyJSON, err := s.baseService.BasePolicy(policyRequest.PolicyID, &respType)
 	if err != nil {
 		return nil, err
 	}
-	var dbPolicy dbmodels.ArkUAPSIADBAccessPolicy
+	var dbPolicy uapsiadbmodels.ArkUAPSIADBAccessPolicy
 	err = mapstructure.Decode(policyJSON, &dbPolicy)
 	if err != nil {
 		return nil, err
@@ -133,9 +133,9 @@ func (s *ArkUAPSIADBService) Policy(policyRequest *commonuapmodels.ArkUAPGetPoli
 }
 
 // UpdatePolicy edits an existing policy with the given information.
-func (s *ArkUAPSIADBService) UpdatePolicy(updatePolicy *dbmodels.ArkUAPSIADBAccessPolicy) (*dbmodels.ArkUAPSIADBAccessPolicy, error) {
+func (s *ArkUAPSIADBService) UpdatePolicy(updatePolicy *uapsiadbmodels.ArkUAPSIADBAccessPolicy) (*uapsiadbmodels.ArkUAPSIADBAccessPolicy, error) {
 	s.Logger.Info("Updating policy [%s]", updatePolicy.Metadata.PolicyID)
-	policyType := reflect.TypeOf(dbmodels.ArkUAPSIADBAccessPolicy{})
+	policyType := reflect.TypeOf(uapsiadbmodels.ArkUAPSIADBAccessPolicy{})
 	policyJSON, err := common.SerializeJSONCamelSchema(updatePolicy, &policyType)
 	if err != nil {
 		return nil, err
@@ -148,7 +148,7 @@ func (s *ArkUAPSIADBService) UpdatePolicy(updatePolicy *dbmodels.ArkUAPSIADBAcce
 	if err != nil {
 		return nil, err
 	}
-	return s.Policy(&commonuapmodels.ArkUAPGetPolicyRequest{
+	return s.Policy(&uapcommonmodels.ArkUAPGetPolicyRequest{
 		PolicyID: updatePolicy.Metadata.PolicyID,
 	})
 }
@@ -158,7 +158,7 @@ func (s *ArkUAPSIADBService) ListPolicies() (<-chan *ArkUAPDBPolicyPage, error) 
 	s.Logger.Info("Listing all policies")
 	policyPagesWithType := make(chan *ArkUAPDBPolicyPage)
 	go func() {
-		filters := commonuapmodels.NewArkUAPFilters()
+		filters := uapcommonmodels.NewArkUAPFilters()
 		filters.TargetCategory = []string{commonmodels.CategoryTypeDB}
 		policyPages, err := s.baseService.BaseListPolicies(filters)
 		if err != nil {
@@ -166,9 +166,9 @@ func (s *ArkUAPSIADBService) ListPolicies() (<-chan *ArkUAPDBPolicyPage, error) 
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			dbPolicies := ArkUAPDBPolicyPage{Items: make([]*dbmodels.ArkUAPSIADBAccessPolicy, len(page.Items))}
+			dbPolicies := ArkUAPDBPolicyPage{Items: make([]*uapsiadbmodels.ArkUAPSIADBAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var dbPolicy dbmodels.ArkUAPSIADBAccessPolicy
+				var dbPolicy uapsiadbmodels.ArkUAPSIADBAccessPolicy
 				err = mapstructure.Decode(*policy, &dbPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -183,13 +183,13 @@ func (s *ArkUAPSIADBService) ListPolicies() (<-chan *ArkUAPDBPolicyPage, error) 
 }
 
 // ListPoliciesBy retrieves policies based on the provided filters.
-func (s *ArkUAPSIADBService) ListPoliciesBy(filters *dbmodels.ArkUAPSIADBFilters) (<-chan *ArkUAPDBPolicyPage, error) {
+func (s *ArkUAPSIADBService) ListPoliciesBy(filters *uapsiadbmodels.ArkUAPSIADBFilters) (<-chan *ArkUAPDBPolicyPage, error) {
 	s.Logger.Info("Listing policies by filter")
 	policyPagesWithType := make(chan *ArkUAPDBPolicyPage)
 	go func() {
 		if filters == nil {
-			filters = &dbmodels.ArkUAPSIADBFilters{
-				ArkUAPFilters: *commonuapmodels.NewArkUAPFilters(),
+			filters = &uapsiadbmodels.ArkUAPSIADBFilters{
+				ArkUAPFilters: *uapcommonmodels.NewArkUAPFilters(),
 			}
 		}
 		filters.TargetCategory = []string{commonmodels.CategoryTypeDB}
@@ -201,9 +201,9 @@ func (s *ArkUAPSIADBService) ListPoliciesBy(filters *dbmodels.ArkUAPSIADBFilters
 		}
 		defer close(policyPagesWithType)
 		for page := range policyPages {
-			dbPolicies := ArkUAPDBPolicyPage{Items: make([]*dbmodels.ArkUAPSIADBAccessPolicy, len(page.Items))}
+			dbPolicies := ArkUAPDBPolicyPage{Items: make([]*uapsiadbmodels.ArkUAPSIADBAccessPolicy, len(page.Items))}
 			for idx, policy := range page.Items {
-				var dbPolicy dbmodels.ArkUAPSIADBAccessPolicy
+				var dbPolicy uapsiadbmodels.ArkUAPSIADBAccessPolicy
 				err = mapstructure.Decode(*policy, &dbPolicy)
 				if err != nil {
 					s.Logger.Error("Failed to decode policy page: %v", err)
@@ -218,13 +218,13 @@ func (s *ArkUAPSIADBService) ListPoliciesBy(filters *dbmodels.ArkUAPSIADBFilters
 }
 
 // DeletePolicy deletes a policy by its ID.
-func (s *ArkUAPSIADBService) DeletePolicy(deletePolicy *commonuapmodels.ArkUAPDeletePolicyRequest) error {
+func (s *ArkUAPSIADBService) DeletePolicy(deletePolicy *uapcommonmodels.ArkUAPDeletePolicyRequest) error {
 	s.Logger.Info("Deleting policy [%s]", deletePolicy.PolicyID)
 	return s.baseService.BaseDeletePolicy(deletePolicy.PolicyID)
 }
 
 // PolicyStatus retrieves the status of a policy by its ID or name.
-func (s *ArkUAPSIADBService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUAPGetPolicyStatus) (string, error) {
+func (s *ArkUAPSIADBService) PolicyStatus(getPolicyStatus *uapcommonmodels.ArkUAPGetPolicyStatus) (string, error) {
 	if getPolicyStatus == nil {
 		return "", fmt.Errorf("getPolicyStatus cannot be nil")
 	}
@@ -232,14 +232,14 @@ func (s *ArkUAPSIADBService) PolicyStatus(getPolicyStatus *commonuapmodels.ArkUA
 		return "", fmt.Errorf("either PolicyID or PolicyName must be provided to retrieve policy status")
 	}
 	s.Logger.Info("Retrieving policy status for ID [%s] and name [%s]", getPolicyStatus.PolicyID, getPolicyStatus.PolicyName)
-	respType := reflect.TypeOf(dbmodels.ArkUAPSIADBAccessPolicy{})
+	respType := reflect.TypeOf(uapsiadbmodels.ArkUAPSIADBAccessPolicy{})
 	return s.baseService.BasePolicyStatus(getPolicyStatus.PolicyID, getPolicyStatus.PolicyName, &respType)
 }
 
 // PoliciesStats calculates policies statistics.
-func (s *ArkUAPSIADBService) PoliciesStats() (*commonuapmodels.ArkUAPPoliciesStats, error) {
+func (s *ArkUAPSIADBService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats, error) {
 	s.Logger.Info("Calculating policies statistics")
-	filters := commonuapmodels.NewArkUAPFilters()
+	filters := uapcommonmodels.NewArkUAPFilters()
 	filters.TargetCategory = []string{commonmodels.CategoryTypeDB}
 	return s.baseService.BasePoliciesStats(filters)
 }

@@ -3,28 +3,56 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
-	"github.com/octago/sflags"
-	"github.com/octago/sflags/gen/gpflag"
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
+	"slices"
+	"strings"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"slices"
-	"strings"
+	"github.com/mitchellh/mapstructure"
+	"github.com/octago/sflags"
+	"github.com/octago/sflags/gen/gpflag"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 // ArkConfigureAction is a struct that implements the ArkAction interface for configuring the CLI profiles.
+//
+// ArkConfigureAction provides functionality for managing CLI configuration profiles,
+// including both interactive and silent configuration modes. It handles profile
+// creation, modification, and persistence, as well as configuring authentication
+// profiles for different authenticators supported by the Ark SDK.
+//
+// The action supports dynamic flag generation based on available authenticators
+// and their supported authentication methods, allowing for flexible configuration
+// of different authentication backends.
 type ArkConfigureAction struct {
+	// ArkBaseAction provides common action functionality
 	*ArkBaseAction
+	// profilesLoader handles loading and saving of profile configurations
 	profilesLoader *profiles.ProfileLoader
 }
 
-// NewArkConfigureAction Creates a new instance of ArkConfigureAction
+// NewArkConfigureAction creates a new instance of ArkConfigureAction.
+//
+// NewArkConfigureAction initializes a new ArkConfigureAction with the provided
+// profile loader and an embedded ArkBaseAction for common CLI functionality.
+// The profile loader is used for loading existing profiles and saving new
+// or modified profile configurations.
+//
+// Parameters:
+//   - profilesLoader: A pointer to a ProfileLoader for handling profile operations
+//
+// Returns a new ArkConfigureAction instance ready for defining configure commands.
+//
+// Example:
+//
+//	loader := profiles.NewProfileLoader()
+//	configAction := NewArkConfigureAction(loader)
+//	configAction.DefineAction(rootCmd)
 func NewArkConfigureAction(profilesLoader *profiles.ProfileLoader) *ArkConfigureAction {
 	return &ArkConfigureAction{
 		ArkBaseAction:  NewArkBaseAction(),
@@ -32,7 +60,36 @@ func NewArkConfigureAction(profilesLoader *profiles.ProfileLoader) *ArkConfigure
 	}
 }
 
-// DefineAction Defines the CLI `configure` action, and adds the clear cache function
+// DefineAction defines the CLI configure action and adds configuration management commands.
+//
+// DefineAction creates a "configure" command that allows users to set up and modify
+// CLI profiles for the Ark SDK. The command supports both interactive and silent
+// modes of operation, dynamically generates flags based on available authenticators,
+// and handles complex profile configuration scenarios.
+//
+// The function performs the following setup:
+//  1. Creates a "configure" command with appropriate usage and help text
+//  2. Sets up common action configuration through embedded ArkBaseAction
+//  3. Dynamically generates flags for ArkProfile struct fields
+//  4. Iterates through supported authenticators and adds their specific flags
+//  5. Generates flags for authentication methods and their settings
+//  6. Handles flag conflicts by filtering duplicate flags
+//
+// Parameters:
+//   - cmd: The parent cobra command to which the configure command will be added
+//
+// The configure command supports extensive flag generation including:
+//   - Profile-level settings (from models.ArkProfile)
+//   - Authenticator enablement flags (work-with-<authenticator>)
+//   - Authentication method selection flags
+//   - Authenticator-specific configuration flags
+//   - Authentication method-specific settings flags
+//
+// Example:
+//
+//	configAction := NewArkConfigureAction(loader)
+//	configAction.DefineAction(rootCmd)
+//	// This adds: myapp configure [flags]
 func (a *ArkConfigureAction) DefineAction(cmd *cobra.Command) {
 	confCmd := &cobra.Command{
 		Use:   "configure",
@@ -100,6 +157,29 @@ func (a *ArkConfigureAction) DefineAction(cmd *cobra.Command) {
 	cmd.AddCommand(confCmd)
 }
 
+// runInteractiveConfigureAction handles interactive profile configuration through prompts.
+//
+// runInteractiveConfigureAction provides an interactive mode for configuring CLI profiles
+// where users are prompted for each configuration value. It loads existing profiles,
+// presents current values as defaults, and guides users through the configuration
+// process for both profile settings and authenticator configurations.
+//
+// The function performs the following operations:
+//  1. Prompts for profile name with intelligent default deduction
+//  2. Loads existing profile or creates new one if not found
+//  3. Prompts for each profile field with existing values as defaults
+//  4. Presents checkbox selection for which authenticators to configure
+//  5. For each selected authenticator, prompts for authentication method and settings
+//  6. Handles authentication method-specific configuration dynamically
+//
+// Parameters:
+//   - cmd: The cobra command containing flag definitions and values
+//   - configureArgs: Command line arguments (not currently used)
+//
+// Returns the configured ArkProfile and any error encountered during configuration.
+//
+// The function uses the args package for interactive prompting and supports
+// complex scenarios like multiple authenticators and different authentication methods.
 func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, configureArgs []string) (*models.ArkProfile, error) {
 	profileName, err := args.GetArg(
 		cmd,
@@ -345,6 +425,30 @@ func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, c
 	return profile, nil
 }
 
+// runSilentConfigureAction handles non-interactive profile configuration using command flags.
+//
+// runSilentConfigureAction processes configuration in silent mode where all configuration
+// values are provided through command line flags rather than interactive prompts. It
+// loads existing profiles, merges flag values, and validates the configuration for
+// completeness and correctness.
+//
+// The function performs the following operations:
+//  1. Extracts profile name from flags or deduces default
+//  2. Loads existing profile or creates new one if not found
+//  3. Processes all changed flags and merges them into the profile
+//  4. Iterates through authenticators based on work-with-* flags
+//  5. Validates required fields (like username for credential-based auth methods)
+//  6. Processes authenticator-specific flags and settings
+//  7. Removes authenticator profiles that are no longer configured
+//
+// Parameters:
+//   - cmd: The cobra command containing parsed flags and values
+//   - args: Command line arguments (not currently used)
+//
+// Returns the configured ArkProfile and any error encountered during configuration.
+//
+// The function requires all necessary configuration to be provided via flags and
+// will return errors for missing required fields or invalid configurations.
 func (a *ArkConfigureAction) runSilentConfigureAction(cmd *cobra.Command, args []string) (*models.ArkProfile, error) {
 	// Load the profile based on the CLI params and merge the rest of the params
 	profileName, err := cmd.Flags().GetString("profile-name")
@@ -438,6 +542,35 @@ func (a *ArkConfigureAction) runSilentConfigureAction(cmd *cobra.Command, args [
 	return profile, nil
 }
 
+// runConfigureAction is the main entry point for the configure command execution.
+//
+// runConfigureAction determines whether to run in interactive or silent mode based
+// on the current CLI environment settings, executes the appropriate configuration
+// method, saves the resulting profile, and displays the configuration results to
+// the user.
+//
+// The function performs the following operations:
+//  1. Checks if the CLI is running in interactive mode
+//  2. Calls either runInteractiveConfigureAction or runSilentConfigureAction
+//  3. Saves the configured profile using the profile loader
+//  4. Marshals the profile to JSON for display
+//  5. Prints success messages and profile location information
+//
+// Parameters:
+//   - cmd: The cobra command containing configuration and flags
+//   - configureArgs: Command line arguments passed to the configure command
+//
+// The function handles errors by logging them and panicking for critical failures
+// like configuration errors, following the CLI pattern of failing fast for
+// configuration issues that prevent proper operation.
+//
+// Example output:
+//
+//	{
+//	  "profile_name": "default",
+//	  "auth_profiles": {...}
+//	}
+//	Profile has been saved to /home/user/.ark-profiles
 func (a *ArkConfigureAction) runConfigureAction(cmd *cobra.Command, configureArgs []string) {
 	var profile *models.ArkProfile
 	var err error
