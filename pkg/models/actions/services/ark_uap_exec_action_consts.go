@@ -72,8 +72,10 @@ var UAPActionToSchemaMap = map[string]interface{}{
 
 // UAPActions defines the actions for the UAP service, including subactions for SCA and SIA DB.
 var UAPActions = &actions.ArkServiceActionDefinition{
-	ActionName: "uap",
-	Schemas:    UAPActionToSchemaMap,
+	ActionName:        "uap",
+	ActionAliases:     []string{"useraccesspolicies"},
+	ActionDescription: "Access policies define when specified users may access particular assets and for how long. You may use access policies for cloud workspaces, virtual machines, and databases.",
+	Schemas:           UAPActionToSchemaMap,
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&UAPSCAActions,
 		&UAPSIADBAction,

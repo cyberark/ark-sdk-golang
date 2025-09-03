@@ -11,7 +11,7 @@ Use the `exec` command to run commands on available services (the available serv
 
 The following SIA commands are supported:
 
-- `ark exec sia`: Root command for the SIA service
+- `ark exec sia`: Root command for the SIA service (aliases: dpa)
     - `sso` - SSO end-user operations
     - `k8s` - Kubernetes service
     - `db` - DB service
@@ -23,28 +23,28 @@ The following SIA commands are supported:
       - `db` - Database operations
     - `access` - Access service
     - `ssh-ca` - SSH CA key service
-- `ark exec cmgr`: Root command for the CMGR service
-- `ark exec pcloud`: Root command for PCloud service
+- `ark exec cmgr`: Root command for the CMGR service (aliases: connectormanager,cm)
+- `ark exec pcloud`: Root command for PCloud service (aliases: privilegecloud,pc)
     - `accounts` - Accounts management
     - `safes` - Safes management
-- `ark exec identity`: Root command for the Identity service
+- `ark exec identity`: Root command for the Identity service (aliases: idaptive,id)
     - `directories` - Directories management
     - `users` - Users management
     - `roles` - Roles management
--  `ark exec sechub`: Root command for the Secrets Hub Service
+-  `ark exec sechub`: Root command for the Secrets Hub Service (aliases: secretshub,sh)
     - `configuration` - Configuration management
     - `service-info` - Service Info management
     - `secrets` - Secrets management
     - `scans` - Scans management
     - `secret-stores` - Secret Stores management
     - `sync-policies` - Sync Policies management
-- `ark exec sm`: Root command for the SM service
-- `ark exec uap`: Root command for the UAP service
+- `ark exec sm`: Root command for the SM service (aliases: sessionmonitoring)
+- `ark exec uap`: Root command for the UAP service (aliases: useraccesspolicies)
     - `sca` - SCA management
     - `db` - SIA DB management
     - `vm` - SIA VM management
 
-All commands have their own subcommands and respective arguments.
+All commands have their own subcommands and respective arguments and aliases.
 
 ## Running
 ```shell linenums="0"
@@ -59,12 +59,13 @@ Usage:
   ark exec [command]
 
 Available Commands:
-  cmgr
-  pcloud
-  sia
-  sechub
-  sm
-  uap
+  cmgr        (aliases: connectormanager, cm)
+  identity    (aliases: idaptive, id)
+  pcloud      (aliases: privilegecloud, pc)
+  sechub      (aliases: secretshub, sh)
+  sia         (aliases: dpa)
+  sm          (aliases: sessionmonitoring)
+  uap         (aliases: useraccesspolicies)
 
 Flags:
       --allow-output                Allow stdout / stderr even when silent and not interactive

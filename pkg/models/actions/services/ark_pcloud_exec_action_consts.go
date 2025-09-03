@@ -60,7 +60,9 @@ var SafesAction = actions.ArkServiceActionDefinition{
 
 // PCloudActions is a struct that defines the Ark PCloud action for the Ark service.
 var PCloudActions = &actions.ArkServiceActionDefinition{
-	ActionName: "pcloud",
+	ActionName:        "pcloud",
+	ActionAliases:     []string{"privilegecloud", "pc"},
+	ActionDescription: "CyberArk Privilege Cloud is a SaaS solution that enables organizations to securely store, rotate and isolate credentials (for both human and non-human users), monitor sessions, and deliver scalable risk reduction to the business.",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&AccountsAction,
 		&SafesAction,
