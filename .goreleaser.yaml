@@ -3,10 +3,14 @@ version: 2
 builds:
   - id: unix
     goos:
+      - freebsd
       - linux
       - darwin
     goarch:
       - amd64
+      - '386'
+      - arm
+      - arm64
     env: [CGO_ENABLED=0]
     main: ./cmd/ark.go
     ldflags:
@@ -17,6 +21,8 @@ builds:
       - windows
     goarch:
       - amd64
+      - '386'
+      - arm64
     env: [CGO_ENABLED=0]
     main: ./cmd/ark.go
     ldflags:
