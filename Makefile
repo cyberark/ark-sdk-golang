@@ -4,6 +4,9 @@ all:
 lint:
 	./scripts/golint.sh
 
+publish-docs:
+	./scripts/publish_docs.sh
+
 validate-notices:
 	@echo "Validating open source dependencies in NOTICES.md..."
 	@echo "Extracting direct dependencies from go.mod..."

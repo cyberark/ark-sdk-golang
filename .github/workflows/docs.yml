@@ -1,0 +1,60 @@
+name: Build & Deploy Docs (mike)
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write   # needed to push to gh-pages
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: "1.8.3"
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Load cached venv
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
+
+      - name: Install deps from lockfile
+        run: |
+          poetry install --no-interaction --no-ansi --no-root
+
+      - name: Configure git user (for mike pushes)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Ensure gh-pages branch is available locally
+        run: |
+          git fetch origin gh-pages:gh-pages || echo "No gh-pages branch yet (first publish)"
+
+      - name: Deploy docs with mike
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: make publish-docs
