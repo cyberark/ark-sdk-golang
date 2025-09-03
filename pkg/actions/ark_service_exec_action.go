@@ -161,8 +161,15 @@ func (s *ArkServiceExecAction) defineServiceExecAction(
 	cmd *cobra.Command,
 	parentActionsDef []*actions.ArkServiceActionDefinition,
 ) (*cobra.Command, error) {
+	descriptionWithAliases := actionDef.ActionDescription
+	if len(actionDef.ActionAliases) > 0 {
+		descriptionWithAliases += fmt.Sprintf(" (aliases: %s)", strings.Join(actionDef.ActionAliases, ", "))
+	}
 	actionCmd := &cobra.Command{
-		Use: actionDef.ActionName,
+		Use:     actionDef.ActionName,
+		Aliases: actionDef.ActionAliases,
+		Short:   fmt.Sprintf("(aliases: %s)", strings.Join(actionDef.ActionAliases, ", ")),
+		Long:    descriptionWithAliases,
 	}
 
 	actionDest := actionDef.ActionName

@@ -21,6 +21,8 @@ var SMActionToSchemaMap = map[string]interface{}{
 
 // SMActions is a struct that defines the SM actions for the Ark service.
 var SMActions = &actions.ArkServiceActionDefinition{
-	ActionName: "sm",
-	Schemas:    SMActionToSchemaMap,
+	ActionName:        "sm",
+	ActionAliases:     []string{"sessionmonitoring"},
+	ActionDescription: "The CyberArk Audit space centralizes session monitoring across all CyberArk services on the Shared Services platform to provide a comprehensive display of all sessions as a unified view. This enables enhanced auditing as well as incident-response investigation.",
+	Schemas:           SMActionToSchemaMap,
 }

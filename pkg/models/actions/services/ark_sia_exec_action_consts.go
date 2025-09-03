@@ -179,7 +179,9 @@ var DbAction = actions.ArkServiceActionDefinition{
 
 // SIAActions is a struct that defines the SIA actions for the Ark service.
 var SIAActions = &actions.ArkServiceActionDefinition{
-	ActionName: "sia",
+	ActionName:        "sia",
+	ActionAliases:     []string{"dpa"},
+	ActionDescription: "Secure infrastructure access provides a seamless, agentless SaaS solution for session management, ideal for securing privileged access to targets spread across hybrid and cloud environments. Session management with SIA allows access with Zero Standing Privileges (ZSP) or vaulted credentials",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&SSOAction,
 		&K8SAction,

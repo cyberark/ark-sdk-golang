@@ -112,7 +112,9 @@ var SyncPoliciesAction = actions.ArkServiceActionDefinition{
 
 // SecHubActions is a struct that defines the SecHub action for the Ark service.
 var SecHubActions = &actions.ArkServiceActionDefinition{
-	ActionName: "sechub",
+	ActionName:        "sechub",
+	ActionAliases:     []string{"secretshub", "sh"},
+	ActionDescription: "Secrets Hub is a CyberArk SaaS solution that simplifies managing and consuming secrets in the Cloud Service Providers’ native secret managers.",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&ServiceInfoAction,
 		&ConfigurationAction,

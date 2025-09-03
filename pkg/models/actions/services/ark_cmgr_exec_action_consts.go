@@ -36,6 +36,8 @@ var CmgrActionToSchemaMap = map[string]interface{}{
 
 // CmgrActions is a struct that defines the CMGR action for the Ark service.
 var CmgrActions = &actions.ArkServiceActionDefinition{
-	ActionName: "cmgr",
-	Schemas:    CmgrActionToSchemaMap,
+	ActionName:        "cmgr",
+	ActionAliases:     []string{"connectormanager", "cm"},
+	ActionDescription: "Connector Management mediates ISPSS services and is used by IT administrators to manage CyberArk components, communication tunnels and manage networks and pools.",
+	Schemas:           CmgrActionToSchemaMap,
 }

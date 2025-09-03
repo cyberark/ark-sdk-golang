@@ -60,7 +60,9 @@ var UsersAction = actions.ArkServiceActionDefinition{
 
 // IdentityActions is a struct that defines the Identity actions for the Ark service.
 var IdentityActions = &actions.ArkServiceActionDefinition{
-	ActionName: "identity",
+	ActionName:        "identity",
+	ActionAliases:     []string{"idaptive", "id"},
+	ActionDescription: "Identity provides a single centralized interface for provisioning users and setting up the authentication for users of the Shared Services platform.",
 	Subactions: []*actions.ArkServiceActionDefinition{
 		&DirectoriesAction,
 		&RolesAction,
