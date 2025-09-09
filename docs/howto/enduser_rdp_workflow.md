@@ -8,7 +8,7 @@ Here is an example workflow for connecting to a windows box using rdp:
 
 1. Install Ark SDK:
    ```shell linenums="0"
-   go install github.com/cyberark/ark-sdk-golang
+   go install github.com/cyberark/ark-sdk-golang/cmd/ark
    ```
    Make sure that the PATH environment variable points to the go binary path, for example
    ```shell linenums="0"

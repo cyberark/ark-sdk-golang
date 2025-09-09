@@ -22,7 +22,7 @@ fi
 
 SCRIPTPATH=$(dirname "$0")
 
-IN_PATH=$SCRIPTPATH/../cmd/.
+IN_PATH=$SCRIPTPATH/../cmd/ark/.
 OUT_PATH=$SCRIPTPATH/../bin
 
 function check_if_exists() {

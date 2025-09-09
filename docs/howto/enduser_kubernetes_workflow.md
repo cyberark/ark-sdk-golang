@@ -9,7 +9,7 @@ To securely access a Kubernetes cluster, do the following:
 
 1. Install Ark SDK:
    ```shell linenums="0"
-   go install github.com/cyberark/ark-sdk-golang
+   go install github.com/cyberark/ark-sdk-golang/cmd/ark
    ```
    Make sure that the PATH environment variable points to the Go binary. For example:
    ```shell linenums="0"

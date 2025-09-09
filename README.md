@@ -73,7 +73,7 @@ Installation
 
 One can install the SDK via the following command:
 ```shell
-go install github.com/cyberark/ark-sdk-golang
+go install github.com/cyberark/ark-sdk-golang/cmd/ark
 ```
 
 CLI Usage
