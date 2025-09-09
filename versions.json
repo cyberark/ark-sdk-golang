@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "version": "1.4.5",
+    "title": "1.4.5",
+    "aliases": [
+      "latest"
+    ]
+  }
+]
