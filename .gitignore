@@ -1,6 +1,5 @@
 bin
 vendor
-ark
 ark_sdk_python/ark
 ark_sdk_python_old/
 .vscode
