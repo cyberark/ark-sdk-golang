@@ -2,7 +2,6 @@ package vm
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -12,17 +11,12 @@ import (
 	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
 	uapsiavmmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/vm/models"
 	"github.com/mitchellh/mapstructure"
+
+	"reflect"
 )
 
 // ArkUAPVMPolicyPage represents a page of SIA VM policies in the UAP service.
 type ArkUAPVMPolicyPage = common.ArkPage[uapsiavmmodels.ArkUAPSIAVMAccessPolicy]
-
-// ArkUAPSIAVMServiceConfig defines the service configuration for ArkUAPSIAVMService.
-var ArkUAPSIAVMServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "uap-vm",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkUAPSIAVMService represents the UAP SIA VM service.
 type ArkUAPSIAVMService struct {
@@ -210,5 +204,5 @@ func (s *ArkUAPSIAVMService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesSta
 
 // ServiceConfig returns the service configuration for ArkUAPSIAVMService.
 func (s *ArkUAPSIAVMService) ServiceConfig() services.ArkServiceConfig {
-	return ArkUAPSIAVMServiceConfig
+	return ServiceConfig
 }

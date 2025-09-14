@@ -18,6 +18,7 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
@@ -38,26 +39,19 @@ const (
 	DefaultSSHFolderPath = "~/.ssh"
 )
 
-// SIASSOServiceConfig is the configuration for the SSO service.
-var SIASSOServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-sso",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIASSOService is a struct that implements the ArkService interface and provides functionality for SSO services of SIA.
 type ArkSIASSOService struct {
 	services.ArkService
 	*services.ArkBaseService
 	ispAuth      *auth.ArkISPAuth
-	cacheKeyring *common.ArkKeyring
+	cacheKeyring *keyring.ArkKeyring
 	client       *isp.ArkISPServiceClient
 }
 
 // NewArkSIASSOService creates a new instance of ArkSIASSOService with the provided authenticators.
 func NewArkSIASSOService(authenticators ...auth.ArkAuth) (*ArkSIASSOService, error) {
 	ssoService := &ArkSIASSOService{
-		cacheKeyring: common.NewArkKeyring(SIASSOServiceConfig.ServiceName),
+		cacheKeyring: keyring.NewArkKeyring(ServiceConfig.ServiceName),
 	}
 	var ssoServiceInterface services.ArkService = ssoService
 	baseService, err := services.NewArkBaseService(ssoServiceInterface, authenticators...)
@@ -567,5 +561,5 @@ func (s *ArkSIASSOService) ShortLivedTokenInfo(getTokenInfo *ssomodels.ArkSIASSO
 
 // ServiceConfig returns the service configuration for the ArkSIASSOService.
 func (s *ArkSIASSOService) ServiceConfig() services.ArkServiceConfig {
-	return SIASSOServiceConfig
+	return ServiceConfig
 }

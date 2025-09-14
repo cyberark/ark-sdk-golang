@@ -24,13 +24,6 @@ const (
 	disableSecretURL = "/api/adb/secretsmgmt/secrets/%s/disable"
 )
 
-// SIASecretsDBServiceConfig is the configuration for the SIA DB secrets service.
-var SIASecretsDBServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-secrets-db",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIASecretsDBService is the service for managing db secrets.
 type ArkSIASecretsDBService struct {
 	services.ArkService
@@ -536,5 +529,5 @@ func (s *ArkSIASecretsDBService) SecretsStats() (*dbsecretsmodels.ArkSIADBSecret
 
 // ServiceConfig returns the service configuration for the ArkSIASecretsVMService.
 func (s *ArkSIASecretsDBService) ServiceConfig() services.ArkServiceConfig {
-	return SIASecretsDBServiceConfig
+	return ServiceConfig
 }

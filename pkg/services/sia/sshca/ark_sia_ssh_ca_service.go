@@ -22,13 +22,6 @@ const (
 	publicKeyScriptURL         = "api/public-keys/scripts"
 )
 
-// SIASSHCAServiceConfig is the configuration for the ArkSIASSHCAService.
-var SIASSHCAServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-ssh-ca",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIASSHCAService is a struct that implements the ArkService interface and provides functionality for SSH CA of SIA.
 type ArkSIASSHCAService struct {
 	services.ArkService
@@ -187,5 +180,5 @@ func (s *ArkSIASSHCAService) PublicKeyScript(getPublicKey *sshcamodels.ArkSIAGet
 
 // ServiceConfig returns the service configuration for the ArkSIASSHCAService.
 func (s *ArkSIASSHCAService) ServiceConfig() services.ArkServiceConfig {
-	return SIASSHCAServiceConfig
+	return ServiceConfig
 }

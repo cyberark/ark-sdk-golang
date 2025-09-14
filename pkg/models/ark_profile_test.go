@@ -45,7 +45,6 @@ func TestArkProfile_UnmarshalJSON(t *testing.T) {
 						AuthMethodSettings: &auth.IdentityArkAuthMethodSettings{
 							IdentityMFAMethod:       "pf",
 							IdentityMFAInteractive:  true,
-							IdentityApplication:     "test-app",
 							IdentityURL:             "https://identity.example.com",
 							IdentityTenantSubdomain: "test-tenant",
 						},

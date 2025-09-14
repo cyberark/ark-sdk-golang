@@ -31,13 +31,6 @@ const (
 	defaultSqlcmdTimeout = 60
 )
 
-// SIADBServiceConfig is the configuration for the ArkSIADBService.
-var SIADBServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-db",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIADBService is a struct that implements the ArkService interface and provides functionality for DB service of SIA.
 type ArkSIADBService struct {
 	services.ArkService
@@ -431,5 +424,5 @@ func (s *ArkSIADBService) GenerateProxyFullChain(generateProxyFullChain *dbmodel
 
 // ServiceConfig returns the service configuration for the ArkSIADBService.
 func (s *ArkSIADBService) ServiceConfig() services.ArkServiceConfig {
-	return SIADBServiceConfig
+	return ServiceConfig
 }

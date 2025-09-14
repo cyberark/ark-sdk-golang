@@ -21,13 +21,6 @@ const (
 	resourceURL  = "/api/adb/resources/%d"
 )
 
-// SIADBWorkspaceServiceConfig is the configuration for the SIA db workspace service.
-var SIADBWorkspaceServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-workspaces-db",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIAWorkspacesDBService is the service for managing databases in a workspace.
 type ArkSIAWorkspacesDBService struct {
 	services.ArkService
@@ -466,5 +459,5 @@ func (s *ArkSIAWorkspacesDBService) ListFamilyTypes() []string {
 
 // ServiceConfig returns the service configuration for the ArkSIATargetSetsWorkspaceService.
 func (s *ArkSIAWorkspacesDBService) ServiceConfig() services.ArkServiceConfig {
-	return SIADBWorkspaceServiceConfig
+	return ServiceConfig
 }

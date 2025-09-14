@@ -4,11 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
-	"slices"
-	"strings"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -19,6 +14,12 @@ import (
 	directoriesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/identity/directories/models"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"net/url"
+	"slices"
+	"strings"
 )
 
 const (
@@ -29,13 +30,6 @@ const (
 
 // ArkIdentityEntitiesPage is a page of ArkIdentityBaseEntity items.
 type ArkIdentityEntitiesPage = common.ArkPage[directoriesmodels.ArkIdentityEntity]
-
-// IdentityDirectoriesServiceConfig is the configuration for the identity directories service.
-var IdentityDirectoriesServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "identity-directories",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkIdentityDirectoriesService is the service for managing identity directories.
 type ArkIdentityDirectoriesService struct {
@@ -328,5 +322,5 @@ func (s *ArkIdentityDirectoriesService) TenantDefaultSuffix() (string, error) {
 
 // ServiceConfig returns the service configuration for the ArkIdentityDirectoriesService.
 func (s *ArkIdentityDirectoriesService) ServiceConfig() services.ArkServiceConfig {
-	return IdentityDirectoriesServiceConfig
+	return ServiceConfig
 }

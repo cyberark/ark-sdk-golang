@@ -3,9 +3,6 @@ package targetsets
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"regexp"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -13,6 +10,10 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	targetsetsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/workspaces/targetsets/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"regexp"
 )
 
 const (
@@ -20,13 +21,6 @@ const (
 	bulkTargetSetsURL = "/api/targetsets/bulk"
 	targetSetURL      = "/api/targetsets/%s"
 )
-
-// SIATargetSetsWorkspaceServiceConfig is the configuration for the SIA target sets workspace service.
-var SIATargetSetsWorkspaceServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-workspaces-target-sets",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkSIAWorkspacesTargetSetsService is the service for managing target sets in a workspace.
 type ArkSIAWorkspacesTargetSetsService struct {
@@ -335,5 +329,5 @@ func (s *ArkSIAWorkspacesTargetSetsService) TargetSetsStats() (*targetsetsmodels
 
 // ServiceConfig returns the service configuration for the ArkSIAWorkspacesTargetSetsService.
 func (s *ArkSIAWorkspacesTargetSetsService) ServiceConfig() services.ArkServiceConfig {
-	return SIATargetSetsWorkspaceServiceConfig
+	return ServiceConfig
 }

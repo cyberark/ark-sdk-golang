@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -12,17 +11,12 @@ import (
 	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
 	uapsiadbmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/sia/db/models"
 	"github.com/mitchellh/mapstructure"
+
+	"reflect"
 )
 
 // ArkUAPDBPolicyPage represents a page of SIA DB policies in the UAP service.
 type ArkUAPDBPolicyPage = common.ArkPage[uapsiadbmodels.ArkUAPSIADBAccessPolicy]
-
-// ArkUAPSIADBServiceConfig defines the service configuration for ArkUAPSIADBService.
-var ArkUAPSIADBServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "uap-db",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkUAPSIADBService represents the UAP SIA DB service.
 type ArkUAPSIADBService struct {
@@ -246,5 +240,5 @@ func (s *ArkUAPSIADBService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesSta
 
 // ServiceConfig returns the service configuration for ArkUAPSIADBService.
 func (s *ArkUAPSIADBService) ServiceConfig() services.ArkServiceConfig {
-	return ArkUAPSIADBServiceConfig
+	return ServiceConfig
 }

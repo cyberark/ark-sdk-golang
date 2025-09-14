@@ -15,7 +15,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -208,7 +207,7 @@ func UnmarshalCookies(cookies []byte, cookieJar *cookiejar.Jar) error {
 //	client := NewSimpleArkClient("api.example.com")
 //	response, err := client.Get(ctx, "/users", nil)
 func NewSimpleArkClient(baseURL string) *ArkClient {
-	return NewArkClient(baseURL, "", "", "", nil, nil)
+	return NewArkClient(baseURL, "", "", "Authorization", nil, nil)
 }
 
 // NewArkClient creates a new ArkClient instance with comprehensive configuration options.
@@ -339,6 +338,53 @@ func (ac *ArkClient) UpdateHeaders(headers map[string]string) {
 //	fmt.Printf("Content-Type: %s\n", currentHeaders["Content-Type"])
 func (ac *ArkClient) GetHeaders() map[string]string {
 	return ac.headers
+}
+
+// RemoveHeader removes a single HTTP header from the ArkClient.
+//
+// This method deletes the specified header from the client's header map.
+// The header will no longer be included in subsequent HTTP requests made by this client.
+//
+// Parameters:
+//   - key: The header name to remove (e.g., "Authorization", "Content-Type")
+//
+// Example:
+//
+//	client.RemoveHeader("Authorization")
+//	client.RemoveHeader("X-Custom-Header")
+func (ac *ArkClient) RemoveHeader(key string) {
+	delete(ac.headers, key)
+}
+
+// DisableRedirections disables automatic HTTP redirection handling.
+//
+// This method configures the underlying HTTP client to not follow redirects.
+// When disabled, the client will return the first response received, even if it
+// is a redirect (3xx status code). This is useful for scenarios where redirect
+// responses need to be handled manually.
+//
+// Example:
+//
+//	client.DisableRedirections()
+//	// Now, GET requests will not follow redirects automatically.
+func (ac *ArkClient) DisableRedirections() {
+	ac.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		return http.ErrUseLastResponse
+	}
+}
+
+// EnableRedirections enables automatic HTTP redirection handling.
+//
+// This method restores the default behavior of the underlying HTTP client,
+// allowing it to automatically follow HTTP redirects (3xx status codes).
+// Use this when you want the client to transparently follow redirects.
+//
+// Example:
+//
+//	client.EnableRedirections()
+//	// Now, GET requests will follow redirects automatically.
+func (ac *ArkClient) EnableRedirections() {
+	ac.client.CheckRedirect = nil
 }
 
 // SetCookie sets a single cookie in the client's cookie jar.
@@ -494,6 +540,7 @@ func (ac *ArkClient) GetCookieJar() *cookiejar.Jar {
 // - Request/response timing logging
 // - Token refresh retry logic on 401 Unauthorized responses
 func (ac *ArkClient) doRequest(ctx context.Context, method string, route string, body interface{}, params map[string]string, refreshRetryCount int) (*http.Response, error) {
+	var err error
 	fullURL := ac.BaseURL
 	if route != "" {
 		segments := strings.Split(route, "/")
@@ -506,11 +553,27 @@ func (ac *ArkClient) doRequest(ctx context.Context, method string, route string,
 		}
 		fullURL += route
 	}
-	bodyBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
+	var bodyBytes *bytes.Buffer
+	if body != nil {
+		if contentType, ok := ac.headers["Content-Type"]; ok && contentType == "application/x-www-form-urlencoded" {
+			if formValues, ok := body.(map[string]string); ok {
+				data := url.Values{}
+				for key, value := range formValues {
+					data.Set(key, value)
+				}
+				bodyBytes = bytes.NewBufferString(data.Encode())
+			} else {
+				return nil, fmt.Errorf("body must be of type map[string]string for x-www-form-urlencoded content type")
+			}
+		} else {
+			bodyB, err := json.Marshal(body)
+			if err != nil {
+				return nil, err
+			}
+			bodyBytes = bytes.NewBuffer(bodyB)
+		}
 	}
-	req, err := http.NewRequestWithContext(ctx, method, fullURL, bytes.NewBuffer(bodyBytes))
+	req, err := http.NewRequestWithContext(ctx, method, fullURL, bodyBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -717,16 +780,7 @@ func (ac *ArkClient) UpdateToken(token string, tokenType string) {
 	ac.token = token
 	ac.tokenType = tokenType
 	if token != "" {
-		if tokenType == "Basic" {
-			decoded, err := base64.StdEncoding.DecodeString(token)
-			if err != nil {
-				return
-			}
-			userPass := string(decoded)
-			ac.headers["Authorization"] = "Basic " + userPass
-		} else {
-			ac.headers[ac.authHeaderName] = fmt.Sprintf("%s %s", tokenType, token)
-		}
+		ac.headers[ac.authHeaderName] = fmt.Sprintf("%s %s", tokenType, token)
 	}
 }
 

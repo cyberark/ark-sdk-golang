@@ -4,16 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
-	"net/http"
-	"os"
-	"path/filepath"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	k8smodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/k8s/models"
+
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
 )
 
 const (
@@ -24,13 +25,6 @@ const (
 const (
 	DefaultKubeConfigFolderPath = "~/.kube"
 )
-
-// SIAK8SServiceConfig is the configuration for the ArkSIAK8SService.
-var SIAK8SServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-k8s",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkSIAK8SService is a struct that implements the ArkService interface and provides functionality for K8S service of SIA.
 type ArkSIAK8SService struct {
@@ -116,5 +110,5 @@ func (s *ArkSIAK8SService) GenerateKubeconfig(generateKubeConfig *k8smodels.ArkS
 
 // ServiceConfig returns the service configuration for the ArkSIAK8SService.
 func (s *ArkSIAK8SService) ServiceConfig() services.ArkServiceConfig {
-	return SIAK8SServiceConfig
+	return ServiceConfig
 }

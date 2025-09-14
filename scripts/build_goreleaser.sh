@@ -12,6 +12,7 @@ fi
 
 SCRIPTPATH=$(dirname "$0")
 OUT_PATH=$SCRIPTPATH/../dist
+TOOLS_PATH=$SCRIPTPATH/../tools
 
 function check_if_exists() {
   fileName="$1"
@@ -21,7 +22,7 @@ function check_if_exists() {
      exit 1
   fi
 }
-
+go generate "$TOOLS_PATH"
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$CURRENT_BRANCH" != "main" && "$CURRENT_BRANCH" != "master" ]]
 then

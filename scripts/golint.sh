@@ -5,7 +5,7 @@ then
 	export GOPATH=$HOME/go
 fi
 
-golint_output=$($GOPATH/bin/golint ./... | grep -v "should have comment" | grep -v "don't use an underscore in package name")
+golint_output=$($GOPATH/bin/golint $(go list ./... | grep -v /vendor/) | grep -v "should have comment" | grep -v "don't use an underscore in package name")
 
 if [[ $golint_output ]]; then
     echo "$golint_output"

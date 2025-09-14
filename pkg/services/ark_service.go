@@ -2,9 +2,11 @@ package services
 
 import (
 	"fmt"
+	"slices"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	"slices"
+	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
 )
 
 // ArkServiceConfig defines the configuration for an Ark service.
@@ -12,6 +14,7 @@ type ArkServiceConfig struct {
 	ServiceName                string
 	RequiredAuthenticatorNames []string
 	OptionalAuthenticatorNames []string
+	ActionsConfigurations      map[actions.ArkServiceActionType][]actions.ArkServiceActionDefinition
 }
 
 // ArkService is an interface that defines the methods for an Ark service.
@@ -76,4 +79,49 @@ func (s *ArkBaseService) HasAuthenticator(authName string) bool {
 		}
 	}
 	return false
+}
+
+var (
+	serviceRegistry  = make(map[string]ArkServiceConfig)
+	topLevelServices []string
+)
+
+// Register registers a new Ark service configuration.
+func Register(serviceConfig ArkServiceConfig, topLevel bool) error {
+	if _, exists := serviceRegistry[serviceConfig.ServiceName]; exists {
+		return fmt.Errorf("service %s already registered", serviceConfig.ServiceName)
+	}
+	serviceRegistry[serviceConfig.ServiceName] = serviceConfig
+	if topLevel {
+		topLevelServices = append(topLevelServices, serviceConfig.ServiceName)
+	}
+	return nil
+}
+
+// GetServiceConfig retrieves the Ark service configuration by service name.
+func GetServiceConfig(serviceName string) (ArkServiceConfig, error) {
+	if config, exists := serviceRegistry[serviceName]; exists {
+		return config, nil
+	}
+	return ArkServiceConfig{}, fmt.Errorf("service %s not registered", serviceName)
+}
+
+// AllServiceConfigs returns a slice of all registered Ark service configurations.
+func AllServiceConfigs() []ArkServiceConfig {
+	configs := make([]ArkServiceConfig, 0, len(serviceRegistry))
+	for _, config := range serviceRegistry {
+		configs = append(configs, config)
+	}
+	return configs
+}
+
+// TopLevelServiceConfigs returns a slice of all registered top-level Ark service configurations.
+func TopLevelServiceConfigs() []ArkServiceConfig {
+	configs := make([]ArkServiceConfig, 0, len(topLevelServices))
+	for _, serviceName := range topLevelServices {
+		if config, exists := serviceRegistry[serviceName]; exists {
+			configs = append(configs, config)
+		}
+	}
+	return configs
 }

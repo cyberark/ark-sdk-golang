@@ -72,13 +72,6 @@ var connectorCmdSet = map[string]map[string]string{
 	},
 }
 
-// SIAAccessServiceConfig is the configuration for the ArkSIAAccessService.
-var SIAAccessServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-access",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSIAAccessService is a struct that implements the ArkService interface and provides functionality for Connectors of SIA.
 type ArkSIAAccessService struct {
 	services.ArkService
@@ -474,5 +467,5 @@ func (s *ArkSIAAccessService) DeleteConnector(deleteConnector *accessmodels.ArkS
 
 // ServiceConfig returns the service configuration for the ArkSIAAccessService.
 func (s *ArkSIAAccessService) ServiceConfig() services.ArkServiceConfig {
-	return SIAAccessServiceConfig
+	return ServiceConfig
 }

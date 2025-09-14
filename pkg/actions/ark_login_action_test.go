@@ -7,11 +7,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/spf13/cobra"
 	"github.com/cyberark/ark-sdk-golang/pkg/actions/testutils"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/spf13/cobra"
 )
 
 func TestNewArkLoginAction(t *testing.T) {

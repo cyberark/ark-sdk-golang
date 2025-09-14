@@ -3,15 +3,16 @@ package uap
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"reflect"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/isp"
 	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"reflect"
 )
 
 const (

@@ -4,13 +4,16 @@ all:
 lint:
 	./scripts/golint.sh
 
+generate:
+	cd tools; go generate ./...
+
 publish-docs:
 	./scripts/publish_docs.sh
 
 validate-notices:
 	@echo "Validating open source dependencies in NOTICES.md..."
 	@echo "Extracting direct dependencies from go.mod..."
-	@go list -m -json all | jq -r 'select(.Main != true and .Indirect != true) | .Path' | grep -E "^github\.com/" | sed 's|github\.com/||' | sed 's|/v[0-9][0-9]*$$||' | sort -u > /tmp/go_deps_github.txt
+	@go list -mod=mod -m -json all | jq -r 'select(.Main != true and .Indirect != true) | .Path' | grep -E "^github\.com/" | sed 's|github\.com/||' | sed 's|/v[0-9][0-9]*$$||' | sort -u > /tmp/go_deps_github.txt
 	@echo "Extracting documented dependencies from NOTICES.md..."
 	@grep -E "https://github\.com/[^[:space:]]+" NOTICES.md | \
 		sed 's/.*https:\/\/github\.com\///' | \
@@ -64,3 +67,29 @@ unit-test-all: unit-test unit-test-coverage unit-test-check
 clean:
 	rm -f ark
 	rm -rf bin
+	rm -f coverage.out coverage.html test_results.txt
+
+BUMP_TYPE ?= patch
+
+bump-version:
+	@echo "Current version: $$(cat VERSION)"
+	@current_version=$$(cat VERSION | tr -d '\n'); \
+	IFS='.' read -r major minor patch <<< "$$current_version"; \
+	case "$(BUMP_TYPE)" in \
+		major) \
+			new_major=$$((major + 1)); \
+			new_version="$$new_major.0.0"; \
+			;; \
+		minor) \
+			new_minor=$$((minor + 1)); \
+			new_version="$$major.$$new_minor.0"; \
+			;; \
+		patch|*) \
+			new_patch=$$((patch + 1)); \
+			new_version="$$major.$$minor.$$new_patch"; \
+			;; \
+	esac; \
+	echo "$$new_version" > VERSION; \
+	sed -i '' "s/^version = \".*\"/version = \"$$new_version\"/" pyproject.toml; \
+	echo "Version bumped from $$current_version to $$new_version ($(BUMP_TYPE))"; \
+	echo "Updated VERSION file and pyproject.toml"

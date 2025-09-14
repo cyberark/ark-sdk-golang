@@ -8,18 +8,18 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-
-	"github.com/cyberark/ark-sdk-golang/pkg/cli"
-	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
-	"github.com/cyberark/ark-sdk-golang/pkg/models/actions/services"
-	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 	"github.com/mitchellh/mapstructure"
 	"github.com/octago/sflags"
 	"github.com/octago/sflags/gen/gpflag"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/cli"
+	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
+	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
+	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
+	"github.com/cyberark/ark-sdk-golang/pkg/services"
 )
 
 // ArkServiceExecAction is a struct that implements the ArkExecAction interface for executing service actions.
@@ -157,9 +157,9 @@ func (s *ArkServiceExecAction) fillRemainingSchema(schema interface{}, flags *pf
 //   - Required field marking based on validation tags
 //   - Default value assignment from struct tags
 func (s *ArkServiceExecAction) defineServiceExecAction(
-	actionDef *actions.ArkServiceActionDefinition,
+	actionDef *actions.ArkServiceCLIActionDefinition,
 	cmd *cobra.Command,
-	parentActionsDef []*actions.ArkServiceActionDefinition,
+	parentActionsDef []*actions.ArkServiceCLIActionDefinition,
 ) (*cobra.Command, error) {
 	descriptionWithAliases := actionDef.ActionDescription
 	if len(actionDef.ActionAliases) > 0 {
@@ -263,9 +263,9 @@ func (s *ArkServiceExecAction) defineServiceExecAction(
 //   - Recursive subaction processing for nested command structures
 //   - Error propagation from nested action creation
 func (s *ArkServiceExecAction) defineServiceExecActions(
-	actionDef *actions.ArkServiceActionDefinition,
+	actionDef *actions.ArkServiceCLIActionDefinition,
 	cmd *cobra.Command,
-	parentActionsDef []*actions.ArkServiceActionDefinition,
+	parentActionsDef []*actions.ArkServiceCLIActionDefinition,
 ) error {
 	actionSubparsers, err := s.defineServiceExecAction(actionDef, cmd, parentActionsDef)
 	if err != nil {
@@ -614,12 +614,21 @@ func (s *ArkServiceExecAction) findMethodByName(value reflect.Value, methodName 
 //	err := serviceExecAction.DefineExecAction(rootCmd)
 //	// This adds all supported service commands to rootCmd
 func (s *ArkServiceExecAction) DefineExecAction(cmd *cobra.Command) error {
-	for _, actionDef := range services.SupportedServiceActions {
-		err := s.defineServiceExecActions(actionDef, cmd, nil)
-		if err != nil {
-			return err
+	configs := services.TopLevelServiceConfigs()
+	for _, config := range configs {
+		cliActionDefs, ok := config.ActionsConfigurations[actions.ArkServiceActionTypeCLI]
+		if !ok || len(cliActionDefs) == 0 {
+			continue
+		}
+		for _, actionDefIfs := range cliActionDefs {
+			var cliActionDef = actionDefIfs.(*actions.ArkServiceCLIActionDefinition)
+			err := s.defineServiceExecActions(cliActionDef, cmd, nil)
+			if err != nil {
+				return err
+			}
 		}
 	}
+
 	return nil
 }
 
@@ -681,7 +690,7 @@ func (s *ArkServiceExecAction) RunExecAction(api *cli.ArkCLIAPI, cmd *cobra.Comm
 	}
 
 	// Resolve the action schema
-	var actionSchemaDef *actions.ArkServiceActionDefinition = nil
+	var actionSchemaDef *actions.ArkServiceCLIActionDefinition = nil
 	for _, servicePart := range serviceParts {
 		if actionSchemaDef != nil {
 			for _, actionDef := range actionSchemaDef.Subactions {
@@ -691,10 +700,18 @@ func (s *ArkServiceExecAction) RunExecAction(api *cli.ArkCLIAPI, cmd *cobra.Comm
 				}
 			}
 		} else {
-			for _, actionDef := range services.SupportedServiceActions {
-				if actionDef.ActionName == servicePart {
-					actionSchemaDef = actionDef
-					break
+			configs := services.TopLevelServiceConfigs()
+			for _, config := range configs {
+				cliActionDefs, ok := config.ActionsConfigurations[actions.ArkServiceActionTypeCLI]
+				if !ok || len(cliActionDefs) == 0 {
+					continue
+				}
+				for _, actionDefIfs := range cliActionDefs {
+					var cliActionDef = actionDefIfs.(*actions.ArkServiceCLIActionDefinition)
+					if cliActionDef.ActionName == servicePart {
+						actionSchemaDef = cliActionDef
+						break
+					}
 				}
 			}
 			if actionSchemaDef == nil {

@@ -24,13 +24,6 @@ const (
 	sessionActivitiesURL = "/api/sessions/%s/activities"
 )
 
-// SMServiceConfig is the configuration for the Session Monitoring service.
-var SMServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sm",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkSMPage represents a page of ArkSMSession items.
 type ArkSMPage = common.ArkPage[smmodels.ArkSMSession]
 
@@ -360,5 +353,5 @@ func (s *ArkSMService) Session(getSession *smmodels.ArkSIASMGetSession) (*smmode
 
 // ServiceConfig returns the service configuration for the ArkSMservice.
 func (s *ArkSMService) ServiceConfig() services.ArkServiceConfig {
-	return SMServiceConfig
+	return ServiceConfig
 }

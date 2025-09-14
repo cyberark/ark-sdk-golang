@@ -2,7 +2,6 @@ package uap
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -10,17 +9,12 @@ import (
 	uap "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common"
 	uapcommonmodels "github.com/cyberark/ark-sdk-golang/pkg/services/uap/common/models"
 	"github.com/mitchellh/mapstructure"
+
+	"reflect"
 )
 
 // ArkUAPPolicyPage represents a page of common policies in the UAP service.
 type ArkUAPPolicyPage = common.ArkPage[uapcommonmodels.ArkUAPCommonAccessPolicy]
-
-// UapServiceConfig defines the service configuration for ArkUAPService.
-var UapServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "uap",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkUAPService represents the UAP service.
 type ArkUAPService struct {
@@ -138,5 +132,5 @@ func (s *ArkUAPService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats, e
 
 // ServiceConfig returns the service configuration for ArkUAPSCAService.
 func (s *ArkUAPService) ServiceConfig() services.ArkServiceConfig {
-	return UapServiceConfig
+	return ServiceConfig
 }

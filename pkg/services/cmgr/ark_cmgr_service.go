@@ -3,8 +3,6 @@ package cmgr
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -12,6 +10,9 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	cmgrmodels "github.com/cyberark/ark-sdk-golang/pkg/services/cmgr/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
 )
 
 const (
@@ -37,13 +38,6 @@ type ArkCmgrPoolIdentifierPage = common.ArkPage[cmgrmodels.ArkCmgrPoolIdentifier
 
 // ArkCmgrPoolComponentPage is a page of ArkCmgrPoolComponent items.
 type ArkCmgrPoolComponentPage = common.ArkPage[cmgrmodels.ArkCmgrPoolComponent]
-
-// CmgrServiceConfig is the configuration for the connector management service.
-var CmgrServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "cmgr",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkCmgrService is the service for managing connector management.
 type ArkCmgrService struct {
@@ -795,5 +789,5 @@ func (s *ArkCmgrService) PoolComponent(getPoolComponent *cmgrmodels.ArkCmgrGetPo
 
 // ServiceConfig returns the service configuration for the ArkCmgrService.
 func (s *ArkCmgrService) ServiceConfig() services.ArkServiceConfig {
-	return CmgrServiceConfig
+	return ServiceConfig
 }
