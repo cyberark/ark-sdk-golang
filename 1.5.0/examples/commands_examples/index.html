@@ -1,0 +1,3017 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Commands Examples">
+      
+      
+        <meta name="author" content="CyberArk, Ofir Iluz">
+      
+      
+      
+        <link rel="prev" href="../../howto/refreshing_authentication/">
+      
+      
+        <link rel="next" href="../sdk_examples/">
+      
+      
+      <link rel="icon" href="../../media/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Commands examples - Ark SDK</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="dark-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#commands-examples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+You're not viewing the latest version.
+<a href="../../..">
+    <strong>Click here to go to latest.</strong>
+</a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Ark SDK" class="md-header__button md-logo" aria-label="Ark SDK" data-md-component="logo">
+      
+  <img src="../../media/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ark SDK
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Commands examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="dark-blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cyberark/ark-sdk-golang" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ark SDK" class="md-nav__button md-logo" aria-label="Ark SDK" data-md-component="logo">
+      
+  <img src="../../media/logo.svg" alt="logo">
+
+    </a>
+    Ark SDK
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cyberark/ark-sdk-golang" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    License
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    How to guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            How to guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/working_with_profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Work with profiles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/working_with_ark_cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Work with Ark cache
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/enduser_databases_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    End-user database workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/enduser_databases_psql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    End-user psql workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/enduser_kubernetes_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    End-user Kubernetes workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/enduser_ssh_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    End-user SSH workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/enduser_rdp_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    End-user RDP workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/install_sia_connectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install SIA connectors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/onboard_pcloud_account/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Onboard pCloud account
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/simple_commands_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Simple commands workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/simple_sdk_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Simple SDK workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_12" id="__nav_5_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UAP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_12">
+            <span class="md-nav__icon md-icon"></span>
+            UAP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_db_policy_cli_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DB Policy CLI workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_db_policy_sdk_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DB Policy SDK workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_vm_policy_cli_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VM Policy CLI workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_vm_policy_sdk_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VM Policy SDK workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_sca_policy_cli_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SCA Policy CLI workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/uap/uap_sca_policy_sdk_workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SCA Policy SDK workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../howto/refreshing_authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Refresh authentication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Commands examples
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Commands examples
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-command-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure command example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#login-commands-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login commands example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec-command-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exec command examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exec command examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-password-for-a-database-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO password for a database connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-password-for-an-rdp-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO password for an RDP connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-oracle-wallet-for-an-oracle-database-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO Oracle wallet for an Oracle database connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-kubectl-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a kubectl config file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-kubectl-config-file-and-save-it-in-the-specified-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a kubectl config file and save it in the specified path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-vm-target-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA VM target set
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-vm-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA VM secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-new-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate new SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deactivate-previous-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deactivate previous SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reactivate-previous-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactivate previous SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-cmgr-connector-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      List CMGR connector pools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-cmgr-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add CMGR network
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-cmgr-connector-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add CMGR connector pool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-connector-installation-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get connector installation script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-a-connector-on-windows-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install a connector on windows remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-a-connector-on-linux-with-private-key-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install a connector on linux with private key remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uninstall-a-connector-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uninstall a connector remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pcloud-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a pCloud Safe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pcloud-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a pCloud account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-a-pcloud-account-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve a pCloud account credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity user
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity role
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-directories-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all directories identities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-database-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-secrets-hub-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Secrets Hub Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Filters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-secrets-hub-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add Secrets Hub Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-scans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Scans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trigger-secrets-hub-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trigger Secrets Hub Scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Secrets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-secrets-using-a-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Secrets using a filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-service-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Service Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-sync-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Sync Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-sessions-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Sessions By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-sessions-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Sessions By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Session
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-session-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Session Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-session-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Session Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-session-activities-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Session Activities By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-session-activities-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Session Activities By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-uap-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all UAP policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-uap-db-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete UAP DB Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-db-policies-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      List DB Policies from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-db-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get DB Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-uap-db-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add UAP DB Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-uap-sca-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      List UAP SCA Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-vm-policies-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      List VM Policies from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-vm-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get VM Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-vm-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete VM Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-mysql-zsp-with-the-mysql-cli-via-ark-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to MySQL ZSP with the mysql cli via Ark CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-postgresql-vaulted-with-the-psql-cli-via-ark-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to PostgreSQL Vaulted with the psql cli via Ark CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk_examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SDK examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    CLI commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            CLI commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/configure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Login
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/exec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exec
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Profiles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cache
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    SDK overview
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            SDK overview
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/authenticators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authenticators
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/schemas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schemas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/pagination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pagination
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-command-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure command example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#login-commands-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login commands example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec-command-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exec command examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exec command examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-password-for-a-database-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO password for a database connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-password-for-an-rdp-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO password for an RDP connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-short-lived-sso-oracle-wallet-for-an-oracle-database-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a short-lived SSO Oracle wallet for an Oracle database connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-kubectl-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a kubectl config file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-a-kubectl-config-file-and-save-it-in-the-specified-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate a kubectl config file and save it in the specified path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-vm-target-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA VM target set
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-vm-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA VM secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-new-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate new SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deactivate-previous-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deactivate previous SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reactivate-previous-ssh-ca-key-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactivate previous SSH CA key version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-cmgr-connector-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      List CMGR connector pools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-cmgr-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add CMGR network
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-cmgr-connector-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add CMGR connector pool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-connector-installation-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get connector installation script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-a-connector-on-windows-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install a connector on windows remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-a-connector-on-linux-with-private-key-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install a connector on linux with private key remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uninstall-a-connector-remotely" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uninstall a connector remotely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pcloud-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a pCloud Safe
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pcloud-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a pCloud account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-a-pcloud-account-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve a pCloud account credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity user
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-identity-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an Identity role
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-directories-identities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all directories identities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-database-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database secret
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-sia-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete SIA database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-secrets-hub-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set Secrets Hub Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Filters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-secrets-hub-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add Secrets Hub Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-scans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Scans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trigger-secrets-hub-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trigger Secrets Hub Scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-secret-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Secret Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Secrets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-secrets-using-a-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Secrets using a filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-service-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Service Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-sync-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Sync Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-secrets-hub-sync-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Secrets Hub Sync Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Sessions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-sessions-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Sessions By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-sessions-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Sessions By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Session
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-session-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Session Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-session-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Session Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-session-activities-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      List Session Activities By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-session-activities-by-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Count Session Activities By Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-all-uap-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      List all UAP policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-uap-db-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete UAP DB Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-db-policies-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      List DB Policies from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-db-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get DB Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-uap-db-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add UAP DB Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-uap-sca-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      List UAP SCA Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-uap-sca-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete UAP SCA Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-vm-policies-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      List VM Policies from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-vm-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get VM Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-vm-policy-from-uap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete VM Policy from UAP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-mysql-zsp-with-the-mysql-cli-via-ark-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to MySQL ZSP with the mysql cli via Ark CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-postgresql-vaulted-with-the-psql-cli-via-ark-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to PostgreSQL Vaulted with the psql cli via Ark CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="commands-examples">Commands examples<a class="headerlink" href="#commands-examples" title="Permanent link">&para;</a></h1>
+<p>This page lists some useful CLI examples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can disable certificate validation for login to an authenticator using the <code>--disable-certificate-verification</code> flag. <strong>This option is not recommended.</strong></p>
+<p><strong>Useful environment variables</strong></p>
+<ul>
+<li><code>ARK_PROFILE</code>: Sets the profile to be used across the CLI</li>
+<li><code>ARK_DISABLE_CERTIFICATE_VERIFICATION</code>: Disables certificate verification for REST APIs</li>
+</ul>
+</div>
+<h2 id="configure-command-example">Configure command example<a class="headerlink" href="#configure-command-example" title="Permanent link">&para;</a></h2>
+<p>The <code>configure</code> command works in interactive or silent mode. When using silent mode, the required parameters need to specified. Here's an example of configuring ISP in silent mode:</p>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span>configure<span class="w"> </span>--profile-name<span class="o">=</span><span class="s2">&quot;PROD&quot;</span><span class="w"> </span>--work-with-isp<span class="w"> </span>--isp-username<span class="o">=</span><span class="s2">&quot;tina@cyberark.cloud.12345&quot;</span><span class="w"> </span>--silent<span class="w"> </span>--allow-output
+</code></pre></div>
+<h2 id="login-commands-example">Login commands example<a class="headerlink" href="#login-commands-example" title="Permanent link">&para;</a></h2>
+<p>The login command can work in interactive or silent mode. Here's an example of a silent login with the profile configured in the example above:
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span>login<span class="w"> </span>-s<span class="w"> </span>--isp-secret<span class="o">=</span>CoolPasswordß<span class="w"> </span>--profile-name<span class="w"> </span>PROD
+</code></pre></div></p>
+<h2 id="exec-command-examples">Exec command examples<a class="headerlink" href="#exec-command-examples" title="Permanent link">&para;</a></h2>
+<p>Use the <code>--help</code> flag to view all <code>exec</code> options.</p>
+<h3 id="generate-a-short-lived-sso-password-for-a-database-connection">Generate a short-lived SSO password for a database connection<a class="headerlink" href="#generate-a-short-lived-sso-password-for-a-database-connection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>sso<span class="w"> </span>short-lived-password
+</code></pre></div>
+<h3 id="generate-a-short-lived-sso-password-for-an-rdp-connection">Generate a short-lived SSO password for an RDP connection<a class="headerlink" href="#generate-a-short-lived-sso-password-for-an-rdp-connection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>sso<span class="w"> </span>short-lived-password<span class="w"> </span>--service<span class="w"> </span>DPA-RDP
+</code></pre></div>
+<h3 id="generate-a-short-lived-sso-oracle-wallet-for-an-oracle-database-connection">Generate a short-lived SSO Oracle wallet for an Oracle database connection<a class="headerlink" href="#generate-a-short-lived-sso-oracle-wallet-for-an-oracle-database-connection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>sso<span class="w"> </span>short-lived-oracle-wallet<span class="w"> </span>--folder<span class="w"> </span>~/wallet
+</code></pre></div>
+<h3 id="generate-a-kubectl-config-file">Generate a kubectl config file<a class="headerlink" href="#generate-a-kubectl-config-file" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>k8s<span class="w"> </span>generate-kubeconfig<span class="w"> </span>
+</code></pre></div>
+<h3 id="generate-a-kubectl-config-file-and-save-it-in-the-specified-path">Generate a kubectl config file and save it in the specified path<a class="headerlink" href="#generate-a-kubectl-config-file-and-save-it-in-the-specified-path" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>k8s<span class="w"> </span>generate-kubeconfig<span class="w"> </span>--folder<span class="o">=</span>/Users/My.User/.kube
+</code></pre></div>
+<h3 id="add-sia-vm-target-set">Add SIA VM target set<a class="headerlink" href="#add-sia-vm-target-set" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>workspaces<span class="w"> </span>target-sets<span class="w"> </span>add-target-set<span class="w"> </span>--name<span class="w"> </span>mydomain.com<span class="w"> </span>--type<span class="w"> </span>Domain
+</code></pre></div></td></tr></table></div>
+<h3 id="add-sia-vm-secret">Add SIA VM secret<a class="headerlink" href="#add-sia-vm-secret" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>secrets<span class="w"> </span>vm<span class="w"> </span>add-secret<span class="w"> </span>--secret-type<span class="w"> </span>ProvisionerUser<span class="w"> </span>--provisioner-username<span class="o">=</span>myuser<span class="w"> </span>--provisioner-password<span class="o">=</span>mypassword
+</code></pre></div></td></tr></table></div>
+<h3 id="generate-new-ssh-ca-key-version">Generate new SSH CA key version<a class="headerlink" href="#generate-new-ssh-ca-key-version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>ssh-ca<span class="w"> </span>generate-new-ca
+</code></pre></div>
+<h3 id="deactivate-previous-ssh-ca-key-version">Deactivate previous SSH CA key version<a class="headerlink" href="#deactivate-previous-ssh-ca-key-version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>ssh-ca<span class="w"> </span>deactivate-previous-ca
+</code></pre></div>
+<h3 id="reactivate-previous-ssh-ca-key-version">Reactivate previous SSH CA key version<a class="headerlink" href="#reactivate-previous-ssh-ca-key-version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>ssh-ca<span class="w"> </span>reactivate-previous-ca
+</code></pre></div>
+<h3 id="list-cmgr-connector-pools">List CMGR connector pools<a class="headerlink" href="#list-cmgr-connector-pools" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cmgr<span class="w"> </span>list-pools
+</code></pre></div></td></tr></table></div>
+<h3 id="add-cmgr-network">Add CMGR network<a class="headerlink" href="#add-cmgr-network" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cmgr<span class="w"> </span>add-network<span class="w"> </span>--name<span class="w"> </span>mynetwork
+</code></pre></div></td></tr></table></div>
+<h3 id="add-cmgr-connector-pool">Add CMGR connector pool<a class="headerlink" href="#add-cmgr-connector-pool" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cmgr<span class="w"> </span>add-pool<span class="w"> </span>--name<span class="w"> </span>mypool<span class="w"> </span>--assigned-network-ids<span class="w"> </span>mynetwork_id
+</code></pre></div></td></tr></table></div>
+<h3 id="get-connector-installation-script">Get connector installation script<a class="headerlink" href="#get-connector-installation-script" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>access<span class="w"> </span>connector-setup-script<span class="w"> </span>--connector-type<span class="w"> </span>ON-PREMISE<span class="w"> </span>--connector-os<span class="w"> </span>windows<span class="w"> </span>--connector-pool-id<span class="w"> </span>588741d5-e059-479d-b4c4-3d821a87f012
+</code></pre></div></td></tr></table></div>
+<h3 id="install-a-connector-on-windows-remotely">Install a connector on windows remotely<a class="headerlink" href="#install-a-connector-on-windows-remotely" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>access<span class="w"> </span>install-connector<span class="w"> </span>--connector-pool-id<span class="w"> </span>89b4f0ff-9b06-445a-9ca8-4ca9a4d72e8c<span class="w"> </span>--username<span class="w"> </span>myuser<span class="w"> </span>--password<span class="w"> </span>mypassword<span class="w"> </span>--target-machine<span class="w"> </span><span class="m">1</span>.2.3.4<span class="w"> </span>--connector-os<span class="w"> </span>windows<span class="w"> </span>--connector-type<span class="w"> </span>ON-PREMISE
+</code></pre></div></td></tr></table></div>
+<h3 id="install-a-connector-on-linux-with-private-key-remotely">Install a connector on linux with private key remotely<a class="headerlink" href="#install-a-connector-on-linux-with-private-key-remotely" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>access<span class="w"> </span>install-connector<span class="w"> </span>--connector-pool-id<span class="w"> </span>89b4f0ff-9b06-445a-9ca8-4ca9a4d72e8c<span class="w"> </span>--username<span class="w"> </span>myuser<span class="w"> </span>--private-key-path<span class="w"> </span>/path/to/private_key.pem<span class="w"> </span>--target-machine<span class="w"> </span><span class="m">1</span>.2.3.4<span class="w"> </span>--connector-os<span class="w"> </span>linux<span class="w"> </span>--connector-type<span class="w"> </span>ON-PREMISE
+</code></pre></div></td></tr></table></div>
+<h3 id="uninstall-a-connector-remotely">Uninstall a connector remotely<a class="headerlink" href="#uninstall-a-connector-remotely" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>access<span class="w"> </span>uninstall-connector<span class="w"> </span>--connector-id<span class="w"> </span>CMSConnector_588741d5-e059-479d-b4c4-3d821a87f012_1a8b3734-8e1d-43a3-bb99-8a587609e653<span class="w"> </span>--username<span class="w"> </span>myuser<span class="w"> </span>--password<span class="w"> </span>mypassword<span class="w"> </span>--target-machine<span class="w"> </span><span class="m">1</span>.2.3.4<span class="w"> </span>--connector-os<span class="w"> </span>windows
+</code></pre></div></td></tr></table></div>
+<h3 id="create-a-pcloud-safe">Create a pCloud Safe<a class="headerlink" href="#create-a-pcloud-safe" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>safes<span class="w"> </span>add-safe<span class="w"> </span>--safe-name<span class="o">=</span>safe
+</code></pre></div></td></tr></table></div>
+<h3 id="create-a-pcloud-account">Create a pCloud account<a class="headerlink" href="#create-a-pcloud-account" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>accounts<span class="w"> </span>add-account<span class="w"> </span>--name<span class="w"> </span>account<span class="w"> </span>--safe-name<span class="w"> </span>safe<span class="w"> </span>--platform-id<span class="o">=</span><span class="s1">&#39;UnixSSH&#39;</span><span class="w"> </span>--username<span class="w"> </span>root<span class="w"> </span>--address<span class="w"> </span><span class="m">1</span>.2.3.4<span class="w"> </span>--secret-type<span class="o">=</span>password<span class="w"> </span>--secret<span class="w"> </span>mypass
+</code></pre></div></td></tr></table></div>
+<h3 id="retrieve-a-pcloud-account-credentials">Retrieve a pCloud account credentials<a class="headerlink" href="#retrieve-a-pcloud-account-credentials" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pcloud<span class="w"> </span>accounts<span class="w"> </span>get-account-credentials<span class="w"> </span>--account-id<span class="w"> </span>11_1
+</code></pre></div></td></tr></table></div>
+<h3 id="create-an-identity-user">Create an Identity user<a class="headerlink" href="#create-an-identity-user" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>users<span class="w"> </span>create-user<span class="w"> </span>--roles<span class="w"> </span><span class="s2">&quot;DpaAdmin&quot;</span><span class="w"> </span>--username<span class="w"> </span><span class="s2">&quot;myuser&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="create-an-identity-role">Create an Identity role<a class="headerlink" href="#create-an-identity-role" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>roles<span class="w"> </span>create-role<span class="w"> </span>--role-name<span class="w"> </span>myrole
+</code></pre></div></td></tr></table></div>
+<h3 id="list-all-directories-identities">List all directories identities<a class="headerlink" href="#list-all-directories-identities" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>identity<span class="w"> </span>directories<span class="w"> </span>list-directories-entities
+</code></pre></div></td></tr></table></div>
+<h3 id="add-sia-database-secret">Add SIA database secret<a class="headerlink" href="#add-sia-database-secret" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>secrets<span class="w"> </span>db<span class="w"> </span>add-secret<span class="w"> </span>--secret-name<span class="w"> </span>mysecret<span class="w"> </span>--secret-type<span class="w"> </span>username_password<span class="w"> </span>--username<span class="w"> </span>user<span class="w"> </span>--password<span class="w"> </span>mypass
+</code></pre></div>
+<h3 id="delete-sia-database-secret">Delete SIA database secret<a class="headerlink" href="#delete-sia-database-secret" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>secrets<span class="w"> </span>db<span class="w"> </span>delete-secret<span class="w"> </span>--secret-name<span class="w"> </span>mysecret
+</code></pre></div>
+<h3 id="add-sia-database">Add SIA database<a class="headerlink" href="#add-sia-database" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>workspaces<span class="w"> </span>db<span class="w"> </span>add-database<span class="w"> </span>--name<span class="w"> </span>mydatabase<span class="w"> </span>--provider-engine<span class="w"> </span>aurora-mysql<span class="w"> </span>--read-write-endpoint<span class="w"> </span>myrds.com
+</code></pre></div>
+<h3 id="delete-sia-database">Delete SIA database<a class="headerlink" href="#delete-sia-database" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>workspaces<span class="w"> </span>db<span class="w"> </span>delete-database<span class="w"> </span>--id<span class="w"> </span>databaseid
+</code></pre></div>
+<h3 id="get-secrets-hub-configuration">Get Secrets Hub Configuration<a class="headerlink" href="#get-secrets-hub-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>configuration<span class="w"> </span>get-configuration
+</code></pre></div>
+<h3 id="set-secrets-hub-configuration">Set Secrets Hub Configuration<a class="headerlink" href="#set-secrets-hub-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>configuration<span class="w"> </span>set-configuration<span class="w"> </span>--sync-settings<span class="w"> </span><span class="m">360</span>
+</code></pre></div>
+<h3 id="get-secrets-hub-filters">Get Secrets Hub Filters<a class="headerlink" href="#get-secrets-hub-filters" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>filters<span class="w"> </span>get-filters<span class="w"> </span>--store-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+</code></pre></div>
+<h3 id="add-secrets-hub-filter">Add Secrets Hub Filter<a class="headerlink" href="#add-secrets-hub-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>filters<span class="w"> </span>add-filter<span class="w"> </span>--type<span class="w"> </span><span class="s2">&quot;PAM_SAFE&quot;</span><span class="w"> </span>--store-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667<span class="w"> </span>--data-safe-name<span class="w"> </span><span class="s2">&quot;example-safe&quot;</span>
+</code></pre></div>
+<h3 id="delete-secrets-hub-filter">Delete Secrets Hub Filter<a class="headerlink" href="#delete-secrets-hub-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>filters<span class="w"> </span>delete-filter<span class="w"> </span>--filter-id<span class="w"> </span>filter-7f3d187d-7439-407f-b968-ec27650be692<span class="w"> </span>--store-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+</code></pre></div>
+<h3 id="get-secrets-hub-scans">Get Secrets Hub Scans<a class="headerlink" href="#get-secrets-hub-scans" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>scans<span class="w"> </span>get-scans
+</code></pre></div>
+<h3 id="trigger-secrets-hub-scan">Trigger Secrets Hub Scan<a class="headerlink" href="#trigger-secrets-hub-scan" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>scans<span class="w"> </span>trigger-scan<span class="w"> </span>--id<span class="w"> </span>default<span class="w"> </span>--secret-stores-ids<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667<span class="w"> </span><span class="nb">type</span><span class="w"> </span>secret-store
+</code></pre></div>
+<h3 id="create-secrets-hub-secret-store">Create Secrets Hub Secret Store<a class="headerlink" href="#create-secrets-hub-secret-store" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secret-stores<span class="w"> </span>create-secret-store<span class="w"> </span>--type<span class="w"> </span>AWS_ASM<span class="w"> </span>--description<span class="w"> </span>sdk-testing<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;SDK Testing&quot;</span><span class="w"> </span>--state<span class="w"> </span>ENABLED<span class="w"> </span>--data-aws-account-alias<span class="w"> </span>ALIAS-NAME-EXAMPLE<span class="w"> </span>--data-aws-region-id<span class="w"> </span>us-east-1<span class="w"> </span>--data-aws-account-id<span class="w"> </span><span class="m">123456789123</span><span class="w"> </span>--data-aws-rolename<span class="w"> </span>Secrets-Hub-IAM-Role-Name-Created-For-Secrets-Hub
+</code></pre></div>
+<h3 id="retrieve-secrets-hub-secret-store">Retrieve Secrets Hub Secret Store<a class="headerlink" href="#retrieve-secrets-hub-secret-store" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secret-stores<span class="w"> </span>get-secret-store<span class="w"> </span>--secret-store-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+</code></pre></div>
+<h3 id="update-secrets-hub-secret-store">Update Secrets Hub Secret Store<a class="headerlink" href="#update-secrets-hub-secret-store" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secret-stores<span class="w"> </span>update-secret-store<span class="w"> </span>--secret-store-id<span class="w"> </span>store-7f3d187d-7439-407f-b968-ec27650be692<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;New Name&quot;</span><span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Updated Description&quot;</span><span class="w"> </span>--data-aws-account-alias<span class="w"> </span><span class="s2">&quot;Test2&quot;</span>
+</code></pre></div>
+<h3 id="delete-secrets-hub-secret-store">Delete Secrets Hub Secret Store<a class="headerlink" href="#delete-secrets-hub-secret-store" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secret-stores<span class="w"> </span>delete-secret-store<span class="w"> </span>--secret-store-id<span class="w"> </span>store-fd11bc7c-22d0-4d9b-ac1b-f8458161935f
+</code></pre></div>
+<h3 id="get-secrets-hub-secrets">Get Secrets Hub Secrets<a class="headerlink" href="#get-secrets-hub-secrets" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secrets<span class="w"> </span>get-secrets
+</code></pre></div>
+<h3 id="get-secrets-hub-secrets-using-a-filter">Get Secrets Hub Secrets using a filter<a class="headerlink" href="#get-secrets-hub-secrets-using-a-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>secrets<span class="w"> </span>get-secrets-by<span class="w"> </span>--limit<span class="w"> </span><span class="m">5</span><span class="w"> </span>--projection<span class="w"> </span>EXTEND<span class="w"> </span>--filter<span class="w"> </span><span class="s2">&quot;name CONTAINS EXAMPLE&quot;</span>
+</code></pre></div>
+<h3 id="get-secrets-hub-service-information">Get Secrets Hub Service Information<a class="headerlink" href="#get-secrets-hub-service-information" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>service-info<span class="w"> </span>get-service-info
+</code></pre></div>
+<h3 id="get-secrets-hub-sync-policies">Get Secrets Hub Sync Policies<a class="headerlink" href="#get-secrets-hub-sync-policies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>sync-policies<span class="w"> </span>get-sync-policies
+</code></pre></div>
+<h3 id="get-secrets-hub-sync-policy">Get Secrets Hub Sync Policy<a class="headerlink" href="#get-secrets-hub-sync-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>sync-policies<span class="w"> </span>get-sync-policy<span class="w"> </span>--policy-id<span class="w"> </span>policy-7f3d187d-7439-407f-b968-ec27650be692<span class="w"> </span>--projection<span class="w"> </span>EXTEND
+</code></pre></div>
+<h3 id="create-secrets-hub-sync-policy">Create Secrets Hub Sync Policy<a class="headerlink" href="#create-secrets-hub-sync-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>sync-policies<span class="w"> </span>create-sync-policy<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;New Sync Policy&quot;</span><span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;New Sync Policy Description&quot;</span><span class="w"> </span>--filter-type<span class="w"> </span>PAM_SAFE<span class="w"> </span>--filter-data-safe-name<span class="w"> </span>EXAMPLE-SAFE-NAME<span class="w"> </span>--source-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd12367<span class="w"> </span>--target-id<span class="w"> </span>store-e488dd22-a59c-418c-bbe3-3f061dd9b667
+</code></pre></div>
+<h3 id="delete-secrets-hub-sync-policy">Delete Secrets Hub Sync Policy<a class="headerlink" href="#delete-secrets-hub-sync-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sechub<span class="w"> </span>sync-policies<span class="w"> </span>delete-sync-policy<span class="w"> </span>--policy-id<span class="w"> </span>policy-7f3d187d-7439-407f-b968-ec27650be692
+</code></pre></div>
+<h3 id="list-sessions">List Sessions<a class="headerlink" href="#list-sessions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>list-sessions
+</code></pre></div>
+<h3 id="count-sessions">Count Sessions<a class="headerlink" href="#count-sessions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>count-sessions
+</code></pre></div>
+<h3 id="list-sessions-by-filter">List Sessions By Filter<a class="headerlink" href="#list-sessions-by-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>list-sessions-by<span class="w"> </span>--search<span class="w"> </span><span class="s2">&quot;duration LE 01:00:00&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="count-sessions-by-filter">Count Sessions By Filter<a class="headerlink" href="#count-sessions-by-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>count-sessions-by<span class="w"> </span>--search<span class="w"> </span><span class="s2">&quot;command STARTSWITH ls&quot;</span>
+</code></pre></div>
+<h3 id="get-session">Get Session<a class="headerlink" href="#get-session" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>get-session<span class="w"> </span>--session-id<span class="w"> </span>my-id
+</code></pre></div>
+<h3 id="list-session-activities">List Session Activities<a class="headerlink" href="#list-session-activities" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>list-session-activities<span class="w"> </span>--session-id<span class="w"> </span>my-id
+</code></pre></div>
+<h3 id="count-session-activities">Count Session Activities<a class="headerlink" href="#count-session-activities" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>count-session-activities<span class="w"> </span>--session-id<span class="w"> </span>my-id
+</code></pre></div>
+<h3 id="list-session-activities-by-filter">List Session Activities By Filter<a class="headerlink" href="#list-session-activities-by-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>list-session-activities-by<span class="w"> </span>--session-id<span class="w"> </span>my-id<span class="w"> </span>--command-contains<span class="w"> </span><span class="s2">&quot;ls&quot;</span>
+</code></pre></div>
+<h3 id="count-session-activities-by-filter">Count Session Activities By Filter<a class="headerlink" href="#count-session-activities-by-filter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sm<span class="w"> </span>count-session-activities-by<span class="w"> </span>--session-id<span class="w"> </span>my-id<span class="w"> </span>--command-contains<span class="w"> </span><span class="s2">&quot;chmod&quot;</span>
+</code></pre></div>
+<h3 id="list-all-uap-policies">List all UAP policies<a class="headerlink" href="#list-all-uap-policies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>list-policies
+</code></pre></div>
+<h3 id="delete-uap-db-policy">Delete UAP DB Policy<a class="headerlink" href="#delete-uap-db-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>db<span class="w"> </span>delete-policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div>
+<h3 id="list-db-policies-from-uap">List DB Policies from UAP<a class="headerlink" href="#list-db-policies-from-uap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>db<span class="w"> </span>list-policies
+</code></pre></div>
+<h3 id="get-db-policy-from-uap">Get DB Policy from UAP<a class="headerlink" href="#get-db-policy-from-uap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>db<span class="w"> </span>policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div>
+<h3 id="add-uap-db-policy">Add UAP DB Policy<a class="headerlink" href="#add-uap-db-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>db<span class="w"> </span>add-policy<span class="w"> </span>--request-file<span class="w"> </span>/path/to/policy-request.json
+</code></pre></div>
+<h3 id="list-uap-sca-policies">List UAP SCA Policies<a class="headerlink" href="#list-uap-sca-policies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>sca<span class="w"> </span>list-policies
+</code></pre></div>
+<h3 id="get-uap-sca-policy">Get UAP SCA Policy<a class="headerlink" href="#get-uap-sca-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>sca<span class="w"> </span>policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div>
+<h3 id="add-uap-sca-policy">Add UAP SCA Policy<a class="headerlink" href="#add-uap-sca-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>sca<span class="w"> </span>add-policy<span class="w"> </span>--request-file<span class="w"> </span>/path/to/policy-request.json
+</code></pre></div>
+<h3 id="delete-uap-sca-policy">Delete UAP SCA Policy<a class="headerlink" href="#delete-uap-sca-policy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>sca<span class="w"> </span>delete-policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div>
+<h3 id="list-vm-policies-from-uap">List VM Policies from UAP<a class="headerlink" href="#list-vm-policies-from-uap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>vm<span class="w"> </span>list-policies
+</code></pre></div></td></tr></table></div>
+<h3 id="get-vm-policy-from-uap">Get VM Policy from UAP<a class="headerlink" href="#get-vm-policy-from-uap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>vm<span class="w"> </span>policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div></td></tr></table></div>
+<h3 id="delete-vm-policy-from-uap">Delete VM Policy from UAP<a class="headerlink" href="#delete-vm-policy-from-uap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uap<span class="w"> </span>vm<span class="w"> </span>delete-policy<span class="w"> </span>--policy-id<span class="w"> </span>my-policy-id
+</code></pre></div></td></tr></table></div>
+<h3 id="connect-to-mysql-zsp-with-the-mysql-cli-via-ark-cli">Connect to MySQL ZSP with the mysql cli via Ark CLI<a class="headerlink" href="#connect-to-mysql-zsp-with-the-mysql-cli-via-ark-cli" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>db<span class="w"> </span>mysql<span class="w"> </span>--target-address<span class="w"> </span>myaddress.com
+</code></pre></div>
+<h3 id="connect-to-postgresql-vaulted-with-the-psql-cli-via-ark-cli">Connect to PostgreSQL Vaulted with the psql cli via Ark CLI<a class="headerlink" href="#connect-to-postgresql-vaulted-with-the-psql-cli-via-ark-cli" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ark<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>sia<span class="w"> </span>db<span class="w"> </span>psql<span class="w"> </span>--target-address<span class="w"> </span>myaddress.com<span class="w"> </span>--target-user<span class="w"> </span>myuser
+</code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 CyberArk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.instant", "navigation.indexes", "navigation.tracking", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
