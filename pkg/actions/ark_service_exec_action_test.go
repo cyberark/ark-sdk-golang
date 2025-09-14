@@ -539,17 +539,19 @@ func TestArkServiceExecAction_serializeAndPrintOutput(t *testing.T) {
 func TestArkServiceExecAction_defineServiceExecAction(t *testing.T) {
 	tests := []struct {
 		name             string
-		actionDef        *actions.ArkServiceActionDefinition
-		parentActionsDef []*actions.ArkServiceActionDefinition
+		actionDef        *actions.ArkServiceCLIActionDefinition
+		parentActionsDef []*actions.ArkServiceCLIActionDefinition
 		expectedError    bool
 		validateFunc     func(t *testing.T, cmd *cobra.Command, err error)
 	}{
 		{
 			name: "success_creates_simple_action",
-			actionDef: &actions.ArkServiceActionDefinition{
-				ActionName: "test-action",
-				Schemas: map[string]interface{}{
-					"execute": testutils.CreateTestSchema(),
+			actionDef: &actions.ArkServiceCLIActionDefinition{
+				ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+					ActionName: "test-action",
+					Schemas: map[string]interface{}{
+						"execute": testutils.CreateTestSchema(),
+					},
 				},
 			},
 			parentActionsDef: nil,
@@ -566,12 +568,18 @@ func TestArkServiceExecAction_defineServiceExecAction(t *testing.T) {
 		},
 		{
 			name: "success_creates_action_with_parent",
-			actionDef: &actions.ArkServiceActionDefinition{
-				ActionName: "sub-action",
-				Schemas:    map[string]interface{}{"execute": testutils.CreateTestSchema()},
+			actionDef: &actions.ArkServiceCLIActionDefinition{
+				ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+					ActionName: "sub-action",
+					Schemas:    map[string]interface{}{"execute": testutils.CreateTestSchema()},
+				},
 			},
-			parentActionsDef: []*actions.ArkServiceActionDefinition{
-				{ActionName: "parent-action"},
+			parentActionsDef: []*actions.ArkServiceCLIActionDefinition{
+				{
+					ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+						ActionName: "parent-action",
+					},
+				},
 			},
 			expectedError: false,
 			validateFunc: func(t *testing.T, cmd *cobra.Command, err error) {
@@ -586,9 +594,11 @@ func TestArkServiceExecAction_defineServiceExecAction(t *testing.T) {
 		},
 		{
 			name: "success_creates_action_without_schemas",
-			actionDef: &actions.ArkServiceActionDefinition{
-				ActionName: "no-schema-action",
-				Schemas:    map[string]interface{}{},
+			actionDef: &actions.ArkServiceCLIActionDefinition{
+				ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+					ActionName: "no-schema-action",
+					Schemas:    map[string]interface{}{},
+				},
 			},
 			parentActionsDef: nil,
 			expectedError:    false,
@@ -628,20 +638,24 @@ func TestArkServiceExecAction_defineServiceExecAction(t *testing.T) {
 }
 
 // Helper function to create a test action definition
-func createTestActionDefinition(name string, hasSubactions bool) *actions.ArkServiceActionDefinition {
-	actionDef := &actions.ArkServiceActionDefinition{
-		ActionName: name,
-		Schemas: map[string]interface{}{
-			"execute": testutils.CreateTestSchema(),
+func createTestActionDefinition(name string, hasSubactions bool) *actions.ArkServiceCLIActionDefinition {
+	actionDef := &actions.ArkServiceCLIActionDefinition{
+		ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+			ActionName: name,
+			Schemas: map[string]interface{}{
+				"execute": testutils.CreateTestSchema(),
+			},
 		},
 	}
 
 	if hasSubactions {
-		actionDef.Subactions = []*actions.ArkServiceActionDefinition{
+		actionDef.Subactions = []*actions.ArkServiceCLIActionDefinition{
 			{
-				ActionName: "sub-" + name,
-				Schemas: map[string]interface{}{
-					"sub-execute": testutils.CreateTestSchema(),
+				ArkServiceBaseActionDefinition: actions.ArkServiceBaseActionDefinition{
+					ActionName: "sub-" + name,
+					Schemas: map[string]interface{}{
+						"sub-execute": testutils.CreateTestSchema(),
+					},
 				},
 			},
 		}
@@ -653,8 +667,8 @@ func createTestActionDefinition(name string, hasSubactions bool) *actions.ArkSer
 func TestArkServiceExecAction_defineServiceExecActions(t *testing.T) {
 	tests := []struct {
 		name             string
-		actionDef        *actions.ArkServiceActionDefinition
-		parentActionsDef []*actions.ArkServiceActionDefinition
+		actionDef        *actions.ArkServiceCLIActionDefinition
+		parentActionsDef []*actions.ArkServiceCLIActionDefinition
 		expectedError    bool
 		validateFunc     func(t *testing.T, cmd *cobra.Command, err error)
 	}{

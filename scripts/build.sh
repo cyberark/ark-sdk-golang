@@ -24,6 +24,7 @@ SCRIPTPATH=$(dirname "$0")
 
 IN_PATH=$SCRIPTPATH/../cmd/ark/.
 OUT_PATH=$SCRIPTPATH/../bin
+TOOLS_PATH=$SCRIPTPATH/../tools
 
 function check_if_exists() {
   fileName="$1"
@@ -33,6 +34,7 @@ function check_if_exists() {
      exit 1
   fi
 }
+go generate "$TOOLS_PATH"
 UNIX_LD_FLAGS="-s -w -X 'main.GitCommit=$GIT_COMMIT' -X 'main.BuildDate=$BUILD_DATE' -X 'main.Version=$BUILD_VERSION' -X 'main.BuildNumber=$BUILD_NUMBER'"
 WINDOWS_LD_FLAGS="-X 'main.GitCommit=$GIT_COMMIT' -X 'main.BuildDate=$BUILD_DATE' -X 'main.Version=$BUILD_VERSION' -X 'main.BuildNumber=$BUILD_NUMBER'"
 env GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "$UNIX_LD_FLAGS" -o "$OUT_PATH/ark-darwin" "$IN_PATH/ark.go"

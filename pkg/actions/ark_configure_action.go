@@ -3,8 +3,16 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"slices"
 	"strings"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/models/actions"
+	"github.com/mitchellh/mapstructure"
+	"github.com/octago/sflags"
+	"github.com/octago/sflags/gen/gpflag"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -12,11 +20,6 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	authmodels "github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"github.com/mitchellh/mapstructure"
-	"github.com/octago/sflags"
-	"github.com/octago/sflags/gen/gpflag"
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 )
 
 // ArkConfigureAction is a struct that implements the ArkAction interface for configuring the CLI profiles.
@@ -58,6 +61,53 @@ func NewArkConfigureAction(profilesLoader *profiles.ProfileLoader) *ArkConfigure
 		ArkBaseAction:  NewArkBaseAction(),
 		profilesLoader: profilesLoader,
 	}
+}
+
+// defaultFlagValue retrieves the default value for a given flag from struct tags.
+func (a *ArkConfigureAction) defaultFlagValue(schema interface{}, flag *sflags.Flag, authName string) string {
+	structType := reflect.TypeOf(schema)
+	if structType.Kind() == reflect.Ptr {
+		structType = structType.Elem()
+	}
+	fieldName := ""
+	for i := 0; i < structType.NumField(); i++ {
+		field := structType.Field(i)
+		tag := field.Tag.Get("flag")
+		expectedFlagName := tag
+		if expectedFlagName == "" {
+			expectedFlagName = strings.Replace(field.Name, "_", "-", -1)
+			expectedFlagName = strings.ToLower(expectedFlagName)
+			if strings.HasPrefix(flag.Name, authName+"-") {
+				expectedFlagName = authName + "-" + expectedFlagName
+			}
+		} else if strings.HasPrefix(flag.Name, authName+"-") {
+			expectedFlagName = authName + "-" + expectedFlagName
+		}
+		if flag.Name == expectedFlagName {
+			fieldName = field.Name
+			break
+		}
+	}
+	if fieldName != "" {
+		field, _ := structType.FieldByName(fieldName)
+		defaultVal := field.Tag.Get("default")
+		if defaultVal != "" {
+			return defaultVal
+		}
+	}
+	return ""
+}
+
+// hasAuthenticatorKey checks if a given key is in the ignored keys for an authenticator.
+func (a *ArkConfigureAction) hasAuthenticatorKey(authName string, key string, items map[string][]string) bool {
+	if ignoredKeys, ok := items[authName]; ok {
+		for _, ignoredKey := range ignoredKeys {
+			if key == fmt.Sprintf("%s-%s", authName, ignoredKey) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // DefineAction defines the CLI configure action and adds configuration management commands.
@@ -147,6 +197,16 @@ func (a *ArkConfigureAction) DefineAction(cmd *cobra.Command) {
 			}
 			filteredFlags := make([]*sflags.Flag, 0)
 			for _, flag := range flags {
+				if a.hasAuthenticatorKey(authenticator.AuthenticatorName(), flag.Name, actions.ConfigurationAuthenticatorIgnoredDefinitionKeys) {
+					continue
+				}
+				defaultValue := a.defaultFlagValue(authSettings, flag, authenticator.AuthenticatorName())
+				if defaultValue != "" {
+					flag.DefValue = defaultValue
+					if flag.Value != nil {
+						_ = flag.Value.Set(defaultValue)
+					}
+				}
 				if !slices.Contains(existingFlags, flag.Name) {
 					filteredFlags = append(filteredFlags, flag)
 				}
@@ -346,7 +406,7 @@ func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, c
 					val,
 					false,
 					true,
-					true,
+					false,
 				)
 				authProfileAnswers[strings.Replace(strings.TrimPrefix(flag.Name, authPrefix), "-", "_", -1)] = val
 			}
@@ -374,6 +434,9 @@ func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, c
 				return nil, err
 			}
 			for _, flag := range methodSettingsFlags {
+				if a.hasAuthenticatorKey(authenticator.AuthenticatorName(), flag.Name, actions.ConfigurationAuthenticatorIgnoredInteractiveKeys) {
+					continue
+				}
 				if flag.Value.Type() == "bool" {
 					val, err := cmd.Flags().GetBool(flag.Name)
 					if err != nil {
@@ -398,6 +461,11 @@ func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, c
 							val = existingVal.(string)
 						}
 					}
+					defaultValue := a.defaultFlagValue(methodSettings, flag, authenticator.AuthenticatorName())
+					if val == "" && defaultValue != "" {
+						val = defaultValue
+					}
+					emptyValAllowed := a.hasAuthenticatorKey(authenticator.AuthenticatorName(), flag.Name, actions.ConfigurationAllowedEmptyValues)
 					val, err = args.GetArg(
 						cmd,
 						flag.Name,
@@ -405,7 +473,7 @@ func (a *ArkConfigureAction) runInteractiveConfigureAction(cmd *cobra.Command, c
 						val,
 						false,
 						true,
-						true,
+						emptyValAllowed,
 					)
 					methodSettingsAnswers[strings.Replace(strings.TrimPrefix(flag.Name, authPrefix), "-", "_", -1)] = val
 				}

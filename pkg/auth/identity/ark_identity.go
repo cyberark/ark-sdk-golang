@@ -13,6 +13,7 @@ import (
 
 	"github.com/Iilun/survey/v2"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
@@ -63,14 +64,14 @@ type ArkIdentity struct {
 	session             *common.ArkClient
 	sessionDetails      *identity.AdvanceAuthResult
 	sessionExp          commonmodels.ArkRFC3339Time
-	keyring             *common.ArkKeyring
+	keyring             *keyring.ArkKeyring
 	isPolling           bool
 	interactionRoutine  chan string
 }
 
 // HasCacheRecord Checks if a cache record exists for the specified profile and username
 func HasCacheRecord(profile *models.ArkProfile, username string, refreshAuthAllowed bool) (bool, error) {
-	keyring := common.NewArkKeyring(strings.ToLower("ArkIdentity"))
+	keyring := keyring.NewArkKeyring(strings.ToLower("ArkIdentity"))
 	token, err := keyring.LoadToken(profile, username+"_identity", false)
 	if err != nil {
 		return false, err
@@ -165,7 +166,7 @@ func NewArkIdentity(username string, password string, identityURL string, identi
 	identityAuth.session.SetHeaders(DefaultHeaders())
 
 	if cacheAuthentication {
-		identityAuth.keyring = common.NewArkKeyring(strings.ToLower("ArkIdentity"))
+		identityAuth.keyring = keyring.NewArkKeyring(strings.ToLower("ArkIdentity"))
 	}
 
 	if loadCache && cacheAuthentication && cacheProfile != nil {

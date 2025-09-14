@@ -197,31 +197,37 @@ func GetArg(cmd *cobra.Command, key string, prompt string, existingVal string, h
 	if prioritizeExistingVal && existingVal != "" {
 		val = existingVal
 	}
+	if emptyValueAllowed {
+		prompt = fmt.Sprintf("%s <Optional>", prompt)
+	}
 	var answer string
-	if hidden {
-		prompt := &survey.Password{
-			Message: prompt,
+	for {
+		if hidden {
+			promptInput := &survey.Password{
+				Message: prompt,
+			}
+			err := survey.AskOne(promptInput, &answer)
+			if err != nil {
+				return "", err
+			}
+		} else {
+			promptInput := &survey.Input{
+				Message: prompt,
+				Default: val,
+			}
+			err := survey.AskOne(promptInput, &answer)
+			if err != nil {
+				return "", err
+			}
 		}
-		err := survey.AskOne(prompt, &answer)
-		if err != nil {
-			return "", err
+		if answer != "" {
+			val = answer
 		}
-	} else {
-		prompt := &survey.Input{
-			Message: prompt,
-			Default: val,
+		if val == "" && !emptyValueAllowed {
+			PrintFailure("Value cannot be empty")
+			continue
 		}
-		err := survey.AskOne(prompt, &answer)
-		if err != nil {
-			return "", err
-		}
-	}
-	if answer != "" {
-		val = answer
-	}
-	if val == "" && !emptyValueAllowed {
-		PrintFailure("Value cannot be empty")
-		return "", fmt.Errorf("value cannot be empty")
+		break
 	}
 	return val, nil
 }
@@ -277,7 +283,7 @@ func GetBoolArg(cmd *cobra.Command, key, prompt string, existingVal *bool, prior
 		return false, err
 	}
 
-	val = (answer == "Yes")
+	val = answer == "Yes"
 	return val, nil
 }
 

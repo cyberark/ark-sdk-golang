@@ -30,13 +30,6 @@ const (
 	directoryServiceQueryURL = "UserMgmt/DirectoryServiceQuery"
 )
 
-// IdentityRolesServiceConfig is the configuration for the identity roles service.
-var IdentityRolesServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "identity-roles",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkIdentityRolesService is the service for managing identity roles.
 type ArkIdentityRolesService struct {
 	services.ArkService
@@ -595,5 +588,5 @@ func (s *ArkIdentityRolesService) DeleteRole(deleteRole *rolesmodels.ArkIdentity
 
 // ServiceConfig returns the service configuration for the ArkIdentityRolesService.
 func (s *ArkIdentityRolesService) ServiceConfig() services.ArkServiceConfig {
-	return IdentityRolesServiceConfig
+	return ServiceConfig
 }

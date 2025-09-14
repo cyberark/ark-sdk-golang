@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	commoninternal "github.com/cyberark/ark-sdk-golang/internal/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	"github.com/spf13/cobra"
 )
 
@@ -195,7 +195,7 @@ func TestArkCacheAction_runClearCacheAction(t *testing.T) {
 				}
 			},
 			createFiles: func(dir string) error {
-				cacheDir := filepath.Join(dir, commoninternal.DefaultBasicKeyringFolder)
+				cacheDir := filepath.Join(dir, keyring.DefaultBasicKeyringFolder)
 				if err := os.MkdirAll(cacheDir, 0755); err != nil {
 					return err
 				}
@@ -214,7 +214,7 @@ func TestArkCacheAction_runClearCacheAction(t *testing.T) {
 				return nil
 			},
 			validateFunc: func(t *testing.T, dir string) {
-				cacheDir := filepath.Join(dir, commoninternal.DefaultBasicKeyringFolder)
+				cacheDir := filepath.Join(dir, keyring.DefaultBasicKeyringFolder)
 				keyringFile := filepath.Join(cacheDir, "keyring")
 				macFile := filepath.Join(cacheDir, "mac")
 
@@ -236,14 +236,14 @@ func TestArkCacheAction_runClearCacheAction(t *testing.T) {
 				}
 
 				// Set custom cache directory via environment variable
-				originalEnv := os.Getenv(commoninternal.ArkBasicKeyringFolderEnvVar)
-				_ = os.Setenv(commoninternal.ArkBasicKeyringFolderEnvVar, tempDir)
+				originalEnv := os.Getenv(keyring.ArkBasicKeyringFolderEnvVar)
+				_ = os.Setenv(keyring.ArkBasicKeyringFolderEnvVar, tempDir)
 
 				return func() {
 					if originalEnv != "" {
-						_ = os.Setenv(commoninternal.ArkBasicKeyringFolderEnvVar, originalEnv)
+						_ = os.Setenv(keyring.ArkBasicKeyringFolderEnvVar, originalEnv)
 					} else {
-						_ = os.Unsetenv(commoninternal.ArkBasicKeyringFolderEnvVar)
+						_ = os.Unsetenv(keyring.ArkBasicKeyringFolderEnvVar)
 					}
 					_ = os.RemoveAll(tempDir)
 				}
@@ -333,12 +333,13 @@ func TestArkCacheAction_runClearCacheAction(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 
+			os.Setenv(keyring.ArkBasicKeyringOverrideEnvVar, "1")
 			cleanup := tt.setupEnv()
 			defer cleanup()
 
 			var testDir string
 			if tt.name == "success_clears_cache_files_from_env_override_location" {
-				testDir = os.Getenv(commoninternal.ArkBasicKeyringFolderEnvVar)
+				testDir = os.Getenv(keyring.ArkBasicKeyringFolderEnvVar)
 			} else {
 				testDir = os.Getenv("HOME")
 			}

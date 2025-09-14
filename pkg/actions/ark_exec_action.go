@@ -8,13 +8,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fatih/color"
+	"github.com/spf13/cobra"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/cli"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/common/args"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
-	"github.com/fatih/color"
-	"github.com/spf13/cobra"
 )
 
 // ArkExecAction defines the interface for executing CLI actions in the ARK SDK.

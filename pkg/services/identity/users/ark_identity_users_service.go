@@ -31,13 +31,6 @@ const (
 	userInfoURL          = "OAuth2/UserInfo/__idaptive_cybr_user_oidc"
 )
 
-// IdentityUsersServiceConfig is the configuration for the identity users service.
-var IdentityUsersServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "identity-users",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkIdentityUsersService is the service for managing identity users.
 type ArkIdentityUsersService struct {
 	services.ArkService
@@ -514,5 +507,5 @@ func (s *ArkIdentityUsersService) UserInfo() (*usersmodels.ArkIdentityUserInfo, 
 
 // ServiceConfig returns the service configuration for the ArkIdentityUsersService.
 func (s *ArkIdentityUsersService) ServiceConfig() services.ArkServiceConfig {
-	return IdentityUsersServiceConfig
+	return ServiceConfig
 }

@@ -3,10 +3,6 @@ package accounts
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
-	"strings"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -14,6 +10,11 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	accountsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/accounts/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 // API endpoint paths for account-related operations
@@ -34,13 +35,6 @@ const (
 
 // ArkPCloudAccountsPage is a paginated type for ArkPCloudAccount
 type ArkPCloudAccountsPage = common.ArkPage[accountsmodels.ArkPCloudAccount]
-
-// PCloudAccountsServiceConfig is the configuration for the pCloud Accounts service.
-var PCloudAccountsServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "pcloud-accounts",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkPCloudAccountsService is the service for managing pCloud Accounts.
 type ArkPCloudAccountsService struct {
@@ -705,5 +699,5 @@ func (s *ArkPCloudAccountsService) AccountsStats() (*accountsmodels.ArkPCloudAcc
 
 // ServiceConfig returns the service configuration for the ArkPCloudAccountsService.
 func (s *ArkPCloudAccountsService) ServiceConfig() services.ArkServiceConfig {
-	return PCloudAccountsServiceConfig
+	return ServiceConfig
 }

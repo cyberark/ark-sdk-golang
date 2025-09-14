@@ -6,6 +6,7 @@ import (
 	"slices"
 	"time"
 
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	"github.com/cyberark/ark-sdk-golang/pkg/profiles"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -49,7 +50,7 @@ type ArkAuthBase struct {
 	Authenticator       ArkAuth
 	Logger              *common.ArkLogger
 	CacheAuthentication bool
-	CacheKeyring        *common.ArkKeyring
+	CacheKeyring        *keyring.ArkKeyring
 	Token               *auth.ArkToken
 	ActiveProfile       *models.ArkProfile
 	ActiveAuthProfile   *auth.ArkAuthProfile
@@ -58,9 +59,9 @@ type ArkAuthBase struct {
 // NewArkAuthBase creates a new instance of ArkAuthBase.
 func NewArkAuthBase(cacheAuthentication bool, name string, authenticator ArkAuth) *ArkAuthBase {
 	logger := common.GetLogger(name, common.Unknown)
-	var cacheKeyring *common.ArkKeyring
+	var cacheKeyring *keyring.ArkKeyring
 	if cacheAuthentication {
-		cacheKeyring = common.NewArkKeyring(name)
+		cacheKeyring = keyring.NewArkKeyring(name)
 	}
 	return &ArkAuthBase{
 		Authenticator:       authenticator,

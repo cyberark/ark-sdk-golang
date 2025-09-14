@@ -3,12 +3,13 @@ package auth
 import (
 	"encoding/base64"
 	"errors"
+	"time"
+
 	"github.com/cyberark/ark-sdk-golang/pkg/auth/identity"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
-	"time"
 )
 
 const (
@@ -140,7 +141,7 @@ func (a *ArkISPAuth) performIdentityServiceUserAuthentication(profile *models.Ar
 	if secret == nil {
 		return nil, errors.New("token secret is required for identity service user auth")
 	}
-	methodSettings := authProfile.AuthMethodSettings.(auth.IdentityServiceUserArkAuthMethodSettings)
+	methodSettings := authProfile.AuthMethodSettings.(*auth.IdentityServiceUserArkAuthMethodSettings)
 	identityAuth, err := identity.NewArkIdentityServiceUser(
 		authProfile.Username,
 		secret.Secret,

@@ -1,12 +1,7 @@
 package actions
 
 import (
-	"os"
-	"reflect"
-
-	commoninternal "github.com/cyberark/ark-sdk-golang/internal/common"
-	"github.com/cyberark/ark-sdk-golang/pkg/common"
-	commonargs "github.com/cyberark/ark-sdk-golang/pkg/common/args"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	"github.com/spf13/cobra"
 )
 
@@ -92,8 +87,8 @@ func (a *ArkCacheAction) DefineAction(cmd *cobra.Command) {
 //
 // The function performs the following operations:
 //  1. Creates a new ArkKeyring instance and retrieves the keyring
-//  2. Checks if the keyring is a BasicKeyring implementation
-//  3. If not BasicKeyring, prints an informational message and returns
+//  2. Checks if the keyring is a ArkBasicKeyring implementation
+//  3. If not ArkBasicKeyring, prints an informational message and returns
 //  4. Determines the cache folder path from HOME or environment variable
 //  5. Removes the "keyring" and "mac" files from the cache folder
 //
@@ -108,16 +103,10 @@ func (a *ArkCacheAction) DefineAction(cmd *cobra.Command) {
 //   - Default: $HOME/.ark-keyring/
 //   - Override: ARK_BASIC_KEYRING_FOLDER environment variable
 func (a *ArkCacheAction) runClearCacheAction(cmd *cobra.Command, args []string) {
-	if keyring, err := common.NewArkKeyring("").GetKeyring(false); err == nil {
-		if reflect.TypeOf(keyring) != reflect.TypeOf(&commoninternal.BasicKeyring{}) {
-			commonargs.PrintNormal("Cache clear is only valid for basic keyring implementation at the moment")
-			return
+	if keyring, err := keyring.NewArkKeyring("").GetKeyring(false); err == nil {
+		err = keyring.ClearAllPasswords()
+		if err != nil {
+			a.logger.Warning("Failed to clear keyring passwords: %v", err)
 		}
-		cacheFolderPath := os.ExpandEnv("$HOME") + string(os.PathSeparator) + commoninternal.DefaultBasicKeyringFolder
-		if envPath := os.Getenv(commoninternal.ArkBasicKeyringFolderEnvVar); envPath != "" {
-			cacheFolderPath = envPath
-		}
-		_ = os.Remove(cacheFolderPath + string(os.PathSeparator) + "keyring")
-		_ = os.Remove(cacheFolderPath + string(os.PathSeparator) + "mac")
 	}
 }

@@ -21,13 +21,6 @@ const (
 // ArkUAPSCAPolicyPage represents a page of SCA policies in the UAP service.
 type ArkUAPSCAPolicyPage = common.ArkPage[uapscamodels.ArkUAPSCACloudConsoleAccessPolicy]
 
-// ArkUAPSCAServiceConfig defines the service configuration for ArkUAPSCAService.
-var ArkUAPSCAServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "uap-sca",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
-
 // ArkUAPSCAService represents the UAP SCA service.
 type ArkUAPSCAService struct {
 	services.ArkService
@@ -268,5 +261,5 @@ func (s *ArkUAPSCAService) PoliciesStats() (*uapcommonmodels.ArkUAPPoliciesStats
 
 // ServiceConfig returns the service configuration for ArkUAPSCAService.
 func (s *ArkUAPSCAService) ServiceConfig() services.ArkServiceConfig {
-	return ArkUAPSCAServiceConfig
+	return ServiceConfig
 }

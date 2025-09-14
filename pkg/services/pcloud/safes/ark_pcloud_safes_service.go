@@ -3,11 +3,6 @@ package safes
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
-	"reflect"
-	"sync"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -15,6 +10,12 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	safesmodels "github.com/cyberark/ark-sdk-golang/pkg/services/pcloud/safes/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"net/url"
+	"reflect"
+	"sync"
 )
 
 // Constants for safes URLs
@@ -89,13 +90,6 @@ type ArkPCloudSafesPage = common.ArkPage[safesmodels.ArkPCloudSafe]
 
 // ArkPCloudSafeMembersPage is a page of ArkPCloudSafeMember items.
 type ArkPCloudSafeMembersPage = common.ArkPage[safesmodels.ArkPCloudSafeMember]
-
-// PCloudSafesServiceConfig is the configuration for the SIA pCloud Safes service.
-var PCloudSafesServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "pcloud-safes",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkPCloudSafesService is the service for managing pCloud Safes.
 type ArkPCloudSafesService struct {
@@ -785,5 +779,5 @@ func (s *ArkPCloudSafesService) SafesMembersStats() (*safesmodels.ArkPCloudSafes
 
 // ServiceConfig returns the service configuration for the ArkPCloudSafesService.
 func (s *ArkPCloudSafesService) ServiceConfig() services.ArkServiceConfig {
-	return PCloudSafesServiceConfig
+	return ServiceConfig
 }

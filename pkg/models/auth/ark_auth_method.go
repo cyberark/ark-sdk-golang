@@ -19,7 +19,6 @@ type ArkAuthMethodSettings interface{}
 type IdentityArkAuthMethodSettings struct {
 	IdentityMFAMethod       string `json:"identity_mfa_method" mapstructure:"identity_mfa_method" validate:"oneof=pf sms email otp" flag:"identity-mfa-method" desc:"MFA Method to use by default [pf, sms, email, otp]"`
 	IdentityMFAInteractive  bool   `json:"identity_mfa_interactive" mapstructure:"identity_mfa_interactive" validate:"required" flag:"identity-mfa-interactive" desc:"Allow Interactive MFA"`
-	IdentityApplication     string `json:"identity_application" mapstructure:"identity_application" flag:"identity-application" desc:"Identity Application"`
 	IdentityURL             string `json:"identity_url" mapstructure:"identity_url" flag:"identity-url" desc:"Identity Url"`
 	IdentityTenantSubdomain string `json:"identity_tenant_subdomain" mapstructure:"identity_tenant_subdomain" flag:"identity-tenant-subdomain" desc:"Identity Tenant Subdomain"`
 }
@@ -28,7 +27,7 @@ type IdentityArkAuthMethodSettings struct {
 type IdentityServiceUserArkAuthMethodSettings struct {
 	IdentityURL                      string `json:"identity_url" mapstructure:"identity_url" flag:"identity-url" desc:"Identity Url"`
 	IdentityTenantSubdomain          string `json:"identity_tenant_subdomain" mapstructure:"identity_tenant_subdomain" flag:"identity-tenant-subdomain" desc:"Identity Tenant Subdomain"`
-	IdentityAuthorizationApplication string `json:"identity_authorization_application" mapstructure:"identity_authorization_application" validate:"required" flag:"identity-authorization-application" desc:"Service User Authorization Application"`
+	IdentityAuthorizationApplication string `json:"identity_authorization_application" mapstructure:"identity_authorization_application" validate:"required" flag:"identity-authorization-application" desc:"Identity Authorization Application" default:"__idaptive_cybr_user_oidc"`
 }
 
 // DirectArkAuthMethodSettings is a struct that represents the settings for the Direct authentication method.

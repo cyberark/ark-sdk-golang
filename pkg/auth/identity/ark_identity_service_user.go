@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
+	"github.com/cyberark/ark-sdk-golang/pkg/common/keyring"
 	"github.com/cyberark/ark-sdk-golang/pkg/models"
 	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	commonmodels "github.com/cyberark/ark-sdk-golang/pkg/models/common"
@@ -24,7 +25,7 @@ type ArkIdentityServiceUser struct {
 	appName             string
 	identityURL         string
 	logger              *common.ArkLogger
-	keyring             *common.ArkKeyring
+	keyring             *keyring.ArkKeyring
 	cacheAuthentication bool
 	session             *common.ArkClient
 	sessionToken        string
@@ -54,9 +55,11 @@ func NewArkIdentityServiceUser(username string, token string, appName string, id
 		return nil, err
 	}
 	identityServiceAuth.session = common.NewSimpleArkClient(identityURL)
+	identityServiceAuth.session.SetHeaders(DefaultSystemHeaders())
+	identityServiceAuth.session.SetHeader("Content-Type", "application/x-www-form-urlencoded")
 
 	if cacheAuthentication {
-		identityServiceAuth.keyring = common.NewArkKeyring(strings.ToLower("ArkIdentity"))
+		identityServiceAuth.keyring = keyring.NewArkKeyring(strings.ToLower("ArkIdentity"))
 	}
 	if loadCache && cacheAuthentication && cacheProfile != nil {
 		identityServiceAuth.loadCache(cacheProfile)
@@ -115,8 +118,8 @@ func (ai *ArkIdentityServiceUser) AuthIdentity(profile *models.ArkProfile, force
 	)
 	response, err := ai.session.Post(
 		context.Background(),
-		fmt.Sprintf("Oauth2/Token/%s", ai.appName),
-		map[string]interface{}{
+		fmt.Sprintf("OAuth2/Token/%s", ai.appName),
+		map[string]string{
 			"grant_type": "client_credentials",
 			"scope":      "api",
 		},
@@ -145,6 +148,7 @@ func (ai *ArkIdentityServiceUser) AuthIdentity(profile *models.ArkProfile, force
 		return fmt.Errorf("failed logging in to identity service user, access token not found")
 	}
 	ai.session.UpdateToken(accessToken, "Bearer")
+	ai.session.DisableRedirections()
 	response, err = ai.session.Get(
 		context.Background(),
 		fmt.Sprintf("OAuth2/Authorize/%s", ai.appName),
@@ -155,6 +159,7 @@ func (ai *ArkIdentityServiceUser) AuthIdentity(profile *models.ArkProfile, force
 			"redirect_uri":  "https://cyberark.cloud/redirect",
 		},
 	)
+	ai.session.EnableRedirections()
 	if err != nil {
 		return err
 	}

@@ -3,10 +3,6 @@ package vmsecrets
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"regexp"
-	"slices"
 
 	"github.com/cyberark/ark-sdk-golang/pkg/auth"
 	"github.com/cyberark/ark-sdk-golang/pkg/common"
@@ -14,19 +10,17 @@ import (
 	"github.com/cyberark/ark-sdk-golang/pkg/services"
 	vmsecretsmodels "github.com/cyberark/ark-sdk-golang/pkg/services/sia/secrets/vm/models"
 	"github.com/mitchellh/mapstructure"
+
+	"io"
+	"net/http"
+	"regexp"
+	"slices"
 )
 
 const (
 	secretsURL = "/api/secrets"
 	secretURL  = "/api/secrets/%s"
 )
-
-// SIASecretsVMServiceConfig is the configuration for the SIA VM secrets service.
-var SIASecretsVMServiceConfig = services.ArkServiceConfig{
-	ServiceName:                "sia-secrets-vm",
-	RequiredAuthenticatorNames: []string{"isp"},
-	OptionalAuthenticatorNames: []string{},
-}
 
 // ArkSIASecretsVMService is the service for managing vm secrets.
 type ArkSIASecretsVMService struct {
@@ -328,5 +322,5 @@ func (s *ArkSIASecretsVMService) SecretsStats() (*vmsecretsmodels.ArkSIAVMSecret
 
 // ServiceConfig returns the service configuration for the ArkSIASecretsVMService.
 func (s *ArkSIASecretsVMService) ServiceConfig() services.ArkServiceConfig {
-	return SIASecretsVMServiceConfig
+	return ServiceConfig
 }

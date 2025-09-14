@@ -1,8 +1,9 @@
 package auth
 
 import (
-	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 	"slices"
+
+	"github.com/cyberark/ark-sdk-golang/pkg/models/auth"
 )
 
 var (

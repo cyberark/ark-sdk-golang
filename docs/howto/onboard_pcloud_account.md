@@ -8,7 +8,7 @@ Here is an example workflow for onboarding a pCloud safe and creating a Safe:
 
 1. Install Ark SDK:
    ```shell linenums="0"
-   go install github.com/cyberark/ark-sdk-golang/cmd/ark
+   go install github.com/cyberark/ark-sdk-golang/cmd/ark@latest
    ```
    Make sure that the PATH environment variable points to the go binary. For example:
    ```shell linenums="0"
