@@ -12,6 +12,15 @@
     </a>
 </p>
 
+> [!CAUTION]
+> ## ⚠️ This SDK is deprecated
+>
+> **`ark-sdk-golang` is deprecated and is no longer actively maintained.**
+>
+> Please migrate to the new SDK: **[idsec-sdk-golang](https://github.com/cyberark/idsec-sdk-golang)**
+>
+> All new features, services, and fixes will be delivered there.
+
 Ark SDK Golang
 ==============
 
